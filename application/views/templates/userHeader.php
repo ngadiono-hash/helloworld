@@ -801,6 +801,6 @@ script_user();
 	echo (isset($jsonUrl)) ? '<div class="url-read hide" data-url="'.$jsonUrl.'"></div>' : '';
 ?>
 	<div class="wrapper">
-<?php //navbar($title,$countNotif) ?>
+<?php navbar($title) ?>
 <?php sidebar() ?>
 <?php //side_notification($countNotif,$contentNotif) ?>
