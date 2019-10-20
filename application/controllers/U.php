@@ -22,38 +22,7 @@ class U extends CI_Controller
 
 	public function index()
 	{
-		$user = $this->Read_model->getDataUser();
-		$cekNotif = $this->Read_model->getNewNotif();
-		if($cekNotif['c'] == 1 || $cekNotif['l'] == 1 || $cekNotif['s'] == 1){
-			$com  = $this->Read_model->countNotifCom();
-			$like = $this->Read_model->countNotifLike();
-			$sec  = $this->Read_model->countNotifSec(['user' => $user['email'], 'status' => 1]);
-			
-			$data['countNotif'] = [
-				'comment' => $com,
-				'security' => $sec,
-				'like' => $like,
-				'all' => $com + $sec + $like
-			];
-			$data['contentNotif'] = [
-				'comment' => $this->Read_model->getCommentNotif(),
-				'security' => $this->Read_model->getSecurityNotif($user['email']),
-				'like' => $this->Read_model->getLikedNotif()
-			];
-		}
-		// https://stackoverflow.com/questions/1597736/how-to-sort-an-array-of-associative-arrays-by-value-of-a-given-key-in-php
-		$data = array_merge($data['contentNotif']['security'],$data['contentNotif']['comment'],$data['contentNotif']['like']);
-		$price = array_column($data,'created');
-		array_multisort($price,SORT_DESC,$data);
-		// https://stackoverflow.com/questions/12706359/php-array-group
-		$result = array();
-		foreach ($data as $el) {
-		    $result[date('d M Y',$el['created'])][] = $el;
-		}
-		var_dump($result);
-		die();
-
-
+		// countNotifNavbar();
 		$data['record'] = $this->Read_model->getHomeTimeLine();
 		foreach ($data['record'] as $k => $v) {
 			if ($v['timeline_cat'] == 1) {
@@ -85,11 +54,9 @@ class U extends CI_Controller
 		foreach ($like as $k => $v) {
 			$like[$k]['type'] = 3;
 		}
-		// https://stackoverflow.com/questions/1597736/how-to-sort-an-array-of-associative-arrays-by-value-of-a-given-key-in-php
 		$obj = array_merge($security,$comment,$like);
 		$sort_by_date = array_column($obj,'created');
 		array_multisort($sort_by_date,SORT_DESC,$obj);
-		// https://stackoverflow.com/questions/12706359/php-array-group
 		$result = array();
 		foreach ($obj as $el) {
 		  $result[date('d M Y',$el['created'])][] = $el;
