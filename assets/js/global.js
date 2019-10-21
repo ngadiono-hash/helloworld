@@ -1,5 +1,5 @@
 
-const host = 'http://'+window.location.hostname+'/';
+const host = 'http://'+window.location.hostname+'/helloworld/';
 const path = window.location.pathname;
 const imgLoad = '<img src="'+ host +'assets/img/feed/bars.svg" height="50">';
 
