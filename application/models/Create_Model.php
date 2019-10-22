@@ -89,7 +89,7 @@ class Create_model extends CI_Model
     $data_comment = [
       'id_user' => getSession('sess_id'),
       'id_target' => $id,
-      'message' => $comment,
+      'message' => htmlentities($comment),
       'created' => time()
     ];
     $this->db->insert('comment',$data_comment);

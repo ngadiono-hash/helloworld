@@ -1,36 +1,82 @@
 <div class="overlay hide"></div>
 <div id="result"></div>
-<button class="effect jello-vertical" id="toTop"><span><i class="fa fa-arrow-up fa-lg"></i></span></button>
+<!-- <button class="effect jello-vertical" id="toTop"><span><i class="fa fa-arrow-up fa-lg"></i></span></button> -->
 <?php if ( !whats_page(2,['reset','sign','change','s']) ) mainFooter(); ?>
 
-<?php if ( whats_page(1,['at','','snippet']) ) { ?>
+<?php if ( whats_page(1,['','at','lesson','snippet']) ) { ?>
 <script src="<?=base_url('assets/js/jquery.flipster.min.js')?>"></script>
 <script id="main_script">
+dialog_confirm('.delete-comment');
+function dialog_confirm(trigger){
+  $(document).on('click',trigger, function(e){
+    e.preventDefault();
+    var com = $(this);
+    var href = $(this).data('href');
+    Swal.fire({
+      title : '<h1 class="header-swal danger">H<small>mm...</small></h1>',
+      html : 
+      '<div class="img-swal">' +
+      '<div class="text-focus-in"><img src="'+ host +'assets/img/feed/no.gif"></div>' + 
+      '</div>' +
+      '<h3 class="info-swal danger">apa kamu yakin ?</p>',
+      type : '',
+      showCancelButton : true,
+      confirmButtonText: '<span>Ya</span>',
+      cancelButtonText: '<span>Ngga</span>',
+      buttonsStyling : false,
+      customClass: {
+        confirmButton: 'effect effect-ok',
+        cancelButton: 'effect effect-no'
+      }
+    }).then((result) => {
+      if(result.value){
+      	$.ajax({
+      		url : href,
+      		type : 'POST',
+      		data : { csrf_token : csrf },
+      		success : function(data){
+      			if (data.status == 1) {
+      				writeResult(data);
+      				$(com).parents('.row-comment').remove();
+      			}
+      		},
+      		error : function(xhr){ handle_ajax(xhr) } 
+      	});
+      }
+    });
+  });	
+}
+let widthClass = function() {
+  let ww = document.body.clientWidth;
+  if (ww < 992) {
+    $('.nav-adjust').addClass('mini');
+  } else if (ww >= 993) {
+    $('.nav-adjust').removeClass('mini');
+  };
+};
 	$(document).ready(function() {
-		$("#coverflow").flipster();
+	  $(window).resize(function(){
+	    widthClass();
+	  });
+	  widthClass();		
 		loading();
+		$("#coverflow").flipster();
+		$(function(){
+			var url = window.location.pathname,
+			urlRegExp = new RegExp(url.replace(/\/$/,'') + "$");
+			$('.main-navbar a').each(function(){
+				if(urlRegExp.test(this.href.replace(/\/$/,''))){
+					$(this).addClass('active');
+				}
+			});
+		});
 		$('#btn-nav').on('click',function(){
 			$(this).toggleClass('open');
-			$(this).children('i').toggleClass('fa-arrow-left fa-sign-out-alt');
+			$(this).children('i').toggleClass('fa-arrow-left fa-user');
 			$('.drop').toggleClass('hide');
 		});
-		$('a[href*=\\#]:not([href$=\\#])').click(function() {
-	    event.preventDefault();
-	    $('html, body').animate({
-	        scrollTop: $($.attr(this, 'href')).offset().top
-	    }, 500);
-		});		
-	 	var com;
-	 	// $('.row-editor').one('mouseenter', function(){
-			// com = setInterval(function(){
-			// 	browserx.open();
-			// 	browserx.writeln($(htmlx).text());
-			// 	browserx.close();	
-			// },100);
-			// setTimeout(function(){
-			// 	clearInterval(com);
-			// },60000);
-	 	// });
+
+
 		$('#coverflow').on('click','a',function(){
 			var req = $(this).data('request');
 			var val = $(this).data('value');
@@ -126,7 +172,8 @@
 		.pause(3000)
 		.type("<a>Situs Belajar Programing Website Bahasa Indonesia</a>")
 		.go();
-		new TypeIt('#str1,#quote', {
+
+		new TypeIt('#str1,#str2,#quote', {
 		  speed: 70,
 		  cursorChar: '',
 		  waitUntilVisible: true

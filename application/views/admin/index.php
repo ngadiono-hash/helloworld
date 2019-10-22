@@ -1,20 +1,26 @@
+<style>
+	.content-index .panel-trigger {
+		display: block;
+    background: #ccc;
+    padding: 10px;
+    font-size: 1.5em;
+    font-family: 'Fredoka One', cursive;
+	}
+	.content-index a[aria-expanded="true"] {
+		pointer-events: none;
+	}
+</style>
 <div class="content-wrapper">
-  <section class="content content-index">
-		
-		<main class="row">
-			<div class="col-md-12">
-				<div class="box">
-					<div class="box-header with-border">
-						<h3 class="box-title">Tutorials</h3>
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-
-					<div class="box-body">
-						<div class="row">
-							<div class="col-md-12">
+	<section class="content content-index">
+		<div class="box">
+			<div class="box-body">
+				<div class="box-group" id="accordion">
+					<div class="panel box box-primary">
+						<a class="panel-trigger" data-toggle="collapse" data-parent="#accordion" href="#one" aria-expanded="false">
+							Tutorials Report
+						</a>
+						<div id="one" class="panel-collapse collapse">
+							<div class="box-body">
 								<div class="row">
 									<div class="col-lg-4 col-xs-6">
 										<div class="small-box theme-html">
@@ -28,9 +34,9 @@
 													<div id="progress-html"></div>
 												</div>
 												<?php
-													for ($i=0; $i < count($level_html) ; $i++) { 
-														echo "<p>".$level_html[$i]['level_name']."<b class='pull-right'>".$level_html[$i]['counter']."</b></p>";
-													}
+												for ($i=0; $i < count($level_html) ; $i++) { 
+													echo "<p>".$level_html[$i]['level_name']."<b class='pull-right'>".$level_html[$i]['counter']."</b></p>";
+												}
 												?>
 											</div>
 											<div class="icon">
@@ -51,9 +57,9 @@
 													<div id="progress-css"></div>
 												</div>												
 												<?php
-													for ($i=0; $i < count($level_css) ; $i++) { 
-														echo "<p>".$level_css[$i]['level_name']."<b class='pull-right'>".$level_css[$i]['counter']."</b></p>";
-													}
+												for ($i=0; $i < count($level_css) ; $i++) { 
+													echo "<p>".$level_css[$i]['level_name']."<b class='pull-right'>".$level_css[$i]['counter']."</b></p>";
+												}
 												?>
 											</div>
 											<div class="icon">
@@ -74,9 +80,9 @@
 													<div id="progress-js"></div>
 												</div>
 												<?php
-													for ($i=0; $i < count($level_js) ; $i++) { 
-														echo "<p>".$level_js[$i]['level_name']."<b class='pull-right'>".$level_js[$i]['counter']."</b></p>";
-													}
+												for ($i=0; $i < count($level_js) ; $i++) { 
+													echo "<p>".$level_js[$i]['level_name']."<b class='pull-right'>".$level_js[$i]['counter']."</b></p>";
+												}
 												?>
 											</div>
 											<div class="icon">
@@ -87,13 +93,76 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
+					<div class="panel box box-primary">
+						<a class="panel-trigger" data-toggle="collapse" data-parent="#accordion" href="#two">
+							Members Report
+						</a>
+						<div id="two" class="panel-collapse collapse">
+							<div class="box-body">
+								Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+								wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+								eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+								assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+								nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+								labore sustainable VHS.
+							</div>
+						</div>
+					</div>
+					<div class="panel box box-primary">
+						<a class="panel-trigger" data-toggle="collapse" data-parent="#accordion" href="#three">
+							Snippets Report
+						</a>
+						<div id="three" class="panel-collapse collapse">
+							<div class="box-body">
+								Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+								wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+								eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+								assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+								nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+								labore sustainable VHS.
+							</div>
+						</div>
+					</div>
+					<div class="panel box box-primary">
+						<a class="panel-trigger" data-toggle="collapse" data-parent="#accordion" href="#four">
+							Bugs Report
+						</a>
+						<div id="four" class="panel-collapse collapse">
+							<div class="box-body">
+								Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+								wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+								eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+								assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+								nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+								labore sustainable VHS.
+							</div>
+						</div>
+					</div>
+					<div class="panel box box-primary">
+						<a class="panel-trigger" data-toggle="collapse" data-parent="#accordion" href="#five">
+							CDN Report
+						</a>
+						<div id="five" class="panel-collapse collapse">
+							<div class="box-body">
+								Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+								wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+								eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+								assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+								nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+								labore sustainable VHS.
+							</div>
+						</div>
+					</div>					
 				</div>
 			</div>
-		</main>
-  </section>
+		</div>
+	</section>
 </div>
 <script>
 	$(function() {

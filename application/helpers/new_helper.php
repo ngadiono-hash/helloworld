@@ -142,8 +142,12 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			'image' => 'blocked.png',
 			'message' => 'kamu tidak punya hak akses ke halman ini'
 		];		
-		(startSession('sess_role') && getSession('sess_role') == 1 ) ? true : blank_page($status);
-		die();
+		if (startSession('sess_role') && getSession('sess_role') == 1 ) {
+			return true;
+		} else {
+			blank_page($status);
+			die();
+		}
 	}
 
 	function is_send_ajax(){

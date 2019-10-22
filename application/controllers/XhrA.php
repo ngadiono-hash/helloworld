@@ -7,8 +7,8 @@ class XhrA extends CI_Controller
 	{
 		parent::__construct();
 		reload_session();
-		is_login();
-		is_admin();
+		// is_login();
+		// is_admin();
 		is_send_ajax();
 		$this->load->model('Create_model');
 		$this->load->model('Read_model');

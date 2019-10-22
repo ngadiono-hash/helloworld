@@ -78,16 +78,16 @@ class XhrM extends CI_Controller
 		$limit = 5;
 		$id = $this->input->post('id');
 		$page = $this->input->post('page');
-		$countLimited = $this->Read_model->countCommentLimited($page,['id <' => $id]);
-		$load = $this->Read_model->getCommentSnippet($page,$limit,['t1.id <' => $id]);
+		$countLimited = $this->Read_model->countCommentLimited($page,['created <' => $id]);
+		$load = $this->Read_model->getCommentSnippet($page,$limit,['t1.created <' => $id]);
 		$load = append_comment($load);
 		foreach ($load as $k => $b) { ?>
-			<div class="row row-comment <?=$b['side']?>" id="<?=$b['id']?>">
+			<div class="row row-comment <?=$b['side']?>" id="<?=$b['created']?>">
 				<div class="col-xs-12">
 					<span class="action <?=$b['side-text']?>">
 						<?php if ( startSession('sess_id') && $b['id_comm'] == getSession('sess_id')) { ?>
 						<button class="btn btn-default btn-sm">edit</button>
-						<button class="btn btn-default btn-sm">hapus</button>
+						<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$b['created']?>">hapus</a>
 						<?php } ?>
 					</span>
 				</div>
@@ -107,7 +107,7 @@ class XhrM extends CI_Controller
 		<?php } ?>
 		<?php if ($countLimited > $limit) { ?>
 			<div class="center" id="more">
-				<button data-id="<?=$b['id']?>" class="btn-default btn">
+				<button data-id="<?=$b['created']?>" class="btn-default btn">
 					<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
 					<span>tampilkan lebih banyak komentar</span>					
 				</button>

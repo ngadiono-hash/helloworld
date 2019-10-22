@@ -13,6 +13,49 @@ class XhrU extends CI_Controller
 		$this->load->model('Update_model');
 		$this->load->model('Delete_model');
 	}
+	public function create_comment() // BELUM
+	{
+		$result = [];
+		checkSession($result);
+		$id_post = $this->input->post('post');
+		$owner_post = $this->input->post('owner');
+		$comment_post = trim($this->input->post('comment'));
+		if (empty($comment_post)) {
+			$result = [
+				'status' => 0,
+				'message' => '<p class="text-danger">kamu belum menulis komentar apapun</p>'
+			];
+		} elseif (strlen($comment_post) < 10) {
+			$result = [
+				'status' => 0,
+				'message' => '<p class="text-danger">komentar minimal terdiri dari 10 karakter</p>'
+			];
+		} else {
+			$insert_last = $this->Create_model->insertComment($id_post,$comment_post);
+			$this->Update_model->updateNotif(['comment' => 1],['user' => $owner_post]);
+			$last_comment = $this->Read_model->getCommentSnippet($id_post,1,['t1.id' => $insert_last]);
+			$last_comment = append_comment($last_comment);
+			$result = [
+				'status' => 1,
+				'message' => $last_comment
+			];
+		}
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}
+	public function create_like() // BELUM
+	{
+		$result = [];
+		checkSession($result);
+		$id_post = $this->input->post('post');
+		$owner_post = $this->input->post('owner');
+		$countLike = $this->Read_model->getCountLikePost($id_post);
+		$cek = $this->Read_model->checkExist('liked',['id_user' => getSession('sess_id'), 'id_target' => $id_post]);
+		if ($cek == 0) {
+			$this->Update_model->updateNotif(['liked' => 1],['user' => $owner_post]);
+			$this->Create_model->insertLiked($id_post,$countLike);
+		}
+		// var_dump($countLike);
+	}
 
 	public function create_progress() // OK
 	{
@@ -34,11 +77,18 @@ class XhrU extends CI_Controller
 	{
 		$result = [];
 		checkSession($result);
-		$codeTitle  = trim($this->input->post('title',true));
-		if ( empty($codeTitle) ) {
+		$codeTitle = trim($this->input->post('title',true));
+		$codeHtml = $this->input->post('html');
+		$valid = $this->input->post('field');
+		// var_dump($valid);
+		if (empty($codeTitle)) {
 			$result['message'] = "alertDanger('ok','belum ada judul yang dimasukkan')";
+		} elseif (empty($codeHtml)) {
+			$result['message'] = "alertDanger('ok','snippet minimal harus ada kode HTML')";
+		} elseif ($valid == '0') {
+			$result['message'] = "alertDanger('ok','kamu belum mengisi kode HTML nya')";
 		} else {	
-			$this->Create_model->insertSnippet();
+			// $this->Create_model->insertSnippet();
 			$result['message'] = "alertSuccess('back',['snippet berhasil disimpan','terima kasih '+ userData.username +' atas kontribusinya','']);";
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
@@ -170,49 +220,18 @@ class XhrU extends CI_Controller
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
 
-	public function create_comment() // BELUM
+	public function delete_comment($id)
 	{
 		$result = [];
 		checkSession($result);
-		$id_post = $this->input->post('post');
-		$owner_post = $this->input->post('owner');
-		$comment_post = trim(htmlspecialchars($this->input->post('comment',true)));
-		if (empty($comment_post)) {
-			$result = [
-				'status' => 0,
-				'message' => '<p class="text-danger">kamu belum menulis komentar apapun</p>'
-			];
-		} elseif (strlen($comment_post) < 10) {
-			$result = [
-				'status' => 0,
-				'message' => '<p class="text-danger">komentar minimal terdiri dari 10 karakter</p>'
-			];
-		} else {
-			$insert_last = $this->Create_model->insertComment($id_post,$comment_post);
-			$this->Update_model->updateNotif(['comment' => 1],['user' => $owner_post]);
-			$last_comment = $this->Read_model->getCommentSnippet($id_post,1,['t1.id' => $insert_last]);
-			$last_comment = append_comment($last_comment);
-			$result = [
-				'status' => 1,
-				'message' => $last_comment
-			];
+		$del = $this->Delete_model->deleteComment($id);
+		if ($del) {
+			$result['status'] = 1;
+			$result['message'] = "flashAlert('sukses','komentar berhasil dihapus')";
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
-	public function create_like() // BELUM
-	{
-		$result = [];
-		checkSession($result);
-		$id_post = $this->input->post('post');
-		$owner_post = $this->input->post('owner');
-		$countLike = $this->Read_model->getCountLikePost($id_post);
-		$cek = $this->Read_model->checkExist('liked',['id_user' => getSession('sess_id'), 'id_target' => $id_post]);
-		if ($cek == 0) {
-			$this->Update_model->updateNotif(['liked' => 1],['user' => $owner_post]);
-			$this->Create_model->insertLiked($id_post,$countLike);
-		}
-		// var_dump($countLike);
-	}
+
 
 
 

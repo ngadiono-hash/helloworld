@@ -17,12 +17,6 @@ class A extends CI_Controller
 		$this->load->model('Delete_model');
 	}
 
-	function not_found()
-	{
-		$data['title'] = 'Not Found';
-		$this->load->view('home/404',$data);
-	}
-
 // =================== DASHBOARD
 	public function index()
 	{

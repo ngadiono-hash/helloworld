@@ -480,8 +480,16 @@ if (whats_page(1,['u'])) { ?>
 			});
 		});
 	// CREATE
+		let field_html = function() {
+		  var x = 0;
+		  $(".content-create").on('click','#html',function() {
+		  	x = 1;
+		  });
+		  return x;
+		}	
 		$('#submit-snippet').on('click', function(){
 			var datax = {
+				field : field_html(),
 				id: $('#input-id').val(),
 				title: $('#input-title').val(), 
 				framework: $('#input-framework').val(),
@@ -492,7 +500,8 @@ if (whats_page(1,['u'])) { ?>
 				description : $('#input-desc').val(),
 				public : $('#input-public').val(),
 				csrf_token : csrf
-			};			
+			};
+			console.log(datax);		
 			startAjax();
 			$.ajax({
 				url : host + 'xhru/create_snip',

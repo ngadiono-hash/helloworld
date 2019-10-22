@@ -116,12 +116,12 @@
 				<div class="clearfix" id="fetch-comment">
 					<?php if(!empty($comment)) { ?>	
 					<?php foreach ($comment as $k => $v) { ?>
-					<div class="row row-comment <?=$v['side']?>" id="<?=$v['id']?>">
+					<div class="row row-comment <?=$v['side']?>" id="<?=$v['created']?>">
 						<div class="col-xs-12">
 							<span class="action <?=$v['side-text']?>">
 								<?php if ( startSession('sess_id') && $v['id_comm'] == getSession('sess_id')) { ?>
-								<button class="btn btn-default btn-sm">edit</button>
-								<button class="btn btn-default btn-sm">hapus</button>
+								<a class="btn btn-default btn-sm">edit</a>
+								<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$v['created']?>">hapus</a>
 								<?php } ?>
 							</span>							
 						</div>
@@ -134,13 +134,13 @@
 									<span class="fred"><a href="" class="base-link"><?=$v['name_comm']?></a></span>
 									<span class="time-stamp"><?=$v['create']?></span>
 								</div>
-								<p><?=$v['message']?></p>
+								<pre><?=$v['message']?></pre>
 							</div>						
 						</div>
 					</div>
 					<?php } ?>
 					<div class="center" id="more">
-						<button data-id="<?=$v['id']?>" class="btn-default btn">
+						<button data-id="<?=$v['created']?>" class="btn-default btn">
 							<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
 							<span>tampilkan lebih banyak komentar</span>
 						</button>
@@ -222,7 +222,8 @@ $(document).ready(function(){
 	$('#comment').on('keyup',function(){
 		$('.error').html('');
 	});
-	if(document.referrer == host + 'u'){
+	// console.log(document.referrer);
+	if(document.referrer == host + 'u/notification'){
 		$('.side-info').fadeIn().removeClass('hide');
 		$('.overlay').fadeIn().removeClass('hide');
 	}

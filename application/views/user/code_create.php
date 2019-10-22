@@ -1,8 +1,5 @@
-<!-- <script>$('body').addClass('sidebar-collapse')</script> -->
-<style>
-
-
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js"></script>
 
 <div class="content-wrapper">
 	<section class="content content-create">
@@ -30,19 +27,19 @@
 			  			<i class="fab fa-fw fa-js"></i>
 			  		</a>
 			  	</li>
-			  	<li class="center " data-toggle="tooltip" data-placement="top" title="SELESAI">
+			  	<li class="center " data-toggle="tooltip" data-placement="top" title="DONE">
 			  		<a class="" data-toggle="tab" href="#sixth">
 			  			<i class="fas fa-save"></i>
 			  		</a>
 			  	</li>			  	
 				</ul>
 				<ul class="nav nav-tabs" style="float: right;">
-					<li class="center  run" data-toggle="tooltip" data-placement="top" title="jalankan kode">
+					<li class="center  run" data-toggle="tooltip" data-placement="top" title="RUN CODE">
 			  		<a data-href="" class="" id="run">
 							<i class="fa fa-play"></i>
 						</a>
 			  	</li>
-			  	<li class="center " data-toggle="tooltip" data-placement="top" title="jalankan kode otomatis">
+			  	<li class="center " data-toggle="tooltip" data-placement="top" title="AUTO RUN">
 			  		<a class="" id="liveEdit">
 							<i class="fa fa-sync"></i>
 						</a>
@@ -88,11 +85,11 @@
 				  				<textarea class="hide" id="source-jquery"></textarea>
 				  			</div>							
 								<div class="col-sm-6">
-									<select class="selectpicker" id="select-cdn-frame" multiple title="pilih framework/library" data-width="100%" data-live-search="true" data-dropup-auto="true" data-selected-text-format="">
+									<select class="selectpicke" id="select-cdn-frame" multiple="multiple" title="pilih framework/library" data-width="100%" data-live-search="true" data-dropup-auto="true" data-selected-text-format="">
 										<?php	foreach ($framework as $f) { 
 										$xx =	popu($f['cdn_css'])."\n".popu($f['cdn_js']);
 										?>
-											<option value="<?=$xx?>" data-name1="<?=$f['cdn_css']?>" data-name2="<?=$f['cdn_js']?>" data-id="<?=$f['id']?>" data-subtext="<?=$f['cdn_version']?>"><span><?=$f['cdn_name']?></span></option>
+											<option value="<?=$xx?>" data-id="<?=$f['id']?>" data-subtext="<?=$f['cdn_version']?>"><span><?=$f['cdn_name']?></span></option>
 										<?php } ?>
 									</select>
 				  				<input type="hidden" id="input-framework">
@@ -126,7 +123,6 @@
 					  		<div class="col-sm-12">
 					  			<p>Sudah selesai membuat snippetnya ?</p>
 					  			<p>Jika masih menemukan error pada program, silahkan cek kembali kode programnya.</p>
-					  			<br>
 					  			<p>Mari kita review kodemu</p>
 					  			<label>Judul Snippet kamu :</label><br>
 					  			<div id="title-snippet" class="input-adjust">
@@ -163,44 +159,66 @@
 			</div>
 			
 		</div>
+		<!-- <div id="logger" class="hide" style="position: absolute; min-height: 100px; background: aqua; bottom: 17px; z-index: 1; width: 100%;"></div> -->
 	</section>
 </div>
 
 <script src="<?= base_url('assets/js/config-edit.js') ?>"></script>
 
-<script>	
+<script>
+$(document).ready(function() {
+	$('.selectpicke').select2();
+});
+// if (typeof console  != "undefined") 
+//     if (typeof console.log != 'undefined')
+//         console.olog = console.log;
+//     else
+//         console.olog = function() {};
+
+// console.log = function(message) {
+//     console.olog(message);
+//     $('#logger').append('<p>' + message + '</p>');
+// };
+// console.error = console.debug = console.info =  console.log
+// console.log('hahahahahahah');
+// console.log = (function (old_function, div_log) { 
+//     return function (text) {
+//         old_function(text);
+//         div_log.value += text;
+//     };
+// } (console.log.bind(console), document.getElementById("logger")));
+
 	$('.welcome-snippet p a').on('click',function(){
 		$('[href="#second"]').parent('li').addClass('active');
 	});
-
 	$('#input-title').on('change',function() {
 		$('#title-snippet').text($(this).val());
 	});
-	
+
 	$('#select-cdn-frame').on('change',function(){
 		var selected_id = [];
 		var selected_name = [];
-		var selected_nam1 = [];
-		var selected_nam2 = [];
+		// var selected_nam1 = [];
+		// var selected_nam2 = [];
 		var sample = $(this).find('option:selected',this);
 		var selected_val = $(this).val();	
 		sample.each(function(){
-			if($(this).data('name1') != '') selected_nam1.push($(this).data('name1'));
-			if($(this).data('name2') != '')	selected_nam2.push($(this).data('name2'));
+			// if($(this).data('name1') != '') selected_nam1.push($(this).data('name1'));
+			// if($(this).data('name2') != '')	selected_nam2.push($(this).data('name2'));
 			selected_id.push($(this).data('id'));
 			selected_name.push($(this).text());
 			$('#input-framework').val(selected_id);
 		  $('#source-framework').val(selected_val.join('\n'));
 			$('#source-name').html(selected_name.join(', '));
-			$('#badge-css').attr('title', selected_nam1.join('\n') );
-			$('#badge-js').attr('title', selected_nam2.join('\n') );
+			// $('#badge-css').attr('title', selected_nam1.join('\n') );
+			// $('#badge-js').attr('title', selected_nam2.join('\n') );
 		});
 		if(sample.length == 0){
 			$('#input-framework').val('');
 			$('#source-framework').val('');
 			$('#source-name').text('tidak ada framework yang dipilih');
-			$('#badge-css').attr('title','');
-			$('#badge-js').attr('title','');	
+			// $('#badge-css').attr('title','');
+			// $('#badge-js').attr('title','');	
 		}
 	});
 	$('#checkbox-jquery').on('change',function(){
@@ -210,7 +228,7 @@
 			$('#input-jquery').val(check);
 			$('#source-jquery').val(jVal);
 			$('#jquery-name').text('jQuery library');
-			$('#badge-js').html('jQuery');
+			$('#badge-js').html('JS + jQuery');
 		} else {
 			$('#input-jquery').val('');
 			$('#source-jquery').val('');

@@ -58,6 +58,11 @@ class Delete_model extends CI_Model
 		$this->db->delete($this->cookie,['token' => $token]);
 	}
 
+	public function deleteComment($id)
+	{
+		return $this->db->delete('comment',['created' => $id]);
+	}
+
 
 // =================== ADMINISTRATOR
   public function deleteTutorial($id)

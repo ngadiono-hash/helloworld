@@ -18,7 +18,7 @@ class At extends CI_Controller
 	{
 		echo "<form method='post'>";
 		echo "<input type='hidden' name='csrf_token' value='".$this->security->get_csrf_hash()."'>";
-		echo "<input name='test' type='text'>";
+		echo "<textarea name='test'></textarea>";
 		echo "<input type='submit'>";
 		echo "</form>";
 		$this->form_validation->set_rules('test', 'Test', 'required');
@@ -26,9 +26,13 @@ class At extends CI_Controller
 			echo form_error('test','<p>','</p>');
 		} else {
 			$a = $this->input->post('test');
-			echo $a;
-			echo "<br>". htmlspecialchars($this->input->post('test',true));
-			echo "<br>". htmlentities($this->input->post('test'));			
+			// echo $a;
+			// echo addcslashes($a);
+			// echo "<br>". htmlspecialchars($this->input->post('test',true));
+			// echo "<br>". htmlspecialchars_decode($this->input->post('test',true));
+			echo "<pre><code>";
+			echo "<br>". htmlentities($this->input->post('test'));
+			echo "</code></pre>";		
 		}
 
 	}

@@ -27,7 +27,7 @@ function snipJs(){ ?>
 
 function myGlobal(){ ?>
 	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-	<script src="<?= base_url('assets/js/glob.js') ?>"></script>
+	<script src="<?= base_url('assets/js/global.js') ?>"></script>
 <?php	}
 
 function blank_page($status) { ?>
@@ -139,30 +139,41 @@ function loader(){ ?>
 // ========= MAIN NAVBAR =======
 function mainNav($code=[]) { ?>
 <div class="main-navbar box-sh">
-	<?php if (!whats_page(2,['s'])) { ?>
-	<!-- <a href="<?= base_url() ?>">Home</a> -->
-	<?php } ?>
-	<?php if (whats_page(1,['','at'])) { ?>
-	<a href="<?= base_url() ?>">Home</a>
-	<a class="hidden-xs hidden-sm" href="#lesson">Pelajaran</a>
-	<a class="hidden-xs hidden-sm" href="<?=base_url('snippet')?>">Snippet</a>
-	<a class="hidden-xs hidden-sm" href="#">Artikel</a> 
-	<?php } elseif(whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
+	<?php if (whats_page(1,['','at','snippet','lesson']) && !whats_page(2,['s'])) { ?>
+	<a class="" href="<?= base_url() ?>">
+		<span class="hidden-xs hidden-sm">Home</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-home"></i></span>
+	</a>
+	<a class="nav-adjust" href="<?=base_url('lesson')?>">
+		<span class="hidden-xs hidden-sm">Pelajaran</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-book"></i></span>
+	</a>
+	<a class="nav-adjust" href="<?=base_url('snippet')?>">
+		<span class="hidden-xs hidden-sm">Snippet</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-code"></i></span>	
+	</a>
+	<a class="nav-adjust" href="#">
+		<span class="hidden-xs hidden-sm">Artikel</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-file"></i></span>		
+	</a> 
+	<?php } elseif (whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
 	<a href="<?= base_url('snippet') ?>"><i class="fa fa-arrow-left"></i></a>
 	<a style="width: 30vw" class="hidden-xs"><?=$code['code_title']?></a>
-	<a style="width: 10vw" class="hidden-sm hidden-xs">
-		<span><?=$code['user_author']?></span>
-	</a>
 	<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
 	<a id="open-comment" class="mini"><i class="fa fa-comment-alt"></i></a>
 	<?php } ?>
 	<?php if (!startSession('sess_user')) { ?>
-	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">Login</a>
+	<?php if (!whats_page(2,['sign'])) { ?>
+	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">
+		<span class="hidden-xs hidden-sm">Login</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-sign-in-alt"></i></span>		
+	</a>
+	<?php } ?>
 	<?php } else { ?>
-	<a class="pull-right right-nav" id="btn-nav"><i class="fa fa-sign-out-alt"></i></a>
+	<a class="pull-right right-nav" id="btn-nav"><i class="fa fa-user"></i></a>
 	<div class="drop hide slide-in-left">
 		<a class="pull-right" data-href="<?= base_url('at/logout') ?>" id="btn-logout" style="width: 2em"><i class="fa fa-power-off"></i></a>
-		<a class="pull-right" href="<?= base_url('u') ?>" style="width: 2em"><i class="fa fa-user"></i></a>
+		<a class="pull-right" href="<?= base_url('u') ?>" style="width: 2em"><i class="fa fa-tachometer-alt"></i></a>
 	</div>
 	<?php } ?>
 </div>
@@ -171,19 +182,19 @@ function mainNav($code=[]) { ?>
 
 function mainFooter() { ?>
 	<footer>
-		<div class="container">
+		<div class="container fred">
 			<div class="row" style="padding-bottom: 20px;">
 				<div class="col-sm-4">
 					<div class="about-us">
-						<h4><a href="#" class="base-link">About</a></h4>
-						<h4><a href="#" class="base-link">Contact Us</a></h4>
+						<h4><a href="#" class="base-link">Tentang kami</a></h4>
+						<h4><a href="#" class="base-link">Kontak kami</a></h4>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="menus">
-						<h4><a href="<?= base_url('html') ?>" class="base-link">HTML</a></h4>
-						<h4><a href="<?= base_url('css') ?>" class="base-link">CSS</a></h4>
-						<h4><a href="<?= base_url('javascript') ?>" class="base-link">JavaScript</a></h4>
+						<h4><a href="<?= base_url('lesson') ?>" class="base-link">Pelajaran</a></h4>
+						<h4><a href="<?= base_url('snippet') ?>" class="base-link">Snippet Program</a></h4>
+						<!-- <h4><a href="<?= base_url('javascript') ?>" class="base-link">JavaScript</a></h4> -->
 					</div>
 				</div>
 				<div class="col-sm-4">

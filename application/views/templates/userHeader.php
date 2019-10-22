@@ -793,7 +793,6 @@ if ( whats_page(1,['u']) ) {
 script_user();
 ?>
 </head>
-
 <body class="hold-transition fix skin-blue sidebar-mini">
 	<div class="overlay hide"></div>
 <?php 
@@ -803,4 +802,3 @@ script_user();
 	<div class="wrapper">
 <?php navbar($title) ?>
 <?php sidebar() ?>
-<?php //side_notification($countNotif,$contentNotif) ?>

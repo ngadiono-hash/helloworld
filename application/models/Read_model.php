@@ -84,6 +84,8 @@ class Read_model extends CI_Model
 		$this->db->select('
 			t1.message AS message,
 			t1.created,
+			t1.id AS anchor,
+			t1.status AS status,
 			t2.u_username AS commentator,
 			t2.u_image AS image,
 			t3.code_title AS post,
@@ -103,6 +105,7 @@ class Read_model extends CI_Model
 	{
 		$this->db->select('
 			t1.created,
+			t1.status AS status,
 			t2.u_username AS liker,
 			t2.u_image AS image,
 			t3.code_title AS post,
@@ -120,7 +123,7 @@ class Read_model extends CI_Model
 
 	public function getSecurityNotif($email)
 	{
-		$this->db->select('ip,agent,created');
+		$this->db->select('ip,agent,created,status');
 		$this->db->where('user',$email);
 		return $this->db->get($this->sec)->result_array();
 	}
