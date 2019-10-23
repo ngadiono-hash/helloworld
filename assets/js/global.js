@@ -131,10 +131,6 @@ function alertSuccess(tipe,message=array(),dir=''){
 	} else if (tipe == 'blank') {
 		button = '';
 		img = 'horray';
-	} else if (tipe == 'back') {
-		button = '<a onclick="Swal.clickConfirm()" class="effect"><span>OK</span></a>';
-		button += '<a onclick="window.history.back()" class="effect"><span>KEMBALI</span></a>';
-		img = 'horray';
 	} 
 	body  =
 			'<div class="img-swal">'
@@ -151,7 +147,7 @@ function alertSuccess(tipe,message=array(),dir=''){
 		showConfirmButton: false,
 		allowOutsideClick: false
 	});
-	if(dir != '' && dir != 'back'){
+	if(dir != ''){
 		setTimeout(function(){
 			window.location.href = dir
 		},3000);

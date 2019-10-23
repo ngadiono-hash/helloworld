@@ -316,15 +316,20 @@ function create_slug($string){
 }
 // 
 function popu($str){
-	$iss = explode('.', $str);
-	$iss = array_pop($iss);
-	if(empty(!$str)){
-		if($iss == 'css'){
-			return "<link rel='stylesheet' href='".$str."'>";
+	$isArray = explode(',',$str);
+	$ret = [];
+	for ($i=0; $i < count($isArray) ; $i++) { 
+		$exp[$i] = explode('.',$isArray[$i]);
+		$pop[$i] = array_pop($exp[$i]);
+		if(count($isArray) != 0){
+			if($pop[$i] == 'css'){
+				$ret[$i] = "<link rel=\"stylesheet\" href=\"".$isArray[$i]."\">\n";
+			} else {
+				$ret[$i] = "<script src=\"".$isArray[$i]."\"></script>\n";
+			}
 		} else {
-			return "<script src='".$str."'></script>";
+			$ret[$i] = '';
 		}
-	} else {
-		return '';
 	}
+	return implode(' ', $ret);
 }

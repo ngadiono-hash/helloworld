@@ -552,11 +552,11 @@ if ( whats_page(1,['u']) ) {
 		position: absolute;
     display: inline-block;
     top: -38px;
-    left: 233px;
+    left: 135px;
 	}
 	.content-create .info-tab button {
 		font-family: 'Fredoka One', cursive;
-		width: 190px;
+		width: 145px;
 	}
 	.content-create .info-tab span {
 		font-family: 'Rubik', Sans-serif;
@@ -565,9 +565,9 @@ if ( whats_page(1,['u']) ) {
 		font-size: 1.2em;
 		text-align: justify;
 	}
-	.content-create .info-snippet, .content-create .welcome-snippet {
+	.info-snippet, .welcome-snippet {
 		overflow-y: auto;
-    padding: 20px;
+    padding: 10px;
     max-height: 80vh;
 	}
 	.content-create .info-snippet hr {
@@ -600,7 +600,13 @@ if ( whats_page(1,['u']) ) {
 	  position: absolute;
 	  right: 50px;
 	}
-
+	/*IN MODAL*/
+	.nav-tab-config {
+		margin-bottom: 0;
+	}
+	.nav-tab-config .tab-content {
+		height: 80vh;
+	}
 /* ============== CODE_USER*/
 
 	.content-snippet-user .not-yet img {

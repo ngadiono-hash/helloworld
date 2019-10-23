@@ -79,17 +79,20 @@ class XhrU extends CI_Controller
 		checkSession($result);
 		$codeTitle = trim($this->input->post('title',true));
 		$codeHtml = $this->input->post('html');
-		$valid = $this->input->post('field');
-		// var_dump($valid);
 		if (empty($codeTitle)) {
-			$result['message'] = "alertDanger('ok','belum ada judul yang dimasukkan')";
+			$result = [
+				'status' => 1,
+				'message' => "alertDanger('ok','belum ada judul yang dimasukkan')"
+			];
 		} elseif (empty($codeHtml)) {
-			$result['message'] = "alertDanger('ok','snippet minimal harus ada kode HTML')";
-		} elseif ($valid == '0') {
-			$result['message'] = "alertDanger('ok','kamu belum mengisi kode HTML nya')";
+			$result = [
+				'status' => 2,
+				'message' => "alertDanger('ok','snippet minimal harus ada kode HTML')"
+			];
 		} else {	
 			// $this->Create_model->insertSnippet();
-			$result['message'] = "alertSuccess('back',['snippet berhasil disimpan','terima kasih '+ userData.username +' atas kontribusinya','']);";
+			$locate = base_url('u/snippet');
+			$result['message'] = "alertSuccess('blank',['snippet berhasil disimpan','terima kasih '+ userData.username +' atas kontribusinya',' '+imgLoad+' '],'".$locate."');";
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
