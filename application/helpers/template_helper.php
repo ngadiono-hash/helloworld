@@ -5,31 +5,82 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 // =============================
 
 // TEMPLATE HEADER
+function myGlobal(){ ?>
+	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
+	<script src="<?= base_url('assets/js/global.js') ?>"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
+<?php	}
+
 function adminCss(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/css-admin.css') ?>">
+
 <?php }
 function adminJs(){ ?>
-	<script src="<?= base_url('assets/js/js_admin.js') ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/read_tutorials.js') ?>"></script> -->
+
 <?php }
 function userCss(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/css_user.css') ?>">
+
 <?php }
 function userJs(){ ?>
 
 <?php }
 function snipCss(){ ?>
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/ssnip.css') ?>"> -->
+	
 <?php }
 function snipJs(){ ?>
 	
 <?php }
 
-function myGlobal(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-	<script src="<?= base_url('assets/js/global.js') ?>"></script>
+function selectBS(){ ?>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+	<!-- <script src="<?=base_url('assets/js/jquery.chained.js')?>"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.min.js"></script>
+<?php }
+
+function select2(){ ?>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js"></script>
+<?php }
+
+function bootstrap(){ ?>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 <?php	}
 
+function aceEditor(){ ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
+	<script src="<?= base_url('assets/js/resize.js')?>"></script>
+<?php }
+
+function dataTable(){ ?>
+	<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
+	<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
+<?php	}
+
+function ckEditor(){ ?>
+	<script src="<?= base_url('assets/js/ckeditor/ckeditor.js') ?>"></script>
+	<script src="<?= base_url('assets/js/ckeditor/adapters/jquery.js') ?>"></script>
+<?php	}
+
+function adminLte(){ ?>
+	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTEe.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/skin-blue.css') ?>">
+	<script src="<?= base_url('assets/js/adminlte.js') ?>"></script>
+<?php	}
+
+function jqueryUi(){ ?>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<?php	}
+
+function typing(){ ?>
+	<script src="https://cdn.jsdelivr.net/npm/typeit@6.0.2/dist/typeit.min.js"></script>
+<?php	}
+
+// 404
 function blank_page($status) { ?>
 	<!DOCTYPE html>
 	<html>
@@ -78,51 +129,6 @@ function script_user(){ ?>
 		};
 	<?php } ?>
 	</script>
-<?php }
-
-function bootstrap(){ ?>
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
-<?php	}
-
-function ace(){ ?>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
-	<script src="<?= base_url('assets/js/resize.js')?>"></script>
-<?php }
-
-function myTable(){ ?>
-	<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
-	<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
-<?php	}
-
-function ckE(){ ?>
-	<script src="<?= base_url('assets/js/ckeditor/ckeditor.js') ?>"></script>
-	<script src="<?= base_url('assets/js/ckeditor/adapters/jquery.js') ?>"></script>
-<?php	}
-
-function adminLte(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTE.css') ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/skin-blue.css') ?>">
-	<script src="<?= base_url('assets/js/adminlte.js') ?>"></script>
-<?php	}
-
-function jqueryUi(){ ?>
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<?php	}
-
-function typing(){ ?>
-	<script src="https://cdn.jsdelivr.net/npm/typeit@6.0.2/dist/typeit.min.js"></script>
-<?php	}
-
-function selectPicker() { ?>
-	<script src="<?=base_url('assets/js/jquery.chained.js')?>"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
 <?php }
 
 // LOADING PAGE

@@ -1,5 +1,5 @@
 <div id="result"></div>
-<?php if ( !whats_page(1,['a']) && !whats_page(3,['create','view']) ) { ?>
+<?php if ( !whats_page(1,['a']) && !whats_page(3,['create','edit']) ) { ?>
 	<footer class="main-footer">
 		<strong>Copyright © <?= date('Y') ?> <a href="<?= base_url() ?>">Hello World</a></strong> All rights reserved
 	</footer>	

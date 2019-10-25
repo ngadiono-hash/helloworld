@@ -18,10 +18,10 @@ class At extends CI_Controller
 	{
 		echo "<form method='post'>";
 		echo "<input type='hidden' name='csrf_token' value='".$this->security->get_csrf_hash()."'>";
-		echo "<textarea name='test'></textarea>";
+		echo "<input type='text' name='test'>";
 		echo "<input type='submit'>";
 		echo "</form>";
-		$this->form_validation->set_rules('test', 'Test', 'required');
+		$this->form_validation->set_rules('test', 'Test', 'callback_validate_url');
 		if($this->form_validation->run() == false){
 			echo form_error('test','<p>','</p>');
 		} else {
@@ -36,6 +36,15 @@ class At extends CI_Controller
 		}
 
 	}
+	public function validate_url() {
+		$url = $this->input->post('test');
+		if (!filter_var($url, FILTER_VALIDATE_URL)) {
+			$this->form_validation->set_message('validate_url','alamat URL tidak valid');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}	
 	public function notFound()
 	{
 		not_found();

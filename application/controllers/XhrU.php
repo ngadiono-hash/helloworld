@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
 class XhrU extends CI_Controller
 {
 	public function __construct()
@@ -12,6 +12,41 @@ class XhrU extends CI_Controller
 		$this->load->model('Read_model');
 		$this->load->model('Update_model');
 		$this->load->model('Delete_model');
+	}
+
+	public function create_cdn()//
+	{
+		$result = [];
+		checkSession($result);
+		// if ($this->input->post('cdn_css') || $this->input->post('cdn_js')) {
+			$this->form_validation->set_rules('cdn_name', 'nama CDN', 'trim|required');
+			$this->form_validation->set_rules('cdn_version', 'versi CDN', 'trim|required');
+			$this->form_validation->set_rules('cdn_css', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn_css').']');
+			$this->form_validation->set_rules('cdn_js', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn_js').']');
+			$this->form_validation->set_message('required','{field} harus diisi');
+			if ($this->form_validation->run() == FALSE) {
+				$result = [
+					'cdn-name' => form_error('cdn_name','<p class="text-danger">','</p>'),
+					'cdn-version' => form_error('cdn_version','<p class="text-danger">','</p>'),
+					'cdn-css' => form_error('cdn_css','<p class="text-danger">','</p>'),
+					'cdn-js' => form_error('cdn_js','<p class="text-danger">','</p>'),
+				];
+			} else {
+				// $this->Create_model->createCdn();
+				$result['message'] = "alertSuccess('ok',['terima kasih atas kontribusinya','proses validasi sedang dilakukan',''],'')";
+			}
+		// }
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}	
+	public function validate_url($url) {
+		if (strlen($url) > 0){
+			if ( (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) ) {
+				$this->form_validation->set_message('validate_url','alamat URL tidak valid');
+				return FALSE;
+			} else {
+				return TRUE;
+			}
+		}
 	}
 	public function create_comment() // BELUM
 	{
@@ -102,39 +137,39 @@ class XhrU extends CI_Controller
 		checkSession($result);
 		$photo = $_FILES['photo']['name'];
 		if($photo){
-      $config['upload_path']    = './assets/img/profile/';
-      $config['allowed_types']  = 'gif|jpg|png|jpeg';
-      $config['max_size']       = 2048;
-      $config['max_width']      = 1000;
-      $config['max_height']     = 1000;
-      $config['encrypt_name'] 	= FALSE;
-      $this->load->library('upload', $config);
-      if ($this->upload->do_upload('photo')) {
-      	$old_photo = $this->Read_model->getOldPhoto(getSession('sess_id'));
-      	if($old_photo['u_image'] != 'default.gif') {
-      		unlink(FCPATH . 'assets/img/profile/' . $old_photo['u_image']);
-      	}
-      	$new_photo = $this->upload->data('file_name');
-      	$this->Update_model->updatePhotoPassword(['u_image' => $new_photo],getSession('sess_id'));
-      	$_SESSION['sess_image'] = base_url('assets/img/profile/') . $new_photo;
-      	$locate = base_url('u/profile');
-      	$result = [
-      		'status' => 1,
-      		'message' => "alertSuccess('blank',['sukses','foto profilmu berhasil diubah',' '+imgLoad+' '],'".$locate."')"
-      	];
-      }	else {
-      	$result = [
-      		'status' => 0,
-      		'message' => $this->upload->display_errors('<p class="text-danger center">', '</p>')
-      	];
-      }
-    } else {
-    	$result = [
-    		'status' => 0,
-    		'message' => '<p class="text-danger center">tidak ada foto untuk diupload</p>'
-    	];
-    }
-    $this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+			$config['upload_path']    = './assets/img/profile/';
+			$config['allowed_types']  = 'gif|jpg|png|jpeg';
+			$config['max_size']       = 2048;
+			$config['max_width']      = 1000;
+			$config['max_height']     = 1000;
+			$config['encrypt_name'] 	= FALSE;
+			$this->load->library('upload', $config);
+			if ($this->upload->do_upload('photo')) {
+				$old_photo = $this->Read_model->getOldPhoto(getSession('sess_id'));
+				if($old_photo['u_image'] != 'default.gif') {
+					unlink(FCPATH . 'assets/img/profile/' . $old_photo['u_image']);
+				}
+				$new_photo = $this->upload->data('file_name');
+				$this->Update_model->updatePhotoPassword(['u_image' => $new_photo],getSession('sess_id'));
+				$_SESSION['sess_image'] = base_url('assets/img/profile/') . $new_photo;
+				$locate = base_url('u/profile');
+				$result = [
+					'status' => 1,
+					'message' => "alertSuccess('blank',['sukses','foto profilmu berhasil diubah',' '+imgLoad+' '],'".$locate."')"
+				];
+			}	else {
+				$result = [
+					'status' => 0,
+					'message' => $this->upload->display_errors('<p class="text-danger center">', '</p>')
+				];
+			}
+		} else {
+			$result = [
+				'status' => 0,
+				'message' => '<p class="text-danger center">tidak ada foto untuk diupload</p>'
+			];
+		}
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
 	public function update_profile() // OK
 	{
@@ -168,11 +203,11 @@ class XhrU extends CI_Controller
 		checkSession($result);
 		$this->form_validation->set_rules('pass_0', 'Password Lama', 'trim|required');
 		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]',
-					array('min_length' => '{field} minimal 6 karakter')
-				);
+			array('min_length' => '{field} minimal 6 karakter')
+		);
 		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]',
-					array('matches' => '{field} tidak cocok')
-				);
+			array('matches' => '{field} tidak cocok')
+		);
 		$this->form_validation->set_message('required','{field} harus diisi');
 		if ($this->form_validation->run() == FALSE) {
 			$result = [
@@ -194,7 +229,7 @@ class XhrU extends CI_Controller
 						'message' => "alertDanger('ok','password baru tidak boleh sama dengan<br> password aktif')"
 					];
 				} else {
-			    $hash = password_hash($new, PASSWORD_DEFAULT); 
+					$hash = password_hash($new, PASSWORD_DEFAULT); 
 					$this->Update_model->updatePhotoPassword(['u_password' => $hash],getSession('sess_id'));
 					$locate = base_url('at/logout');
 					$result = [

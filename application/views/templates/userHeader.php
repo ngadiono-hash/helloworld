@@ -9,15 +9,11 @@
 <?php 
 	bootstrap();
 	adminLte();
-	selectPicker();
-if ( !whats_page(1,['a']) ) ace();
 	myGlobal();
-if ( !whats_page(3,['create','view']) ) jqueryUi();
-if ( whats_page(1,['a']) && whats_page(2,['html','css','javascript','deleted','cdn','users']) ) myTable();
-// if ( whats_page(1,['a']) ) adminCss();
-if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckE(); 
-// if ( whats_page(1,['user']) ) userCss();
-// if ( whats_page(1,['user']) && whats_page(3,['create']) ) snipCss(); ?>	
+if ( whats_page(1,['a']) ) dataTable().selectBS();
+if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckEditor();
+if ( whats_page(1,['u']) && whats_page(2,['snippet']) && whats_page(3,['create','edit'])) aceEditor().select2(); 
+?>
 <style>
 /*ALL*/
 	.body-fix {
@@ -103,6 +99,20 @@ if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckE();
     top: 10px;
     left: 30px;
 	}
+	.select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 2px solid #808080;
+    border-radius: 4px;
+    cursor: pointer;
+	}
+	.select2-container--default.select2-container--focus .select2-selection--multiple {
+		border: 2px solid !important;
+		border-color: #808080 !important;
+	}
+	input.input-adjust:hover,textarea.input-adjust:hover,select.input-adjust:hover,
+	input.input-adjust:focus,textarea.input-adjust:focus,select.input-adjust:focus {
+		background: white;
+	}
 /*THEME*/
 	.base-link:hover {
 		letter-spacing: 2px;
@@ -140,8 +150,7 @@ if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckE();
 	}
 </style>
 <?php if ( whats_page(1,['a']) ) { ?>
-<style>
-	/*body { overflow-y: hidden; }*/
+<style id="style-admin">
 /*=========== TABLE ===============*/
   .dataTables_processing {
     position: absolute !important;
@@ -261,7 +270,6 @@ if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckE();
     padding: 10px 15px;
     background: #f1f1f1
   }
-
 /*=========== EDIT ===========*/
   .nav-tabs {
     font-family: 'Fredoka One', cursive;
@@ -365,13 +373,10 @@ if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckE();
   .list-cat {
     padding: 10px 30px;
   }
-
 </style>
-<?php } 
-
-if ( whats_page(1,['u']) ) {
-?>
-<style>	
+<?php }
+if ( whats_page(1,['u']) ) { ?>
+<style id="style-user">	
 /* ============== NAVBAR*/
 	.navbar .title-navbar {
 		color: #f1f1f1; 
@@ -390,7 +395,6 @@ if ( whats_page(1,['u']) ) {
     text-overflow: ellipsis;
     overflow: hidden;
 	}
-
 /* ============== NOTIFICATION*/
 	.side-notification {
     position: fixed;
@@ -451,7 +455,6 @@ if ( whats_page(1,['u']) ) {
     margin-right: 10px;
     margin-top: 8px;
 	}
-
 /* ============== PROFILE BOX*/
 	.profile-box-fixed {
 		position: fixed;
@@ -465,7 +468,6 @@ if ( whats_page(1,['u']) ) {
 	.content-home, .content-activity {
 		padding-right: 300px;
 	}
-
 /* ============== CODE_CREATE*/
 	.content-create	.splitter {
 		flex: 0 0 auto;
@@ -716,7 +718,6 @@ if ( whats_page(1,['u']) ) {
 		background-color: #ccc;
 		color: #fff;
 	}
-
 /* ============== ACTIVITY*/
 	.content-activity .profile-body {
 		min-height: 330px;
@@ -738,7 +739,6 @@ if ( whats_page(1,['u']) ) {
 	.content-activity .profile-body .profile-user-img {
 		height: 100px;
 	}
-
 /* ============== PROFILE*/
 	.content-profile .box {
 		position: relative;

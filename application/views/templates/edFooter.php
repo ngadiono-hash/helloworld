@@ -1,7 +1,6 @@
 
 <div id="cats" style="display: none;"><?= $category ?></div>
-<?php ace() ?>
-<?php typing() ?>	
+<?php aceEditor() ?>	
 	<script src="<?= base_url('assets/js/fieldtoclipboard.js') ?>"></script>
 	<script src="<?= base_url('assets/js/classie.js') ?>"></script>
 	<script src="<?= base_url('assets/js/main.js') ?>"></script>

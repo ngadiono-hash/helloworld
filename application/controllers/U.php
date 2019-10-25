@@ -130,7 +130,7 @@ class U extends CI_Controller
 				$data['jq_snippet'] = $fm['cdn_jquery'];
 				$data['framework'] = $this->Read_model->getAllListCdn();
 				$data['jQuery'] 	 = $this->Read_model->getCdnJquery();
-				_temp_user($data,"Edit Snippet - ".$data['code']['code_title'],'code_view');				
+				_temp_user($data,"Edit Snippet - ".$data['code']['code_title'],'code_edit');				
 			}
 		}
 

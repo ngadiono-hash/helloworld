@@ -113,22 +113,6 @@ class XhrA extends CI_Controller
 		echo json_encode($result);
 	}
 
-	public function create_cdn()//
-	{
-		$this->form_validation->set_rules('cdn_name','CDN Name','required|trim');
-		$this->form_validation->set_rules('cdn_version','CDN Version','required|trim');
-		$this->form_validation->set_rules('cdn_type','CDN type','required');
-		$this->form_validation->set_rules('cdn_link','CDN Link','required');
-		
-		if($this->form_validation->run() === FALSE){
-			$result = 0;
-		}	else {
-			$this->Create_model->createCdn();
-			$result = 1;
-		}
-		echo json_encode($result);	
-	}
-
 	public function update_tutorial()
 	{
 		$this->Update_model->updateTutorial();
