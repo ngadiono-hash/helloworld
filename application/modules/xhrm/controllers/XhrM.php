@@ -15,7 +15,7 @@ class XhrM extends CI_Controller
 		$category = $this->input->post('request');
 		$on_user = $this->input->post('user');
 		if (!empty($on_user)) {
-			$app = $this->Common_model->xhrm_getProgress($on_user);
+			// $app = $this->Common_model->xhrm_getProgress($on_user);
 			$as = [];
 			foreach ($app as $a) {
 				$as[] = $a['id'];
@@ -47,7 +47,7 @@ class XhrM extends CI_Controller
 				'slug' 			=> $k['slug'],
 				'link' 			=> base_url('lesson/').$k['category'].'/'.$k['meta']
 			];
-		}		
+		}
 		if (!empty($on_user)) {
 			foreach ($all_category_by_cat as $k) {
 				$result['list'][] = [
@@ -55,7 +55,6 @@ class XhrM extends CI_Controller
 				];
 			}
 		}
-		// var_dump($result['list']);
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
 	public function create_report() // OK

@@ -17,7 +17,7 @@ class Common_model extends CI_Model
 		$query = $this->db->get($tbl);
 		return $query->result();
 	}
-	function select_fields($tbl = '', $data, $single = FALSE,$group_by = '',$order_by = '',$resultArray = false)
+	function select_fields($tbl = '', $data, $single = FALSE,$resultArray = TRUE,$order_by = '',$group_by = '')
 	{
 		if(is_array($data)){
 			$this->db->select($data[0],$data[1]);
@@ -67,7 +67,7 @@ class Common_model extends CI_Model
 		 * @return array
 		 */
 
-		function select_fields_where($tbl = '', $data, $where, $single = FALSE, $like = '', $field = '', $value = '',$group_by = '',$order_by = '',$array = TRUE)
+		function select_fields_where($tbl = '', $data, $where, $single = FALSE, $array = TRUE, $order_by = '', $like = '', $field = '', $value = '',$group_by = '')
 		{
 			if(is_array($data) && isset($data[1])){
 				$this->db->select($data[0],$data[1]);

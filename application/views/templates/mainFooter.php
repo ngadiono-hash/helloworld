@@ -81,14 +81,15 @@ let widthClass = function() {
 			var req = $(this).data('request');
 			var val = $(this).data('value');
 			var result = $('.result');
-			$('.content').removeClass('hide');
-			$('#lessons').removeClass('hide');
+			$(result).empty();
 			startAjax();
 			$.ajax({
 				url: host+'xhrm/get_list_menu',
 				type: 'POST',
 				data: { request : req },
 				success: function(data){
+					$('.content').removeClass('hide');
+					$('#lessons').removeClass('hide');
 					var temp = '';
 					temp += '<h2>Index '+val.toUpperCase()+'</h2>';
 					temp += '<br>';
