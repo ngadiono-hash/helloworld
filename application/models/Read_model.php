@@ -13,7 +13,7 @@ class Read_model extends CI_Model
     $this->snip      = 'snip';
     $this->snip_help = 'snip_help';
 
-    $this->user    = 'users';
+    'users'    = 'users';
     $this->cookie  = 'user_cookie';
     $this->valid   = 'user_valid';
     $this->progres = 'user_progress';
@@ -158,19 +158,19 @@ class Read_model extends CI_Model
 	}  
 	public function getAllTutorialByCat($category)
 	{
-		$this->db->select('
-			tutors.snip_id AS id,
-			tutors.snip_title AS title,
-			tutors.snip_slug AS slug,
-			tutors.snip_meta AS meta,
-			tutor_cat._name AS category,
-			tutor_lev._name AS level
-		');
-		$this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
-		$this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
-		$this->db->where(['tutors.snip_category' => $category,'tutors.snip_bin' => 0, 'tutors.snip_publish' => 1]);
-		$this->db->order_by('tutors.snip_order','asc');
-		return $this->db->get($this->tutor)->result_array();
+		// $this->db->select('
+		// 	tutors.snip_id AS id,
+		// 	tutors.snip_title AS title,
+		// 	tutors.snip_slug AS slug,
+		// 	tutors.snip_meta AS meta,
+		// 	tutor_cat._name AS category,
+		// 	tutor_lev._name AS level
+		// ');
+		// $this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		// $this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
+		// $this->db->where(['tutors.snip_category' => $category,'tutors.snip_bin' => 0, 'tutors.snip_publish' => 1]);
+		// $this->db->order_by('tutors.snip_order','asc');
+		// return $this->db->get($this->tutor)->result_array();
 	}
 	public function getTutorialByMeta($category,$meta)
 	{
@@ -217,9 +217,9 @@ class Read_model extends CI_Model
 
 	public function getLevelNameByCat($category)
 	{
-		$this->db->select('_name AS Lname');
-		$this->db->where('_cat',$category);
-		return $this->db->get($this->tutorLev)->result_array();
+		// $this->db->select('_name AS Lname');
+		// $this->db->where('_cat',$category);
+		// return $this->db->get($this->tutorLev)->result_array();
 	}
 
 
@@ -242,8 +242,7 @@ class Read_model extends CI_Model
 		');
 		$this->db->join('users','users.u_id = snip.code_author');
 		$this->db->order_by('snip.code_upload','desc');
-		return $this->db->get($this->snip)->result_array();		
-
+		return $this->db->get($this->snip)->result_array();
 	}
 
 	public function getSingleSnippet($where)
@@ -255,6 +254,8 @@ class Read_model extends CI_Model
 			t1.code_id AS code_id,
 			t1.code_title AS code_title,
 			t1.code_desc AS code_desc,
+			t1.code_cdn AS code_cdn,
+			t1.code_tag AS code_tag,
 			t1.code_html AS code_html,
 			t1.code_css AS code_css,
 			t1.code_js AS code_js,
@@ -269,9 +270,9 @@ class Read_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
-	public function getFrameCdnOfSnippet($serial)
+	public function getTagSnippet()
 	{
-		return $this->db->get_where('snip_help',['id_snippet' => $serial])->row_array();
+		return $this->db->get('snip_cat')->result_array();
 	}
 
 	public function getAllSnippetByAuthor()
@@ -335,6 +336,13 @@ class Read_model extends CI_Model
 		$this->db->where(['id_target' => $page]);
 		$this->db->where($id);
 		return $this->db->count_all_results();
+	}
+
+	public function getCountLikePost($id_post)
+	{
+		$this->db->select('code_like');
+		$this->db->where('code_id',$id_post);
+		return $this->db->get('snip')->row()->code_like;
 	}
 
 // ================= USER PAGE
@@ -405,7 +413,7 @@ class Read_model extends CI_Model
 		return $resultDB;
 	}
 
-	public function getProgress($user)
+	public function xhr_getProgress($user)
 	{
 		$this->db->select('tutors.snip_id AS id');
 		$this->db->from($this->tutor);
@@ -433,125 +441,9 @@ class Read_model extends CI_Model
 	// }  
 	public function getOldPhoto($id)
 	{
-		return $this->db->select('u_image')->get_where($this->user,['u_id' => $id])->row_array();
-	}
-// ================= MAIN USER
-	public function checkUserFb($fb=[])
-	{
-		if(!empty($fb)){
-			$this->db->select('u_id');
-			$this->db->from($this->user);
-			$this->db->where(['u_provider' => $fb['provider'], 'u_id' => $fb['uid']]);
-			$prevQuery = $this->db->get();
-			$prevCheck = $prevQuery->num_rows();
-			if($prevCheck > 0){
-				$prevResult = $prevQuery->row_array();
-				$data = [
-					'sess_id'    => $prevResult['u_id'],
-					'sess_role'  => $prevResult['u_role'],
-					'sess_user'  => $prevResult['u_username'],
-					'sess_reg'   => $prevResult['u_register'],
-					'sess_image' => $prevResult['u_image']
-				];
-				$this->session->set_userdata($data);
-				return true;
-			} else {
-				$data = [
-					'u_id'        => $fb['uid'],
-					'u_provider'  => $fb['provider'],
-					'u_role'      => $fb['role'],
-					'u_username'  => $fb['username'],
-					'u_email'     => $fb['email'],
-					'u_active'    => 1,
-					'u_register'  => time(),
-					'u_modified'  => time(),
-					'u_image'     => $fb['image'],
-					'u_name'      => $fb['name'],
-					'u_gender'    => $fb['gender']
-				];
-				$this->db->insert($this->user, $data);
-				$data = [
-					'sess_id'    => $fb['uid'],
-					'sess_role'  => $fb['role'],
-					'sess_user'  => $fb['username'],
-					'sess_reg'   => time(),
-					'sess_image' => $fb['image']
-				];
-				$this->session->set_userdata($data);
-				return true;
-			}
-		}
+		return $this->db->select('u_image')->get_where('users',['u_id' => $id])->row_array();
 	}
 
-	public function getDataUser()
-	{
-		// $session_id = getSession('sess_id');
-		$this->db->select('
-			u_id AS uid,
-			u_provider AS provider,
-			u_username AS username,
-			u_password AS password,
-			u_email AS email,
-			u_gender AS gender,
-			u_name AS name,
-			u_bio AS bio,
-			u_web AS web
-		');
-		$this->db->where('u_id',getSession('sess_id'));
-		return $this->db->get($this->user)->row_array();
-	}
-
-	public function getUserDataByEmail($email)
-	{
-		$this->db->select('
-			u_id AS id,
-			u_username AS username,
-			u_email AS email,
-			u_active AS active,
-			u_register AS register,
-			u_role AS role,
-			u_password AS password,
-			u_image AS image
-		');
-		$this->db->where('u_email',$email);
-		return $this->db->get($this->user)->row_array();
-	}
-
-	public function getUserDataByEmailActive($email)
-	{
-		$this->db->select('
-			u_email AS email,
-			u_password AS password
-		');
-		$this->db->where(['u_email' => $email, 'u_active' => 1]);
-		return $this->db->get($this->user)->row_array();
-	}
-	public function getAttempt($email,$ip,$agent)
-	{
-		$this->db->select('
-			log_att AS attempt,
-			log_time AS time,
-		');
-		$this->db->where(['log_email'=>$email,'log_ip'=>$ip,'log_agent'=>$agent]);
-		return $this->db->get($this->att)->row_array();
-	}
-	public function getTokenUrl($token)
-	{
-		$this->db->select('email AS e, token AS t, created AS c');
-		$this->db->where(['token' => $token]);
-		return $this->db->get($this->valid)->row_array();
-	}
-	public function countTokenByEmail($email)
-	{
-		$this->db->where('email', $email);
-		return $this->db->get($this->valid)->num_rows();
-	}
-	// public function countAttempt($email,$ip,$agent) 
-	// {
-	// 	$this->db->from($this->att);
-	// 	$this->db->where();
-	// 	return $this->db->get()->num_rows();
-	// }	
 
 // ================= ADMINISTRATOR
 	function Ignited_dt($select,$table,$where,$order)

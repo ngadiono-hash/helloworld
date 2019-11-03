@@ -13,10 +13,7 @@ class Lesson extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Menu Pelajaran di Hello World';
-		$this->load->view('templates/mainHeader',$data);
-		$this->load->view('lesson/index',$data);
-		$this->load->view('templates/mainFooter',$data);		
+		
 	}
 
 	public function html()

@@ -12,7 +12,8 @@
 	<?php 
 	bootstrap();
 	myGlobal();
-	typing(); 
+	typing();
+	if (whats_page(1,['snippet'])) aceEditor();
 	if (true) { ?>
 		<!-- <link rel="stylesheet" href="<?= base_url('assets/css/css_main.css'); ?>">	 -->
 		<style>
@@ -677,7 +678,7 @@
 			height: 50px;
 			border-radius: 50%;
 		}
-		.snippet-box a {
+		.snippet-box a.open-to-editor {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -686,10 +687,18 @@
 			border: 0 !important;
 			z-index: 1;		
 		}
-
-
-
-
+		.info-each-snippet {
+	    position: absolute;
+	    width: 100%;
+	    left: 0;
+	    top: -30px;
+	    display: flex;
+	    padding: 0 10px;
+	    visibility: hidden;
+		}
+		.info-each-snippet a {
+			min-width: 33%;
+		}
 		.content-snippet .splitter {
 			flex: 0 0 auto;
 			width: 18px;  
@@ -704,6 +713,7 @@
 		}
 		.content-snippet	.panel-container {
 			display: flex;
+			margin-top: 2px;
 			flex-direction: row;
 			overflow: hidden;
 			height: 100%;
@@ -712,10 +722,14 @@
 			xtouch-action: none;
 		}
 		/*SIDE LEFT*/
+		.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	    background-color: #eee;
+	    border-color: transparent;
+		}		
 		.content-snippet .panel-left {
 			flex: 0 0 auto;
 			width: 50vw;
-			min-width: 460px;
+			min-width: 5%;
 			max-width: 98%;
 			background-color: #ccc;
 		}	
@@ -724,7 +738,10 @@
 			background: #ccc;
 			display: inline-block;
 			border-bottom: none;
-		}	
+		}
+		.content-snippet .dropdown-menu li a {
+			letter-spacing: 1px;
+		}
 		.content-snippet .nav > li > a {
 			padding: 5px 10px;
 			min-width: 45px;
@@ -780,11 +797,15 @@
 			padding: 0;
 		}	
 		/*SIDE RIGHT*/
+		#dm {
+		  position: absolute;
+		  right: 40px;
+		  top: 50px;
+		  font-size: 1em;
+		}
 		.content-snippet	.panel-right {
 			flex: 1 1 auto;
 			width: 100%;
-			min-height: 200px;
-			min-width: 400px;
 			background: #fff;
 		}
 		.content-snippet .frame {
@@ -823,6 +844,11 @@
 		.content-snippet .row-info {
 			/*height: 40vh;	*/
 		}
+		.content-snippet .info-title {
+			margin-bottom: 5px;
+			font-size: 2rem;
+
+		}
 		.content-snippet .info-desc {
 			min-height: 200px;
 			max-height: 200px;
@@ -851,18 +877,26 @@
 		.content-snippet .info-like p, .content-snippet .info-comment p {
 			margin: 0;		
 		}
-		.content-snippet .info-like span, .content-snippet .info-comment span {
-			float: left;
+		.content-snippet .info-like i, .content-snippet .info-comment i {
+			padding: 13px;
+	    background: #0000ff45;
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    border-radius: 5px;
 		}	
-		.content-snippet .info-desc, .content-snippet .info-author, .content-snippet .info-link, .content-snippet .info-like, .content-snippet .info-comment {
+		.content-snippet .info-title, .content-snippet .info-desc, .content-snippet .info-author, .content-snippet .info-link, .content-snippet .info-like, .content-snippet .info-comment {
 			border-radius: 5px;
-			background: rgba(0,0,0,0.2);
+			background: #D2D6DE;
 			padding: 10px;
-			color: #f1f1f1;
+			color: #808080;
+			position: relative;
 		}
 		.content-snippet .btn-diss {
-			position: absolute;
-			z-index: 2;
+	    position: absolute;
+	    z-index: 2;
+	    right: -40px;
+	    top: 0;
 		}
 		.content-snippet .img-user-post {
 			border-radius: 50%;
@@ -874,7 +908,12 @@
 		}
 
 
-
+		.col-img {
+			width: 15%;
+		}
+		.col-text {
+			width: 85%;
+		}
 		.content-snippet .row-comment {
 			margin: 30px 0;
 		}

@@ -31,13 +31,17 @@
 				}
 			});
 		});
-		if (window.addEventListener) {              
-			document.getElementById("jkdragbar").addEventListener("mousedown", function(e) {dragstart(e);});
-			document.getElementById("jkdragbar").addEventListener("touchstart", function(e) {dragstart(e);});
-			window.addEventListener("mousemove", function(e) {dragmove(e);});
-			window.addEventListener("touchmove", function(e) {dragmove(e);});
-			window.addEventListener("mouseup", dragend);
-			window.addEventListener("touchend", dragend);
+
+		if (window.addEventListener) {
+			$('#jkdragbar').on('mousedown',function(e){
+				dragstart(e);
+			});
+			$(window).on('mousemove',function(e){
+				dragmove(e,'jktargetCode');
+			});
+			$(window).on('mouseup',function(e){
+				dragend;
+			});
 		}
 		$(document).ready(function() {
 			loading();			

@@ -66,7 +66,7 @@ function ckEditor(){ ?>
 <?php	}
 
 function adminLte(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTEe.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTE.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/skin-blue.css') ?>">
 	<script src="<?= base_url('assets/js/adminlte.js') ?>"></script>
 <?php	}
@@ -165,8 +165,6 @@ function mainNav($code=[]) { ?>
 	<?php } elseif (whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
 	<a href="<?= base_url('snippet') ?>"><i class="fa fa-arrow-left"></i></a>
 	<a style="width: 30vw" class="hidden-xs"><?=$code['code_title']?></a>
-	<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
-	<a id="open-comment" class="mini"><i class="fa fa-comment-alt"></i></a>
 	<?php } ?>
 	<?php if (!startSession('sess_user')) { ?>
 	<?php if (!whats_page(2,['sign'])) { ?>

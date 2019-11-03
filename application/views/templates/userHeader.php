@@ -10,9 +10,9 @@
 	bootstrap();
 	adminLte();
 	myGlobal();
-if ( whats_page(1,['a']) ) dataTable().selectBS();
+if ( whats_page(1,['a']) ) dataTable().selectBS().jqueryUi();
 if ( whats_page(1,['a']) && whats_page(2,['tutorial']) ) ckEditor();
-if ( whats_page(1,['u']) && whats_page(2,['snippet']) && whats_page(3,['create','edit'])) aceEditor().select2(); 
+if ( whats_page(1,['u']) && whats_page(2,['snippet']) && whats_page(3,['create','edit'])) aceEditor().select2().selectBS(); 
 ?>
 <style>
 /*ALL*/
@@ -494,7 +494,7 @@ if ( whats_page(1,['u']) ) { ?>
 	.content-create	.panel-left {
 		flex: 0 0 auto;
 		width: 50vw;
-		min-width: 460px;
+		min-width: 5%;
 		max-width: 98%;
 		background-color: #ccc;
 	}
@@ -530,7 +530,7 @@ if ( whats_page(1,['u']) ) { ?>
 	.content-create .nav-tabs li.active a:hover {
 	  border-radius: 5px 5px 0 0;
 	  text-shadow: none !important;
-	  background: #5F5F5F;
+	  background: #1d1f21;
 	  color: #f1f1f1;
 	  opacity: 1;
 	  cursor: pointer;
@@ -538,7 +538,7 @@ if ( whats_page(1,['u']) ) { ?>
 	.content-create .tab-content {
 		min-height: 81vh; 
 		margin-top: -6px; 
-		border: 2px solid #5F5F5F;
+		border: 2px solid #1d1f21;
 		border-left: none;
 		border-radius: 0 5px 5px 0;
 		background-color: #ECF0F5;
@@ -585,6 +585,12 @@ if ( whats_page(1,['u']) ) { ?>
 		min-height: 150px;
 	}
 	/*SIDE RIGHT*/
+	#dm {
+	  position: absolute;
+	  right: 40px;
+	  top: 20px;
+	  font-size: 1em;
+	}
 	.content-create	.panel-right {
 		flex: 1 1 auto;
 		width: 100%;
@@ -610,7 +616,68 @@ if ( whats_page(1,['u']) ) { ?>
 		height: 80vh;
 	}
 /* ============== CODE_USER*/
-
+		.snippet-box {
+			position: relative;
+			height: 350px;
+			background: transparent;
+			margin-bottom: 50px;
+			border-radius: 10px;
+			transition: all .4s ease-in-out;
+		}
+		.snippet-box:hover {
+			background: rgba(0, 0, 0, 0.3);
+			padding: 20px;
+			padding-bottom: 5px;
+		}
+		.frame-views {
+			height: 150%;
+			width: 200%;
+			border-radius: 20px;
+			pointer-events: none;
+			border: none;
+			transform: scale(0.5);
+			transform-origin: 0 0;
+		}
+		.snippet-box-info {
+			position: absolute;
+			top: 76%;
+			left: 0;
+			right: 0;
+			background: #337ab7ab;
+			border-radius: 10px;
+			padding: 10px;
+		}
+		.info-each-snippet {
+			position: absolute;
+	    width: 100%;
+	    left: 0;
+	    bottom: -33px;
+	    padding: 0 10px;
+	    visibility: hidden;
+		}
+		.snippet-box-info .author h4 {
+			font-family: 'Fredoka One', cursive;
+			margin: 5px;
+			color: #f1f1f1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;		
+		}
+		.snippet-box-info .image img {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+		}
+		.snippet-box a.open-to-editor {
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 85px;
+			border: 0 !important;
+			z-index: 1;		
+		}
+		/*-----------------*/
 	.content-snippet-user .not-yet img {
 		display: block;
 		margin: 40px auto;
@@ -626,97 +693,6 @@ if ( whats_page(1,['u']) ) { ?>
 	.content-snippet-user .create-new img {
 		width: 100px;
 		height: 100px;
-	}
-
-	.info-box {
-    display: block;
-    position: relative;
-    cursor: default;
-    min-height: 90px;
-    background: #fff;
-    width: 100%;
-    border: 2px solid #ccc;
-    margin-bottom: 15px;
-    transition: all .4s ease-in-out;
-	}
-	.info-box:hover {
-     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3); 		
-	}
-
-	.info-box-content {
-	  padding: 5px 10px;
-	  margin-left: 200px;
-	  min-height: 200px;
-	  position: relative;
-	  background: linear-gradient(45deg, #8b8585, transparent);
-	  background: linear-gradient(45deg,transparent, #d5d0d0);
-	}
-	.info-box-content span {
-    color: #fff;
-    text-shadow: -1px -1px 0 #aaa5a5, 1px -1px 0 #aaa5a5, -1px 1px 0 #aaa5a5, 1px 1px 0 #aaa5a5;
-	}
-	.content-snippet-user .info-box-content p {
-		margin: 0;
-    text-align: end;
-	}
-
-	.info-box-icon {
-	  border-top-left-radius: 2px;
-	  border-top-right-radius: 0;
-	  border-bottom-right-radius: 0;
-	  border-bottom-left-radius: 2px;
-	  display: block;
-	  float: left;
-	  height: 200px;
-	  width: 200px;
-	  text-align: center;
-	  font-size: 1.5em;
-	  line-height: 1;
-	  position: relative;
-	}
-	.info-box > p {
-		position: absolute;
-    bottom: -10px;
-    left: 0;
-    text-align: center;
-    padding: 2px;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.5em;
-    width: 200px;
-    max-height: 200px;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #ccc;
-    text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;
-    overflow: hidden;
-    white-space: nowrap;
-    white-space: pre-wrap;
-    text-overflow: ellipsis;
-	}
-	.frame-view {
-		min-height: 402px;
-	  min-width: 402px;
-		pointer-events: none;
-		transition: 0.4s ease;
-	  border: none;
-	  transform: scale(0.5);
-	  transform-origin: 0 0;
-	}
-	.content-snippet-user {
-		min-height: 84vh;
-		overflow: hidden;
-	}
-	.content-snippet-user .link-detail {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		text-align: center;
-		padding: 5px;
-	}
-	.content-snippet-user .link-detail:hover {
-		background-color: #ccc;
-		color: #fff;
 	}
 /* ============== ACTIVITY*/
 	.content-activity .profile-body {

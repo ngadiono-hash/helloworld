@@ -3,9 +3,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	function change_host($content)
 	{
-		$find 			= ["/http:\/\/helloworlds\.epizy\.com\//"];
-		$replace 		= ["http://localhost/"];
-		$newContent = preg_replace($find,$replace, $content);
+		$find = ["/http:\/\/localhosts\/helloworld\//"];
+		# $find = ["/http:\/\/localhost\/helloworld\//"]
+		$replace 		= ["".base_url().""];
+		$newContent = preg_replace($find,$replace,$content);
 		return $newContent;		
 	}
 

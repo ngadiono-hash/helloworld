@@ -1,13 +1,7 @@
 <style>
-	.link-to-view {
-		position: absolute;
-    text-align: center;
-    padding: 5px;
-    left: 1px;
-    right: 0;
-    bottom: 0;
-    margin-bottom: 0;
-    background: rgba(0,0,0,0.1);
+	.snippet-box.home {
+    margin: 0;
+    height: 300px;
 	}
 </style>
 <div class="content-wrapper">
@@ -26,48 +20,25 @@
 						<span class="description"><?= date('d M, Y H:i',$r['timeline_time']) ?> - <?=time_elapsed_string('@'.$r['timeline_time']) ?></span>
 					</div>
 					<h3 class="fred"><?=$r['line_user']?> membuat snippet baru</h3>
-				<div class="info-box">
-          <span class="info-box-icon">
-          	<iframe class="frame-view" src="<?= base_url('snippet/p/').$r['line_code_id'] ?>"></iframe>
-          </span>
-          <div class="info-box-content">
-          	<h3 class="fred center"><?=$r['line_code_title']?></h3>
-          	<h4><?=$r['line_code_desc']?></h4>
-          	<h4 class="link-to-view">
-          		<a class="base-link" href="<?= base_url('snippet/s/').$r['line_code_id'] ?>">Lihat selengkapnya</a>
-          	</h4>
-          </div>
-        </div>
+					<div class="row">
+						<div class="col-sm-6">	
+							<div class="snippet-box home">
+								<a class="open-to-editor" href="<?= base_url('snippet/s/').$r['line_code_id'] ?>"></a>
+								<iframe class="frame-views" src="<?= base_url('snippet/p/').$r['line_code_id'] ?>"></iframe>
+								<!-- <div class="snippet-box-info">
+									<div class="info-each-snippet">
+										<a class="btn btn-sm btn-no pull-right" href="<?= base_url('u/snippet/edit/').$r['line_code_id'] ?>"><i class="fa fa-edit"></i> edit snippet</a>
+									</div>  
+									<div class="clearfix"></div>
+								</div> -->
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<h3 class="fred text-muted"><?=$r['line_code_title']?></h3>
+							<?=$r['line_code_desc']?>
+						</div>
+					</div>
 
-					<ul class="list-inline">
-						<li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Lihat</a></li>
-						<li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
-						<li class="pull-right">
-							<a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> komentar
-								(5)</a></li>
-					</ul>
-					<div class="box-footer box-comments">
-            <div class="box-comment">
-              <img class="img-circle img-sm" src="<?=base_url('assets/img/profile/default.gif')?>" alt="User Image">
-              <div class="comment-text">
-                    <span class="username">
-                      Maria Gonzales
-                      <span class="text-muted pull-right">8:03 PM Today</span>
-                    </span>
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-              </div>
-            </div>
-          </div>
-					<div class="box-footer">
-            <form class="post-comment">
-            	<input type="hidden" name="id" value="">
-              <img class="img-responsive img-circle img-sm" src="<?=getSession('sess_image')?>" alt="Alt Text">
-              <div class="img-push">
-                <input type="text" name="comment" class="form-control input-sm" placeholder="Press enter to post comment">
-              </div>
-            </form>
-          </div>
 				</div>
 			</div>
 		</div>

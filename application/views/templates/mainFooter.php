@@ -202,9 +202,9 @@ let widthClass = function() {
 	});	
 </script>	
 <?php } if (startSession('sess_id')) { ?>
-<script id="loged">
-	// setInterval(C_Session, 1800000);
+<script id="snippet-script">
 	$('#like-this').on('click',function(){
+		var liked = $('#like-this');
 		var datax = {
 			post : $('.content').data('id'),
 			owner : $('.content').data('author'),
@@ -215,6 +215,7 @@ let widthClass = function() {
 			type : 'POST',
 			data : datax,
 			success : function(data){
+				$(liked).parents('li').addClass('active');
 
 			}
 		});

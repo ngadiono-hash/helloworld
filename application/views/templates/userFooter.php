@@ -480,9 +480,42 @@ if (whats_page(1,['u'])) { ?>
 		});
 	});
 	// CREATE
+	$('#form-add-cdn').on('click','#submit-cdn',function(e){
+		e.preventDefault();
+		var btn = $('#submit-cdn');
+		var datax = $('#form-add-cdn').serialize()+'&'+$.param({ csrf_token: csrf });
+		$(btn).children('img').toggleClass('hide');
+		$(btn).children('span').toggleClass('hide');
+		startAjax();
+		$.ajax({
+			url : host + 'xhru/create_cdn',
+			type : 'POST',
+			data : datax,
+			success : function(data){
+				$('#form-add-cdn').siblings('.alert').remove();
+				$.each(data, function(key, value){
+					$('#'+key).html(value);
+				});
+				writeResult(data);
+				if (data.status == 1) {
+					$("#form-add-cdn")[0].reset();
+					$('#modal-add-library').modal('hide');
+				}
+			},
+			error : function(xhr){
+				handle_ajax(xhr);
+			},
+			complete : function(){
+				endAjax();
+				$(btn).children('img').toggleClass('hide');
+				$(btn).children('span').toggleClass('hide');
+			}
+		});
+	});	
 	$('#submit-snippet').on('click', function(){
 		var datax = {
-			title: $('#input-title').val(), 
+			title: $('#input-title').val(),
+			tag : $('#input-tag').val(),
 			framework: $('#input-framework').val(),
 			jquery: $('#input-jquery').val(),
 			html: field.html.session.getValue(),
@@ -524,9 +557,10 @@ if (whats_page(1,['u'])) { ?>
 		startAjax();
 		var datax = {
 			id: $('#input-id').val(),
-			title: $('#input-title').val(), 
-			framework: $('#input-framework').val(),
-			jquery: $('#input-jquery').val(),
+			title: $('#input-title').val(),
+			tag : $('#input-tag').val(), 
+			jquery : $('#input-jquery').val(),
+			framework : $('#input-framework').val(),
 			html: field.html.session.getValue(),
 			css: field.css.session.getValue(),
 			js: field.js.session.getValue(),

@@ -27,6 +27,11 @@
 	        		<h4><?= $co['code_title'] ?></h4>
 	        		<h4><?= $co['user_author'] ?></h4>
 	        	</div>
+						<div class="info-each-snippet">
+							<a class="btn btn-sm btn-prm"><i class="fa fa-eye"></i> 2</a> 
+							<a class="btn btn-sm btn-prm"><i class="fa fa-thumbs-up"></i> 4</a>
+							<a class="btn btn-sm btn-prm"><i class="fa fa-comment-alt"></i> 8</a>
+						</div>	        	
 	        	<div class="clearfix"></div>
 	        </div>  
         </div>
@@ -40,7 +45,15 @@
 $(document).ready(function () {
   $('.frame-views').on('load', function() {
     $(this).contents().find("#user-body").css("overflow", "hidden");
-  }); 
+  });
+	$('.snippet-box').on({
+		'mouseenter': function(){
+			$(this).find('.info-each-snippet').css('visibility','visible');
+		},
+		'mouseleave': function(){
+			$(this).find('.info-each-snippet').css('visibility','hidden');
+		}
+	});  
 });
 
 </script>

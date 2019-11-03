@@ -1,0 +1,2513 @@
+{
+    "results": [
+        {
+            "name": "twitter-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js",
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "version": "4.3.1",
+            "keywords": [
+                "css",
+                "less",
+                "mobile-first",
+                "responsive",
+                "front-end",
+                "framework",
+                "web",
+                "twitter",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-material-design",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js",
+            "description": "Material Design for Bootstrap 3",
+            "version": "4.0.2",
+            "keywords": [
+                "material",
+                "design",
+                "bootstrap",
+                "theme",
+                "google",
+                "android",
+                "browser",
+                "framework"
+            ]
+        },
+        {
+            "name": "react-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.4/react-bootstrap.min.js",
+            "description": "Bootstrap 3 components built with React",
+            "version": "0.32.4",
+            "keywords": [
+                "react",
+                "ecosystem-react",
+                "react-component",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "angular-ui-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js",
+            "description": "Native AngularJS (Angular) directives for Bootstrap. Small footprint (5kB gzipped!), no 3rd party JS dependencies (jQuery, bootstrap JS) required!",
+            "version": "2.5.0",
+            "keywords": [
+                "AngularJS",
+                "angular",
+                "angular.js",
+                "bootstrap",
+                "angular-ui",
+                "AngularUI"
+            ]
+        },
+        {
+            "name": "bootstrap-datepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js",
+            "description": "A datepicker for Bootstrap forked from Stefan Petre's (of eyecon.ro), improvements by eternicode",
+            "version": "1.9.0",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "datepicker"
+            ]
+        },
+        {
+            "name": "bootstrap-table",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.4/bootstrap-table.min.js",
+            "description": "An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3).",
+            "version": "1.15.4",
+            "keywords": [
+                "bootstrap",
+                "table"
+            ]
+        },
+        {
+            "name": "bootstrap-daterangepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js",
+            "description": "Date range picker component for Bootstrap",
+            "version": "3.0.5",
+            "keywords": [
+                "bootstrap",
+                "daterangepicker"
+            ]
+        },
+        {
+            "name": "bootstrap-select",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.11/js/bootstrap-select.min.js",
+            "description": "Bootstrap-select is a jQuery plugin that overhauls select elements to improve their appearance and expand their functionality.",
+            "version": "1.13.11",
+            "keywords": [
+                "javascript",
+                "jquery",
+                "form",
+                "bootstrap",
+                "select",
+                "replacement"
+            ]
+        },
+        {
+            "name": "ng-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ng-bootstrap/5.1.1/ng-bootstrap.umd.min.js",
+            "description": "Angular powered Bootstrap",
+            "version": "5.1.1",
+            "keywords": [
+                "angular",
+                "bootstrap",
+                "components",
+                "accordion",
+                "alert",
+                "buttons",
+                "carousel",
+                "collapse",
+                "datepicker",
+                "dropdown",
+                "modal",
+                "pagination",
+                "popover",
+                "progressbar",
+                "rating",
+                "tabset",
+                "timepicker",
+                "tooltip",
+                "typeahead"
+            ]
+        },
+        {
+            "name": "bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js",
+            "description": "A date/time picker component designed to work with Bootstrap 3 and Momentjs. For usage, installation and demos see Project Site on GitHub",
+            "version": "4.17.47",
+            "keywords": [
+                "twitter-bootstrap",
+                "bootstrap",
+                "datepicker",
+                "datetimepicker",
+                "timepicker",
+                "moment"
+            ]
+        },
+        {
+            "name": "eonasdan-bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js",
+            "description": "A date/time picker component designed to work with Bootstrap 3 and Momentjs. For usage, installation and demos see Project Site on GitHub",
+            "version": "4.17.47",
+            "keywords": [
+                "twitter-bootstrap",
+                "bootstrap",
+                "datepicker",
+                "datetimepicker",
+                "timepicker",
+                "moment"
+            ]
+        },
+        {
+            "name": "jquery-ui-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/assets/css/bootstrap.min.css",
+            "description": "A Bootstrap-themed kickstart for jQuery UI widgets",
+            "version": "0.5pre",
+            "keywords": [
+                "jquery",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-modal",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js",
+            "description": "Extends the default Bootstrap Modal class.",
+            "version": "2.2.6",
+            "keywords": [
+                "bootstrap",
+                "modal"
+            ]
+        },
+        {
+            "name": "bootstrap-switch",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js",
+            "description": "Turn checkboxes and radio buttons into toggle switches.",
+            "version": "3.3.4",
+            "keywords": [
+                "bootstrap",
+                "switch",
+                "javascript",
+                "js"
+            ]
+        },
+        {
+            "name": "ng2-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ng2-bootstrap/1.6.2/ng2-bootstrap.umd.min.js",
+            "description": "angular2 native bootstrap components",
+            "version": "1.6.2",
+            "keywords": [
+                "angular2",
+                "bootstrap",
+                "angularjs",
+                "twitter-bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-fileinput",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.6/js/fileinput.min.js",
+            "description": "An enhanced HTML 5 file input for Bootstrap 3.x with file preview, multiple selection, ajax uploads, and more features.",
+            "version": "5.0.6",
+            "keywords": [
+                "bootstrap",
+                "file",
+                "input",
+                "preview",
+                "image",
+                "upload",
+                "ajax",
+                "multiple",
+                "delete",
+                "progress",
+                "gallery"
+            ]
+        },
+        {
+            "name": "bootstrap-tour",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js",
+            "description": "Quick and easy way to build your product tours with Bootstrap Popovers.",
+            "version": "0.11.0",
+            "keywords": [
+                "tour",
+                "bootstrap",
+                "js",
+                "intro",
+                "twitter"
+            ]
+        },
+        {
+            "name": "smalot-bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js",
+            "description": "Both Date and Time picker widget based on twitter bootstrap",
+            "version": "2.4.4",
+            "keywords": [
+                "twitter-bootstrap",
+                "bootstrap",
+                "datepicker",
+                "datetimepicker",
+                "timepicker"
+            ]
+        },
+        {
+            "name": "bootstrap-multiselect",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js",
+            "description": "JQuery multiselect plugin based on Twitter Bootstrap.",
+            "version": "0.9.15",
+            "keywords": [
+                "js",
+                "css",
+                "less",
+                "bootstrap",
+                "jquery",
+                "multiselect"
+            ]
+        },
+        {
+            "name": "bootstrap-treeview",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js",
+            "description": "Tree View for Twitter Bootstrap",
+            "version": "1.2.0",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "tree",
+                "treeview",
+                "tree-view",
+                "navigation",
+                "javascript",
+                "jquery",
+                "jquery-plugin"
+            ]
+        },
+        {
+            "name": "bootstrap-tagsinput",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js",
+            "description": "jQuery plugin providing a Twitter Bootstrap user interface for managing tags.",
+            "version": "0.8.0",
+            "keywords": [
+                "tags",
+                "bootstrap",
+                "input",
+                "select",
+                "form"
+            ]
+        },
+        {
+            "name": "bootstrap-calendar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/js/calendar.min.js",
+            "description": "Bootstrap full view calendar",
+            "version": "0.2.5",
+            "keywords": [
+                "calendar"
+            ]
+        },
+        {
+            "name": "bootstrap-slider",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js",
+            "description": "Slider view component for Twitter Bootstrap.",
+            "version": "10.6.2",
+            "keywords": [
+                "slider",
+                "bootstrap",
+                "twitter",
+                "slide"
+            ]
+        },
+        {
+            "name": "bootstrap-social",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css",
+            "description": "Social Buttons for Bootstrap",
+            "version": "5.1.1",
+            "keywords": [
+                "bootstrap",
+                "social",
+                "buttons"
+            ]
+        },
+        {
+            "name": "jasny-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css",
+            "description": "Additional features and components for Bootstrap",
+            "version": "4.0.0",
+            "keywords": [
+                "twitter bootstrap",
+                "bootstrap",
+                "css"
+            ]
+        },
+        {
+            "name": "1000hz-bootstrap-validator",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js",
+            "description": "A user-friendly HTML5 Form validator for Bootstrap 3",
+            "version": "0.11.9",
+            "keywords": [
+                "bootstrap",
+                "bootstrap3",
+                "jquery",
+                "form",
+                "validator",
+                "validation",
+                "plugin"
+            ]
+        },
+        {
+            "name": "react-bootstrap-table",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table/4.3.1/react-bootstrap-table.min.js",
+            "description": "It's a react table for bootstrap",
+            "version": "4.3.1",
+            "keywords": [
+                "react",
+                "bootstrap",
+                "table",
+                "grid",
+                "react-component"
+            ]
+        },
+        {
+            "name": "todc-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/todc-bootstrap/3.4.0-3.4.1/js/bootstrap.min.js",
+            "description": "Google-styled theme for Bootstrap.",
+            "version": "3.4.0-3.4.1",
+            "keywords": [
+                "bootstrap",
+                "css",
+                "js",
+                "less",
+                "mobile-first",
+                "responsive",
+                "front-end",
+                "web",
+                "theme",
+                "google"
+            ]
+        },
+        {
+            "name": "mouse0270-bootstrap-notify",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js",
+            "description": "This is a simple plugin that turns standard Bootstrap alerts into \"Growl-like\" notifications.",
+            "version": "3.1.7",
+            "keywords": [
+                "bootstrap",
+                "jquery",
+                "notify",
+                "notification",
+                "notifications",
+                "growl",
+                "message",
+                "notice"
+            ]
+        },
+        {
+            "name": "bootstrap-sweetalert",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js",
+            "description": "A beautiful 'replacement' for JavaScript's alert",
+            "version": "1.0.1",
+            "keywords": [
+                "sweetalert",
+                "alert",
+                "modal",
+                "popup"
+            ]
+        },
+        {
+            "name": "bootstrap-markdown",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js",
+            "description": "A bootstrap plugin for markdown editing",
+            "version": "2.10.0",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "markdown",
+                "editor"
+            ]
+        },
+        {
+            "name": "awesome-bootstrap-checkbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/1.0.2/awesome-bootstrap-checkbox.min.css",
+            "description": "Font Awesome Bootstrap Checkboxes & Radios. Pure css way to make inputs look prettier.",
+            "version": "1.0.2",
+            "keywords": [
+                "bootstrap",
+                "font-awesome",
+                "scss",
+                "less"
+            ]
+        },
+        {
+            "name": "bootstrap3-dialog",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/js/bootstrap-dialog.min.js",
+            "description": "Make use of Bootstrap Modal more monkey-friendly.",
+            "version": "1.35.4",
+            "keywords": [
+                "bootstrap",
+                "dialog"
+            ]
+        },
+        {
+            "name": "bootstrap-timepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js",
+            "description": "Timepicker widget for Twitter Bootstrap",
+            "version": "0.5.2",
+            "keywords": [
+                "widget",
+                "timepicker",
+                "time"
+            ]
+        },
+        {
+            "name": "bootstrap-3-typeahead",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js",
+            "description": "Bootstrap 3 Typeahead: The typeahead autocomplete plugin for Twitter's Bootstrap 2 ready to use with Bootstrap 3.",
+            "version": "4.0.2",
+            "keywords": [
+                "typeahead",
+                "autocomplete",
+                "plugin",
+                "jquery",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "react-router-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-router-bootstrap/0.25.0/ReactRouterBootstrap.min.js",
+            "description": "Integration between React Router and React-Bootstrap",
+            "version": "0.25.0",
+            "keywords": [
+                "react",
+                "react-router",
+                "react-bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-toggle",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js",
+            "description": "Bootstrap Toggle is a highly flexible Bootstrap plugin that converts checkboxes into toggles",
+            "version": "2.2.2",
+            "keywords": [
+                "bootstrap",
+                "toggle",
+                "bootstrap-toggle",
+                "switch",
+                "bootstrap-switch"
+            ]
+        },
+        {
+            "name": "twitter-bootstrap-wizard",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js",
+            "description": "This twitter bootstrap plugin builds a wizard out of a formatter tabbable structure. It allows to build a wizard functionality using buttons to go through the different wizard steps and using events allows to hook into each step individually.",
+            "version": "1.2",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "wizard"
+            ]
+        },
+        {
+            "name": "bootstrap.native",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.27/bootstrap-native.min.js",
+            "description": "Native Javascript for Bootstrap 3, the sweetest Javascript library without jQuery.",
+            "version": "2.0.27",
+            "keywords": [
+                "bootstrap.native",
+                "bootstrap",
+                "vanilla js",
+                "native javascript",
+                "vanilla javascript"
+            ]
+        },
+        {
+            "name": "bootstrap-hover-dropdown",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js",
+            "description": "An unofficial Bootstrap plugin to enable Bootstrap dropdowns to activate on hover and provide a nice user experience.",
+            "version": "2.2.1",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "hover",
+                "dropdowns"
+            ]
+        },
+        {
+            "name": "ladda-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.9.4/ladda.min.js",
+            "description": "Buttons with built-in loading indicators, effectively bridging the gap between action and feedback.",
+            "version": "0.9.4",
+            "keywords": [
+                "loading",
+                "indicator",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-colorpicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js",
+            "description": "A nice and customizable colorpicker plugin for Twitter Bootstrap",
+            "version": "2.5.3",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "colorpicker"
+            ]
+        },
+        {
+            "name": "angular-bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.4/js/datetimepicker.min.js",
+            "description": "This directive allows you to add a datetime-picker to your form elements.",
+            "version": "1.1.4",
+            "keywords": [
+                "anguar",
+                "calendar",
+                "date picker",
+                "date",
+                "directive",
+                "moment",
+                "time picker",
+                "time"
+            ]
+        },
+        {
+            "name": "bootstrap-formhelpers",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js",
+            "description": "A collection of jQuery plugins for Bootstrap.",
+            "version": "2.3.0",
+            "keywords": [
+                "bootstrap",
+                "css",
+                "jquery",
+                "form",
+                "plugin"
+            ]
+        },
+        {
+            "name": "bootstrap-lightbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js",
+            "description": "A simple lightbox plugin based on the bootstrap modal plugin.",
+            "version": "0.7.0",
+            "keywords": [
+                "bootstrap",
+                "lightbox",
+                "modal"
+            ]
+        },
+        {
+            "name": "bootstrap-rtl",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.min.css",
+            "description": "Right-to-left (RTL) theme for Boostrap 3.x",
+            "version": "3.4.0",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "rtl",
+                "css",
+                "persian",
+                "farsi",
+                "arabic",
+                "hebrew",
+                "theme"
+            ]
+        },
+        {
+            "name": "bootstrap-star-rating",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/star-rating.min.js",
+            "description": "A simple yet powerful JQuery star rating plugin for Bootstrap.",
+            "version": "4.0.6",
+            "keywords": [
+                "bootstrap",
+                "star",
+                "rating",
+                "font",
+                "awesome",
+                "glyphicon",
+                "svg"
+            ]
+        },
+        {
+            "name": "bootstrap-tokenfield",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js",
+            "description": "Advanced tagging/tokenizing plugin for input fields with a focus on keyboard and copy-paste support.",
+            "version": "0.12.0",
+            "keywords": [
+                "jquery",
+                "javascript",
+                "bootstrap",
+                "tokenfield",
+                "tags",
+                "token",
+                "input",
+                "select",
+                "form"
+            ]
+        },
+        {
+            "name": "bootstrap-notify",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js",
+            "description": "Bootstrap alert system made better.",
+            "version": "0.2.0",
+            "keywords": [
+                "bootstrap",
+                "alert",
+                "notify"
+            ]
+        },
+        {
+            "name": "bootstrap-validator",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js",
+            "description": "The best jQuery plugin to validate form fields. Designed to use with Bootstrap 3",
+            "version": "0.5.3",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "validator"
+            ]
+        },
+        {
+            "name": "jquery.bootstrapvalidator",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js",
+            "description": "The best jQuery plugin to validate form fields. Designed to use with Bootstrap 3",
+            "version": "0.5.3",
+            "keywords": [
+                "jQuery",
+                "plugin",
+                "validate",
+                "validator",
+                "form",
+                "Bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-growl",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js",
+            "description": "Pretty simple jQuery plugin that turns standard Bootstrap alerts into hovering 'Growl-like' notifications.",
+            "version": "1.0.0",
+            "keywords": [
+                "bootstrap",
+                "growl",
+                "notification",
+                "jquery"
+            ]
+        },
+        {
+            "name": "bootstrap3-wysiwyg",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.all.min.js",
+            "description": "Bootstrap 3 compatible wysiwyg editor",
+            "version": "0.3.3",
+            "keywords": [
+                "bootstrap",
+                "wysiwyg"
+            ]
+        },
+        {
+            "name": "bootstrap-combobox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.8/js/bootstrap-combobox.min.js",
+            "description": "A combobox plugin that works with twitter bootstrap",
+            "version": "1.1.8",
+            "keywords": [
+                "bootstrap-combobox",
+                "bootstrap",
+                "combobox"
+            ]
+        },
+        {
+            "name": "select2-bootstrap-theme",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css",
+            "description": "A theme for Select2 v4 and Bootstrap 3.",
+            "version": "0.1.0-beta.10",
+            "keywords": [
+                "bootstrap",
+                "select2",
+                "css"
+            ]
+        },
+        {
+            "name": "bootstrap-filestyle",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js",
+            "description": "Bootstrap FileStyle is a quick and simple plugin to help style your form's file upload inputs.",
+            "version": "2.1.0",
+            "keywords": [
+                "jquery",
+                "file",
+                "upload",
+                "boostrap",
+                "multiple",
+                "input",
+                "style"
+            ]
+        },
+        {
+            "name": "bootstrap-maxlength",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-maxlength/1.7.0/bootstrap-maxlength.min.js",
+            "description": "An visual feedback indicator for the MaxLength attribute",
+            "version": "1.7.0",
+            "keywords": [
+                "form",
+                "maxlength",
+                "html5",
+                "input",
+                "feedback",
+                "jquery-plugin",
+                "jquery"
+            ]
+        },
+        {
+            "name": "select2-bootstrap-css",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css",
+            "description": "simple css to make select2 widgets fit in with bootstrap",
+            "version": "1.4.6",
+            "keywords": [
+                "bootstrap",
+                "select2",
+                "css"
+            ]
+        },
+        {
+            "name": "bootstrap-material-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js",
+            "description": "Datepicker for bootstrap-material",
+            "version": "2.7.1",
+            "keywords": [
+                "css",
+                "js",
+                "mobile-first",
+                "responsive",
+                "front-end",
+                "web"
+            ]
+        },
+        {
+            "name": "bootstrap-contextmenu",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-contextmenu/0.3.4/bootstrap-contextmenu.min.js",
+            "description": "Context-menu extension for the Bootstrap framework",
+            "version": "0.3.4",
+            "keywords": [
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-progressbar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js",
+            "description": "progressbar interactions for twitter bootstrap 2 & 3",
+            "version": "0.9.0",
+            "keywords": [
+                "boostrap-progressbar",
+                "progressbar"
+            ]
+        },
+        {
+            "name": "bootstrap4-duallistbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.1/jquery.bootstrap-duallistbox.min.js",
+            "description": "A responsive dual listbox widget optimized for Twitter Bootstrap. It works on all modern browsers and on touch devices.",
+            "version": "4.0.1",
+            "keywords": [
+                "bootstrap",
+                "dual list box"
+            ]
+        },
+        {
+            "name": "react-bootstrap-typeahead",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-typeahead/3.4.7/react-bootstrap-typeahead.min.js",
+            "description": "React-based typeahead using the Bootstrap theme",
+            "version": "3.4.7",
+            "keywords": [
+                "bootstrap",
+                "bootstrap-tokenizer",
+                "bootstrap-typeahead",
+                "react",
+                "react-bootstrap",
+                "react-bootstrap-tokenizer",
+                "react-bootstrap-typeahead",
+                "tokenizer",
+                "typeahead"
+            ]
+        },
+        {
+            "name": "bootstrap-touchspin",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/4.2.5/jquery.bootstrap-touchspin.min.js",
+            "description": "A mobile and touch friendly input spinner component for Bootstrap 3.",
+            "version": "4.2.5",
+            "keywords": [
+                "bootstrap",
+                "touchspin",
+                "jquery"
+            ]
+        },
+        {
+            "name": "tempusdominus-bootstrap-4",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
+            "description": "A date/time picker component designed to work with Bootstrap 4 and Momentjs. For usage, installation and demos see Project Site on GitHub",
+            "version": "5.1.2",
+            "keywords": [
+                "bootstrap",
+                "datepicker",
+                "datetimepicker",
+                "timepicker",
+                "moment"
+            ]
+        },
+        {
+            "name": "angular-bootstrap-colorpicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.32/js/bootstrap-colorpicker-module.min.js",
+            "description": "Native AngularJS colorpicker directive",
+            "version": "3.0.32",
+            "keywords": [
+                "angular",
+                "color picker",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-submenu",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-submenu/3.0.1/js/bootstrap-submenu.min.js",
+            "description": "Bootstrap Sub-Menus",
+            "version": "3.0.1",
+            "keywords": [
+                "bootstrap",
+                "dropdown",
+                "jquery-plugin",
+                "submenu"
+            ]
+        },
+        {
+            "name": "pwstrength-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/pwstrength-bootstrap/3.0.5/pwstrength-bootstrap.min.js",
+            "description": "jQuery plugin for Twitter Bootstrap that provides rulesets for visualy displaying the quality of a users typed in password.",
+            "version": "3.0.5",
+            "keywords": [
+                "bootstrap",
+                "password",
+                "strength",
+                "meter",
+                "jquery-plugin",
+                "ecosystem:jquery"
+            ]
+        },
+        {
+            "name": "bootstrap-rating-input",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.min.js",
+            "description": "A Lightweight Bootstrap Rating Input",
+            "version": "0.4.0",
+            "keywords": [
+                "bootstrap",
+                "rating",
+                "input"
+            ]
+        },
+        {
+            "name": "bootstrap-autohidingnavbar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-autohidingnavbar/4.0.0/jquery.bootstrap-autohidingnavbar.min.js",
+            "description": "An extension for Bootstrap's fixed navbar which hides the navbar while the page is scrolling downwards and shows it the other way. The plugin is able to show/hide the navbar programmatically as well.",
+            "version": "4.0.0",
+            "keywords": [
+                "jquery",
+                "plugin",
+                "bootstrap",
+                "ui",
+                "navigation"
+            ]
+        },
+        {
+            "name": "angular-bootstrap-lightbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-lightbox/0.12.0/angular-bootstrap-lightbox.min.js",
+            "description": "An AngularJS lightbox built using UI Bootstrap Modal.",
+            "version": "0.12.0",
+            "keywords": [
+                "angular",
+                "lightbox",
+                "image",
+                "gallery"
+            ]
+        },
+        {
+            "name": "bootstrap-iconpicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-iconpicker/1.10.0/js/bootstrap-iconpicker.min.js",
+            "description": "A simple iconpicker for Bootstrap 3.x",
+            "version": "1.10.0",
+            "keywords": [
+                "bootstrap",
+                "iconpicker",
+                "icon-fonts",
+                "icons",
+                "css",
+                "javascript",
+                "jquery"
+            ]
+        },
+        {
+            "name": "bootstrap-ui-datetime-picker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-ui-datetime-picker/2.6.3/datetime-picker.min.js",
+            "description": "AngularJs directive to use a date and/or time picker as a dropdown from an input",
+            "version": "2.6.3",
+            "keywords": [
+                "date-picker",
+                "time-picker",
+                "angular",
+                "bootstrap",
+                "angular-ui"
+            ]
+        },
+        {
+            "name": "angular-bootstrap-switch",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-switch/0.5.2/angular-bootstrap-switch.min.js",
+            "description": "AngularJS directive for the bootstrap-switch jQuery plugin.",
+            "version": "0.5.2",
+            "keywords": [
+                "angular-bootstrap-switch",
+                "bootstrap-switch",
+                "jQuery plugin"
+            ]
+        },
+        {
+            "name": "mistic100-Bootstrap-Confirmation",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/mistic100-Bootstrap-Confirmation/2.4.4/bootstrap-confirmation.min.js",
+            "description": "Bootstrap plugin for on-place confirm boxes using Popover",
+            "version": "2.4.4",
+            "keywords": [
+                "confirmation",
+                "popup"
+            ]
+        },
+        {
+            "name": "bootstrap-sidebar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sidebar/0.2.2/js/sidebar.min.js",
+            "description": "a sidebar plugin for bootstrap 3",
+            "version": "0.2.2",
+            "keywords": [
+                "bootstrap",
+                "sidebar",
+                "plugin"
+            ]
+        },
+        {
+            "name": "bootstrap-year-calendar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-year-calendar/1.1.1/js/bootstrap-year-calendar.min.js",
+            "description": "A fully customizable year calendar widget, for Bootstrap!",
+            "version": "1.1.1",
+            "keywords": [
+                "calendar",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-markdown-editor",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown-editor/2.0.2/js/bootstrap-markdown-editor.js",
+            "description": "Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.",
+            "version": "2.0.2",
+            "keywords": [
+                "markdown",
+                "bootstrap",
+                "editor",
+                "ace"
+            ]
+        },
+        {
+            "name": "chrome-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/chrome-bootstrap/1.5.0/chrome-bootstrap.min.css",
+            "description": "Reusable Chrome settings UI",
+            "version": "1.5.0",
+            "keywords": [
+                "chrome",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "knockout-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/knockout-bootstrap/0.2.1/knockout-bootstrap.min.js",
+            "description": "Knockout Bindings for Bootstrap Widgets",
+            "version": "0.2.1",
+            "keywords": [
+                "knockout",
+                "bootstrap",
+                "knockout-bootstrap",
+                "bindings"
+            ]
+        },
+        {
+            "name": "bootstrap-datepaginator",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepaginator/1.1.0/bootstrap-datepaginator.min.js",
+            "description": "Date Paginator for Twitter Bootstrap",
+            "version": "1.1.0",
+            "keywords": [
+                "Twitter",
+                "Bootstrap",
+                "Date",
+                "Paginator"
+            ]
+        },
+        {
+            "name": "bootstrap-show-password",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.1.2/bootstrap-show-password.min.js",
+            "description": "Show/hide password plugin for twitter bootstrap.",
+            "version": "1.1.2",
+            "keywords": [
+                "bootstrap.password",
+                "show.password",
+                "hide.password"
+            ]
+        },
+        {
+            "name": "ajax-bootstrap-select",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.5/js/ajax-bootstrap-select.min.js",
+            "description": "Extends existing [Bootstrap Select] implementations by adding the ability to search via AJAX requests as you type. Originally for CROSCON.",
+            "version": "1.4.5",
+            "keywords": [
+                "bootstrap",
+                "bootstrap-select",
+                "ajax"
+            ]
+        },
+        {
+            "name": "jquery.dirtyforms.dialogs.bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery.dirtyforms.dialogs.bootstrap/2.0.0/jquery.dirtyforms.dialogs.bootstrap.min.js",
+            "description": "Dirty Forms is a jQuery plugin to help prevent users from losing data when editing forms.",
+            "version": "2.0.0",
+            "keywords": [
+                "bootstrap",
+                "modal",
+                "jquery",
+                "plugin",
+                "dirty",
+                "forms",
+                "confirmation",
+                "validate",
+                "validation",
+                "areyousure",
+                "jquery-plugin",
+                "ecosystem:jquery"
+            ]
+        },
+        {
+            "name": "bootstrap-checkbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-checkbox/1.5.0/js/bootstrap-checkbox.min.js",
+            "description": "A checkbox component based on Bootstrap framework",
+            "version": "1.5.0",
+            "keywords": [
+                "bootstrap",
+                "checkbox",
+                "jquery-plugin",
+                "switch"
+            ]
+        },
+        {
+            "name": "vue-bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/vue-bootstrap-datetimepicker/5.0.1/vue-bootstrap-datetimepicker.min.js",
+            "description": "Vue.js component for bootstrap-datetimepicker",
+            "version": "5.0.1",
+            "keywords": [
+                "vue",
+                "bootstrap",
+                "bootstrap-datetimepicker",
+                "vue-bootstrap-datetimepicker",
+                "datepicker",
+                "timepicker"
+            ]
+        },
+        {
+            "name": "bootstrap-without-jquery",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-without-jquery/0.6.1/bootstrap3/bootstrap-without-jquery.min.js",
+            "description": "Lightweight script to replace jQuery for simple interactions when using Twitter Bootstrap.",
+            "version": "0.6.1",
+            "keywords": [
+                "bootstrap",
+                "jquery"
+            ]
+        },
+        {
+            "name": "bootstrap-rating",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.5.0/bootstrap-rating.min.js",
+            "description": "A small jQuery plugin that turns an input field into a highly customizable rating component",
+            "version": "1.5.0",
+            "keywords": [
+                "rating",
+                "jquery",
+                "bootstrap",
+                "fontawesome",
+                "component",
+                "plugin"
+            ]
+        },
+        {
+            "name": "typeahead.js-bootstrap-css",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css",
+            "description": "Bootstrap3 style for typeahead.js using Bootstrap 3 mixins and variables",
+            "version": "1.2.1",
+            "keywords": [
+                "less",
+                "bootstrap",
+                "typeahead.js"
+            ]
+        },
+        {
+            "name": "angular-bootstrap-slider",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-slider/0.1.28/slider.min.js",
+            "description": "An angular directive for seiyria-bootstrap-slider",
+            "version": "0.1.28",
+            "keywords": [
+                "angular",
+                "slider",
+                "bootstrap-slider",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-confirmation",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.7/bootstrap-confirmation.min.js",
+            "description": "Confirmation plugin compatible with Twitter Bootstrap 3 extending Popover",
+            "version": "1.0.7",
+            "keywords": [
+                "bootstrap",
+                "confirm",
+                "confirmation"
+            ]
+        },
+        {
+            "name": "bootstrap3-contact-form",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-contact-form/1.4.1/js/contact-form.min.js",
+            "description": "A simple bootstrap 3 contact form using Google's reCAPTCHA. Submitted messages are sent to a specified email address using SMTP with support for SSL or TLS transport.",
+            "version": "1.4.1",
+            "keywords": [
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "angular-js-bootstrap-datetimepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-js-bootstrap-datetimepicker/2.5.1/datetimepicker.min.js",
+            "description": "Date-time picker AngularJS Bootstrap plugin",
+            "version": "2.5.1",
+            "keywords": [
+                "date",
+                "time",
+                "picker",
+                "angularjs",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootstrap-waitingfor",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-waitingfor/1.2.7/bootstrap-waitingfor.min.js",
+            "description": "Waiting for dialog with progress bar for Bootstrap",
+            "version": "1.2.7",
+            "keywords": [
+                "waiting",
+                "dialog",
+                "progress",
+                "bar",
+                "boostrap"
+            ]
+        },
+        {
+            "name": "bootstrap-magnify",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-magnify/0.3.0/js/bootstrap-magnify.min.js",
+            "description": "Small bootstrap js plugin to enhance porte-folios and image galleries.",
+            "version": "0.3.0",
+            "keywords": [
+                "bootstrap",
+                "magnify",
+                "image",
+                "gallery"
+            ]
+        },
+        {
+            "name": "angular-formly-templates-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-formly-templates-bootstrap/6.5.1/angular-formly-templates-bootstrap.min.js",
+            "description": "Angular-Formly plugin which outputs bootstrap compatible form fields.",
+            "version": "6.5.1",
+            "keywords": [
+                "AngularJs",
+                "form",
+                "formly",
+                "json",
+                "bootstrap",
+                "html"
+            ]
+        },
+        {
+            "name": "bootstrap-drawer",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-drawer/1.0.6/js/drawer.min.js",
+            "description": "A Bootstrap add-on to create drawer (off-canvas) styled navigation",
+            "version": "1.0.6",
+            "keywords": [
+                "bootstrap-3",
+                "off-canvas",
+                "navigation",
+                "navs",
+                "nav",
+                "drawer",
+                "menu",
+                "html",
+                "css",
+                "less",
+                "javascript",
+                "jquery"
+            ]
+        },
+        {
+            "name": "react-bootstrap-select",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-select/0.14.0/js/bootstrap-select.min.js",
+            "description": "A custom <select> for react-bootstrap using button dropdown as replacement",
+            "version": "0.14.0",
+            "keywords": [
+                "react",
+                "react-component",
+                "form",
+                "bootstrap",
+                "select",
+                "replacement"
+            ]
+        },
+        {
+            "name": "bootstrap-horizon",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-horizon/0.1.1/bootstrap-horizon.min.css",
+            "description": "Boostrap 3 rows with inline, horizontally scrolling columns",
+            "version": "0.1.1",
+            "keywords": [
+                "bootstrap",
+                "horizontal",
+                "scroll",
+                "row"
+            ]
+        },
+        {
+            "name": "m8tro-bootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/m8tro-bootstrap/3.3.7/m8tro.min.css",
+            "description": "Bootstrap theme inspired by Windows Modern UI (aka Metro)",
+            "version": "3.3.7",
+            "keywords": [
+                "css",
+                "less",
+                "bootstrap",
+                "modern ui",
+                "metro",
+                "metro ui",
+                "windows 8",
+                "windows 10",
+                "windows phone"
+            ]
+        },
+        {
+            "name": "jqBootstrapValidation",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.7/jqBootstrapValidation.min.js",
+            "description": "A JQuery validation plugin for bootstrap forms.",
+            "version": "1.3.7",
+            "keywords": [
+                "jquery",
+                "validation",
+                "plugin",
+                "form",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "mdbootstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js",
+            "description": "Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.",
+            "version": "4.8.10",
+            "keywords": [
+                "material",
+                "design",
+                "bootstrap",
+                "mdbootstrap",
+                "mdb",
+                "framework",
+                "css",
+                "mobile-first",
+                "responsive"
+            ]
+        },
+        {
+            "name": "angular-autofields",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-autofields/2.2.5/autofields.min.js",
+            "description": "Automatically generate fields from a schema object and bind them to an object",
+            "version": "2.2.5",
+            "keywords": [
+                "angular",
+                "bootstrap",
+                "form",
+                "fields",
+                "data-binding",
+                "generate"
+            ]
+        },
+        {
+            "name": "Sortable",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js",
+            "description": "Minimalist JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices. No jQuery. Supports AngularJS and any CSS library, e.g. Bootstrap.",
+            "version": "1.10.1",
+            "keywords": [
+                "sortable",
+                "reorder",
+                "drag"
+            ]
+        },
+        {
+            "name": "gentelella",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/gentelella/1.4.0/js/custom.min.js",
+            "description": "Gentellela Admin is a free to use Bootstrap admin template",
+            "version": "1.4.0",
+            "keywords": [
+                "css",
+                "js",
+                "html",
+                "template",
+                "admin",
+                "bootstrap",
+                "theme",
+                "backend",
+                "responsive"
+            ]
+        },
+        {
+            "name": "flat-ui",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css",
+            "description": "Flat UI Free is a beautiful theme for Bootstrap. We have redesigned many of its components to look flat in every pixel",
+            "version": "2.3.0",
+            "keywords": [
+                "ui",
+                "flat",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "froala-design-blocks",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.1/css/froala_blocks.min.css",
+            "description": "An amazing collection of over 170 ready to use responsive design blocks based on Bootstrap.",
+            "version": "2.0.1",
+            "keywords": [
+                "froala",
+                "froala design blocks",
+                "html design",
+                "bootstrap",
+                "material design",
+                "html templates",
+                "website design",
+                "html5",
+                "trending design"
+            ]
+        },
+        {
+            "name": "bootswatch",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cerulean/bootstrap.min.css",
+            "description": "Bootswatch is a collection of themes for Bootstrap.",
+            "version": "4.3.1",
+            "keywords": [
+                "css"
+            ]
+        },
+        {
+            "name": "summernote",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.min.js",
+            "description": "Super Simple WYSIWYG Editor on Bootstrap",
+            "version": "0.8.12",
+            "keywords": [
+                "bootstrap",
+                "summernote",
+                "editor",
+                "WYSIWYG"
+            ]
+        },
+        {
+            "name": "reactstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/reactstrap/8.0.1/reactstrap.min.js",
+            "description": "React Bootstrap 4 components",
+            "version": "8.0.1",
+            "keywords": [
+                "reactstrap",
+                "bootstrap",
+                "react",
+                "component",
+                "components",
+                "react-component",
+                "ui"
+            ]
+        },
+        {
+            "name": "startbootstrap-sb-admin-2",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7+1/js/sb-admin-2.min.js",
+            "description": "A free, open source, Bootstrap admin theme created by Start Bootstrap",
+            "version": "3.3.7+1",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "x-editable",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js",
+            "description": "In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery",
+            "version": "1.5.1",
+            "keywords": [
+                "bootstrap",
+                "editable",
+                "edit-in-place"
+            ]
+        },
+        {
+            "name": "angular-strap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.12/angular-strap.min.js",
+            "description": "AngularStrap - AngularJS directives for Bootstrap",
+            "version": "2.3.12",
+            "keywords": [
+                "angular",
+                "bootstrap",
+                "directives",
+                "datepicker"
+            ]
+        },
+        {
+            "name": "weather-icons",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css",
+            "description": "215 weather themed icons inspired by Font Awesome and ready for Bootstrap",
+            "version": "2.0.9",
+            "keywords": [
+                "css",
+                "font",
+                "icons",
+                "weather"
+            ]
+        },
+        {
+            "name": "material-kit",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/material-kit/2.0.4/js/material-kit.min.js",
+            "description": "A Badass Bootstrap UI Kit based on Material Design",
+            "version": "2.0.4",
+            "keywords": [
+                "material",
+                "bootstrap",
+                "design",
+                "google",
+                "twitter"
+            ]
+        },
+        {
+            "name": "vue-strap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/vue-strap/1.1.40/vue-strap.min.js",
+            "description": "Bootstrap components built with Vue.js",
+            "version": "1.1.40",
+            "keywords": [
+                "vue",
+                "vue-bootstrap",
+                "vue-component",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootbox.js",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js",
+            "description": "Wrappers for JavaScript alert(), confirm() and other flexible dialogs using the Bootstrap framework",
+            "version": "5.3.2",
+            "keywords": [
+                "bootbox.js"
+            ]
+        },
+        {
+            "name": "bootflat",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootflat/2.0.4/css/bootflat.min.css",
+            "description": "BOOTFLAT is an open source Flat UI KIT based on Bootstrap 3.2.0 CSS framework. It provides a faster, easier and less repetitive way for web developers to create elegant web apps.",
+            "version": "2.0.4",
+            "keywords": [
+                "mobile",
+                "html5",
+                "css3",
+                "scss",
+                "bootflat",
+                "bootstrap",
+                "flat",
+                "flat ui",
+                "ui"
+            ]
+        },
+        {
+            "name": "clockpicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/jquery-clockpicker.min.js",
+            "description": "A clock-style timepicker for Bootstrap (or jQuery)",
+            "version": "0.0.7",
+            "keywords": [
+                "clock",
+                "clockpicker",
+                "clock style"
+            ]
+        },
+        {
+            "name": "startbootstrap-freelancer",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/5.1.3/js/freelancer.min.js",
+            "description": "A one page HTML theme for freelancers created by Start Bootstrap",
+            "version": "5.1.3",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "ekko-lightbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js",
+            "description": "A lightbox gallery plugin for Bootstrap 3 based on the modal plugin",
+            "version": "5.3.0",
+            "keywords": [
+                "lightbox",
+                "gallery",
+                "bootstrap",
+                "jquery",
+                "modal"
+            ]
+        },
+        {
+            "name": "startbootstrap-creative",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-creative/5.1.8/js/creative.min.js",
+            "description": "A one page HTML theme for creatives by Start Bootstrap",
+            "version": "5.1.8",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "startbootstrap-agency",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-agency/5.2.2/js/agency.min.js",
+            "description": "A one page HTML theme for agencies created by Start Bootstrap",
+            "version": "5.2.2",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "cutestrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/cutestrap/1.3.1/css/cutestrap.min.css",
+            "description": "A sassy, opinionated CSS Framework. A tiny alternative to Bootstrap.",
+            "version": "1.3.1",
+            "keywords": [
+                "micro",
+                "css",
+                "opinionated",
+                "sassy",
+                "Bootstrap"
+            ]
+        },
+        {
+            "name": "magicsuggest",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/magicsuggest/2.1.4/magicsuggest-min.js",
+            "description": "MagicSuggest is a multiple selection auto suggest combo box for Bootstrap 3.",
+            "version": "2.1.4",
+            "keywords": [
+                "select",
+                "suggest",
+                "autocomplete",
+                "typeahead",
+                "dropdown",
+                "multiselect",
+                "tag",
+                "tagging",
+                "bootstrap",
+                "combobox"
+            ]
+        },
+        {
+            "name": "startbootstrap-clean-blog",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-clean-blog/5.0.8/js/clean-blog.min.js",
+            "description": "A clean Bootstrap blog theme created by Start Bootstrap",
+            "version": "5.0.8",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "patternfly",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.59.4/js/patternfly.min.js",
+            "description": "This reference implementation of PatternFly is based on [Bootstrap v3](http://getbootstrap.com/).  Think of PatternFly as a \"skinned\" version of Bootstrap with additional components and customizations.",
+            "version": "3.59.4",
+            "keywords": [
+                "Bootstrap-v3",
+                "skinned"
+            ]
+        },
+        {
+            "name": "bootcards",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.1.2/js/bootcards.min.js",
+            "description": "A cards-based UI framework for mobile and desktop apps, built on top of Bootstrap",
+            "version": "1.1.2",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "cards"
+            ]
+        },
+        {
+            "name": "startbootstrap-landing-page",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-landing-page/5.0.7/css/landing-page.min.css",
+            "description": "A responsive, Bootstrap landing page template created by Start Bootstrap",
+            "version": "5.0.7",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "jquery-bootgrid",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.min.js",
+            "description": "Nice, sleek and intuitive. A grid control especially designed for bootstrap.",
+            "version": "1.3.1",
+            "keywords": [
+                "jquery-plugin",
+                "jQuery",
+                "Bootstrap",
+                "Plugin",
+                "Component",
+                "Control",
+                "UI",
+                "Grid",
+                "Table",
+                "Data",
+                "Sorting",
+                "Filtering",
+                "HTML5",
+                "Accessibility"
+            ]
+        },
+        {
+            "name": "twbs-pagination",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js",
+            "description": "jQuery simple pagination plugin for bootstrap-style webpages",
+            "version": "1.4.2",
+            "keywords": [
+                "pagination",
+                "jQuery",
+                "jQuery-plugin",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "startbootstrap-grayscale",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-grayscale/5.0.9/js/grayscale.min.js",
+            "description": "A multipurpose one page Bootstrap theme created by Start Bootstrap",
+            "version": "5.0.9",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "webui-popover",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/webui-popover/2.1.15/jquery.webui-popover.min.js",
+            "description": "A enhancement popover plugin for Bootstrap ,but you can use it stand-alone without Bootstrap!",
+            "version": "2.1.15",
+            "keywords": [
+                "popover",
+                "jquery-plugin",
+                "ecosystem:jquery"
+            ]
+        },
+        {
+            "name": "tagmanager",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/tagmanager/3.0.2/tagmanager.min.js",
+            "description": "A jQuery plugin to create tag input fields, which works nicely with Twitter Typeahead.js and Twitter Bootstrap",
+            "version": "3.0.2",
+            "keywords": [
+                "tags",
+                "manager",
+                "input",
+                "form"
+            ]
+        },
+        {
+            "name": "uiv",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/uiv/0.33.0/uiv.min.js",
+            "description": "Bootstrap 3 components implemented by Vue 2.",
+            "version": "0.33.0",
+            "keywords": [
+                "Bootstrap",
+                "Bootstrap 3",
+                "Bootstrap for Vue",
+                "SSR",
+                "Web",
+                "Components",
+                "Directives",
+                "Vue",
+                "VueJS",
+                "Vue2",
+                "WebComponents",
+                "vue-strap",
+                "vuestrap",
+                "CSS",
+                "Affix",
+                "MessageBox",
+                "Notification",
+                "ScrollSpy",
+                "Alert",
+                "Button",
+                "Button group",
+                "Breadcrumbs",
+                "Carousel",
+                "Slider",
+                "Collapse",
+                "Dropdown",
+                "Nav",
+                "Modal",
+                "Navbar",
+                "Pagination",
+                "Popover",
+                "Progress",
+                "Tab",
+                "Tooltip",
+                "Typeahead",
+                "Auto complete"
+            ]
+        },
+        {
+            "name": "simplePagination.js",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js",
+            "description": "A simple jQuery pagination plugin, 3 CSS themes and Bootstrap support.",
+            "version": "1.6",
+            "keywords": [
+                "jquery",
+                "plugin",
+                "pagination"
+            ]
+        },
+        {
+            "name": "snackbarjs",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/snackbarjs/1.1.0/snackbar.min.js",
+            "description": "SnackbarJS is a lightweight and jQuery powered plugin made to work in Bootstrap style, just like the Bootstrap tooltips work.",
+            "version": "1.1.0",
+            "keywords": [
+                "snackbarjs"
+            ]
+        },
+        {
+            "name": "angular-dialog-service",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-dialog-service/5.3.0/dialogs.min.js",
+            "description": "A service to handle common dialog types in a web application.  Built on top of Angular-Bootstrap's modal",
+            "version": "5.3.0",
+            "keywords": [
+                "angular",
+                "dialog",
+                "modal",
+                "service"
+            ]
+        },
+        {
+            "name": "startbootstrap-stylish-portfolio",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-stylish-portfolio/5.0.7/css/stylish-portfolio.min.css",
+            "description": "A stylish, one page, Bootstrap portfolio theme created by Start Bootstrap",
+            "version": "5.0.7",
+            "keywords": [
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "angular-ui-notification",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.js",
+            "description": "Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating",
+            "version": "0.3.6",
+            "keywords": [
+                "angular",
+                "notification",
+                "notify",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "bootpag",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/bootpag/1.0.7/jquery.bootpag.min.js",
+            "description": "bootpag - dynamic pagination jQuery plugin. Works well with bootstrap or standalone.",
+            "version": "1.0.7",
+            "keywords": [
+                "pagination",
+                "bootstrap",
+                "jquery-plugin",
+                "ecosystem:jquery"
+            ]
+        },
+        {
+            "name": "jquery-bootpag",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery-bootpag/1.0.4/jquery.bootpag.min.js",
+            "description": "bootpag - dynamic pagination jQuery plugin. Works well with bootstrap or standalone.",
+            "version": "1.0.4",
+            "keywords": [
+                "pagination",
+                "bootstrap",
+                "jquery-plugin",
+                "ecosystem:jquery"
+            ]
+        },
+        {
+            "name": "winstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/winstrap/0.5.12/css/winstrap.min.css",
+            "description": "Winstrap is the official Bootstrap theme for Microsoft design language.",
+            "version": "0.5.12",
+            "keywords": [
+                "microsoft",
+                "windows",
+                "bootstrap",
+                "theme"
+            ]
+        },
+        {
+            "name": "angular-growl",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-growl/0.4.0/angular-growl.min.js",
+            "description": "growl like notifications for angularJS projects, using bootstrap alert classes",
+            "version": "0.4.0",
+            "keywords": [
+                "angular",
+                "notification",
+                "alert",
+                "boostrap"
+            ]
+        },
+        {
+            "name": "jquery-mobile-datebox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile-datebox/1.1.1/jqm-datebox.core.min.js",
+            "description": "Plugin to provide a framework agnostic Date and Time Picker (jQuery Mobile & Bootstrap currently supported)",
+            "version": "1.1.1",
+            "keywords": [
+                "jquery",
+                "mobile",
+                "datebox"
+            ]
+        },
+        {
+            "name": "sco.js",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/sco.js/1.1.0/css/scojs.min.css",
+            "description": "Javascript extensions for Twitter Bootstrap. Rewrites bootstrap tabs, collapse, modal, tooltip components for easier usage and provides more plugins for your coding pleasure",
+            "version": "1.1.0",
+            "keywords": [
+                "scojs",
+                "sco.js",
+                "twitter",
+                "bootstrap",
+                "twitter-bootstrap"
+            ]
+        },
+        {
+            "name": "fontawesome-iconpicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js",
+            "description": "Font Awesome Icon Picker plugin for Twitter Bootstrap",
+            "version": "3.2.0",
+            "keywords": [
+                "bootstrap",
+                "fontawesome",
+                "iconpicker",
+                "popover",
+                "picker"
+            ]
+        },
+        {
+            "name": "json-forms",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/json-forms/1.6.3/js/brutusin-json-forms.min.js",
+            "description": "Brutusin json-forms is a JSON Schema to HTML form generator, supporting dynamic subschemas (on the fly resolution). Extensible and customizable library with zero dependencies. Bootstrap add-ons provided",
+            "version": "1.6.3",
+            "keywords": [
+                "json",
+                "forms",
+                "dynamic",
+                "schema",
+                "json-schema"
+            ]
+        },
+        {
+            "name": "angularjs-dropdown-multiselect",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js",
+            "description": "This directive gives you a Bootstrap Dropdown with the power of AngularJS directives.",
+            "version": "1.11.8",
+            "keywords": [
+                "AngularJS",
+                "Bootstrap",
+                "Dropdown"
+            ]
+        },
+        {
+            "name": "smokejs",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/js/smoke.min.js",
+            "description": "Smoke form validation and components for Bootstrap",
+            "version": "3.1.1",
+            "keywords": [
+                "html",
+                "css",
+                "js",
+                "JavaScript",
+                "JQuery",
+                "plugin",
+                "bootstrap",
+                "front-end",
+                "web"
+            ]
+        },
+        {
+            "name": "tree-grid-directive",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/tree-grid-directive/0.4.0/tree-grid-directive.min.js",
+            "description": "AngularJS directive for a tree grid, using Bootstrap",
+            "version": "0.4.0",
+            "keywords": [
+                "angularjs",
+                "bootstrap",
+                "tree",
+                "grid",
+                "widget"
+            ]
+        },
+        {
+            "name": "gijgo",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js",
+            "description": "Gijgo is a set of free open source javascript controls distributed under MIT License. All widgets are high performance, built on top of the jQuery JavaScript Library with built-in support for Bootstrap, Material Design and Font Awesome. They are designed to saves you time and scales with your development process.",
+            "version": "1.9.13",
+            "keywords": [
+                "jquery-plugin",
+                "jquery",
+                "gijgo",
+                "javascript",
+                "plugin",
+                "grid",
+                "datagrid",
+                "table",
+                "dialog",
+                "modal",
+                "draggable",
+                "droppable",
+                "tree",
+                "treeview"
+            ]
+        },
+        {
+            "name": "zabuto_calendar",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/zabuto_calendar/1.6.4/zabuto_calendar.min.js",
+            "description": "jQuery plugin for Bootstrap to add a month calendar to your page.",
+            "version": "1.6.4",
+            "keywords": [
+                "calendar",
+                "agenda",
+                "date",
+                "monthly",
+                "events",
+                "bootstrap",
+                "html5",
+                "responsive",
+                "ajax",
+                "json"
+            ]
+        },
+        {
+            "name": "angular-growl-2",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-growl-2/0.7.9/angular-growl.min.js",
+            "description": "growl like notifications for angularJS projects, using bootstrap alert classes",
+            "version": "0.7.9",
+            "keywords": [
+                "angular",
+                "alert",
+                "notification",
+                "boostrap"
+            ]
+        },
+        {
+            "name": "eModal",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/eModal/1.2.67/eModal.min.js",
+            "description": "Easy Modal for bootstrap, is a simple way to create modal dialogs using javaScript.",
+            "version": "1.2.67",
+            "keywords": [
+                "bootstrap",
+                "modal",
+                "dialog"
+            ]
+        },
+        {
+            "name": "ng-bs-daterangepicker",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/ng-bs-daterangepicker/0.0.6/ng-bs-daterangepicker.min.js",
+            "description": "AngularJS directive for bootstrap-daterangepicker",
+            "version": "0.0.6",
+            "keywords": [
+                "angular",
+                "bootstrap",
+                "daterangepicker",
+                "datepicker",
+                "moment",
+                "time",
+                "interval",
+                "calendar"
+            ]
+        },
+        {
+            "name": "titatoggle",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/titatoggle/2.1.2/titatoggle-dist-min.css",
+            "description": "Default bootstrap checkbox toggle buttons. Just default Bootstrap, add a class to use these awesome toggle buttons. Browser support: Internet Explorer 9, FireFox, Safari, Chrome, Safari Ios, Stock Android browser 4.2, Chrome Android",
+            "version": "2.1.2",
+            "keywords": [
+                "css",
+                "less",
+                "bootstrap",
+                "togglebutton",
+                "checkbox",
+                "form",
+                "buttons",
+                "toggle"
+            ]
+        },
+        {
+            "name": "angular-foundation-6",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-foundation-6/0.11.22/angular-foundation.min.js",
+            "description": "This project is a port of the AngularUI team's excellent angular-bootstrap project for use in the Foundation framework.",
+            "version": "0.11.22",
+            "keywords": [
+                "angular",
+                "foundation",
+                "6"
+            ]
+        },
+        {
+            "name": "flagstrap",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/flagstrap/1.0/js/jquery.flagstrap.min.js",
+            "description": "A lightwieght jQuery plugin for creating Bootstrap 3 compatible country select boxes with flags.",
+            "version": "1.0",
+            "keywords": [
+                "jquery",
+                "bootstrap",
+                "country",
+                "flag",
+                "flagstrap",
+                "jquery-flagstrap"
+            ]
+        },
+        {
+            "name": "twbuttons",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/twbuttons/0.1.3/twbuttons.min.css",
+            "description": "alexwolfe/Buttons for Twitter Bootstrap 3",
+            "version": "0.1.3",
+            "keywords": [
+                "buttons",
+                "less",
+                "css",
+                "css buttons",
+                "less buttons",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "myforce-angularjs-dropdown-multiselect",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/myforce-angularjs-dropdown-multiselect/1.10.2/angularjs-dropdown-multiselect.min.js",
+            "description": "This directive gives you a Bootstrap Dropdown with the power of AngularJS directives.",
+            "version": "1.10.2",
+            "keywords": [
+                "angular",
+                "multiselect"
+            ]
+        },
+        {
+            "name": "jquery-contextify",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jquery-contextify/1.0.8/jquery.contextify.min.js",
+            "description": "A lightweight jQuery plugin for creating Bootstrap powered context menus.",
+            "version": "1.0.8",
+            "keywords": [
+                "jquery",
+                "context",
+                "menu"
+            ]
+        },
+        {
+            "name": "lobipanel",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/lobipanel/1.0.6/js/lobipanel.min.js",
+            "description": "jQuery plugin for bootstrap panels. It extends panels with several common and useful functions.",
+            "version": "1.0.6",
+            "keywords": [
+                "jquery-plugin",
+                "bootstrap",
+                "floating",
+                "minimizable",
+                "panels",
+                "ajax",
+                "localStorage"
+            ]
+        },
+        {
+            "name": "notifxi",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/notifxi/0.2.2/notifxi.min.js",
+            "description": "A queued notification class for javascript that utilizes Bootstrap and jQuery.",
+            "version": "0.2.2",
+            "keywords": [
+                "notification",
+                "notify",
+                "jquery",
+                "jquery-plugin",
+                "plugin",
+                "bootstrap",
+                "simple",
+                "flexible",
+                "weaponxi",
+                "alert",
+                "queued",
+                "queue",
+                "notifications",
+                "automatic"
+            ]
+        },
+        {
+            "name": "admin-lte",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/js/adminlte.min.js",
+            "description": "Admin dashboard and control panel template",
+            "version": "2.4.18",
+            "keywords": [
+                "css",
+                "js",
+                "html",
+                "template",
+                "admin",
+                "bootstrap",
+                "theme",
+                "backend",
+                "responsive"
+            ]
+        },
+        {
+            "name": "blueimp-file-upload",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.2.0/js/jquery.fileupload.min.js",
+            "description": "File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.",
+            "version": "10.2.0",
+            "keywords": [
+                "jquery",
+                "file",
+                "upload",
+                "widget",
+                "multiple",
+                "selection",
+                "drag",
+                "drop",
+                "progress",
+                "preview",
+                "cross-domain",
+                "cross-site",
+                "chunk",
+                "resume",
+                "gae",
+                "go",
+                "python",
+                "php",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "react-native-elements",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/react-native-elements/1.1.0/bundle.js",
+            "description": "React Native Elements & UI Toolkit",
+            "version": "1.1.0",
+            "keywords": [
+                "react-native",
+                "reactjs",
+                "reactnative",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "milligram",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css",
+            "description": "A minimalist CSS framework.",
+            "version": "1.3.0",
+            "keywords": [
+                "boilerplate",
+                "bootstrap",
+                "css",
+                "css3",
+                "design",
+                "front-end",
+                "framework",
+                "html",
+                "html5",
+                "kickstart",
+                "less",
+                "milligram",
+                "responsive",
+                "mobile",
+                "mobile-first",
+                "sass",
+                "stylus",
+                "style",
+                "stylesheet"
+            ]
+        },
+        {
+            "name": "fuelux",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/fuelux/3.17.2/js/fuelux.min.js",
+            "description": "Base Fuel UX styles and controls",
+            "version": "3.17.2",
+            "keywords": [
+                "application",
+                "bootstrap",
+                "controls",
+                "css",
+                "exacttarget",
+                "exact target",
+                "front-end",
+                "fuelux",
+                "fuel ux",
+                "js",
+                "salesforce",
+                "user interface",
+                "web"
+            ]
+        },
+        {
+            "name": "pnotify",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js",
+            "description": "PNotify is a JavaScript notification plugin, developed by SciActive. It is designed to provide an unparalleled level of flexibility, while still being very easy to implement and use.",
+            "version": "3.2.1",
+            "keywords": [
+                "pnotify",
+                "notice",
+                "notification",
+                "growl",
+                "nonblocking",
+                "non-blocking",
+                "unobtrusive",
+                "bootstrap",
+                "jquery"
+            ]
+        },
+        {
+            "name": "hack",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css",
+            "description": "Dead simple CSS framework.",
+            "version": "0.8.1",
+            "keywords": [
+                "hack",
+                "css",
+                "ui",
+                "web",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "survey-angular",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/survey-angular/1.1.14/survey.angular.min.js",
+            "description": "survey.js is a JavaScript Survey Library. It is a modern way to add a survey to your website. It uses JSON for survey metadata and results.",
+            "version": "1.1.14",
+            "keywords": [
+                "Survey",
+                "JavaScript",
+                "Bootstrap",
+                "Library",
+                "angular",
+                "Knockout",
+                "angular-component"
+            ]
+        },
+        {
+            "name": "survey-jquery",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/survey-jquery/1.1.14/survey.jquery.min.js",
+            "description": "survey.js is a JavaScript Survey Library. It is a modern way to add a survey to your website. It uses JSON for survey metadata and results.",
+            "version": "1.1.14",
+            "keywords": [
+                "Survey",
+                "JavaScript",
+                "Bootstrap",
+                "Library",
+                "jquery",
+                "jquery-plugin"
+            ]
+        },
+        {
+            "name": "survey-knockout",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/survey-knockout/1.1.14/survey.ko.min.js",
+            "description": "survey.js is a JavaScript Survey Library. It is a modern way to add a survey to your website. It uses JSON for survey metadata and results.",
+            "version": "1.1.14",
+            "keywords": [
+                "Survey",
+                "JavaScript",
+                "Bootstrap",
+                "Library",
+                "Knockout"
+            ]
+        },
+        {
+            "name": "survey-react",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/survey-react/1.1.14/survey.react.min.js",
+            "description": "survey.js is a JavaScript Survey Library. It is a modern way to add a survey to your website. It uses JSON for survey metadata and results.",
+            "version": "1.1.14",
+            "keywords": [
+                "Survey",
+                "JavaScript",
+                "Bootstrap",
+                "Library",
+                "react",
+                "react-component"
+            ]
+        },
+        {
+            "name": "survey-vue",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/survey-vue/1.1.14/survey.vue.min.js",
+            "description": "survey.js is a JavaScript Survey Library. It is a modern way to add a survey to your website. It uses JSON for survey metadata and results.",
+            "version": "1.1.14",
+            "keywords": [
+                "Survey",
+                "JavaScript",
+                "Bootstrap",
+                "Library",
+                "vue"
+            ]
+        },
+        {
+            "name": "metisMenu",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.4/metisMenu.min.js",
+            "description": "A jQuery menu plugin",
+            "version": "3.0.4",
+            "keywords": [
+                "twitter",
+                "bootstrap",
+                "twbs",
+                "jquery",
+                "menu",
+                "accordion",
+                "toggle",
+                "metis",
+                "metisMenu"
+            ]
+        },
+        {
+            "name": "pretty-checkbox",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css",
+            "description": "A pure CSS library to beautify checkbox and radio buttons",
+            "version": "3.0.0",
+            "keywords": [
+                "checkbox",
+                "radio",
+                "bootstrap",
+                "fonticon",
+                "icon",
+                "svg",
+                "switch",
+                "toggle",
+                "sass",
+                "css3",
+                "animation",
+                "pretty",
+                "check",
+                "colors"
+            ]
+        },
+        {
+            "name": "marx",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/marx/3.0.7/marx.min.css",
+            "description": "The stylish CSS reset.",
+            "version": "3.0.7",
+            "keywords": [
+                "marx",
+                "karl",
+                "mblode",
+                "matthew blode",
+                "matt",
+                "blode",
+                "layout",
+                "framework",
+                "css",
+                "sass",
+                "scss",
+                "web",
+                "frontend",
+                "bootstrap",
+                "pure",
+                "markdown",
+                "format",
+                "classless"
+            ]
+        },
+        {
+            "name": "pegasus",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/pegasus/0.3.5/pegasus.min.js",
+            "description": "Load data while still loading other scripts, works with jQuery, Backbone, Angular...",
+            "version": "0.3.5",
+            "keywords": [
+                "ajax",
+                "promise",
+                "xhr",
+                "http",
+                "request",
+                "XMLHttpRequest",
+                "data",
+                "json",
+                "bootstrap",
+                "performance",
+                "optimization",
+                "load",
+                "loader",
+                "preload",
+                "preloader"
+            ]
+        },
+        {
+            "name": "fork-awesome",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/fork-awesome/1.1.7/css/fork-awesome.min.css",
+            "description": "A fork of the iconic font and CSS framework",
+            "version": "1.1.7",
+            "keywords": [
+                "font",
+                "awesome",
+                "forkawesome",
+                "icon",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "pavilion",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/pavilion/2.0.3/pavilion.min.css",
+            "description": "A simple, unopinionated CSS framework, ready for the future.",
+            "version": "2.0.3",
+            "keywords": [
+                "responsive",
+                "framework",
+                "minimal",
+                "bootstrap",
+                "scss",
+                "css",
+                "web"
+            ]
+        },
+        {
+            "name": "jspanel3",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/jspanel3/3.11.2/jquery.jspanel.min.js",
+            "description": "A jQuery Plugin to create highly configurable multifunctional floating panels",
+            "version": "3.11.2",
+            "keywords": [
+                "jquery-plugin",
+                "jsPanel",
+                "panel",
+                "ui",
+                "layout",
+                "popup",
+                "widget",
+                "window",
+                "modal",
+                "tooltip",
+                "hint",
+                "notifier",
+                "bootstrap"
+            ]
+        },
+        {
+            "name": "cascade-framework",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/cascade-framework/1.5.0/css/build-full.min.css",
+            "description": "CSS framework that puts back the C in CSS",
+            "version": "1.5.0",
+            "keywords": [
+                "cascade",
+                "CSS",
+                "OOCSS",
+                "frontend",
+                "bootstrap",
+                "foundation",
+                "grid",
+                "system",
+                "framework",
+                "responsive"
+            ]
+        },
+        {
+            "name": "angular-schema-form",
+            "latest": "https://cdnjs.cloudflare.com/ajax/libs/angular-schema-form/0.8.14/bootstrap-decorator.min.js",
+            "description": "Create complex forms from a JSON schema with angular.",
+            "version": "0.8.14",
+            "keywords": [
+                "angular",
+                "angularjs",
+                "form",
+                "json",
+                "json-schema",
+                "schema"
+            ]
+        }
+    ],
+    "total": 185
+}

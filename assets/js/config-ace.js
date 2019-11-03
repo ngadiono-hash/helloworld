@@ -59,7 +59,7 @@ function compilex(delay){
 		field.js.session.setMode("ace/mode/javascript");
 		field.js.setTheme("ace/theme/tomorrow_night");
 
-	// CONTROLLER
+	// CONTROL
 	if(window.addEventListener){
 		$("#liveEdit").on("click", function() {
 	    use.liveEdit ? use.liveEdit = false: use.liveEdit = true;
@@ -80,3 +80,7 @@ function compilex(delay){
 		});
 
 	}
+	$(".content-create .panel-left").resizable({
+		handleSelector: ".splitter",
+		resizeHeight: false
+	});

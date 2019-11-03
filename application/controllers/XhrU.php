@@ -14,28 +14,28 @@ class XhrU extends CI_Controller
 		$this->load->model('Delete_model');
 	}
 
-	public function create_cdn()//
+	public function create_cdn()
 	{
 		$result = [];
 		checkSession($result);
-		// if ($this->input->post('cdn_css') || $this->input->post('cdn_js')) {
-			$this->form_validation->set_rules('cdn_name', 'nama CDN', 'trim|required');
-			$this->form_validation->set_rules('cdn_version', 'versi CDN', 'trim|required');
-			$this->form_validation->set_rules('cdn_css', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn_css').']');
-			$this->form_validation->set_rules('cdn_js', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn_js').']');
-			$this->form_validation->set_message('required','{field} harus diisi');
-			if ($this->form_validation->run() == FALSE) {
-				$result = [
-					'cdn-name' => form_error('cdn_name','<p class="text-danger">','</p>'),
-					'cdn-version' => form_error('cdn_version','<p class="text-danger">','</p>'),
-					'cdn-css' => form_error('cdn_css','<p class="text-danger">','</p>'),
-					'cdn-js' => form_error('cdn_js','<p class="text-danger">','</p>'),
-				];
-			} else {
-				// $this->Create_model->createCdn();
-				$result['message'] = "alertSuccess('ok',['terima kasih atas kontribusinya','proses validasi sedang dilakukan',''],'')";
-			}
-		// }
+		$this->form_validation->set_rules('cdn_name', 'nama CDN', 'trim|required|is_unique[cdn.cdn_name]');
+		$this->form_validation->set_rules('cdn_version', 'versi CDN', 'trim|required|callback_validate_numeric['.$this->input->post('cdn_version').']');
+		$this->form_validation->set_rules('cdn[0]', 'URL CDN', 'required|callback_validate_url['.$this->input->post('cdn[0]').']');
+		$this->form_validation->set_rules('cdn[1]', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn[1]').']');
+		$this->form_validation->set_rules('cdn[2]', 'URL CDN', 'callback_validate_url['.$this->input->post('cdn[2]').']');
+		if ($this->form_validation->run() == FALSE) {
+			$result = [
+				'cdn-name' => form_error('cdn_name','<p class="text-danger">','</p>'),
+				'cdn-version' => form_error('cdn_version','<p class="text-danger">','</p>'),
+				'cdn0' => form_error('cdn[0]','<p class="text-danger">','</p>'),
+				'cdn1' => form_error('cdn[1]','<p class="text-danger">','</p>'),
+				'cdn2' => form_error('cdn[2]','<p class="text-danger">','</p>'),
+			];
+		} else {
+			$this->Create_model->insertCdn();
+			$result['status'] = 1;
+			$result['message'] = "alertSuccess('ok',['terima kasih atas kontribusinya','proses validasi sedang dilakukan',''],'')";
+		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}	
 	public function validate_url($url) {
@@ -48,6 +48,17 @@ class XhrU extends CI_Controller
 			}
 		}
 	}
+	public function validate_numeric($str) 
+	{
+		if (strlen($str) > 0){
+	    if (!preg_match('/^[0-9 .]+$/i',$str) ) {
+	    	$this->form_validation->set_message('validate_numeric','versi CDN harus berupa angka dan titik');
+	      return false;
+	    } else {
+	    	return true;
+	    }
+  	}
+	}	
 	public function create_comment() // BELUM
 	{
 		$result = [];
@@ -87,9 +98,13 @@ class XhrU extends CI_Controller
 		$cek = $this->Read_model->checkExist('liked',['id_user' => getSession('sess_id'), 'id_target' => $id_post]);
 		if ($cek == 0) {
 			$this->Update_model->updateNotif(['liked' => 1],['user' => $owner_post]);
-			$this->Create_model->insertLiked($id_post,$countLike);
+			$this->Create_model->insertLiked($id_post);
+			$this->Update_model->updateLiked('add',$id_post,$countLike);
+			$result = ['status' => 1];
+		} else {
+
 		}
-		// var_dump($countLike);
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
 
 	public function create_progress() // OK
@@ -99,7 +114,7 @@ class XhrU extends CI_Controller
 		$id_user = $this->input->post('id_user');
 		$check 	 = $this->Read_model->checkExist('user_progress',['id_snip' => $id_page, 'id_user' => $id_user]);
 		if( $time > (60000) ) {
-			if ( $check < 1 ) {
+			if ( $check == 0  ) {
 				$data = [
 					'id_snip' => $id_page,
 					'id_user' => $id_user
@@ -113,11 +128,12 @@ class XhrU extends CI_Controller
 		$result = [];
 		checkSession($result);
 		$codeTitle = trim($this->input->post('title',true));
+		$codeTag = $this->input->post('tag');
 		$codeHtml = $this->input->post('html');
-		if (empty($codeTitle)) {
+		if (empty($codeTitle) && empty($codeTag)) {
 			$result = [
 				'status' => 1,
-				'message' => "alertDanger('ok','belum ada judul yang dimasukkan')"
+				'message' => "alertDanger('ok','periksa Judul dan Tag snippet <br> keduanya harus diisi')"
 			];
 		} elseif (empty($codeHtml)) {
 			$result = [
@@ -125,7 +141,7 @@ class XhrU extends CI_Controller
 				'message' => "alertDanger('ok','snippet minimal harus ada kode HTML')"
 			];
 		} else {	
-			// $this->Create_model->insertSnippet();
+			$this->Create_model->insertSnippet();
 			$locate = base_url('u/snippet');
 			$result['message'] = "alertSuccess('blank',['snippet berhasil disimpan','terima kasih '+ userData.username +' atas kontribusinya',' '+imgLoad+' '],'".$locate."');";
 		}
@@ -245,8 +261,10 @@ class XhrU extends CI_Controller
 		$result = [];
 		checkSession($result);
 		$codeTitle = trim($this->input->post('title',true));
-		if ( empty($codeTitle) ) {
-			$result['message'] = "alertDanger('ok','kolom judul tidak boleh dikosongkan')";
+		$codeTag = $this->input->post('tag[]');
+
+		if ( empty($codeTitle) && empty($codeTag) ) {
+			$result['message'] = "alertDanger('ok','kolom Judul dan Tag tidak boleh dikosongkan')";
 		} else {
 			$update = $this->Update_model->updateSnippet();
 			if ($update) {

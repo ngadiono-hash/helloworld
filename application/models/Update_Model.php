@@ -35,16 +35,29 @@ class Update_model extends CI_Model
 // ================= TUTORIAL
 
 // ================= SNIPPET
+  public function updateLiked($action,$id_post,$countLike);
+  {
+    if ($action == 'add') {
+      $this->db->update('snip',['code_like' => ($countLike + 1)],['code_id' => $id_post]);
+    } else {
+      if ($countLike != 0) {
+        $this->db->update('snip',['code_like' => ($countLike - 1)],['code_id' => $id_post]);
+      } else {
+        return true;
+      }
+    }
+  }
   public function updateCdn()
   {
     $id = $this->input->post('cdn_id');
     $name = $this->input->post('cdn_name');
     $version = $this->input->post('cdn_version');
-    $link = $this->input->post('cdn_link');
+    $link = $this->input->post('cdn[]');
+    $link = implode(',', $link);
     $data = [
       'cdn_name' => $name,
       'cdn_version' => $version,
-      'cdn_link' => $link
+      'cdn_js' => $link
     ];
     $this->db->where('id', $id);
     $this->db->update('cdn', $data);
@@ -52,31 +65,36 @@ class Update_model extends CI_Model
   public function updateSnippet()
   {
     $code_id = $this->input->post('id');
+    $jquery = [$this->input->post('jquery')];
+    $framework = [$this->input->post('framework')];
+    $cdn = array_merge($jquery,$framework);
+    if ($jquery[0] == '') {
+      array_shift($cdn);
+    }
+    if ($framework[0] == '') {
+      array_pop($cdn);
+    }
+    // var_dump($jquery);
+    // var_dump($framework);
+    // var_dump($cdn);
+    // var_dump(implode(',', $cdn));
+
     $set_snippets = [
-      'code_title'  => trim($this->input->post('title',true)),
-      'code_desc'   => trim($this->input->post('description',true)),
+      'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
+      'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
+      'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
+      'code_tag'    => $this->input->post('tag'),
       'code_html'   => htmlentities($this->input->post('html')),
       'code_css'    => htmlentities($this->input->post('css')),
       'code_js'     => htmlentities($this->input->post('js')),
       'code_update' => time(),
       'code_publish'=> $this->input->post('public')
     ];
-    $set_helpers = [
-      'cdn_framework' => $this->input->post('framework'),
-      'cdn_jquery' => $this->input->post('jquery')
-    ];
     $set_timeline = ['publish' => $this->input->post('public')];
-    $this->db->update($this->snip,$set_snippets,['_id' => $code_id]);
-    $this->db->update($this->snip_help,$set_helpers,['id_snippet' => $code_id]);
-    $this->db->update($this->time,$set_timeline,['relation' => $code_id]);
-    // $data1 = $this->db->set($data_snippets)->where('_id', $code_id)->update($this->snip);
-    // $data2 = $this->db->set()->where()->update();
-    // $data3 = $this->db->set($data_timeline)->where('relation', $code_id)->update($this->time);
-    // if ($data1 && $data2) {
-      return true;
-    // } else {
-    //   return false;
-    // }
+    // die();
+    $this->db->update('snip',$set_snippets,['code_id' => $code_id]);
+    $this->db->update('timeline',$set_timeline,['relation' => $code_id]);
+    return true;
   }
 // ================= USER PAGE
 	public function updateMarkReadAll($user)
@@ -104,32 +122,7 @@ class Update_model extends CI_Model
     return $this->db->update($this->user,$set_profile,['u_id' => $id]);
   }
 
-// ================= MAIN USER
-	public function updateActivate($email)
-	{
-		return $this->db->update($this->user,['u_active' => 1],['u_email' => $email]);
-	}
 
-	public function updatePassword($email,$password)
-	{
-		return $this->db->update($this->user,['u_password' => $password],['u_email' => $email]);
-	}
-
-	public function updateAttempt($now,$email,$ip,$agent)
-	{
-		$where = ['log_email' => $email,'log_ip' => $ip,'log_agent' => $agent];
-		$this->db->set('log_att','`log_att`+1',FALSE);
-		$this->db->set('log_time',$now);
-		$this->db->where($where);
-		return $this->db->update($this->att);
-	}
-
-	public function updateResetAttempt($now,$email,$ip,$agent)
-	{
-		$where = ['log_email' => $email,'log_ip' => $ip,'log_agent' => $agent];
-		$set = ['log_att' => 0,'log_time'=>$now];
-		return $this->db->update($this->att,$set,$where);
-	}
 
 // ============== ADMINISTRATOR
   public function updateTutorial()

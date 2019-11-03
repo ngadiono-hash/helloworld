@@ -35,33 +35,7 @@ class Delete_model extends CI_Model
     $this->db->delete($this->snip,['_id' => $serial]);
     $this->db->delete($this->snip_help,['id_snippet' => $serial]);
   }	
-// ================= USER PAGE
-// ================= MAIN USER
-	public function deleteToken($email)
-	{
-		$this->db->delete($this->valid,['email' => $email]);
-	}
 
-	public function deleteUser($email)
-	{
-		$this->db->delete($this->user,['u_email' => $email]);
-	}
-
-	public function deleteAttempt($email)
-	{
-		$this->db->where('log_email',$email);
-		$this->db->delete($this->att);
-	}	
-
-	public function deleteCookie($token)
-	{
-		$this->db->delete($this->cookie,['token' => $token]);
-	}
-
-	public function deleteComment($id)
-	{
-		return $this->db->delete('comment',['created' => $id]);
-	}
 
 
 // =================== ADMINISTRATOR

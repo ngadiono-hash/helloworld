@@ -163,3 +163,8 @@ $foldershistory[] = $useruploadfolder;
     $useruploadpath = $usersiteroot."$useruploadfolder/";
     $foldershistory[] = "/assets/img/";
         
+
+    $useruploadfolder = "helloworld/assets/img";
+    $useruploadpath = $usersiteroot."$useruploadfolder/";
+    $foldershistory[] = "helloworld/assets/img";
+        

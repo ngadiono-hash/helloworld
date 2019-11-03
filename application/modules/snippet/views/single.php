@@ -1,20 +1,40 @@
-<?php ace() ?>
 
-<style>
-	.col-img {
-		width: 15%;
-	}
-	.col-text {
-		width: 85%;
-	}
-</style>
-
-	<div class="content content-snippet" data-id="<?=$code['code_id']?>" data-author="<?=$code['id_author'] ?>">
+	<div class="content content-snippet" data-id="<?=$code['code_id']?>" data-author="<?=$code['id_author']?>">
 	<?php mainNav($code) ?>
 		<div class="panel-container">
 			<div class="panel-left">
-				<ul class="nav nav-tabs">
-					<li class="center">
+				<ul class="nav nav-tabs" id="control-left">
+					<li class="dropdown center">
+						<a class="dropdown-toggle mini" data-toggle="dropdown" href="#" aria-expanded="false">
+							<i class="fa fa-cog"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="" id="liveEdit"><i class="fa fa-fw fa-sync"></i> <span>Auto Run</span></a>
+							</li>
+							<li>
+								<a target="_blank" href="<?=base_url("snippet/p/".$code['code_id'])?>">
+									<i class="fa fa-arrows-alt"></i> 
+									<span>View Full Screen</span>
+								</a>
+							</li>
+							<li>
+								<a >
+									<i class="fa fa-align-left"></i> 
+									<span>Wrap Editor</span>
+								</a>
+							</li>
+							<?php if (startSession('sess_id') && $code['id_author'] == getSession('sess_id')) { ?>
+							<li>
+								<a target="_blank" href="<?=base_url("u/snippet/edit/".$code['code_id'])?>">
+									<i class="fa fa-edit"></i> 
+									<span>Edit</span>
+								</a>
+							</li>
+							<?php } ?>						
+						</ul>
+					</li>					
+					<li class="center active">
 						<a class="" data-toggle="tab" href="#third">HTML</a>
 					</li>
 					<li class="center">
@@ -24,41 +44,20 @@
 						<a class="" data-toggle="tab" href="#fifth">JS</a>
 					</li>
 				</ul>
-				<ul class="nav nav-tabs pull-right">
-					<li class="center run" data-toggle="tooltip" data-placement="top" title="RUN">
-						<a id="run" class="mini">
-							<i class="fa fa-play"></i>
-						</a>
+				<ul class="nav nav-tabs pull-right" id="control-right">
+					<li class="center run" data-toggle="tooltip" data-placement="top" title="BOOKMARK">
+						<a class="mini"><i class="fa fa-bookmark"></i></a>
 					</li>
-					
-					<li class="dropdown center">
-						<a class="dropdown-toggle mini" data-toggle="dropdown" href="#" aria-expanded="false">
-							<i class="fa fa-cog"></i>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a target="_blank" href="<?=base_url("snippet/p/".$code['code_id'])?>">
-									<i class="fa fa-arrows-alt"></i> 
-									<span>View Fullscreen</span>
-								</a>
-							</li>
-							<li role="presentation" class="divider"></li>
-							<li>
-								<a target="_blank" href="<?=base_url("snippet/p/".$code['code_id'])?>">
-									<i class="fa fa-comment-alt"></i> 
-									<span>Wrap Editor</span>
-								</a>
-							</li>
-						</ul>
-					</li>			  	
+					<li class="center" data-toggle="tooltip" data-placement="top" title="LIKE">
+						<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
+					</li>
+					<li class="center run" data-toggle="tooltip" data-placement="top" title="INFO">
+						<a id="open-comment" class="mini"><i class="fa fa-info-circle"></i></a>
+					</li>
 				</ul>				
 				<ul class="nav nav-tabs" style="float: right;">
 				</ul>
 				<div class="tab-content">
-					
-					<div id="second" class="tab-pane fade">
-
-					</div>
 					<div id="third" class="tab-pane fade in active">
 						<div class="box-body body-html" id="html"><?= $code['code_html'] ?></div>
 					</div>
@@ -75,6 +74,7 @@
 			<div class="splitter"></div>
 
 			<div class="panel-right">
+				<div id="dm"></div>
 				<iframe class="frame" id="result-frame"></iframe>
 			</div>
 		</div>
@@ -82,34 +82,47 @@
 		<div class="side-info scale-in-center hide">
 			<div class="side-info-inner">
 				<button class="btn btn-default btn-diss"><i class="fa fa-times"></i></button>
-				<h2 style=""><?=$code['code_title']?></h2>
 				<div class="row row-info">
+					<div class="col-sm-12">
+						<div class="info-title center fred">
+							<?=$code['code_title']?>
+						</div>
+					</div>
 					<div class="col-sm-12 col-md-8">
 						<div class="info-desc">
+							<p class="fred">deskripsi :</p>
 							<p><?=$code['code_desc']?></p>
 						</div>
 						<div class="info-link">
-							<p>Snippet ini menggunakan :</p>
-							<p>bootstrap v 3.32</p>
+							<p class="fred">dukungan library :</p>
+							<?php foreach ($framework as $k) {
+								$pieces = explode(',',$k['cdn_link']);
+								$singgle = implode(PHP_EOL, $pieces);
+								if($k != '') {
+									echo '<a class="btn btn-default" title="'.$singgle.'">'.$k['cdn_name'].' '.$k['cdn_version'].'</a> ';
+								} else {
+									echo "tidak ada (pure JS & pure CSS)";
+								}
+							} ?>
 						</div>
 					</div>
 					<div class="hidden-xs hidden-sm col-md-4">
 						<div class="info-author">
-							<h3>author</h3>
-							<img style="width: 100px" class="img-circle" src="<?=base_url('assets/img/profile/').$code['image_author']?>">
+							<h3 class="fred">author</h3>
+							<img style="width: 100px; height: 100px;" class="img-circle" src="<?=base_url('assets/img/profile/').$code['image_author']?>">
 							<h3 class="fred"><a class="base-link" href="#"><?=$code['user_author'] ?></a></h3>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="info-like">
-							<span><i class="fa fa-thumbs-up"></i></span>
-							<p>4 orang menyukai snippet ini</p>
+							<i class="fa fa-thumbs-up"></i>
+							<p><span>4</span> <span class="hidden-sm hidden-xs">suka</span></p>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="info-comment">
-							<span><i class="fa fa-comment-alt"></i></span>
-							<p><?=$count_comm?> komentar pada snippet ini</p>
+							<i class="fa fa-comment-alt"></i>
+							<p><span><?=$count_comm?></span> <span class="hidden-sm hidden-xs">komentar</span></p>
 						</div>
 					</div>
 				</div>
@@ -169,46 +182,40 @@
 				<h4 class="center fred">silahkan login untuk memberikan komentar</h4>
 				<h3 class="center fred"><a class="effect effect-prm" href="<?=base_url('at/sign')?>"><span>login</span></a></h3>
 				<?php } ?>
-
-				<div class="row hide">
-					<div class="col-sm-12"><h4>Framework</h4></div>
-					<div class="col-sm-6">
-						<input type="checkbox" data-name="jQuery library" data-id="<?=$jQuery[0]['id']?>" id="checkbox-jquery" class="checkin" value="<?=popu($jQuery[0]['cdn_js'])?>"
-						<?= ($jq_snippet == 1) ? "checked" : "" ?>
-						 >
-						<label for="checkbox-jquery">jQuery</label><br>
-						<input type="hidden" id="input-jquery" value="<?=$jq_snippet?>">
-						<textarea class="hide" id="source-jquery"><?= ($jq_snippet == 1) ? popu($jQuery[0]['cdn_js']) : "";  ?></textarea>
-						<textarea class="hide" id="source-framework">
-							<?php foreach ($framework as $k) {
-								for ($i=0;$i<count($fm_snippet);$i++){
-									echo ($k['id'] == $fm_snippet[$i]) ? popu($k['cdn_css'])."\n".popu($k['cdn_js']) : "" ;  
-								}
-							} ?>
-						</textarea>		
-					</div>							
-					<div class="col-sm-6">
-					</div>
-				</div>
 			</div>			
 		</div>
 	</div>
-
-
-<script src="<?= base_url('assets/js/config-edit.js') ?>"></script>
+<textarea class="hide" id="source-jquery"></textarea>
+<textarea class="hide" id="source-framework">
+<?php foreach ($framework as $k) {
+	for ($i = 0; $i < count($fm_snippet); $i++){
+		echo ($k['id'] == $fm_snippet[$i]) ? popu($k['cdn_link']) : "" ;  
+	}
+} ?>
+</textarea>
+<script src="<?= base_url('assets/js/config-ace.js') ?>"></script>
 
 <script>
-
 	$(".content-snippet .panel-left").resizable({
 		handleSelector: ".splitter",
 		resizeHeight: false
 	});
-
 </script>
 
 <script>
 $(document).ready(function(){
 	compilex();
+	if (window.addEventListener) {
+		$('.splitter').on('mousedown',function(e){
+			dragstart(e);
+		});
+		$(window).on('mousemove',function(e){
+			dragmove(e,'result-frame');
+		});
+		$(window).on('mouseup',function(e){
+			dragend();
+		});
+	}	
 	$('#open-comment').on('click',function(){
 		$(this).addClass('active');
 		$('.side-info').fadeIn().removeClass('hide');

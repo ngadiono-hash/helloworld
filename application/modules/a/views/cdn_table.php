@@ -9,7 +9,8 @@
 						<tr>
 							<th>No.</th>
 							<th><i class="fa fa-cog"></i></th>
-							<th>Type</th>
+							<th>Author</th>
+							<th>Status</th>
 							<th>Name</th>
 							<th>Version</th>
 							<th>Link</th>
@@ -37,11 +38,7 @@
 			      	<hr>	      			
 	      		</div>
 	      		<div class="col-xs-6">
-			      	<label>CDN Type</label><br>
-			      	<select name="cdn_type" class="selectpicker">
-			      		<option value="1">CSS</option>
-			      		<option value="2">JS</option>
-			      	</select>
+			      	
 	      		</div>
 	      	</div>
 	      	<label>CDN Link</label>
@@ -62,11 +59,11 @@
 	      <div class="modal-body">
 	      	<input type="hidden" id="cdn-id" name="cdn_id">
 	      	<label>CDN Name</label>
-	      	<input type="text" id="cdn-name" name="cdn_name" class="input-adjust"><hr>
+	      	<input type="text" id="cdn-name" name="cdn_name" class="input-adjust">
 	      	<label>CDN Version</label>
-	      	<input type="text" id="cdn-version" name="cdn_version" class="input-adjust"><hr>
+	      	<input type="text" id="cdn-version" name="cdn_version" class="input-adjust">
 	      	<label>CDN Link</label>
-	      	<input type="text" id="cdn-link" name="cdn_link" class="input-adjust">
+	      	<div id="cdn-link"></div>
 	      </div>
 	      <div class="modal-footer center">
 	        <button class="btn button btn-prm btn-update" style="width: 50%">UPDATE</button>
@@ -106,14 +103,38 @@ $(document).ready(function(){
 			"type": "POST"
 		},
 		createdRow: function( row, data, dataIndex , cells) {
-			if ( data['cdn_type'] == 1 ) {
-	      $(cells[2]).html('<a class="btn btn-sm btn-block btn-prm">css</a>');
+			var id = data['id'],
+			author = data['cdn_author'],
+			name = data['cdn_name'],
+			version = data['cdn_version'],
+			link = data['cdn_link'],
+			status = data['cdn_status'];
+			// action
+			$(cells[1]).html('<a title="edit" data-id="'+id+'" data-name="'+name+'" data-version="'+version+'" data-link="'+link+'" class="action btn btn-sm btn-prm" data-toggle="modal" href="#modal_edit"><i class="fa fa-fw fa-edit"></i></a>');
+			// author
+			if ( author == 1 ) {
+	      $(cells[2]).html('<a class="btn btn-sm btn-block btn-prm">admin</a>');
 	    } else {
-	    	$(cells[2]).html('<a class="btn btn-sm btn-block btn-warn">js</a>');;
+	    	$(cells[2]).html('<a class="btn btn-sm btn-block btn-warn">member</a>');;
 	    }
+    	// status
+    	if ( status == 0 ) {
+	      $(cells[3]).html('<a class="btn btn-sm btn-block btn-no"><i class="fa fa-thumbs-down"></i></a>');
+	    } else {
+	    	$(cells[3]).html('<a class="btn btn-sm btn-block btn-ok"><i class="fa fa-thumbs-up"></i></a>');;
+	    }
+    	// link
+    	var result = '';
+			if (link.includes(',')) {
+				link = link.split(',');
+				for (var i = 0; i < link.length; i++) {
+					result += '<a class="btn btn-default btn-sm" contenteditable="false">'+link[i]+'</a><br>';
+				}
+				$(cells[6]).html(result);
+			} else {
+				$(cells[6]).html('<a class="btn btn-default btn-sm">'+link+'</a>');
+			}
 		},
-				
-		// "rowId": 'staffId',
 		"lengthMenu": [[10,20,30,50,100,-1], [10,20,30,50,100, "All"]],
 		"displayLength": 20,
 		"lengthChange": true,
@@ -131,51 +152,20 @@ $(document).ready(function(){
 			sProcessing: '<i class="fa fa-cog fa-spin fa-10x fa-fw"></i>',  
 		},
 		"columnDefs": [
-			{ // no
-				"targets": 0,
-				"data": null,
-				"className": "center",
-				"orderable": false, 
-			},
-			{ // action
-				"targets": 1,
-				"data":  null,
-				"className": "center",
-				"orderable": false,
-				"render": function(data){
-						var obj, id, name, version, link, result;
-						id 	= data['id'];
-						name = data['cdn_name'];
-						version = data['cdn_version'];
-						link = data['cdn_link'];
-						result = 
-						'<a title="edit" data-id="'+id+'" data-name="'+name+'" data-version="'+version+'" data-link="'+link+'" class="action btn btn-sm btn-prm" data-toggle="modal" href="#modal_edit"><i class="fa fa-fw fa-edit"></i></a>' + 
-						'<a title="delete" class="action btn btn-sm btn-no btn-del" data-href="'+ host +'admin/cdn_delete/'+ id +'"><i class="fa a-fw fa-trash-alt"></i></a>';
-						return result;
-					}
-			},			
-			{ // type
-				"targets": 2,
-				"data": 'cdn_type',
-				"className": "center",
-				"orderable": true
-			},
-			{ // name
-				"targets": 3,
-				"data": 'cdn_name',
-				"orderable": true
-			},
-			{ // version
-				"targets": 4,
-				"data": 'cdn_version',
-				"className": "center",
-				"orderable": false
-			},
-			{ // link
-				"targets": 5,
-				"data": 'cdn_link',
-				"orderable": false
-			},
+			// no
+			{ "targets": 0,	"data": null, "className": "center", "orderable": false},
+			// action
+			{ "targets": 1, "data":  null, "className": "center" },
+			// author
+			{ "targets": 2, "data": 'cdn_author', "className": "center","orderable": true },
+			// status
+			{ "targets": 3, "data": "cdn_status" },
+			// name
+			{ "targets": 4, "data": 'cdn_name', "orderable": true },
+			// version
+			{ "targets": 5, "data": 'cdn_version', "className": "center", "orderable": false },
+			// link
+			{ "targets": 6, "data": null, "orderable": false },
 		],
 
 		rowCallback: function(row, data, iDisplayIndex) {
@@ -187,17 +177,30 @@ $(document).ready(function(){
 		}
 	});	
 
-	$('#modal_edit').on('show.bs.modal', function(e) {
+	$('#modal_edit').on('show.bs.modal', function(e){
+		$('#cdn-id,#cdn-name,#cdn-version').val('');
+		$('#cdn-link').empty();
 		$('#cdn-id').val($(e.relatedTarget).data('id'));
 		$('#cdn-name').val($(e.relatedTarget).data('name'));
 		$('#cdn-version').val($(e.relatedTarget).data('version'));
-		$('#cdn-link').val($(e.relatedTarget).data('link'));
+		var arr = $(e.relatedTarget).data('link');
+		if(arr.includes(',')){
+			arr = arr.split(',');
+			var result = '';
+			for (var i = 0; i < arr.length; i++) {
+				result += '<input type="text" name="cdn['+i+']" value="'+arr[i]+'" class="input-adjust">';
+			}
+			$('#cdn-link').append(result);
+			
+		} else {
+			$('#cdn-link').append('<input type="text" name="cdn[0]" value="'+arr+'" class="input-adjust">');
+		}
 	});
 	$('.btn-update').on('click',function(e){
 		e.preventDefault();
 		var data = $('#form_edit').serialize();
 		$.ajax({
-			url : host + 'admin/update_cdn',
+			url : host + 'xhra/update_cdn',
 			method: 'POST', 
 			data : data,
 			success: function(result){
