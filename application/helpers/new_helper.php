@@ -3,9 +3,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	function change_host($content)
 	{
-		$find 			= ["/http:\/\/helloworlds\.epizy\.com\//"];
-		$replace 		= ["http://localhost/"];
-		$newContent = preg_replace($find,$replace, $content);
+		$find = ["/http:\/\/localhosts\/helloworld\//"];
+		# $find = ["/http:\/\/localhost\/helloworld\//"]
+		$replace 		= ["".base_url().""];
+		$newContent = preg_replace($find,$replace,$content);
 		return $newContent;		
 	}
 
@@ -142,8 +143,12 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			'image' => 'blocked.png',
 			'message' => 'kamu tidak punya hak akses ke halman ini'
 		];		
-		(startSession('sess_role') && getSession('sess_role') == 1 ) ? true : blank_page($status);
-		die();
+		if (startSession('sess_role') && getSession('sess_role') == 1 ) {
+			return true;
+		} else {
+			blank_page($status);
+			die();
+		}
 	}
 
 	function is_send_ajax(){
@@ -312,15 +317,20 @@ function create_slug($string){
 }
 // 
 function popu($str){
-	$iss = explode('.', $str);
-	$iss = array_pop($iss);
-	if(empty(!$str)){
-		if($iss == 'css'){
-			return "<link rel='stylesheet' href='".$str."'>";
+	$isArray = explode(',',$str);
+	$ret = [];
+	for ($i=0; $i < count($isArray) ; $i++) { 
+		$exp[$i] = explode('.',$isArray[$i]);
+		$pop[$i] = array_pop($exp[$i]);
+		if(count($isArray) != 0){
+			if($pop[$i] == 'css'){
+				$ret[$i] = "<link rel=\"stylesheet\" href=\"".$isArray[$i]."\">\n";
+			} else {
+				$ret[$i] = "<script src=\"".$isArray[$i]."\"></script>\n";
+			}
 		} else {
-			return "<script src='".$str."'></script>";
+			$ret[$i] = '';
 		}
-	} else {
-		return '';
 	}
+	return implode(' ', $ret);
 }

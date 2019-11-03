@@ -2,7 +2,7 @@
 const host = 'http://'+window.location.hostname+'/helloworld/';
 const path = window.location.pathname;
 const imgLoad = '<img src="'+ host +'assets/img/feed/bars.svg" height="50">';
-
+const uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
 function startAjax(){
 	var temp = '<div class="loading">';
 	temp += '<img src="'+ host +'assets/img/feed/bars.svg" height="250" alt="ajax-send">';
@@ -131,10 +131,6 @@ function alertSuccess(tipe,message=array(),dir=''){
 	} else if (tipe == 'blank') {
 		button = '';
 		img = 'horray';
-	} else if (tipe == 'back') {
-		button = '<a onclick="Swal.clickConfirm()" class="effect"><span>OK</span></a>';
-		button += '<a onclick="window.history.back()" class="effect"><span>KEMBALI</span></a>';
-		img = 'horray';
 	} 
 	body  =
 			'<div class="img-swal">'
@@ -151,7 +147,7 @@ function alertSuccess(tipe,message=array(),dir=''){
 		showConfirmButton: false,
 		allowOutsideClick: false
 	});
-	if(dir != '' && dir != 'back'){
+	if(dir != ''){
 		setTimeout(function(){
 			window.location.href = dir
 		},3000);
@@ -293,24 +289,33 @@ function convert_time(timeStamp,full=false){
 			return elmnt.currentStyle[style];
 		}
 	}
-	function showFrameSize() {
-		var t;
+	function showFrameSize(target) {
 		var width, height;
-		width = Number(getStyle(document.getElementById("jktargetCode"), "width").replace("px", "")).toFixed();
-		height = Number(getStyle(document.getElementById("jktargetCode"), "height").replace("px", "")).toFixed();
+		width = Number(getStyle(document.getElementById(target), "width").replace("px", "")).toFixed();
+		height = Number(getStyle(document.getElementById(target), "height").replace("px", "")).toFixed();
 		$('#dm').fadeIn();
 		$('#dm').html("<span>" + width + " x " + height + "</span>");
-		
+		if(width > 750 ){
+			$('#control-right').fadeOut(1);
+			if (width > 950) {
+				$('#control-left').fadeOut(1);
+			} else {
+				$('#control-left').fadeIn();	
+			}
+		} else {
+			$('#control-right').fadeIn();
+		}
 	}
+
 	var dragging = false;
 	function dragstart(e) {
 		e.preventDefault();
 		dragging = true;
-		var main = document.getElementById("jktargetCode");
+		// var main = document.getElementById("jktargetCode");
 	}
-	function dragmove(e) {
+	function dragmove(e,target) {
 		if (dragging) {
-			showFrameSize();    
+			showFrameSize(target);    
 		}
 	}
 	function dragend() {

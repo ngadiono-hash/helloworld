@@ -17,12 +17,6 @@ class A extends CI_Controller
 		$this->load->model('Delete_model');
 	}
 
-	function not_found()
-	{
-		$data['title'] = 'Not Found';
-		$this->load->view('home/404',$data);
-	}
-
 // =================== DASHBOARD
 	public function index()
 	{
@@ -113,7 +107,7 @@ class A extends CI_Controller
 
 	public function cdn()
 	{
-		$data['jsonUrl'] = 'a/dt_cdn_list';
+		$data['jsonUrl'] = 'xhra/dt_cdn_list';
 		_temp_admin($data,'Admin - List CDN','cdn_table');
 	}
 

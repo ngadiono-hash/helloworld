@@ -11,22 +11,21 @@ class Lesson extends CI_Controller
 		$this->load->model('Read_model');
 	}
 
-	public function not_found()
+	public function index()
 	{
-		$data['title'] = 'Not Found';
-		$this->load->view('home/404',$data);
-	}	
+		
+	}
 
 	public function html()
 	{
 		$meta  = $this->uri->segment(3);
 		$checkMeta = $this->Read_model->checkMeta($meta);
 		if($checkMeta < 1){
-			$this->not_found();		
+			not_found();
 		} else {
 			$query = $this->Read_model->getTutorialByMeta('1',$meta);
 			if($query['publish'] == 0){
-				$this->not_found();
+				not_found();
 			} else {
 				$data = [
 					'id'  		=> $query['id'],
@@ -51,7 +50,7 @@ class Lesson extends CI_Controller
 				}
 				$data['menu'] = $this->Read_model->getListMenuByLevel($data['level']);
 				$this->load->view('templates/edHeader', $data);
-				$this->load->view('lesson/index',$data);
+				$this->load->view('lesson/lesson',$data);
 				$this->load->view('templates/edFooter');		
 			}
 		}
@@ -62,11 +61,11 @@ class Lesson extends CI_Controller
 		$meta  = $this->uri->segment(3);
 		$checkMeta = $this->Read_model->checkMeta($meta);
 		if($checkMeta < 1){
-			$this->not_found();		
+			not_found();		
 		} else {
 			$query = $this->Read_model->getTutorialByMeta('2',$meta);
 			if ($query['publish'] == 0) {
-				$this->not_found();
+				not_found();
 			} else {
 				$data = [
 					'id'  		=> $query['id'],
@@ -91,7 +90,7 @@ class Lesson extends CI_Controller
 				}
 				$data['menu'] = $this->Read_model->getListMenuByLevel($data['level']);
 				$this->load->view('templates/edHeader', $data);
-				$this->load->view('lesson/index',$data);
+				$this->load->view('lesson/lesson',$data);
 				$this->load->view('templates/edFooter');
 			}
 		}
@@ -102,11 +101,11 @@ class Lesson extends CI_Controller
 		$meta  = $this->uri->segment(3);
 		$checkMeta = $this->Read_model->checkMeta($meta);
 		if($checkMeta < 1){
-			$this->not_found();		
+			not_found();		
 		} else {
 			$query = $this->Read_model->getTutorialByMeta('3',$meta);
 			if ($query['publish'] == 0) {
-				$this->not_found();
+				not_found();
 			} else {
 				$data = [
 					'id'  		=> $query['id'],
@@ -131,7 +130,7 @@ class Lesson extends CI_Controller
 				}
 				$data['menu'] = $this->Read_model->getListMenuByLevel($data['level']);
 				$this->load->view('templates/edHeader', $data);
-				$this->load->view('lesson/index',$data);
+				$this->load->view('lesson/lesson',$data);
 				$this->load->view('templates/edFooter');				
 			}
 		}

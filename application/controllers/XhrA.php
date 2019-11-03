@@ -7,8 +7,8 @@ class XhrA extends CI_Controller
 	{
 		parent::__construct();
 		reload_session();
-		is_login();
-		is_admin();
+		// is_login();
+		// is_admin();
 		is_send_ajax();
 		$this->load->model('Create_model');
 		$this->load->model('Read_model');
@@ -59,8 +59,10 @@ class XhrA extends CI_Controller
 	public function dt_cdn_list()//
 	{
 		echo $this->Read_model->Ignited_dt(
-			'id,cdn_type,cdn_name,cdn_version,cdn_link', 
-			'cdn'
+			'id,cdn_author,cdn_name,cdn_version,cdn_link,cdn_status', 
+			'cdn',
+			[],
+			''
 		);
 	}
 	public function get_detail_user()//
@@ -111,22 +113,6 @@ class XhrA extends CI_Controller
 			$result = 1;
 		}
 		echo json_encode($result);
-	}
-
-	public function create_cdn()//
-	{
-		$this->form_validation->set_rules('cdn_name','CDN Name','required|trim');
-		$this->form_validation->set_rules('cdn_version','CDN Version','required|trim');
-		$this->form_validation->set_rules('cdn_type','CDN type','required');
-		$this->form_validation->set_rules('cdn_link','CDN Link','required');
-		
-		if($this->form_validation->run() === FALSE){
-			$result = 0;
-		}	else {
-			$this->Create_model->createCdn();
-			$result = 1;
-		}
-		echo json_encode($result);	
 	}
 
 	public function update_tutorial()
@@ -196,7 +182,7 @@ class XhrA extends CI_Controller
 	{
 		$this->form_validation->set_rules('cdn_name','CDN Name','required|trim');
 		$this->form_validation->set_rules('cdn_version','CDN Version','required|trim');
-		$this->form_validation->set_rules('cdn_link','CDN Link','required');
+		$this->form_validation->set_rules('cdn[]','CDN Link','required');
 		if($this->form_validation->run() === FALSE){
 			$result = 0;
 		}else{

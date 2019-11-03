@@ -78,16 +78,16 @@ class XhrM extends CI_Controller
 		$limit = 5;
 		$id = $this->input->post('id');
 		$page = $this->input->post('page');
-		$countLimited = $this->Read_model->countCommentLimited($page,['id <' => $id]);
-		$load = $this->Read_model->getCommentSnippet($page,$limit,['t1.id <' => $id]);
+		$countLimited = $this->Read_model->countCommentLimited($page,['created <' => $id]);
+		$load = $this->Read_model->getCommentSnippet($page,$limit,['t1.created <' => $id]);
 		$load = append_comment($load);
 		foreach ($load as $k => $b) { ?>
-			<div class="row row-comment <?=$b['side']?>" id="<?=$b['id']?>">
+			<div class="row row-comment <?=$b['side']?>" id="<?=$b['created']?>">
 				<div class="col-xs-12">
 					<span class="action <?=$b['side-text']?>">
 						<?php if ( startSession('sess_id') && $b['id_comm'] == getSession('sess_id')) { ?>
 						<button class="btn btn-default btn-sm">edit</button>
-						<button class="btn btn-default btn-sm">hapus</button>
+						<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$b['created']?>">hapus</a>
 						<?php } ?>
 					</span>
 				</div>
@@ -107,7 +107,7 @@ class XhrM extends CI_Controller
 		<?php } ?>
 		<?php if ($countLimited > $limit) { ?>
 			<div class="center" id="more">
-				<button data-id="<?=$b['id']?>" class="btn-default btn">
+				<button data-id="<?=$b['created']?>" class="btn-default btn">
 					<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
 					<span>tampilkan lebih banyak komentar</span>					
 				</button>
@@ -168,25 +168,10 @@ class XhrM extends CI_Controller
 	public function set_register() // OK
 	{
 		$result = [];
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|max_length[16]|is_unique[users.u_username]',
-					[
-						'max_length' => '{field} maksimal tediri dari 16 karakter', 
-						'alpha_numeric' => '{field} hanya boleh terdiri dari huruf dan angka'
-					]
-				);
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.u_email]',
-					['valid_email' => 'Format {field} tidak valid']
-				);
-		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]',
-					['min_length' => '{field} minimal terdiri dari 6 karakter']
-				);
-		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]',
-					['matches' => '{field} tidak cocok']
-				);
-
-		$this->form_validation->set_message('required','{field} harus diisi');
-		$this->form_validation->set_message('is_unique','{field} ini telah terdaftar');
-
+		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|max_length[16]|is_unique[users.u_username]');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.u_email]');
+		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]');
+		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]');
 		if ($this->form_validation->run($this) == FALSE) {
 			$result = [
 				'username'  => form_error('username','<p>','</p>'),

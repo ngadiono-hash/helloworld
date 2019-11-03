@@ -5,31 +5,82 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 // =============================
 
 // TEMPLATE HEADER
+function myGlobal(){ ?>
+	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
+	<script src="<?= base_url('assets/js/global.js') ?>"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
+<?php	}
+
 function adminCss(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/css-admin.css') ?>">
+
 <?php }
 function adminJs(){ ?>
-	<script src="<?= base_url('assets/js/js_admin.js') ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/read_tutorials.js') ?>"></script> -->
+
 <?php }
 function userCss(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/css_user.css') ?>">
+
 <?php }
 function userJs(){ ?>
 
 <?php }
 function snipCss(){ ?>
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/ssnip.css') ?>"> -->
+	
 <?php }
 function snipJs(){ ?>
 	
 <?php }
 
-function myGlobal(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-	<script src="<?= base_url('assets/js/glob.js') ?>"></script>
+function selectBS(){ ?>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+	<!-- <script src="<?=base_url('assets/js/jquery.chained.js')?>"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.min.js"></script>
+<?php }
+
+function select2(){ ?>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js"></script>
+<?php }
+
+function bootstrap(){ ?>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 <?php	}
 
+function aceEditor(){ ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
+	<script src="<?= base_url('assets/js/resize.js')?>"></script>
+<?php }
+
+function dataTable(){ ?>
+	<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
+	<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
+<?php	}
+
+function ckEditor(){ ?>
+	<script src="<?= base_url('assets/js/ckeditor/ckeditor.js') ?>"></script>
+	<script src="<?= base_url('assets/js/ckeditor/adapters/jquery.js') ?>"></script>
+<?php	}
+
+function adminLte(){ ?>
+	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTE.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/skin-blue.css') ?>">
+	<script src="<?= base_url('assets/js/adminlte.js') ?>"></script>
+<?php	}
+
+function jqueryUi(){ ?>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<?php	}
+
+function typing(){ ?>
+	<script src="https://cdn.jsdelivr.net/npm/typeit@6.0.2/dist/typeit.min.js"></script>
+<?php	}
+
+// 404
 function blank_page($status) { ?>
 	<!DOCTYPE html>
 	<html>
@@ -80,51 +131,6 @@ function script_user(){ ?>
 	</script>
 <?php }
 
-function bootstrap(){ ?>
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
-<?php	}
-
-function ace(){ ?>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
-	<script src="<?= base_url('assets/js/resize.js')?>"></script>
-<?php }
-
-function myTable(){ ?>
-	<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
-	<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
-<?php	}
-
-function ckE(){ ?>
-	<script src="<?= base_url('assets/js/ckeditor/ckeditor.js') ?>"></script>
-	<script src="<?= base_url('assets/js/ckeditor/adapters/jquery.js') ?>"></script>
-<?php	}
-
-function adminLte(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/AdminLTE.css') ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/skin-blue.css') ?>">
-	<script src="<?= base_url('assets/js/adminlte.js') ?>"></script>
-<?php	}
-
-function jqueryUi(){ ?>
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<?php	}
-
-function typing(){ ?>
-	<script src="https://cdn.jsdelivr.net/npm/typeit@6.0.2/dist/typeit.min.js"></script>
-<?php	}
-
-function selectPicker() { ?>
-	<script src="<?=base_url('assets/js/jquery.chained.js')?>"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-<?php }
-
 // LOADING PAGE
 function loader(){ ?>
 	<div class="preloader">
@@ -139,30 +145,39 @@ function loader(){ ?>
 // ========= MAIN NAVBAR =======
 function mainNav($code=[]) { ?>
 <div class="main-navbar box-sh">
-	<?php if (!whats_page(2,['s'])) { ?>
-	<!-- <a href="<?= base_url() ?>">Home</a> -->
-	<?php } ?>
-	<?php if (whats_page(1,['','at'])) { ?>
-	<a href="<?= base_url() ?>">Home</a>
-	<a class="hidden-xs hidden-sm" href="#lesson">Pelajaran</a>
-	<a class="hidden-xs hidden-sm" href="<?=base_url('snippet')?>">Snippet</a>
-	<a class="hidden-xs hidden-sm" href="#">Artikel</a> 
-	<?php } elseif(whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
+	<?php if (whats_page(1,['','at','snippet','lesson']) && !whats_page(2,['s'])) { ?>
+	<a class="" href="<?= base_url() ?>">
+		<span class="hidden-xs hidden-sm">Home</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-home"></i></span>
+	</a>
+	<a class="nav-adjust" href="<?=base_url('lesson')?>">
+		<span class="hidden-xs hidden-sm">Pelajaran</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-book"></i></span>
+	</a>
+	<a class="nav-adjust" href="<?=base_url('snippet')?>">
+		<span class="hidden-xs hidden-sm">Snippet</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-code"></i></span>	
+	</a>
+	<a class="nav-adjust" href="#">
+		<span class="hidden-xs hidden-sm">Artikel</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-file"></i></span>		
+	</a> 
+	<?php } elseif (whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
 	<a href="<?= base_url('snippet') ?>"><i class="fa fa-arrow-left"></i></a>
 	<a style="width: 30vw" class="hidden-xs"><?=$code['code_title']?></a>
-	<a style="width: 10vw" class="hidden-sm hidden-xs">
-		<span><?=$code['user_author']?></span>
-	</a>
-	<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
-	<a id="open-comment" class="mini"><i class="fa fa-comment-alt"></i></a>
 	<?php } ?>
 	<?php if (!startSession('sess_user')) { ?>
-	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">Login</a>
+	<?php if (!whats_page(2,['sign'])) { ?>
+	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">
+		<span class="hidden-xs hidden-sm">Login</span>
+		<span class="visible-xs visible-sm"><i class="fa fa-sign-in-alt"></i></span>		
+	</a>
+	<?php } ?>
 	<?php } else { ?>
-	<a class="pull-right right-nav" id="btn-nav"><i class="fa fa-sign-out-alt"></i></a>
+	<a class="pull-right right-nav" id="btn-nav"><i class="fa fa-user"></i></a>
 	<div class="drop hide slide-in-left">
 		<a class="pull-right" data-href="<?= base_url('at/logout') ?>" id="btn-logout" style="width: 2em"><i class="fa fa-power-off"></i></a>
-		<a class="pull-right" href="<?= base_url('u') ?>" style="width: 2em"><i class="fa fa-user"></i></a>
+		<a class="pull-right" href="<?= base_url('u') ?>" style="width: 2em"><i class="fa fa-tachometer-alt"></i></a>
 	</div>
 	<?php } ?>
 </div>
@@ -171,19 +186,19 @@ function mainNav($code=[]) { ?>
 
 function mainFooter() { ?>
 	<footer>
-		<div class="container">
+		<div class="container fred">
 			<div class="row" style="padding-bottom: 20px;">
 				<div class="col-sm-4">
 					<div class="about-us">
-						<h4><a href="#" class="base-link">About</a></h4>
-						<h4><a href="#" class="base-link">Contact Us</a></h4>
+						<h4><a href="#" class="base-link">Tentang kami</a></h4>
+						<h4><a href="#" class="base-link">Kontak kami</a></h4>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="menus">
-						<h4><a href="<?= base_url('html') ?>" class="base-link">HTML</a></h4>
-						<h4><a href="<?= base_url('css') ?>" class="base-link">CSS</a></h4>
-						<h4><a href="<?= base_url('javascript') ?>" class="base-link">JavaScript</a></h4>
+						<h4><a href="<?= base_url('lesson') ?>" class="base-link">Pelajaran</a></h4>
+						<h4><a href="<?= base_url('snippet') ?>" class="base-link">Snippet Program</a></h4>
+						<!-- <h4><a href="<?= base_url('javascript') ?>" class="base-link">JavaScript</a></h4> -->
 					</div>
 				</div>
 				<div class="col-sm-4">

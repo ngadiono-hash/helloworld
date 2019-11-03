@@ -114,6 +114,7 @@ class U extends CI_Controller
 		}
 
 		elseif($p1 == 'create'){
+			$data['tag'] = $this->Read_model->getTagSnippet();
 			$data['jQuery'] 		= $this->Read_model->getCdnJquery();
 			$data['framework'] 	= $this->Read_model->getAllListCdn();
 			_temp_user($data,'Buat Snippet','code_create');				
@@ -125,12 +126,12 @@ class U extends CI_Controller
 				not_found();
 			} else {
 				$data['code'] = $this->Read_model->getSingleSnippet(['t1.code_id' => $serial]);
-				$fm = $this->Read_model->getFrameCdnOfSnippet($serial);
-				$data['fm_snippet'] = explode(',',$fm['cdn_framework']);
-				$data['jq_snippet'] = $fm['cdn_jquery'];
+				$data['fm_snippet'] = explode(',',$data['code']['code_cdn']);
+				$data['tag_snippet'] = explode(',',$data['code']['code_tag']);
+				$data['tag'] = $this->Read_model->getTagSnippet();
 				$data['framework'] = $this->Read_model->getAllListCdn();
 				$data['jQuery'] 	 = $this->Read_model->getCdnJquery();
-				_temp_user($data,"Edit Snippet - ".$data['code']['code_title'],'code_view');				
+				_temp_user($data,"Edit Snippet - ".$data['code']['code_title'],'code_edit');				
 			}
 		}
 

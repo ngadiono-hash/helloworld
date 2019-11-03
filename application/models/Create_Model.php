@@ -6,23 +6,23 @@ class Create_model extends CI_Model
 	public function __construct() 
 	{
 		parent::__construct();
-    $this->tutor    = 'tutors';
+    // 'tutors'    = 'tutors';
     $this->tutorLev = 'tutor_lev';
     $this->tutorCat = 'tutor_cat';
 
     // 'snip'      = 'snip';
     // 'snip'_help = 'snip_help';
 
-    $this->user    = 'users';
-    $this->cookie  = 'user_cookie';
-    $this->valid   = 'user_valid';
+    // 'users'    = 'users';
+    // 'user_cookie'  = 'user_cookie';
+    // 'user_valid'   = 'user_valid';
     $this->progres = 'user_progress';
     $this->notif   = 'user_notif';
-    $this->att     = 'login_attempt';
+    // 'login_attempt'     = 'login_attempt';
 
-    $this->time  = 'timeline';
+    // 'timeline'  = 'timeline';
     // 'comment'   = 'comment';
-    $this->sec   = 'secure';
+    // 'secure'   = 'secure';
     // 'liked' = 'liked';
 
     $this->cdn = 'cdn';
@@ -36,26 +36,32 @@ class Create_model extends CI_Model
   {
 
 	  $code_id = getRandStr(6);
-    $count = $this->db->where('_id',$code_id)->get('snip');
+    $count = $this->db->get_where('snip',['code_id' => $code_id]);
     if ($count->num_rows() > 0) {
     	$code_id = getRandStr(6);
     }
+    $jquery = [$this->input->post('jquery')];
+    $framework = [$this->input->post('framework')];
+    $cdn = array_merge($jquery,$framework);
+    if ($jquery[0] == '') {
+      array_shift($cdn);
+    }
+    if ($framework[0] == '') {
+      array_pop($cdn);
+    }
     $data_snippets = [
-      '_id'     		=> $code_id,
+      'code_id'     => $code_id,
       'code_author' => getSession('sess_id'),
-      'code_title'  => trim($this->input->post('title',true)),
-      'code_desc'   => trim($this->input->post('description',true)),
+      'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
+      'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
+      'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
+      'code_tag'    => $this->input->post('tag'),
       'code_html'   => htmlentities($this->input->post('html')),
       'code_css'    => htmlentities($this->input->post('css')),
       'code_js'     => htmlentities($this->input->post('js')),
       'code_upload' => time(),
       'code_update' => time(),
       'code_publish' => $this->input->post('public')
-    ];
-    $data_helpers = [
-      'id_snippet'    => $code_id,
-      'cdn_framework' => $this->input->post('framework'),
-      'cdn_jquery'    => $this->input->post('jquery')
     ];
     $data_timeline = [
     	'category' => 2,
@@ -65,22 +71,24 @@ class Create_model extends CI_Model
     	'publish'  => $this->input->post('public')
     ];
     $this->db->insert('snip',$data_snippets);
-    $this->db->insert('snip_help',$data_helpers);
-    $this->db->insert($this->time,$data_timeline);
+    $this->db->insert('timeline',$data_timeline);
     return true;
   }
 
-  public function addCdn()//
+  public function insertCdn()
   {
-    $name = $this->input->post('cdn_name');
-    $version = $this->input->post('cdn_version');
-    $link = $this->input->post('cdn_link');
-    $type = $this->input->post('cdn_type');
+    if (getSession('sess_role') != 1) {
+      $author = getSession('sess_id');
+    } else {
+      $author = 1;
+    }    
+    $cdn = $this->input->post('cdn[]');
+    $cdn = implode(',', $cdn);
     $data = [
-      'cdn_name' => $name,
-      'cdn_type' => $type,
-      'cdn_version' => $version,
-      'cdn_link' => $link
+      'cdn_author' => $author,
+      'cdn_name' => htmlspecialchars($this->input->post('cdn_name')),
+      'cdn_version' => $this->input->post('cdn_version'),
+      'cdn_link' => $cdn
     ];
     $this->db->insert('cdn',$data);
   }
@@ -89,75 +97,14 @@ class Create_model extends CI_Model
     $data_comment = [
       'id_user' => getSession('sess_id'),
       'id_target' => $id,
-      'message' => $comment,
+      'message' => htmlentities($comment),
       'created' => time()
     ];
     $this->db->insert('comment',$data_comment);
     return $this->db->insert_id(); 
   }
-// ================= USER PAGE
-// ================= MAIN USER
-	public function insertToken($user_token=[])
-	{
-		$this->db->insert($this->valid,$user_token);
-	}
 
-	public function insertRegister($user_data)
-	{
-		$this->db->insert($this->user, $user_data);
-	}
 
-	public function insertAttempt($email)
-	{
-		$data = [
-			'log_time' => time(),
-			'log_email' => $email,
-			'log_ip' => getIp(),
-			'log_agent' => $_SERVER['HTTP_USER_AGENT'],
-			'log_att' => 0
-		];
-		$this->db->insert($this->att,$data);
-	}	
-
-	public function insertCookie($dataCookie=[])
-	{
-		$data = [
-			'created' 	=> time(),
-			'expired' 	=> $dataCookie['expired'],
-			'token' 		=> $dataCookie['token'],
-			'email' 		=> $dataCookie['email'],
-			'ip'  			=> $dataCookie['ip'],
-			'agent' 		=> $dataCookie['agent']
-		];
-		$this->db->insert($this->cookie,$data);
-		setcookie('c_user',$dataCookie['token'],$dataCookie['expired'],'/');
-	}	
-
-	public function insertBug($data)
-	{
-		$this->db->insert($this->bug,$data);
-	}
-
-	public function insertNotifLogin($notif=[])
-	{
-		$data = [
-      'user'    => $notif['user'],
-      'ip'      => $notif['ip'],
-      'agent'   => $notif['agent'],
-			'created' => $notif['created'],
-		];
-		$this->db->insert($this->sec,$data);
-	}	
-
-  public function insertLiked($id)
-  {
-    $data = [
-      'id_user' => getSession('sess_id'),
-      'id_target' => $id,
-      'created' => time()
-    ];
-    $this->db->insert('liked',$data);
-  }
 
 // ================= ADMINISTRATOR
   public function insertTutorial()
@@ -171,7 +118,7 @@ class Create_model extends CI_Model
     } else {
     	$id = 'j'.$id;
     }
-    $order = $this->db->where(['snip_category'=> $category, 'snip_bin' => 0 ])->from($this->tutor)->count_all_results();  
+    $order = $this->db->where(['snip_category'=> $category, 'snip_bin' => 0 ])->from('tutors')->count_all_results();  
     $data_tutor = [
     	'snip_id'				=> $id,
       'snip_order'    => $order + 1,
@@ -190,8 +137,8 @@ class Create_model extends CI_Model
     	'created'		=> time(),
     	'publish'		=> 0
     ];
-    $this->db->insert($this->tutor,$data_tutor);
-    $this->db->insert($this->time,$data_timeline);
+    $this->db->insert('tutors',$data_tutor);
+    $this->db->insert('timeline',$data_timeline);
   }
 
 // END OF CREATE MODEL
