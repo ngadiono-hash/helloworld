@@ -136,10 +136,10 @@ class Read_model extends CI_Model
 	}	
 	public function checkMeta($meta)
 	{
-		$this->db->select('snip_meta');
-		$this->db->from($this->tutor);
-		$this->db->where('snip_meta', $meta);
-		return $this->db->get()->num_rows();    
+		// $this->db->select('snip_meta');
+		// $this->db->from($this->tutor);
+		// $this->db->where('snip_meta', $meta);
+		// return $this->db->get()->num_rows();    
 	}
 	public function getListMenuByLevel($level)
 	{
@@ -227,47 +227,47 @@ class Read_model extends CI_Model
 // ================= SNIPPET
 	public function getAllSnippet()
 	{
-		$this->db->select('
-			snip.code_id AS code_id,
-			snip.code_title AS code_title,
-			snip.code_desc AS code_desc,
-			snip.code_html AS code_html,
-			snip.code_css AS code_css,
-			snip.code_js AS code_js,
-			snip.code_update AS code_update,
-			snip.code_upload AS code_upload,
-			snip.code_publish AS code_publish,
-			users.u_username AS user_author,
-			users.u_image AS image_author
-		');
-		$this->db->join('users','users.u_id = snip.code_author');
-		$this->db->order_by('snip.code_upload','desc');
-		return $this->db->get($this->snip)->result_array();
+		// $this->db->select('
+		// 	snip.code_id AS code_id,
+		// 	snip.code_title AS code_title,
+		// 	snip.code_desc AS code_desc,
+		// 	snip.code_html AS code_html,
+		// 	snip.code_css AS code_css,
+		// 	snip.code_js AS code_js,
+		// 	snip.code_update AS code_update,
+		// 	snip.code_upload AS code_upload,
+		// 	snip.code_publish AS code_publish,
+		// 	users.u_username AS user_author,
+		// 	users.u_image AS image_author
+		// ');
+		// $this->db->join('users','users.u_id = snip.code_author');
+		// $this->db->order_by('snip.code_upload','desc');
+		// return $this->db->get($this->snip)->result_array();
 	}
 
 	public function getSingleSnippet($where)
 	{
-		$this->db->select('
-			t2.u_id AS id_author,
-			t2.u_username AS user_author,
-			t2.u_image AS image_author,
-			t1.code_id AS code_id,
-			t1.code_title AS code_title,
-			t1.code_desc AS code_desc,
-			t1.code_cdn AS code_cdn,
-			t1.code_tag AS code_tag,
-			t1.code_html AS code_html,
-			t1.code_css AS code_css,
-			t1.code_js AS code_js,
-			t1.code_update AS code_update,
-			t1.code_upload AS code_upload,
-			t1.code_publish AS code_publish,
-			t1.code_like AS code_like
-		');
-		$this->db->from('snip AS t1');
-		$this->db->join('users AS t2','t1.code_author = t2.u_id');
-		$this->db->where($where);
-		return $this->db->get()->row_array();
+		// $this->db->select('
+		// 	t2.u_id AS id_author,
+		// 	t2.u_username AS user_author,
+		// 	t2.u_image AS image_author,
+		// 	t1.code_id AS code_id,
+		// 	t1.code_title AS code_title,
+		// 	t1.code_desc AS code_desc,
+		// 	t1.code_cdn AS code_cdn,
+		// 	t1.code_tag AS code_tag,
+		// 	t1.code_html AS code_html,
+		// 	t1.code_css AS code_css,
+		// 	t1.code_js AS code_js,
+		// 	t1.code_update AS code_update,
+		// 	t1.code_upload AS code_upload,
+		// 	t1.code_publish AS code_publish,
+		// 	t1.code_like AS code_like
+		// ');
+		// $this->db->from('snip AS t1');
+		// $this->db->join('users AS t2','t1.code_author = t2.u_id');
+		// $this->db->where($where);
+		// return $this->db->get()->row_array();
 	}
 
 	public function getTagSnippet()

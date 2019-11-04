@@ -6,33 +6,27 @@ class Snippet extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Create_model');
-		$this->load->model('Read_model');
-		$this->load->model('Update_model');
-		$this->load->model('Delete_model');
+		$this->load->model('Common_model');
 	}
 
 	public function haha()
 	{
-		// $serial = 'ywz2ru';
-		// $comment = $this->Read_model->getCommentSnippet($serial);
-		// foreach ($comment as $k => $v) {
-		// 	if ($v['id_comm'] == $v['author']) {
-		// 		$comment[$k]['side'] = 'right';
-		// 	} else {
-		// 		$comment[$k]['side'] = 'left';
-		// 	}
-		// }
-		// echo $this->input->user_agent();
-		// var_dump($comment);
+
 	}
-	public function index()
+	public function index() // ok
 	{
 		$data['title'] = 'Snippet Hello World';
-
-		$data['code'] = $this->Read_model->getAllSnippet();
+		$data['code'] = $this->Common_model->select_fields_where_join(
+			'snip AS t1',
+			't1.code_id AS code_id,t1.code_title AS code_title,t2.u_username AS user_author,t2.u_image AS image_author',
+			[
+				['table' => 'users AS t2', 'condition' => 't2.u_id = t1.code_author', 'type' => '']
+			],
+			['t1.code_publish' => 1],
+			['t1.code_upload','desc']			
+		);
 		$this->load->view('templates/mainHeader', $data);
-		$this->load->view('snippet/index', $data);
+		$this->load->view('index', $data);
 		$this->load->view('templates/mainFooter', $data);
 	}
 
@@ -54,16 +48,27 @@ class Snippet extends CI_Controller
 		if ($data['code']) {
 			$data['title'] = $data['code']['code_title'];
 			$this->load->view('templates/mainHeader', $data);
-			$this->load->view('snippet/single', $data);
+			$this->load->view('single', $data);
 			$this->load->view('templates/mainFooter', $data);			
 		}
 	}
 
-	public function p($serial)
+	public function p($serial) // ok
 	{
-		$data['code'] = $this->Read_model->getSingleSnippet(['code_id' => $serial]);
-		$data['framework'] = explode(',', $data['code']['code_cdn']);
-		$this->load->view('snippet/thumbs',$data);
+		$data['code'] = $this->Common_model->select_fields_where(
+			'snip',
+			'code_id,code_title,code_cdn,code_html,code_css,code_js',			
+			['code_id' => $serial],
+			true
+		);
+		$library_id = explode(',', $data['code']['code_cdn']);
+		foreach ($library_id as $k) {
+			$cdn[] = $this->Common_model->select_fields_where('snip_cdn','cdn_link',['id' => $k],true);
+		}
+		for ($i = 0; $i < count($cdn); $i++) {
+			$data['extract'][$i] = popu($cdn[$i]['cdn_link']);
+		}
+		$this->load->view('thumbs',$data);
 	}
 
 
