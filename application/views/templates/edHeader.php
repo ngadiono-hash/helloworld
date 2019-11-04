@@ -18,46 +18,46 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	<meta name="keywords" content="<?= $keyword ?>">
 	<meta name ="revised" content ="Hello World, <?= date('m/d/Y',$update) ?>">
 	<meta name="author" content="Hello World">
-<?php bootstrap(); ?>
-<?php jqueryUi() ?>
-<?php myGlobal(); ?>
+	<?php bootstrap(); ?>
+	<?php jqueryUi() ?>
+	<?php myGlobal(); ?>
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/prisma.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
 	<!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/css/css_tutorial.css"> -->
 	<script src="<?= base_url(); ?>assets/js/loader.js"></script>
-<?php script_user() ?>
-<?php if ( startSession('sess_id') ) { ?>
-	<?php if ( getSession('sess_role') != 1 ) { ?>
-<script>
-	$(function(){
-		var start = null;
-		$(window).on('load',function(e) {
-			start = e.timeStamp;
-		});
-		$(window).on('unload',function(e) {
-			var time = e.timeStamp - start;
-			var datax = {
-				time : time,
-				id_page : <?= $id ?>,
-				id_user : userData.id
-			}
-			$.ajax({
-				url : host+'xhru/create_progress',
-				type : 'post',
-				async : false,
-				data : datax,
-			}).done();
-		});
-	}); 
-</script>
+	<?php script_user() ?>
+	<?php if ( startSession('sess_id') ) { ?>
+		<?php if ( getSession('sess_role') != 1 ) { ?>
+			<script>
+				$(function(){
+					var start = null;
+					$(window).on('load',function(e) {
+						start = e.timeStamp;
+					});
+					$(window).on('unload',function(e) {
+						var time = e.timeStamp - start;
+						var datax = {
+							time : time,
+							id_page : <?= $id ?>,
+							id_user : userData.id
+						}
+						$.ajax({
+							url : host+'xhru/create_progress',
+							type : 'post',
+							async : false,
+							data : datax,
+						}).done();
+					});
+				}); 
+			</script>
+		<?php } ?>
 	<?php } ?>
-<?php } ?>
-<style>
+	<style>
 	html { font-size: 18px; }
 	html, body {
 		overflow-x: hidden;
 	}
-/*============ ALL =================*/
+	/*============ ALL =================*/
 	body { 
 		color: #808080; 
 		font-family: Rubik, Sans-serif; 
@@ -83,19 +83,16 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	}
 	.overlay.block { display: block; }
 
-/*============ SIDENAV =============*/
+	/*============ SIDENAV =============*/
 	.menu { 
-		width: 350px; 
-		border: 5px solid #ccc;
-		border-radius: 10px;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-		background-color: #f1f1f1;
-		box-shadow: 1px 2px 6px rgba(0, 0, 0,0.5);
-		position: fixed; 
-		top: 0; 
+		width: 345px;
+		border: 3px solid #ccc;
+		border-left: none;
+		background: linear-gradient(#fff, #ddd);
+		position: fixed;
+		top: 0;
 		bottom: 0;
-		z-index: 200; 
+		z-index: 200;
 		transition: ease-in-out 0.5s;
 	}
 	.menu.out { width: 0; opacity: 0; z-index: -1; }
@@ -168,7 +165,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		box-shadow: 0 6px 12px rgba(2,2,2,0.5);
 	}
 	
-/*============ TOOLBAR =============*/
+	/*============ TOOLBAR =============*/
 	div#jktoolbar { 
 		position: absolute; 
 		top: 0; 
@@ -178,8 +175,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	}
 	div#jktoolbar ul { 
 		margin-bottom: 0; 
-		padding-left: 10px; 
-		margin-left: 35px;
+		padding-left: 10px;
 	}
 	div#jktoolbar>ul>li>a { 
 		padding: 10px; 
@@ -187,20 +183,10 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		background: transparent; 
 		color: #ccc; 
 	}
-	.wrap-btn {
+	a.open-menu {
 		position: absolute;
-		height: 37px;
-	}
-	.wrap-btn a:hover, .wrap-btn a:focus, .wrap-btn a:active {
-		box-shadow: 0 0 7px 0 rgba(0,0,0,.16) inset;
-		transition: box-shadow 200ms cubic-bezier(.4,0,.2,1) 0s;
-		background: <?= $tmLight; ?> !important;
-		color: #ccc;
-	}
-	.btn-home, .open-menu {
-		display: inline-block;
-		color: #ccc;
-		padding: 10px;
+		top: 4px;
+		left: 350px;
 	}  
 	div#jktoolbar>ul>li>a:active { box-sizing: border-box; }
 	div#jktoolbar .select-style { 
@@ -215,7 +201,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		width: 70px; 
 	}
 
-/*============ BROWSER WINDOW ======*/
+	/*============ BROWSER WINDOW ======*/
 	.container-window {
 		height: 38px;
 		width: 100%;
@@ -255,7 +241,14 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		padding-right: 15px;
 	}
 
-/*============ EDITOR ==============*/
+	/*============ EDITOR ==============*/
+	html.rowslayout #jkcodecontainer {
+		padding: 0;
+		height: 99%;
+	}
+	html.rowslayout iframe#jktargetCode {
+		height: 90%;
+	}
 	html.rowslayout #jkcodeinput { padding-bottom: 3px; }
 	.ace_content { margin-top: 0px; }
 	#jkcodecontainer {
@@ -301,8 +294,8 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	}
 
 
-/*============ DESCRIPTION =========*/
-	a.btn-desc-left, a.btn-desc-right {
+	/*============ DESCRIPTION =========*/
+	a.btn-desc-left {
 		z-index: 99;
 		padding: 5px;
 		border: 3px solid #808080;
@@ -331,37 +324,41 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	}
 	a.btn-desc-right {
 		z-index: 99;
-		/*padding: 5px;*/
 		position: absolute;
-		top: 50%;
-		right: -64px;  	
+		top: 4px;
+		right: 7px;	
 	}
-	a.btn-desc-right:hover {
+	a.open-col {
+		position: absolute;
+		top: 4px;
+		left: 392px;
+	}
+	a.close-col {
+		position: absolute;
+		right: 5px;
+	}
+	a.btn-edit:hover, a.close-col:hover, a.open-col:hover, a.open-menu:hover, a.btn-desc-right:hover {
 		color: #ccc;
 		text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;
 		background-color: rgba(0,0,0,0.5);	
 	}
-	.btn-admin {
+	.btn-edit {
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: 4px;
+		background: yellow;
+		right: 50px;
 		width: 70px;
-		text-align: center;
-		padding: 5px;
-		font-size: .8rem;
 	}
 	.box-desc {
-		padding: 25px 0; 
+		padding: 25px 0;
 		position: absolute;
-		top: 0px; 
+		top: 0px;
 		bottom: 0px;
-		right: 7%;
+		right: 0%;
 		left: 0%;
 		border: 3px solid #808080;
 		border-left: none;
-		border-radius: 10px;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
+		border-right: none;
 		min-width: 500px;
 		cursor: default;
 		z-index: 100;
@@ -369,7 +366,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.inner-desc { 
 		margin-top: 20px;
 		padding: 0 5px;
-		padding-left: 26%;
+		padding-left: 350px;
 		overflow-y: auto;
 		background: #f1f1f1; 
 		height: 99%;
@@ -381,13 +378,12 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		font-family: Rubik, Sans-serif; 
 		padding: 50px 10px;
 	}
-	.main-content .main-title { 
-		margin: 0;
-		position: fixed;
-		top: 0;
-		left: 28%;
+	.main-title { 
+		margin-top: -25px;
+		margin-bottom: -10px;
+		padding-left: 350px;
 		color: #f1f1f1;
-		text-shadow: 1px 1px 2px rgba(0,0,0,0.5);    
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 	}
 	.second-title {
 		text-align: center;
@@ -415,8 +411,8 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		font-size: .9rem;
 	}
 	.col-left {
-		width: 25%;
-		/*background: #b3afaf;*/
+		width: 350px;
+		z-index: 1;
 		background: linear-gradient(#fff, #ddd);
 		position: fixed;
 		top: 0;
@@ -429,13 +425,19 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		border-top: 2px solid #a09292;
 	}
 	#point {
-		overflow: hidden;
+		overflow-y: auto;
+		overflow-x: hidden;
+		height: 50%;
+	}
+	#point h5 {
+		margin: 0;
 	}
 	#point a {
 		display: inline-block;
 		font-size: .9rem;
 		padding: 5px;
 		margin-right: -5px;
+		font-family: 'Fredoka One', cursive;
 	}
 	#point a:hover {
 		letter-spacing: 2px;
@@ -443,10 +445,9 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	#point a.active {
 		text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;
 		color: lightblue;
-    font-size: 1.5rem;
-    display: block;
-    text-align: center;
-    pointer-events: none;
+		letter-spacing: 2px;
+		text-align: center;
+		pointer-events: none;
 	}
 	#point a.active::after {
 		content: '';
@@ -541,7 +542,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.wrapper-content a.base-link:hover { color: #34b6e0; }
 
 
-/*============ FOOTER ==============*/
+	/*============ FOOTER ==============*/
 	.main-footer {
 		padding: 20px 10px;
 	}
@@ -578,7 +579,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 		font-size: 1rem;
 	}
 
-/*============ ADD CONTENT =========*/
+	/*============ ADD CONTENT =========*/
 	.main-content code { background-color: transparent; }
 	.main-content .img-left { float: left; margin-left: 100px; }
 	.main-content .img-right { float: right; margin-right: 100px; }
@@ -597,8 +598,8 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.html-attr { color: #90ca1c;  }
 	.css-code { color: #18c4e7; font-style: italic; }
 
-/*==================================*/
-/*============ ADD CONTENT =========*/
+	/*==================================*/
+	/*============ ADD CONTENT =========*/
 	.toolEditor ul li a:active, 
 	.toolEditor ul li a:hover, 
 	.toolEditor ul li select:hover,
@@ -616,29 +617,27 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.main-content .wrapper-content { border: 10px solid <?= $tmLight; ?>; border-top: none; border-right: none; }
 	.main-content h3 { border-top: 10px solid <?= $tmLight ?>; } 
 	.main-content h3, .main-footer .right-side .next-lesson, #next p
-	 { text-shadow: -1px -1px 0 <?= $tmDark; ?>, 1px -1px 0 <?= $tmDark; ?>, -1px 1px 0 <?= $tmDark; ?>, 1px 1px 0 <?= $tmDark; ?>; }  
+	{ text-shadow: -1px -1px 0 <?= $tmDark; ?>, 1px -1px 0 <?= $tmDark; ?>, -1px 1px 0 <?= $tmDark; ?>, 1px 1px 0 <?= $tmDark; ?>; }  
 
-/*============ MOBILE ==============*/
-
+	/*============ MEDIUM ==============*/
 	@media only screen and (max-width: 992px) {
 		html { font-size: 17px; }
-		.main-content .main-title {
+		.main-title {
+			margin-top: -20px;
 			font-size: 2em;
-			top: 7px;
-			left: 3%;
-			right: 3%;
+			padding-left: 0px;
 		}
 		.main-content .img-left { float: none; margin: 10px auto; display: block; }
 		.main-content .img-right { float: none; margin: 10px auto; display: block; }
 		.inner-desc { padding-left: 5px; }
+		a.open-menu { left: 5px; }
+		a.open-col { left: 47px; }
 	}
+	/*============ SMALL ==============*/	
 	@media only screen and (max-width: 768px) {
 		html { font-size: 15px; }
-		.main-content .main-title {
-			font-size: 1.6em;
-			top: 7px;
-			left: 3%;
-			right: 3%;
+		.main-title {
+			display: none;
 		}
 	}
 	

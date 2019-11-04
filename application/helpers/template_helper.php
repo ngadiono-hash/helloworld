@@ -451,9 +451,9 @@ function temp_profile(){
 function _menus($menu,$level,$category){ ?>
 	<div class="menu-wrap">
 		<div class="control">
-			<span><a class="tip-bottom backTo fa fa-home" href="<?=base_url()?>" title="back to home"></a></span>
+			<span><a class="tip-bottom backTo fa fa-home" href="<?=base_url()?>"></a></span>
 			<span><h4><?=$level?></h4></span>
-			<span><a class="tip-bottom closed-menu fa fa-times" title="close menu"></a></span>
+			<span><a class="tip-bottom closed-menu fa fa-times"></a></span>
 		</div>
 		<ul class="side-menu">
 		<?php	
@@ -468,16 +468,11 @@ function _menus($menu,$level,$category){ ?>
 // TOOLBAR
 function _toolEditor() { ?>
 	<div id="jktoolbar" class="toolEditor">
-		<div class="wrap-btn">
-			<a class="tip-bottom open-menu" title="open menu">
-				<i class="fa fa-fw fa-bars fa-lg"></i>
-			</a>			
-		</div>
 		<ul>
 			<li><a id="rowslayoutbutton" href="#rowslayout" class="tip-bottom fa fa-fw fa-laptop fa-lg" title="orientation"></a></li>
 			<li><a href="#wrap" title="wrap lines" class="tip-bottom fa fa-fw fa-align-left fa-lg"></a></li>
 			<li><a href="#shownumbers" title="line number" class="tip-bottom fa fa-fw fa-sort-numeric-down fa-lg"></a></li>
-			<li><a href="#runcode" title="run code" class="tip-bottom fa fa-fw fa-play fa-lg"></a></li>
+			<li><a href="#copycode" title="copy code" class="tip-bottom fa fa-copy fa-lg"></a></li>
 			<li>
 				<div class="tip-bottom select-style" title="interval run">
 					<select>
@@ -490,7 +485,7 @@ function _toolEditor() { ?>
 					</select>
 				</div>	
 			</li>
-			<li><a href="#copycode" title="copy code" class="tip-bottom fa fa-copy fa-lg"></a></li>
+			<li><a href="#runcode" title="run code" class="tip-bottom fa fa-fw fa-play fa-lg"></a></li>
 		</ul>
 	</div>
 <?php }
@@ -531,6 +526,7 @@ if(isset($code)) {
 // MAIN DOCUMENTATION
 function _mainContent($id,$order,$title,$titles,$level,$category,$content,$update,$next,$btn) { ?>
 	<div class="col-left visible-md visible-lg">
+		<a class="close-col btn btn-def visible-sm visible-xs"><i class="fa fa-angle-double-left"></i></a>
 		<div class="info-desc">
 			<p><i class="fas fa-tachometer-alt"></i> kategori</p>
 			<span><?= strtoupper($category) ?></span>
@@ -540,21 +536,13 @@ function _mainContent($id,$order,$title,$titles,$level,$category,$content,$updat
 			<span><?= time_elapsed_string('@'.$update) ?></span>
 		</div>
 		<hr>
-		<h4 class="second-title"><?= $title ?></h4>
+		<h4 class="second-title"><?=$titles?></h4>
+		<h4 class="second-title"><?=$title?></h4>
 		<hr>		
 		<div id="point"></div>
 	</div>
 	<div class="inner-desc">
 		<div class="main-content">
-			<?php 
-				if ( startSession('sess_role') ) :
-					if ( getSession('sess_role') == 1 ) :
-						echo '<a href="' . base_url('a/tutorial/') . strtolower($category) . '/' . $order .'" target="_blank" class="button btn-admin" ><i class="fa fa-cog"></i></a>';
-					endif;
-				endif;
-			?>
-			<h1 class="main-title sh"><?= $titles; ?></h1>
-
 			<div class="col-right">
 			<?php 
 				if($content != '') {
@@ -622,12 +610,12 @@ function footerDoc($id,$next,$category,$level,$btn) { ?>
 				<p class="next-lesson sh" style="margin-bottom: 15px;">materi ini telah habis<br>selanjutnya belajar apa lagi</p>
 				<button id="btn-next" class="button <?= $btn; ?> jello-vertical"><i class="fas fa-question"></i></button>
 				<div id="next" class="hide bounce-in-top" style="margin-top: 10px;">	
-					<?php if(isset($next)) { ?>
+					<?php if(!empty($next)) { ?>
 					<p><?= $next['title'] ?></p>
 					<a href="<?= base_url('lesson/').$category.'/'.$next['meta']; ?>" class="base-link"><?= $next['slug']; ?></a>
 					<?php } else { ?>
 						<p>materi <?= $level; ?> ini sudah habis</p>
-						<a href="<?= base_url().'#lesson' ?>">silahkan kembali ke index</a>
+						<a href="<?= base_url('lesson') ?>">silahkan kembali ke index</a>
 					<?php } ?>
 				</div>
 			</div>

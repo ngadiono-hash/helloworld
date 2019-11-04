@@ -1,23 +1,39 @@
-<?php
-/**
- * Class Common_model
- * @property CI_DB_driver $db
- * @property Datatables $datatables
- */
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Common_model extends CI_Model
 {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('Datatables');
+		// $this->load->library('Datatables');
 	}
-		// Select Queries
-	function select($tbl = '')
+// ================= READ QUERY
+	function check_exist($table,$data)
+	{
+		$this->db->where($data);
+		$query = $this->db->get($table);
+		if($query->num_rows() > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}	
+	function select($tbl)
 	{
 		$query = $this->db->get($tbl);
 		return $query->result();
 	}
-	function select_fields($tbl = '', $data, $single = FALSE,$resultArray = TRUE,$order_by = '',$group_by = '')
+	public function select_spec($tbl,$data,$where)
+	{
+		$this->db->select($data);
+		$this->db->from($tbl);
+		$this->db->where($where);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->row()->$data;
+		}
+	}
+	function select_fields($tbl,$data,$single=FALSE,$resultArray=TRUE,$order_by='',$group_by='')
 	{
 		if(is_array($data)){
 			$this->db->select($data[0],$data[1]);
@@ -35,7 +51,6 @@ class Common_model extends CI_Model
 			}
 		}
 		$query = $this->db->get($tbl);
-				//return $this->db->last_query();
 		if ($query) {
 			if ($single == TRUE) {
 				if($resultArray === false) {
@@ -54,312 +69,313 @@ class Common_model extends CI_Model
 			return $this->db->error();
 		}
 	}
-		/**
-		 * @param string $tbl
-		 * @param $data
-		 * @param $where
-		 * @param bool $single
-		 * @param string $like
-		 * @param string $field
-		 * @param string $value
-		 * @param string $group_by
-		 * @param string $order_by
-		 * @return array
-		 */
-
-		function select_fields_where($tbl = '', $data, $where, $single = FALSE, $array = TRUE, $order_by = '', $like = '', $field = '', $value = '',$group_by = '')
-		{
-			if(is_array($data) && isset($data[1])){
-				$this->db->select($data[0],$data[1]);
+	function select_fields_where($tbl,$data,$where,$single=FALSE,$array=TRUE,$order_by='',$like='',$field='',$value='',$group_by='')
+	{
+		if(is_array($data) && isset($data[1])){
+			$this->db->select($data[0],$data[1]);
+		}else{
+			$this->db->select($data);
+		}
+		$this->db->from($tbl);
+		if ($like != '') {
+			$this->db->like('LOWER(' . $field . ')', strtolower($value));
+			$this->db->like($like);
+		}
+		$this->db->where($where);
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		if($order_by !== ''){
+			if(is_array($order_by)){
+				$this->db->order_by($order_by[0],$order_by[1]);
 			}else{
-				$this->db->select($data);
+				$this->db->order_by($order_by);
 			}
-			$this->db->from($tbl);
-			if ($like != '') {
-				$this->db->like('LOWER(' . $field . ')', strtolower($value));
-				$this->db->like($like);
+		}
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			if ($single == TRUE) {
+				if($array === TRUE){
+					return $query->row_array();
+				}else{
+					return $query->row();
+				}
+			} else {
+				if($array === TRUE){
+					return $query->result_array();
+				}else{
+					return $query->result();
+				}
 			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}
+	function select_fields_where_join($tbl,$data,$joins='',$where='',$order_by='',$single=FALSE,$array=TRUE,$limit='',$field='',$value='',$group_by='')
+	{
+		if (is_array($data) and isset($data[1])) {
+			$this->db->select($data[0],$data[1]);
+		} else {
+			$this->db->select($data);
+		}
+		$this->db->from($tbl);
+		// Fourth Param is For Escaping, i-e CI should use backTicks on a join or not.
+		if ($joins != '') {
+			foreach ($joins as $k => $v) {
+				$this->db->join($v['table'], $v['condition'], $v['type'],(isset($v['escape'])?$v['escape']:TRUE));
+			}
+		}
+		if ($value !== '') {
+			$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		}
+		if ($where != '') {
 			$this->db->where($where);
-			if($group_by != ''){
-				$this->db->group_by($group_by);
-			}
-			if($order_by !== ''){
-				if(is_array($order_by)){
-					$this->db->order_by($order_by[0],$order_by[1]);
-				}else{
-					$this->db->order_by($order_by);
-				}
-			}
-			$query = $this->db->get();
-			//return $this->db->last_query();
-			if ($query->num_rows() > 0) {
-			// query returned results
-				if ($single == TRUE) {
-					if($array === true){
-						return $query->row_array();
-					}else{
-						return $query->row();
-					}
-				} else {
-					if($array === true){
-						return $query->result_array();
-					}else{
-						return $query->result();
-					}
-				}
-			} else {
-			// query returned no results
-				return FALSE;
-			}
 		}
-		function select_fields_where_like($tbl = '', $data, $where = '', $single = FALSE, $field, $value,$group_by = '',$order_by = '')
-		{
-			$this->db->select($data);
-			$this->db->from($tbl);
-			$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			if($group_by != ''){
-				$this->db->group_by($group_by);
-			}
-			if($order_by !== ''){
-				if(is_array($order_by)){
-					$this->db->order_by($order_by[0],$order_by[1]);
-				}else{
-					$this->db->order_by($order_by);
-				}
-			}
-			$query = $this->db->get();
-			//return $this->db->last_query();
-			if ($query->num_rows() > 0) {
-			// query returned results
-				if ($single == TRUE) {
-					return $query->row();
-				} else {
-					return $query->result();
-				}
-			} else {
-			// query returned no results
-				return FALSE;
-			}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
 		}
-		function select_fields_where_like_orLikes($tbl = '', $data, $where = '', $single = FALSE, $field, $value, $orLikes = '',$group_by = '')
-		{
-			$this->db->select($data);
-			$this->db->from($tbl);
-			$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			if($orLikes != '' and is_array($orLikes)){
-				foreach($orLikes as $key=>$array){
-					$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
-				}
-			}
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			if($group_by != ''){
-				$this->db->group_by($group_by);
-			}
-			$query = $this->db->get();
-			//return $this->db->last_query();
-			if ($query->num_rows() > 0) {
-			// query returned results
-				if ($single == TRUE) {
-					return $query->row();
-				} else {
-					return $query->result();
-				}
-			} else {
-			// query returned no results
-				return FALSE;
-			}
-		}
-		function select_fields_where_like_join($tbl = '', $data, $joins = '', $where = '', $order_by = '', $single = FALSE, $array = TRUE, $limit = '', $field = '', $value = '', $group_by='')
-		{
-			if (is_array($data) and isset($data[1])) {
-				$this->db->select($data[0],$data[1]);
-			} else {
-				$this->db->select($data);
-			}
-			$this->db->from($tbl);
-			// Fourth Param is For Escaping, i-e CI should use backTicks on a join or not.
-			if ($joins != '') {
-				foreach ($joins as $k => $v) {
-					$this->db->join($v['table'], $v['condition'], $v['type'],(isset($v['escape'])?$v['escape']:TRUE));
-				}
-			}
-			if ($value !== '') {
-				$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			}
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			if($group_by != ''){
-				$this->db->group_by($group_by);
-			}
-			if($order_by != ''){
-				if(is_array($order_by)){
-					$this->db->order_by($order_by[0],$order_by[1]);
-				}else{
-					$this->db->order_by($order_by);
-				}
-			}
-			if($limit != ''){
-				if(is_array($limit)){
-					$this->db->limit($limit[0],$limit[1]);
-				}else{
-					$this->db->limit($limit);
-				}
-			}
-			$query = $this->db->get();
-			if($query === FALSE ){
-			// echo 'Database Error(' . $this->db->_error_number() . ') - ' . $this->db->_error_message();
-				return FALSE;
-			}
-			if ($query->num_rows() !== NULL && $query->num_rows() > 0) {
-				if ($single == TRUE) {
-					if($array === true){
-						return $query->row_array();
-					}else{
-						return $query->row();
-					}
-				} else {
-					if($array === true) {
-						return $query->result_array();
-					}else{
-						return $query->result();
-					}
-				}
-			} else {
-				return FALSE;
-			}
-		}
-		function select_fields_where_like__orLikes_join($tbl = '', $data, $joins = '', $where = '', $single = FALSE, $field = '', $value = '', $orLikes = '', $group_by='',$order_by = '',$limit = '')
-		{
-			if (is_array($data) and isset($data[1])){
-				$this->db->select($data[0],$data[1]);
+		if($order_by != ''){
+			if(is_array($order_by)){
+				$this->db->order_by($order_by[0],$order_by[1]);
 			}else{
-				$this->db->select($data);
-			}
-			$this->db->from($tbl);
-			if ($joins != '') {
-				foreach ($joins as $k => $v) {
-					$this->db->join($v['table'], $v['condition'], $v['type']);
-				}
-			}
-			if ($value !== '') {
-				$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			}
-			if($orLikes != '' and is_array($orLikes)){
-				foreach($orLikes as $key=>$array){
-					$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
-				}
-			}
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			if($group_by != ''){
-				$this->db->group_by($group_by);
-			}
-			if($order_by != ''){
-				if(is_array($order_by)){
-					$this->db->order_by($order_by[0],$order_by[1]);
-				}else{
-					$this->db->order_by($order_by);
-				}
-			}
-			if($limit != ''){
-				if(is_array($limit)){
-					$this->db->limit($limit[0],$limit[1]);
-				}else{
-					$this->db->limit($limit);
-				}
-			}
-			$query = $this->db->get();
-			//return $this->db->last_query();
-			if ($query->num_rows() > 0) {
-			// query returned results
-				if ($single == TRUE) {
-					return $query->row();
-				} else {
-					return $query->result();
-				}
-			} else {
-			// query returned no results
-				return FALSE;
+				$this->db->order_by($order_by);
 			}
 		}
-		//Common AutoComplete Queries
-		function get_autoComplete($tbl, $data, $field, $value, $where = '', $group_by = false, $limit = '')
-		{
-			$this->db->select($data);
-			$this->db->from($tbl);
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			if ($group_by == true) {
-				$this->db->group_by($field);
-			}
-			if ($limit != '') {
+		if($limit != ''){
+			if(is_array($limit)){
+				$this->db->limit($limit[0],$limit[1]);
+			}else{
 				$this->db->limit($limit);
 			}
-			$query = $this->db->get();
-			return $query->result();
 		}
-		function get_autoCompleteJoin($PTable, $joins = '', $where = '', $data, $field, $value, $group_by = false)
-		{
-			$this->db->select($data);
-			$this->db->from($PTable);
-			if ($joins != "") {
-				foreach ($joins as $k => $v) {
-					$this->db->join($v['table'], $v['condition'], $v['type']);
-				}
-			}
-			if ($where != '') {
-				$this->db->where($where);
-			}
-			$this->db->like('LOWER(' . $field . ')', strtolower($value));
-			if ($group_by == true) {
-				$this->db->group_by($field);
-			}
-			$query = $this->db->get();
-			//echo $this->db->last_query();
-			return $query->result();
+		$query = $this->db->get();
+		if($query === FALSE ){
+		// echo 'Database Error(' . $this->db->_error_number() . ') - ' . $this->db->_error_message();
+			return FALSE;
 		}
-
-		//------------------------ insert record queries -----------------------------------
-		function insert_record($tbl, $data)
-		{
-			$this->db->insert($tbl, $data);
-			return $this->db->insert_id();
-		}
-		//Insert Record If Don't Exist Else Update the Record
-		function insert_slash_update($tbl, $data, $field, $id,$where)
-		{
-			$this->db->where($where);
-			$q = $this->db->get($tbl);
-			if ( $q->num_rows() > 0 )
-			{
-				$this->db->where($field,$id);
-				$this->db->update($tbl,$data);
-				$affectedRows = $this->db->affected_rows();
-				if($affectedRows){
-					return TRUE;
+		if ($query->num_rows() !== NULL && $query->num_rows() > 0) {
+			if ($single == TRUE) {
+				if($array === true){
+					return $query->row_array();
 				}else{
-					return FALSE;
+					return $query->row();
 				}
 			} else {
-				$this->db->set($field, $id);
-				$this->db->insert($tbl,$data);
-				$insertedID = $this->db->insert_id();
-				if($insertedID > 0){
-					return TRUE;
+				if($array === true) {
+					return $query->result_array();
 				}else{
-					return FALSE;
+					return $query->result();
 				}
 			}
+		} else {
+			return FALSE;
 		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	function select_fields_where_like($tbl = '', $data, $where = '', $single = FALSE, $field, $value,$group_by = '',$order_by = '')
+	{
+		$this->db->select($data);
+		$this->db->from($tbl);
+		$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		if($order_by !== ''){
+			if(is_array($order_by)){
+				$this->db->order_by($order_by[0],$order_by[1]);
+			}else{
+				$this->db->order_by($order_by);
+			}
+		}
+		$query = $this->db->get();
+		//return $this->db->last_query();
+		if ($query->num_rows() > 0) {
+		// query returned results
+			if ($single == TRUE) {
+				return $query->row();
+			} else {
+				return $query->result();
+			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}
+	function select_fields_where_like_orLikes($tbl = '', $data, $where = '', $single = FALSE, $field, $value, $orLikes = '',$group_by = '')
+	{
+		$this->db->select($data);
+		$this->db->from($tbl);
+		$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		if($orLikes != '' and is_array($orLikes)){
+			foreach($orLikes as $key=>$array){
+				$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
+			}
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		$query = $this->db->get();
+		//return $this->db->last_query();
+		if ($query->num_rows() > 0) {
+		// query returned results
+			if ($single == TRUE) {
+				return $query->row();
+			} else {
+				return $query->result();
+			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}
+	function select_fields_where_like__orLikes_join($tbl = '', $data, $joins = '', $where = '', $single = FALSE, $field = '', $value = '', $orLikes = '', $group_by='',$order_by = '',$limit = '')
+	{
+		if (is_array($data) and isset($data[1])){
+			$this->db->select($data[0],$data[1]);
+		}else{
+			$this->db->select($data);
+		}
+		$this->db->from($tbl);
+		if ($joins != '') {
+			foreach ($joins as $k => $v) {
+				$this->db->join($v['table'], $v['condition'], $v['type']);
+			}
+		}
+		if ($value !== '') {
+			$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		}
+		if($orLikes != '' and is_array($orLikes)){
+			foreach($orLikes as $key=>$array){
+				$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
+			}
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		if($order_by != ''){
+			if(is_array($order_by)){
+				$this->db->order_by($order_by[0],$order_by[1]);
+			}else{
+				$this->db->order_by($order_by);
+			}
+		}
+		if($limit != ''){
+			if(is_array($limit)){
+				$this->db->limit($limit[0],$limit[1]);
+			}else{
+				$this->db->limit($limit);
+			}
+		}
+		$query = $this->db->get();
+		//return $this->db->last_query();
+		if ($query->num_rows() > 0) {
+		// query returned results
+			if ($single == TRUE) {
+				return $query->row();
+			} else {
+				return $query->result();
+			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}
+
+
+
+
+
+	//Common AutoComplete Queries
+	function get_autoComplete($tbl, $data, $field, $value, $where = '', $group_by = false, $limit = '')
+	{
+		$this->db->select($data);
+		$this->db->from($tbl);
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		if ($group_by == true) {
+			$this->db->group_by($field);
+		}
+		if ($limit != '') {
+			$this->db->limit($limit);
+		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+	function get_autoCompleteJoin($PTable, $joins = '', $where = '', $data, $field, $value, $group_by = false)
+	{
+		$this->db->select($data);
+		$this->db->from($PTable);
+		if ($joins != "") {
+			foreach ($joins as $k => $v) {
+				$this->db->join($v['table'], $v['condition'], $v['type']);
+			}
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		if ($group_by == true) {
+			$this->db->group_by($field);
+		}
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		return $query->result();
+	}
+
+// ================= INSERT QUERY
+	function insert_record($tbl, $data)
+	{
+		$this->db->insert($tbl, $data);
+		return $this->db->insert_id();
+	}
+	//Insert Record If Don't Exist Else Update the Record
+	function insert_slash_update($tbl, $data, $field, $id,$where)
+	{
+		$this->db->where($where);
+		$q = $this->db->get($tbl);
+		if ( $q->num_rows() > 0 )
+		{
+			$this->db->where($field,$id);
+			$this->db->update($tbl,$data);
+			$affectedRows = $this->db->affected_rows();
+			if($affectedRows){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		} else {
+			$this->db->set($field, $id);
+			$this->db->insert($tbl,$data);
+			$insertedID = $this->db->insert_id();
+			if($insertedID > 0){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+	}
 		function insert_multiple($tbl, $data)
 		{
 			$query = $this->db->insert_batch($tbl, $data);
@@ -644,23 +660,13 @@ class Common_model extends CI_Model
 		public function insert_else_ignore($table,$data)
 		{
 			$query = $this->db->get_where($table,$data);
-				$count = $query->num_rows(); //counting result from query
-				if ($count === 0) {
-					$this->db->insert($table, $data);
-					return true;
-				}
-			}
-			public function get_row_where($table,$data)
-			{
-				$this->db->where($data);
-				$query = $this->db->get($table);
-			//echo "<pre> query = "; print_r( $query  ); echo "</pre>";
-			if($query->num_rows() > 0) //counting result from query
-			{
+			$count = $query->num_rows(); //counting result from query
+			if ($count === 0) {
+				$this->db->insert($table, $data);
 				return true;
 			}
 		}
-		function get_row_order_desc($tbl = '', $data, $single = FALSE,$order_by = '')
+		public function get_row_order_desc($tbl = '', $data, $single = FALSE,$order_by = '')
 		{
 			$this->db->select($data);
 			$this->db->from($tbl);

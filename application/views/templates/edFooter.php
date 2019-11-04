@@ -62,7 +62,7 @@
 			}).get();
 			var result = "";
 			for (var i = 0; i < res.length; i++) {
-				result += "<a class='base-link' href='#" + res[i].toLowerCase().replace(/\s+/g, '-') + "'> "+ res[i].replace(/-/g, ' ') + "</a>";
+				result += "<h5><a class='base-link' href='#" + res[i].toLowerCase().replace(/\s+/g, '-') + "'> "+ res[i].replace(/-/g, ' ') + "</a></h5>";
 			}
 			$('#point').html(result);	
 			$('.inner-desc').on("scroll", onScroll);
@@ -86,7 +86,7 @@
 		 		$('.inner-desc').on("scroll", onScroll);
 		 	});
 		 });
-		 var btn_in 	  = $('.btn-desc-left'),
+		 var btn_in = $('.btn-desc-left'),
 		 btn_out 	= $('.btn-desc-right'),
 		 boxDesc 	= $('.box-desc'),
 		 overlay 	= $('.overlay'),
@@ -108,10 +108,18 @@
 
 			// TOGGLE MENU
 			$('.open-menu').click(function(){
+				$(this).fadeOut();
 				$(side_menu).toggleClass('out');
 				$(overlay).addClass('block');
 			});
+			$('.open-col').click(function(){
+				$('.col-left').removeClass('visible-md visible-lg');
+			});
+			$('.close-col').click(function(){
+				$('.col-left').addClass('visible-md visible-lg');
+			});
 			$('.closed-menu').click(function(){
+				$('.open-menu').fadeIn();
 				$(side_menu).addClass('out');
 				$(overlay).removeClass('block');
 			});

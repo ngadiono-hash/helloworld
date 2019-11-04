@@ -29,7 +29,7 @@ class XhrM extends CI_Controller
 		foreach ($all_category as $l) {
 			$result['cat'][] = $l['Lname'];
 		}
-		$all_category_by_cat = $this->Common_model->select_fields_where_like_join(
+		$all_category_by_cat = $this->Common_model->select_fields_where_join(
 			'tutors AS t1',
 			't1.snip_id AS id,t1.snip_title AS title,t1.snip_slug AS slug,t1.snip_meta AS meta,t2._name AS level,t3._name AS category',
 			[

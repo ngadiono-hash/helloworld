@@ -31,9 +31,9 @@ class Read_model extends CI_Model
 
 	public function checkExist($table,$where=[])
 	{
-	  $this->db->where($where);
-		$cek = $this->db->get($table);
-		return $cek->num_rows();
+	 //  $this->db->where($where);
+		// $cek = $this->db->get($table);
+		// return $cek->num_rows();
 	}
 
 // ================= NOTIFICATION
@@ -143,18 +143,18 @@ class Read_model extends CI_Model
 	}
 	public function getListMenuByLevel($level)
 	{
-		$this->db->select('
-			tutors.snip_title AS title,
-			tutors.snip_slug AS slug,
-			tutors.snip_meta AS meta
-		');
-		$this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
-		$this->db->where([
-			'tutor_lev._name' => $level,
-			'tutors.snip_publish' => 1,
-		]);
-		$this->db->order_by("tutors.snip_order", "asc");
-		return $this->db->get($this->tutor)->result_array();
+		// $this->db->select('
+		// 	tutors.snip_title AS title,
+		// 	tutors.snip_slug AS slug,
+		// 	tutors.snip_meta AS meta
+		// ');
+		// $this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		// $this->db->where([
+		// 	'tutor_lev._name' => $level,
+		// 	'tutors.snip_publish' => 1,
+		// ]);
+		// $this->db->order_by("tutors.snip_order", "asc");
+		// return $this->db->get($this->tutor)->result_array();
 	}  
 	public function getAllTutorialByCat($category)
 	{
@@ -174,45 +174,45 @@ class Read_model extends CI_Model
 	}
 	public function getTutorialByMeta($category,$meta)
 	{
-		$this->db->select('
-			tutors.snip_id AS id,
-			tutors.snip_order AS order,
-			tutors.snip_title AS judul,
-			tutors.snip_slug AS slug,
-			tutors.snip_meta AS meta,
-			tutors.snip_content AS konten,
-			tutors.snip_code AS kode,
-			tutors.snip_update AS update,
-			tutors.snip_publish AS publish,
-			tutor_cat._name AS kategori,
-			tutor_lev._name AS level,
-		');
-		$this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
-		$this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
-		$this->db->where([
-			'tutors.snip_category' => $category,
-			'tutors.snip_meta' => $meta,
-			'tutors.snip_bin' => 0,
+		// $this->db->select('
+		// 	tutors.snip_id AS id,
+		// 	tutors.snip_order AS order,
+		// 	tutors.snip_title AS judul,
+		// 	tutors.snip_slug AS slug,
+		// 	tutors.snip_meta AS meta,
+		// 	tutors.snip_content AS konten,
+		// 	tutors.snip_code AS kode,
+		// 	tutors.snip_update AS update,
+		// 	tutors.snip_publish AS publish,
+		// 	tutor_cat._name AS kategori,
+		// 	tutor_lev._name AS level,
+		// ');
+		// $this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		// $this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
+		// $this->db->where([
+		// 	'tutors.snip_category' => $category,
+		// 	'tutors.snip_meta' => $meta,
+		// 	'tutors.snip_bin' => 0,
 
-		]);
-		return $this->db->get($this->tutor)->row_array();
+		// ]);
+		// return $this->db->get($this->tutor)->row_array();
 	}  
 	public function getNextTutorial($order,$level)
 	{
-		$this->db->select('
-			tutors.snip_meta AS meta,
-			tutors.snip_title AS title,
-			tutors.snip_slug AS slug
-		');
-		$this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
-		$this->db->where([
-			'tutor_lev._name' => $level,
-			'tutors.snip_order >' => $order,
-			'tutors.snip_publish' => 1
-		]);
-		$this->db->limit(1);
-		$this->db->order_by('tutors.snip_order','asc');
-		return $this->db->get($this->tutor)->row_array();
+		// $this->db->select('
+		// 	tutors.snip_meta AS meta,
+		// 	tutors.snip_title AS title,
+		// 	tutors.snip_slug AS slug
+		// ');
+		// $this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		// $this->db->where([
+		// 	'tutor_lev._name' => $level,
+		// 	'tutors.snip_order >' => $order,
+		// 	'tutors.snip_publish' => 1
+		// ]);
+		// $this->db->limit(1);
+		// $this->db->order_by('tutors.snip_order','asc');
+		// return $this->db->get($this->tutor)->row_array();
 	}
 
 	public function getLevelNameByCat($category)
