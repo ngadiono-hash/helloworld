@@ -17,13 +17,16 @@ class Common_model extends CI_Model
 		} else {
 			return false;
 		}
-	}	
-	function select($tbl)
-	{
-		$query = $this->db->get($tbl);
-		return $query->result();
 	}
-	public function select_spec($tbl,$data,$where)
+	function count_record($table,$data,$where)
+	{
+		$this->db->select($data);
+		$this->db->from($table);
+		$this->db->where($where);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+	function select_spec($tbl,$data,$where)
 	{
 		$this->db->select($data);
 		$this->db->from($tbl);
@@ -689,19 +692,6 @@ class Common_model extends CI_Model
 			} else {
 				// query returned no results
 				return FALSE;
-			}
-		}
-		public function get_record_where($table,$where)
-		{
-			$this->db->select('*');
-			$this->db->from($table);
-			$this->db->where($where);
-			$query = $this->db->get();
-			if($query->num_rows() > 0) //counting result from query
-			{
-				return $query->row();
-			}else{
-				return false;
 			}
 		}
 

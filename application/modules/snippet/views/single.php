@@ -45,17 +45,17 @@
 					</li>
 				</ul>
 				<ul class="nav nav-tabs pull-right" id="control-right">
-					<li class="center run" data-toggle="tooltip" data-placement="top" title="BOOKMARK">
-						<a class="mini"><i class="fa fa-bookmark"></i></a>
+					<li class="center" data-toggle="tooltip" data-placement="top" title="BOOKMARK">
+						<a id="book-this" class="mini"><i class="fa fa-bookmark"></i></a>
 					</li>
 					<li class="center" data-toggle="tooltip" data-placement="top" title="LIKE">
 						<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
 					</li>
-					<li class="center run" data-toggle="tooltip" data-placement="top" title="INFO">
+					<li class="center" data-toggle="tooltip" data-placement="top" title="INFO">
 						<a id="open-comment" class="mini"><i class="fa fa-info-circle"></i></a>
 					</li>
 				</ul>				
-				<ul class="nav nav-tabs" style="float: right;">
+				<ul class="nav nav-tabs pull-right">
 				</ul>
 				<div class="tab-content">
 					<div id="third" class="tab-pane fade in active">
@@ -113,16 +113,25 @@
 							<h3 class="fred"><a class="base-link" href="#"><?=$code['user_author'] ?></a></h3>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="clearfix"></div>
+					<div class="col-xs-2">
 						<div class="info-like">
 							<i class="fa fa-thumbs-up"></i>
-							<p><span>4</span> <span class="hidden-sm hidden-xs">suka</span></p>
+							<p><span class="fred">4</span></p>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-xs-2">
 						<div class="info-comment">
 							<i class="fa fa-comment-alt"></i>
-							<p><span><?=$count_comm?></span> <span class="hidden-sm hidden-xs">komentar</span></p>
+							<p><span class="fred"><?=$count_comm?></span></p>
+						</div>
+					</div>
+					<div class="col-xs-8">
+						<div class="info-tags">
+							<i class="fas fa-tags"></i>
+						<?php foreach ($tags_snippet as $k) { ?>
+							<a href="#" class="base-link fred">#<?=$k['category_name']?></a>	
+						<?php	}	?>
 						</div>
 					</div>
 				</div>
@@ -229,7 +238,6 @@ $(document).ready(function(){
 	$('#comment').on('keyup',function(){
 		$('.error').html('');
 	});
-	// console.log(document.referrer);
 	if(document.referrer == host + 'u/notification'){
 		$('.side-info').fadeIn().removeClass('hide');
 		$('.overlay').fadeIn().removeClass('hide');

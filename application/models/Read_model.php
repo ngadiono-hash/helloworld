@@ -272,7 +272,7 @@ class Read_model extends CI_Model
 
 	public function getTagSnippet()
 	{
-		return $this->db->get('snip_cat')->result_array();
+		// return $this->db->get('snip_cat')->result_array();
 	}
 
 	public function getAllSnippetByAuthor()
@@ -332,10 +332,10 @@ class Read_model extends CI_Model
 	}
 	public function countCommentLimited($page,$id=[])
 	{
-		$this->db->from('comment');
-		$this->db->where(['id_target' => $page]);
-		$this->db->where($id);
-		return $this->db->count_all_results();
+		// $this->db->from('comment');
+		// $this->db->where(['id_target' => $page]);
+		// $this->db->where($id);
+		// return $this->db->count_all_results();
 	}
 
 	public function getCountLikePost($id_post)

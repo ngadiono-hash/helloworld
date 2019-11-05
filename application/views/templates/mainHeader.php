@@ -864,7 +864,7 @@
 			margin-top: 5px;
 			min-height: 100px;
 		}	
-		.content-snippet .info-like, .content-snippet .info-comment {
+		.content-snippet .info-like, .content-snippet .info-comment, .content-snippet .info-tags {
 			margin-top: 5px;
 			text-align: center;
 		}
@@ -875,17 +875,18 @@
 			margin-left: -10px;
 		}
 		.content-snippet .info-like p, .content-snippet .info-comment p {
-			margin: 0;		
+			margin: 0;
+			margin-left: 40px;
 		}
-		.content-snippet .info-like i, .content-snippet .info-comment i {
-			padding: 13px;
+		.content-snippet .info-like i, .content-snippet .info-comment i, .content-snippet .info-tags i {
+			padding: 14px;
 	    background: #0000ff45;
 	    position: absolute;
 	    left: 0;
 	    top: 0;
 	    border-radius: 5px;
 		}	
-		.content-snippet .info-title, .content-snippet .info-desc, .content-snippet .info-author, .content-snippet .info-link, .content-snippet .info-like, .content-snippet .info-comment {
+		.content-snippet .info-title, .content-snippet .info-desc, .content-snippet .info-author, .content-snippet .info-link, .content-snippet .info-like, .content-snippet .info-comment, .content-snippet .info-tags {
 			border-radius: 5px;
 			background: #D2D6DE;
 			padding: 10px;
