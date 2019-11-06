@@ -440,17 +440,18 @@ class Common_model extends CI_Model
 		}
 	}
 
-		function delete($table , $where=NULL)
+// DELETE QUERY
+	function delete($table , $where=NULL)
+	{
+		if(!empty($where))
 		{
-			if(!empty($where))
-			{
-				$this->db->where($where);
-			}
-			if($this->db->delete($table))
-			{
-				return $this->db->affected_rows();
-			}
+			$this->db->where($where);
 		}
+		if($this->db->delete($table))
+		{
+			return $this->db->affected_rows();
+		}
+	}
 
 		//Common DataTables Queries
 		function  select_fields_joined_DTM($data, $PTable, $joins = '', $where = '',$where_in_column ='', $where_in_data = '', $group_by = '', $addColumn = '', $editColumn = '',$unsetColumn = '')

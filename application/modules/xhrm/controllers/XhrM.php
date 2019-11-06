@@ -30,10 +30,16 @@ class XhrM extends CI_Controller
 	}
 	private function updateAttempt($now,$where)
 	{
-		$this->db->set('log_att','`log_att`+1',FALSE);
-		$this->db->set('log_time',$now);
-		$this->db->where($where);
-		return $this->db->update('login');
+		$attempt = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
+		$exp = intval($attempt['log_time'] + 1800);
+		if ($exp < $now) {
+			$this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
+		} else {
+			$this->db->set('log_att','`log_att`+1',FALSE);
+			$this->db->set('log_time',$now);
+			$this->db->where($where);
+			$this->db->update('login');
+		}
 	}
 
 	public function get_list_menu() //
@@ -86,13 +92,17 @@ class XhrM extends CI_Controller
 	}
 	public function create_report() // OK
 	{
-		$ip = $this->input->post('ip');
+		$ip 	= $this->input->post('ip');
 		$code = $this->input->post('code');
 		$page = $this->input->post('page');
 		$detail = htmlspecialchars($this->input->post('detail',true));
-		$check = $this->Common_model->checkExist('bug',['sender' => $ip,'page' => $page,'code' => 'undefined']);
+		$check = $this->Common_model->count_record(
+			'bug',
+			'id',
+			['sender' => $ip,'page' => $page,'code' => $code]
+		);
 		if ($check == 0){
-			$bug_data = [
+			$data = [
 				'page' => $page,
 				'code' => $code,
 				'sender' => $ip,
@@ -100,16 +110,28 @@ class XhrM extends CI_Controller
 				'created' => time(),
 				'status' => 1
 			];
-			$this->Create_model->insertBug($bug_data);
+			$this->Common_model->insert_record('bug',$data);
 		}
 	}
-	public function load_more_comment() // OK
+	public function load_more_comment() //
 	{
 		$limit = 5;
 		$id = $this->input->post('id');
-		$page = $this->input->post('page');
-		$countLimited = $this->Common_model->countCommentLimited($page,['created <' => $id]);
-		$load = $this->Common_model->getCommentSnippet($page,$limit,['t1.created <' => $id]);
+		$serial = $this->input->post('page');
+		$countLimited = $this->Common_model->count_record('user_comment','id',['id_target' => $serial, 'created <' => $id]);
+		$load = $this->Common_model->select_fields_where_join(
+			'user_comment AS t1',
+			't1.id,t1.message AS message,t1.created AS created,
+			t2.u_id AS id_comm,t2.u_username AS name_comm,t2.u_image AS img_comm,
+			t3.code_author AS author',
+			[
+				['table' => 'users AS t2', 'condition' => 't1.id_user = t2.u_id', 'type' => ''],
+				['table' => 'snip AS t3', 'condition' => 't1.id_target = t3.code_id', 'type' => ''],
+			],
+			['t1.id_target' => $serial,'t1.created <' => $id],
+			['t1.created','desc'],
+			false,true,5
+		);		
 		$load = append_comment($load);
 		foreach ($load as $k => $b) { ?>
 			<div class="row row-comment <?=$b['side']?>" id="<?=$b['created']?>">
@@ -159,7 +181,7 @@ class XhrM extends CI_Controller
 				'key_pass'    => form_error('key_pass','<p>','</p>')
 			];
 		} else {
-			$post_email 		= trim($this->input->post('key_email',true));
+			$post_email 		= trim(htmlspecialchars($this->input->post('key_email',true)));
 			$post_remember 	= $this->input->post('remember');
 			$userLogged = $this->getUserDataByEmail($post_email);
 			$ip 		= getIp();
@@ -169,17 +191,15 @@ class XhrM extends CI_Controller
 				$now 						= time();
 				$expired 				= $now + $defaultCookie;
 				$token 					= sha1($ip.$expired.$userLogged['email'].microtime());
-				$dataCookie = [
+				$data = [
 					'expired' 	=> $expired,
 					'token' 		=> $token,
 					'email' 		=> $userLogged['email'],
 					'ip'				=> $ip,
 					'agent' 		=> $agent,
 				];
-				$this->Create_model->insertCookie($dataCookie);
+				$this->Common_model->insert_record('user_cookie',$data);
 			}
-			var_dump('ok');
-			die();
 			$user_session = [
 				'sess_id'    => $userLogged['id'],
 				'sess_role'  => $userLogged['role'],
@@ -188,7 +208,7 @@ class XhrM extends CI_Controller
 				'sess_image' => base_url('assets/img/profile/').$userLogged['image']
 			];
 			$this->session->set_userdata($user_session);
-			$this->Delete_model->deleteAttempt($userLogged['email']);
+			$this->Common_model->delete('login',['log_email' => $userLogged['email']]);
 			$refPage = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('u');
 			$printResult = [
 				'status' => 1,
@@ -407,9 +427,9 @@ class XhrM extends CI_Controller
 						return FALSE;
 					}
 					$attempt = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
-					if (($attempt['log_att'] > 0) && (($attempt['log_time'] + 18) < $now)) {
-						$this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
-					} else {
+					// if (($attempt['log_att'] > 0) && (($attempt['log_time'] + 18) < $now)) {
+						// $this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
+					// } else {
 						if ( $attempt['log_att'] == 0 ) {
 							$this->form_validation->set_message('validate_pass', '<b>Password Salah !</b>');
 							$this->updateAttempt($now,$where);
@@ -430,7 +450,7 @@ class XhrM extends CI_Controller
 							$this->form_validation->set_message('validate_pass', '');
 							$this->updateAttempt($now,$where);
 							return FALSE;
-						}
+						// }
 					}
 				}
 			}

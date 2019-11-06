@@ -83,7 +83,7 @@ class Snippet extends CI_Controller
 			'framework' => $framework,
 			'tags_snippet' => $tags,
 			'count_comm' => $count_comm,
-			'comment' => append_comment($comment),
+			'comment' => (!empty($comment)) ? append_comment($comment) : [],
 		];
 		$data['title'] = $code['code_title'];
 		$this->load->view('templates/mainHeader', $data);

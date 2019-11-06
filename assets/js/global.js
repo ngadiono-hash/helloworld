@@ -106,7 +106,7 @@ function alertBug(tipe,message,hr){
 		+ '</div>'
 		+ '<h3 class="info-swal danger">maaf, telah terjadi kesalahan</h3>'
 		+ '<h4 class="message-swal">'+ message +'</h4>'
-		+ '<input type="text" class="input-adjust hide" id="detail-bug" placeholder="tulis bug di sini untuk dilaporkan" autocomplete="off">'
+		+ '<input type="text" class="input-adjust hide" id="detail-bug" placeholder="tulis detail bug untuk dilaporkan" autocomplete="off">'
 		+ '<br>'+button;
 	swal.fire({
 		title : '<h1 class="header-swal danger">O<small>ops...</small></h1>',
@@ -181,7 +181,7 @@ function alertDanger(tipe,message){
 	});
 }
 function handle_ajax(xhr){
-	alertBug('report','bugs '+xhr.status+'',xhr.status);
+	alertBug('report','bug code '+xhr.status+'',xhr.status);
 }
 function send_bug(x){
 	$('#swal2-content').on('click','.detail',function(){

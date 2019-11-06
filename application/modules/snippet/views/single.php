@@ -91,7 +91,7 @@
 					<div class="col-sm-12 col-md-8">
 						<div class="info-desc">
 							<p class="fred">deskripsi :</p>
-							<p><?=$code['code_desc']?></p>
+							<p><?=(!empty($code['code_desc'])) ? $code['code_desc'] : 'tidak ada deskripsi yang disematkan' ?></p>
 						</div>
 						<div class="info-link">
 							<p class="fred">dukungan library :</p>
