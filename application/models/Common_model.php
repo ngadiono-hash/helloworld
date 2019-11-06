@@ -8,9 +8,9 @@ class Common_model extends CI_Model
 		// $this->load->library('Datatables');
 	}
 // ================= READ QUERY
-	function check_exist($table,$data)
+	function check_exist($table,$where)
 	{
-		$this->db->where($data);
+		$this->db->where($where);
 		$query = $this->db->get($table);
 		if($query->num_rows() > 0){
 			return true;
@@ -350,11 +350,15 @@ class Common_model extends CI_Model
 // ================= INSERT QUERY
 	function insert_record($tbl, $data)
 	{
-		$this->db->insert($tbl, $data);
-		return $this->db->insert_id();
+		$query = $this->db->insert($tbl,$data);
+		if ($query) {
+			return $this->db->insert_id();
+		} else {
+			return FALSE;
+		}
 	}
 	//Insert Record If Don't Exist Else Update the Record
-	function insert_slash_update($tbl, $data, $field, $id,$where)
+	function insert_or_update($tbl, $data, $field, $id,$where)
 	{
 		$this->db->where($where);
 		$q = $this->db->get($tbl);
@@ -379,65 +383,62 @@ class Common_model extends CI_Model
 			}
 		}
 	}
-		function insert_multiple($tbl, $data)
-		{
-			$query = $this->db->insert_batch($tbl, $data);
-			return $query;
+	function insert_multiple($tbl, $data)
+	{
+		$query = $this->db->insert_batch($tbl, $data);
+		return $query;
+	}
+	function insert_multiple_ignore_duplicate($tbl, $data){
+		$this->db->trans_start();
+		foreach ($data as $item) {
+			$insert_query = $this->db->insert_string($tbl, $item);
+			$insert_query = str_replace('INSERT INTO', 'INSERT IGNORE INTO', $insert_query);
+			$this->db->query($insert_query);
 		}
-		/**
-		 * @param $tbl
-		 * @param $data
-		 * @return bool
-		 */
-		function insert_multiple_ignore_duplicate($tbl, $data){
-			$this->db->trans_start();
-			foreach ($data as $item) {
-				$insert_query = $this->db->insert_string($tbl, $item);
-				$insert_query = str_replace('INSERT INTO', 'INSERT IGNORE INTO', $insert_query);
-				$this->db->query($insert_query);
-			}
-			$this->db->trans_complete();
-			if($this->db->trans_status() === FALSE){
-				return FALSE;
-			}else{
-				return TRUE;
-			}
+		$this->db->trans_complete();
+		if($this->db->trans_status() === FALSE){
+			return FALSE;
+		}else{
+			return TRUE;
 		}
-		// Common Update Queries
-		function update($tbl, $where, $data)
-		{
-			$this->db->where($where);
-			$this->db->update($tbl, $data);
-			$affectedRows = $this->db->affected_rows();
-			if ($affectedRows) {
-				return true;
-			} else {
-				return $this->db->error();
-			}
-		}
-		function update_query($tbl, $field, $id, $data)
-		{
-			$this->db->where($field, $id);
-			$this->db->update($tbl, $data);
-			$affectedRows = $this->db->affected_rows();
-			if ($affectedRows) {
-				return TRUE;
-			} else {
-				return $this->db->error();
-			}
-		}
+	}
 
-		function update_query_array($tbl, $fields, $data)
-		{
-			$this->db->where($fields);
-			$this->db->update($tbl, $data);
-			$afftectedRows = $this->db->affected_rows();
-			if ($afftectedRows) {
-				return $afftectedRows;
-			} else {
-				return $this->db->_error_message();
-			}
+// ================= UPDATE QUERY
+	function update($tbl,$data,$where)
+	{
+		$this->db->set($data);
+		$this->db->where($where);
+		$this->db->update($tbl);
+		$affectedRows = $this->db->affected_rows();
+		if ($affectedRows) {
+			return true;
+		} else {
+			return $this->db->error();
 		}
+	}
+	function update_query($tbl, $field, $id, $data)
+	{
+		$this->db->where($field, $id);
+		$this->db->update($tbl, $data);
+		$affectedRows = $this->db->affected_rows();
+		if ($affectedRows) {
+			return TRUE;
+		} else {
+			return $this->db->error();
+		}
+	}
+
+	function update_query_array($tbl, $fields, $data)
+	{
+		$this->db->where($fields);
+		$this->db->update($tbl, $data);
+		$afftectedRows = $this->db->affected_rows();
+		if ($afftectedRows) {
+			return $afftectedRows;
+		} else {
+			return $this->db->_error_message();
+		}
+	}
 
 		function delete($table , $where=NULL)
 		{
@@ -695,4 +696,4 @@ class Common_model extends CI_Model
 			}
 		}
 
-	} //End of Common DataTables Queries
+	} //End 

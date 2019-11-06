@@ -1,6 +1,12 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+	function debug($param)
+	{
+		var_dump($param);
+		die();
+	}
+
 	function change_host($content)
 	{
 		$find = ["/http:\/\/localhosts\/helloworld\//"];

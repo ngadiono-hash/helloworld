@@ -10,6 +10,21 @@ class At extends CI_Controller
 		$this->load->model('Common_model');
 	}
 
+	public function haha()
+	{
+		var_dump($_SESSION);
+		$ip  = getIp();
+		$agent = $_SERVER['HTTP_USER_AGENT'];
+		$where = ['log_email' => 'naflafam@gmail.com', 'log_ip' => $ip, 'log_agent' => $agent];
+		$error_pass = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
+		var_dump($error_pass);
+		if ($error_pass['log_time'] + 10 >= time()) {
+			echo "error";	
+		}	else {
+			echo "lanjut";
+		}
+	}
+
 	public function notFound()
 	{
 		not_found();

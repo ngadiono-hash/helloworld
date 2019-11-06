@@ -9,7 +9,34 @@ class XhrM extends CI_Controller
 		$this->load->model('Common_model');
 	}
 
-	public function get_list_menu() // 
+	private function getUserDataByEmail($post_email)
+	{
+		$query = $this->Common_model->select_fields_where(
+			'users',
+			'
+			u_id AS id,
+			u_username AS username,
+			u_email AS email,
+			u_active AS active,
+			u_register AS register,
+			u_role AS role,
+			u_password AS password,
+			u_image AS image
+			',
+			['u_email' => $post_email],
+			true
+		);
+		return $query;
+	}
+	private function updateAttempt($now,$where)
+	{
+		$this->db->set('log_att','`log_att`+1',FALSE);
+		$this->db->set('log_time',$now);
+		$this->db->where($where);
+		return $this->db->update('login');
+	}
+
+	public function get_list_menu() //
 	{
 		$result = [];
 		$category = $this->input->post('request');
@@ -89,8 +116,8 @@ class XhrM extends CI_Controller
 				<div class="col-xs-12">
 					<span class="action <?=$b['side-text']?>">
 						<?php if ( startSession('sess_id') && $b['id_comm'] == getSession('sess_id')) { ?>
-						<button class="btn btn-default btn-sm">edit</button>
-						<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$b['created']?>">hapus</a>
+							<button class="btn btn-default btn-sm">edit</button>
+							<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$b['created']?>">hapus</a>
 						<?php } ?>
 					</span>
 				</div>
@@ -112,11 +139,13 @@ class XhrM extends CI_Controller
 			<div class="center" id="more">
 				<button data-id="<?=$b['created']?>" class="btn-default btn">
 					<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
-					<span>tampilkan lebih banyak komentar</span>					
+					<span>tampilkan lebih banyak komentar</span>
 				</button>
 			</div>
-		<?php }		
+		<?php }
 	}
+
+
 
 // LOGIN REGISTER RESET
 	public function set_login() // OK
@@ -132,9 +161,9 @@ class XhrM extends CI_Controller
 		} else {
 			$post_email 		= trim($this->input->post('key_email',true));
 			$post_remember 	= $this->input->post('remember');
-			$userLogged 		= $this->Common_model->getUserDataByEmail($post_email);
+			$userLogged = $this->getUserDataByEmail($post_email);
 			$ip 		= getIp();
-			$agent 	= $_SERVER['HTTP_USER_AGENT'];			
+			$agent 	= $_SERVER['HTTP_USER_AGENT'];
 			if ($post_remember == 1 ){
 				$defaultCookie 	= 31536000; // 1 year
 				$now 						= time();
@@ -149,6 +178,8 @@ class XhrM extends CI_Controller
 				];
 				$this->Create_model->insertCookie($dataCookie);
 			}
+			var_dump('ok');
+			die();
 			$user_session = [
 				'sess_id'    => $userLogged['id'],
 				'sess_role'  => $userLogged['role'],
@@ -159,133 +190,133 @@ class XhrM extends CI_Controller
 			$this->session->set_userdata($user_session);
 			$this->Delete_model->deleteAttempt($userLogged['email']);
 			$refPage = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('u');
-				$printResult = [
-					'status' => 1,
-					'message' => "alertSuccess('blank',['kamu berhasil masuk','mohon tunggu sebentar',' '+imgLoad+' '],'".$refPage."')"
-				];
+			$printResult = [
+				'status' => 1,
+				'message' => "alertSuccess('blank',['kamu berhasil masuk','mohon tunggu sebentar',' '+imgLoad+' '],'".$refPage."')"
+			];
 			$this->session->unset_userdata('reff_page');
-			
+
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($printResult));
 	}
-	// public function set_register() // OK
-	// {
-	// 	$result = [];
-	// 	$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|max_length[16]|is_unique[users.u_username]');
-	// 	$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.u_email]');
-	// 	$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]');
-	// 	$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]');
-	// 	if ($this->form_validation->run($this) == FALSE) {
-	// 		$result = [
-	// 			'username'  => form_error('username','<p>','</p>'),
-	// 			'email'     => form_error('email','<p>','</p>'),
-	// 			'pass_1'    => form_error('pass_1','<p>','</p>'),
-	// 			'pass_2'    => form_error('pass_2','<p>','</p>')
-	// 		];
-	// 	} else {
-	// 		$post_email = $this->input->post('email',true);
-	// 		$post_user  = htmlspecialchars($this->input->post('username',true));
-	// 		$post_pass  = $this->input->post('pass_1');
-	// 		$token 			= sha1($post_email.$post_user.microtime());
-	// 		$user_token = [
-	// 			'email'   => $post_email,
-	// 			'token'   => $token,
-	// 			'created' => time()
-	// 		];
-	// 		$user_data = [
-	// 			'u_id'				=> date('mdHis',time()),
-	// 			'u_role'			=> 3,
-	// 			'u_username' 	=> $post_user,
-	// 			'u_email'			=> $post_email,
-	// 			'u_password'	=> password_hash($post_pass, PASSWORD_DEFAULT),
-	// 			'u_active'		=> 0,
-	// 			'u_register'	=> time(),
-	// 			'u_modified'  => time(),
-	// 			'u_image'			=> 'default.gif'
-	// 		];
-	// 			$toVerify = $this->_sendEmail('verify',$token,$post_email,$post_user);
-	// 		if($toVerify == 1) {
-	// 			$this->Create_model->insertToken($user_token);
-	// 			$this->Create_model->insertRegister($user_data);
-	// 			$result = [
-	// 				'status' => 1,
-	// 				'message' => "alertSuccess('ok',['akun berhasil dibuat','silahkan periksa inbox email untuk verifikasi akun','']);"
-	// 			];
-	// 		} else {
-	// 			$result = [
-	// 				'status' => 0,
-	// 				'message' => "alertBug('report','proses registrasi mengalami gangguan<br> silahkan coba beberapa saat lagi')"
-	// 			];
-	// 		}
-	// 	}
-	// 	$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
-	// }
-	// public function set_pw_reset() // OK
-	// {
-	// 	$result = [];
-	// 	$this->form_validation->set_rules('reset_email', 'Email', 'callback_validate_reset');
-	// 	if ( $this->form_validation->run($this) == FALSE ) {
-	// 		$result = [
-	// 			'reset_email'   => form_error('reset_email','<p>','</p>')
-	// 		];
-	// 	} else {
-	// 		$post_reset = trim($this->input->post('reset_email',true));
-	// 		$token = sha1($post_reset.microtime());
-	// 		$user_token = [
-	// 			'email'   => $post_reset,
-	// 			'token'   => $token,
-	// 			'created' => time()
-	// 		];
-	// 		$cek = $this->Common_model->countTokenByEmail($post_reset);
-	// 		if ($cek < 1){
-	// 			$toReset = $this->_sendEmail('forgot',$token,$post_reset);
-	// 			if($toReset) {
-	// 				$this->Create_model->insertToken($user_token);
-	// 				$result['message'] = "alertSuccess('ok',['link reset password telah dikirim','silahkan periksa inbox email untuk proses selanjutnya',''])";
-	// 			} else {
-	// 				$result['message'] = "alertBug('report','proses reset password mengalami gangguan<br> silahkan coba beberapa saat lagi')";
-	// 			}				
-	// 		} else {
-	// 			$result['message'] = "alertSuccess('ok',['link reset password telah dikirim','silahkan periksa inbox email untuk proses selanjutnya',''])";
-	// 		}
-	// 	}
+	public function set_register() // OK
+	{
+		$result = [];
+		$this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|max_length[16]|is_unique[users.u_username]');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.u_email]');
+		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]');
+		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]');
+		if ($this->form_validation->run($this) == FALSE) {
+			$result = [
+				'username'  => form_error('username','<p>','</p>'),
+				'email'     => form_error('email','<p>','</p>'),
+				'pass_1'    => form_error('pass_1','<p>','</p>'),
+				'pass_2'    => form_error('pass_2','<p>','</p>')
+			];
+		} else {
+			$post_email = $this->input->post('email',true);
+			$post_user  = htmlspecialchars($this->input->post('username',true));
+			$post_pass  = $this->input->post('pass_1');
+			$token 			= sha1($post_email.$post_user.microtime());
+			$user_token = [
+				'email'   => $post_email,
+				'token'   => $token,
+				'created' => time()
+			];
+			$user_data = [
+				'u_id'				=> date('mdHis',time()),
+				'u_role'			=> 3,
+				'u_username' 	=> $post_user,
+				'u_email'			=> $post_email,
+				'u_password'	=> password_hash($post_pass, PASSWORD_DEFAULT),
+				'u_active'		=> 0,
+				'u_register'	=> time(),
+				'u_modified'  => time(),
+				'u_image'			=> 'default.gif'
+			];
+			$toVerify = $this->_sendEmail('verify',$token,$post_email,$post_user);
+			if($toVerify == 1) {
+				$this->Create_model->insertToken($user_token);
+				$this->Create_model->insertRegister($user_data);
+				$result = [
+					'status' => 1,
+					'message' => "alertSuccess('ok',['akun berhasil dibuat','silahkan periksa inbox email untuk verifikasi akun','']);"
+				];
+			} else {
+				$result = [
+					'status' => 0,
+					'message' => "alertBug('report','proses registrasi mengalami gangguan<br> silahkan coba beberapa saat lagi')"
+				];
+			}
+		}
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}
+	public function set_pw_reset() // OK
+	{
+		$result = [];
+		$this->form_validation->set_rules('reset_email', 'Email', 'callback_validate_reset');
+		if ( $this->form_validation->run($this) == FALSE ) {
+			$result = [
+				'reset_email'   => form_error('reset_email','<p>','</p>')
+			];
+		} else {
+			$post_reset = trim($this->input->post('reset_email',true));
+			$token = sha1($post_reset.microtime());
+			$user_token = [
+				'email'   => $post_reset,
+				'token'   => $token,
+				'created' => time()
+			];
+			$cek = $this->Common_model->countTokenByEmail($post_reset);
+			if ($cek < 1){
+				$toReset = $this->_sendEmail('forgot',$token,$post_reset);
+				if($toReset) {
+					$this->Create_model->insertToken($user_token);
+					$result['message'] = "alertSuccess('ok',['link reset password telah dikirim','silahkan periksa inbox email untuk proses selanjutnya',''])";
+				} else {
+					$result['message'] = "alertBug('report','proses reset password mengalami gangguan<br> silahkan coba beberapa saat lagi')";
+				}
+			} else {
+				$result['message'] = "alertSuccess('ok',['link reset password telah dikirim','silahkan periksa inbox email untuk proses selanjutnya',''])";
+			}
+		}
 
-	// 	$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
-	// }
-	// public function set_pw_change() // OK
-	// {
-	// 	$result = [];
-	// 	$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]',
-	// 				array('min_length' => '{field} minimal terdiri dari 6 karakter')
-	// 			);
-	// 	$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]',
-	// 				array('matches' => '{field} tidak cocok')
-	// 			);
-	// 	$this->form_validation->set_message('required','{field} harus diisi');
-	// 	if ($this->form_validation->run() == FALSE) {
-	// 		$result = [
-	// 			'pass_1'    => form_error('pass_1','<p class="text-danger">','</p>'),
-	// 			'pass_2'    => form_error('pass_2','<p class="text-danger">','</p>')
-	// 		];
-	// 	} else {
-	// 		$post_pass 	= password_hash($this->input->post('pass_1'),PASSWORD_DEFAULT);
-	// 		$sess_email = getSession('reset_password');
-	// 		$this->Update_model->updatePassword($sess_email,$post_pass);
-	// 		$locate = base_url('at/sign');
-	// 		$result = [
-	// 			"message" => "alertSuccess('blank',['password berhasil diubah','mohon tunggu sebentar',' '+imgLoad+' '],'".$locate."')"
-	// 		];
-	// 		$this->Delete_model->deleteToken($sess_email);
-	// 		$this->session->unset_userdata('reset_password');
-	// 	}
-	// 	$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
-	// }
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}
+	public function set_pw_change() // OK
+	{
+		$result = [];
+		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]',
+			array('min_length' => '{field} minimal terdiri dari 6 karakter')
+		);
+		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]',
+			array('matches' => '{field} tidak cocok')
+		);
+		$this->form_validation->set_message('required','{field} harus diisi');
+		if ($this->form_validation->run() == FALSE) {
+			$result = [
+				'pass_1'    => form_error('pass_1','<p class="text-danger">','</p>'),
+				'pass_2'    => form_error('pass_2','<p class="text-danger">','</p>')
+			];
+		} else {
+			$post_pass 	= password_hash($this->input->post('pass_1'),PASSWORD_DEFAULT);
+			$sess_email = getSession('reset_password');
+			$this->Update_model->updatePassword($sess_email,$post_pass);
+			$locate = base_url('at/sign');
+			$result = [
+				"message" => "alertSuccess('blank',['password berhasil diubah','mohon tunggu sebentar',' '+imgLoad+' '],'".$locate."')"
+			];
+			$this->Delete_model->deleteToken($sess_email);
+			$this->session->unset_userdata('reset_password');
+		}
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}
 
 // CALLBABCK
 	public function validate_email() // OK
 	{
-		$post_email = trim($this->input->post('key_email',true));
-		$cek_mail 	= $this->Common_model->getUserDataByEmail($post_email);		
+		$post_email = trim(htmlspecialchars($this->input->post('key_email',true)));
+		$cek_mail 	= $this->getUserDataByEmail($post_email);
 		$now = time();
 		$ip = getIp();
 		$agent = $_SERVER['HTTP_USER_AGENT'];
@@ -295,7 +326,7 @@ class XhrM extends CI_Controller
 		} else {
 			if (!filter_var($post_email,FILTER_VALIDATE_EMAIL)) {
 				$this->form_validation->set_message('validate_email','Format Email tidak valid');
-				return FALSE; 
+				return FALSE;
 			} else {
 				if($cek_mail['email'] == null){
 					$this->form_validation->set_message('validate_email','Email ini tidak <b>terdaftar</b> di sistem kami');
@@ -305,8 +336,13 @@ class XhrM extends CI_Controller
 						$this->form_validation->set_message('validate_email','Email ini belum <b>teraktivasi</b> di sistem kami');
 						return FALSE;
 					} else {
-						$error_mail = $this->Common_model->getAttempt($cek_mail['email'],$ip,$agent);
-						$end = $error_mail['time'] + 1800; 
+						$error_mail = $this->Common_model->select_fields_where(
+							'login',
+							'log_att AS attempt,log_time AS time',
+							['log_email' => $cek_mail['email'], 'log_ip' => $ip, 'log_agent' => $agent],
+							true
+						);
+						$end = $error_mail['time'] + 1800;
 						if (($error_mail['attempt'] == 5) && ($now < $end)) {
 							$diff 	= $end - $now;
 							$hour 	= floor($diff/(3600));
@@ -319,18 +355,20 @@ class XhrM extends CI_Controller
 							} else {
 								$time = ' beberapa detik ';
 							}
-							$this->form_validation->set_message('validate_email', '<b>Email ini terblokir untuk sementara.</b><br> Silahkan login kembali dalam waktu '.$time.' lagi');
+							$this->form_validation->set_message('validate_email', '<b>Email ini terblokir untuk sementara.</b><br> Silahkan login kembali dalam waktu '.$time.' lagi<br> atau gunakan fitur Lupa Password');
 							return FALSE;
 						} elseif( ($error_mail['attempt'] == 5) && ($now > $end)) {
 							$notif = [
-								'user' => $cek_mail['email'],
-								'ip' => $ip,
+								'user' 	=> $cek_mail['email'],
+								'ip' 		=> $ip,
 								'agent' => $agent,
 								'created' => $now,
 							];
-							$this->Create_model->insertNotifLogin($notif);
-							$this->Update_model->updateNotif(['security' => 1],['user' => $cek_mail['id']]);
-							$this->Update_model->updateResetAttempt($now,$cek_mail['email'],$ip,$agent);
+							$create_notif = $this->Common_model->insert_record('secure',$notif);
+							if ($create_notif) {
+								$this->Common_model->update('notification',['security' => 1],['user' => $cek_mail['id']]);
+								$this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
+							}
 							return TRUE;
 						}
 					}
@@ -342,45 +380,59 @@ class XhrM extends CI_Controller
 	{
 		$post_email = trim($this->input->post('key_email',true));
 		$post_pass 	= trim($this->input->post('key_pass'));
-		$cek_pass   = $this->Common_model->getUserDataByEmailActive($post_email);
+		$cek_pass   = $this->getUserDataByEmail($post_email);
 		$now = time();
-		$ip = getIp();
+		$ip  = getIp();
 		$agent = $_SERVER['HTTP_USER_AGENT'];
+		$where = ['log_email' => $cek_pass['email'], 'log_ip' => $ip, 'log_agent' => $agent];
 		if (empty($post_pass)) {
 			$this->form_validation->set_message('validate_pass', 'Password harus diisi');
 			return FALSE;
 		} else {
 			if ($cek_pass['email']) {
 				if (!password_verify($post_pass, $cek_pass['password'])) {
-					$count = $this->Common_model->checkExist('login_attempt',['log_email'=>$cek_pass['email'],'log_ip'=>$ip,'log_agent'=>$agent]);					
+					$count = $this->Common_model->count_record('login','id',$where);
 					if ($count == 0) {
-						$this->Create_model->insertAttempt($cek_pass['email']);
-						$this->form_validation->set_message('validate_pass', '<b>Password Salah</b>');
+						$this->Common_model->insert_record(
+							'login',
+							[
+								'log_time' 	=> $now,
+								'log_email' => $cek_pass['email'],
+								'log_ip' 		=> $ip,
+								'log_agent' => $agent,
+								'log_att' 	=> 0
+							]
+						);
+						$this->form_validation->set_message('validate_pass','<b>Password Salah</b>');
 						return FALSE;
 					}
-					$error_pass = $this->Common_model->getAttempt($cek_pass['email'],$ip,$agent);
-					if ( $error_pass['attempt']  == 0 ) {
-						$this->form_validation->set_message('validate_pass', '<b>Password Salah !</b>');
-						$this->Update_model->updateAttempt($now,$cek_pass['email'],$ip,$agent);
-						return FALSE;
-					} elseif ( $error_pass['attempt'] == 1 ) {
-						$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b>');
-						$this->Update_model->updateAttempt($now,$cek_pass['email'],$ip,$agent);
-						return FALSE;
-					} elseif ( $error_pass['attempt'] == 2 ) {
-						$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b> <br>Percobaan Login untuk yang kesekian kalinya dengan password yang salah');
-						$this->Update_model->updateAttempt($now,$cek_pass['email'],$ip,$agent);
-						return FALSE;
-					} elseif ( $error_pass['attempt'] == 3 ) {
-						$this->form_validation->set_message('validate_pass', '<b>Password Salah</b> <br>Kesempatan sekali lagi untuk Login, gunakan dengan hati-hati');
-						$this->Update_model->updateAttempt($now,$cek_pass['email'],$ip,$agent);
-						return FALSE;
-					} elseif ( $error_pass['attempt'] == 4 ) {
-						$this->form_validation->set_message('validate_pass', '');
-						$this->Update_model->updateAttempt($now,$cek_pass['email'],$ip,$agent);
-						return FALSE;
+					$attempt = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
+					if (($attempt['log_att'] > 0) && (($attempt['log_time'] + 18) < $now)) {
+						$this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
+					} else {
+						if ( $attempt['log_att'] == 0 ) {
+							$this->form_validation->set_message('validate_pass', '<b>Password Salah !</b>');
+							$this->updateAttempt($now,$where);
+							return FALSE;
+						} elseif ( $attempt['log_att'] == 1 ) {
+							$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b>');
+							$this->updateAttempt($now,$where);
+							return FALSE;
+						} elseif ( $attempt['log_att'] == 2 ) {
+							$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b> <br>Percobaan Login untuk yang kesekian kalinya dengan password yang salah');
+							$this->updateAttempt($now,$where);
+							return FALSE;
+						} elseif ( $attempt['log_att'] == 3 ) {
+							$this->form_validation->set_message('validate_pass', '<b>Password Salah</b> <br>Kesempatan sekali lagi untuk Login, gunakan dengan hati-hati');
+							$this->updateAttempt($now,$where);
+							return FALSE;
+						} elseif ( $attempt['log_att'] == 4 ) {
+							$this->form_validation->set_message('validate_pass', '');
+							$this->updateAttempt($now,$where);
+							return FALSE;
+						}
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -394,7 +446,7 @@ class XhrM extends CI_Controller
 	// 	} else {
 	// 		if (!filter_var($post_reset, FILTER_VALIDATE_EMAIL)) {
 	// 			$this->form_validation->set_message('validate_reset', 'Format Email tidak valid');
-	// 			return FALSE; 
+	// 			return FALSE;
 	// 		} else {
 	// 			if($user['email'] == null){
 	// 				$this->form_validation->set_message('validate_reset', 'Email ini tidak <b>terdaftar</b> di sistem kami');
@@ -441,15 +493,15 @@ class XhrM extends CI_Controller
 			$send_link = base_url().'at/verify/'.urldecode($token);
 			$body = $this->load->view('templates/emailHeader','',true);
 			$body .= '
-			  <h2 style="margin: 20px 0">Hai '.$user.', <br>terima kasih telah melakukan pendaftaran</h2>
-				<p style="text-align: left;">Akunmu telah berhasil dibuat, tapi masih belum aktif dan belum bisa digunakan untuk login.</p>
-				<p style="text-align: left;">Agar kamu bisa masuk ke akun yang baru dibuat, lakukan langkah verifikasi dengan meng-klik tautan di bawah ini.</p>
-				<a style="font-family: Arial, Sans-serif" href="'.$send_link.'">'.$send_link.'</a>
-				<p style="text-align: left; margin-top: 50px; font-size: 14px;">
-				<strong>Note:</strong>
-				<br> - Email ini hanya akan valid selama 2 x 24 jam sejak dikirimkannya. 
-				<br> - Segera lakukan verifikasi sebelum data yang kamu kirim dihapus oleh sistem.
-				<br> - Mohon jangan membalas email ini.</p>';
+			<h2 style="margin: 20px 0">Hai '.$user.', <br>terima kasih telah melakukan pendaftaran</h2>
+			<p style="text-align: left;">Akunmu telah berhasil dibuat, tapi masih belum aktif dan belum bisa digunakan untuk login.</p>
+			<p style="text-align: left;">Agar kamu bisa masuk ke akun yang baru dibuat, lakukan langkah verifikasi dengan meng-klik tautan di bawah ini.</p>
+			<a style="font-family: Arial, Sans-serif" href="'.$send_link.'">'.$send_link.'</a>
+			<p style="text-align: left; margin-top: 50px; font-size: 14px;">
+			<strong>Note:</strong>
+			<br> - Email ini hanya akan valid selama 2 x 24 jam sejak dikirimkannya.
+			<br> - Segera lakukan verifikasi sebelum data yang kamu kirim dihapus oleh sistem.
+			<br> - Mohon jangan membalas email ini.</p>';
 			$body .= $this->load->view('templates/emailFooter','',true);
 			$this->email->subject('Verifikasi Akun Hello World');
 			$this->email->message($body);
@@ -458,18 +510,18 @@ class XhrM extends CI_Controller
 			$send_link = base_url().'at/reset/'.urldecode($token);
 			$body = $this->load->view('templates/emailHeader','',true);
 			$body .= '
-				<h2 style="margin: 20px 0">Hai pemilik akun '.$email.'</h2>
-				<p style="text-align: left;">Beberapa waktu yang lalu, kamu meminta untuk melakukan reset password untuk akun dengan alamat email '.$email.'.</p>
-				<p style="text-align: left;">Langkah berikutnya untuk melanjutkan proses reset password ini adalah dengan meng-klik tautan di bawah ini.</p>
-				<a style="font-family: Arial, Sans-serif" href="'.$send_link.'">'.$send_link.'</a>				
-				<p style="text-align: left; margin-top: 50px; font-size: 14px;">
-				<strong>Note:</strong>
-				<br> - Email ini hanya akan valid selama 2 x 24 jam sejak dikirimkannya. 
-				<br> - Segera lakukan verifikasi sebelum data yang kamu kirim dihapus oleh sistem.
-				<br> - Mohon jangan membalas email ini.</p>';
+			<h2 style="margin: 20px 0">Hai pemilik akun '.$email.'</h2>
+			<p style="text-align: left;">Beberapa waktu yang lalu, kamu meminta untuk melakukan reset password untuk akun dengan alamat email '.$email.'.</p>
+			<p style="text-align: left;">Langkah berikutnya untuk melanjutkan proses reset password ini adalah dengan meng-klik tautan di bawah ini.</p>
+			<a style="font-family: Arial, Sans-serif" href="'.$send_link.'">'.$send_link.'</a>
+			<p style="text-align: left; margin-top: 50px; font-size: 14px;">
+			<strong>Note:</strong>
+			<br> - Email ini hanya akan valid selama 2 x 24 jam sejak dikirimkannya.
+			<br> - Segera lakukan verifikasi sebelum data yang kamu kirim dihapus oleh sistem.
+			<br> - Mohon jangan membalas email ini.</p>';
 			$body .= $this->load->view('templates/emailFooter','',true);
 			$this->email->subject('Reset Password Akun Hello World');
-			$this->email->message($body);			
+			$this->email->message($body);
 		}
 
 		$temp = $this->email->send();
