@@ -153,8 +153,8 @@ class Common_model extends CI_Model
 			}
 		}
 		$query = $this->db->get();
-		if($query === FALSE ){
-		// echo 'Database Error(' . $this->db->_error_number() . ') - ' . $this->db->_error_message();
+		if($query == FALSE ){
+			echo 'Database Error(' . $this->db->_error_number() . ') - ' . $this->db->_error_message();
 			return FALSE;
 		}
 		if ($query->num_rows() !== NULL && $query->num_rows() > 0) {

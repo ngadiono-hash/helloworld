@@ -217,7 +217,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		$data['title']    = $title;
 
 		$CI->load->view('templates/userHeader',$data);
-		$CI->load->view('admin/'.$page,$data);
+		$CI->load->view($page,$data);
 		$CI->load->view('templates/userFooter',$data);
 	}
 
@@ -231,7 +231,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		$data['title']    = $title;
 
 		$CI->load->view('templates/userHeader',$data);
-		$CI->load->view('user/'.$page,$data);
+		$CI->load->view($page,$data);
 		$CI->load->view('templates/userFooter',$data);
 	}
 

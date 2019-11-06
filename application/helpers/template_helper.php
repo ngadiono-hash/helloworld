@@ -226,21 +226,21 @@ function mainFooter() { ?>
 // =============================
 
 function navbar($title) {
-	$CI = get_instance();
-	$CI->load->model('Read_model');
-	$user = $CI->Read_model->getDataUser();
-	$cekNotif = $CI->Read_model->getNewNotif();
-	$countNotif = [];
-	if($cekNotif['c'] == 1 || $cekNotif['l'] == 1 || $cekNotif['s'] == 1){
-		$com  = $CI->Read_model->countNotifCom();
-		$like = $CI->Read_model->countNotifLike();
-		$sec  = $CI->Read_model->countNotifSec(['user' => $user['email'], 'status' => 1]);	
-		$countNotif = [
-			'all' => $com + $sec + $like
-		];
-	}
+	// $CI = get_instance();
+	// $CI->load->model('Read_model');
+	// $user = $CI->Read_model->getDataUser();
+	// $cekNotif = $CI->Read_model->getNewNotif();
+	// $countNotif = [];
+	// if($cekNotif['c'] == 1 || $cekNotif['l'] == 1 || $cekNotif['s'] == 1){
+	// 	$com  = $CI->Read_model->countNotifCom();
+	// 	$like = $CI->Read_model->countNotifLike();
+	// 	$sec  = $CI->Read_model->countNotifSec(['user' => $user['email'], 'status' => 1]);	
+	// 	$countNotif = [
+	// 		'all' => $com + $sec + $like
+	// 	];
+	// }
 
-	$badge = ($countNotif['all'] > 0) ? $countNotif['all'] : '';
+	// $badge = ($countNotif['all'] > 0) ? $countNotif['all'] : '';
 	?>
 	<header class="main-header">
 		<a href="<?=base_url()?>" class="logo hidden-xs">
@@ -257,7 +257,7 @@ function navbar($title) {
 					</li>
 					<li class="">
 						<a href="<?=base_url('u/notification')?>"><i class="fa fa-bell fa-lg fa-fw"></i>
-							<span class="badge label-danger badge-bar"><?=$badge?></span>
+							<span class="badge label-danger badge-bar"><??></span>
 						</a>
 					</li>
 					<li class="user-menu">

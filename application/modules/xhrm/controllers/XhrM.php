@@ -340,6 +340,7 @@ class XhrM extends CI_Controller
 		$now = time();
 		$ip = getIp();
 		$agent = $_SERVER['HTTP_USER_AGENT'];
+		$where = ['log_email' => $cek_mail['email'], 'log_ip' => $ip, 'log_agent' => $agent];
 		if(empty($post_email)){
 			$this->form_validation->set_message('validate_email','Email harus diisi');
 			return FALSE;
@@ -384,7 +385,7 @@ class XhrM extends CI_Controller
 								'agent' => $agent,
 								'created' => $now,
 							];
-							$create_notif = $this->Common_model->insert_record('secure',$notif);
+							$create_notif = $this->Common_model->insert_record('user_secure',$notif);
 							if ($create_notif) {
 								$this->Common_model->update('notification',['security' => 1],['user' => $cek_mail['id']]);
 								$this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
@@ -427,30 +428,26 @@ class XhrM extends CI_Controller
 						return FALSE;
 					}
 					$attempt = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
-					// if (($attempt['log_att'] > 0) && (($attempt['log_time'] + 18) < $now)) {
-						// $this->Common_model->update('login',['log_att' => 0, 'log_time' => $now],$where);
-					// } else {
-						if ( $attempt['log_att'] == 0 ) {
-							$this->form_validation->set_message('validate_pass', '<b>Password Salah !</b>');
-							$this->updateAttempt($now,$where);
-							return FALSE;
-						} elseif ( $attempt['log_att'] == 1 ) {
-							$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b>');
-							$this->updateAttempt($now,$where);
-							return FALSE;
-						} elseif ( $attempt['log_att'] == 2 ) {
-							$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b> <br>Percobaan Login untuk yang kesekian kalinya dengan password yang salah');
-							$this->updateAttempt($now,$where);
-							return FALSE;
-						} elseif ( $attempt['log_att'] == 3 ) {
-							$this->form_validation->set_message('validate_pass', '<b>Password Salah</b> <br>Kesempatan sekali lagi untuk Login, gunakan dengan hati-hati');
-							$this->updateAttempt($now,$where);
-							return FALSE;
-						} elseif ( $attempt['log_att'] == 4 ) {
-							$this->form_validation->set_message('validate_pass', '');
-							$this->updateAttempt($now,$where);
-							return FALSE;
-						// }
+					if ( $attempt['log_att'] == 0 ) {
+						$this->form_validation->set_message('validate_pass', '<b>Password Salah !</b>');
+						$this->updateAttempt($now,$where);
+						return FALSE;
+					} elseif ( $attempt['log_att'] == 1 ) {
+						$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b>');
+						$this->updateAttempt($now,$where);
+						return FALSE;
+					} elseif ( $attempt['log_att'] == 2 ) {
+						$this->form_validation->set_message('validate_pass', '<b>Password masih Salah !</b> <br>Percobaan Login untuk yang kesekian kalinya dengan password yang salah');
+						$this->updateAttempt($now,$where);
+						return FALSE;
+					} elseif ( $attempt['log_att'] == 3 ) {
+						$this->form_validation->set_message('validate_pass', '<b>Password Salah</b> <br>Kesempatan sekali lagi untuk Login, gunakan dengan hati-hati');
+						$this->updateAttempt($now,$where);
+						return FALSE;
+					} elseif ( $attempt['log_att'] == 4 ) {
+						$this->form_validation->set_message('validate_pass', '');
+						$this->updateAttempt($now,$where);
+						return FALSE;
 					}
 				}
 			}

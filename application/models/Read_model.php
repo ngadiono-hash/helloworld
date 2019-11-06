@@ -277,37 +277,37 @@ class Read_model extends CI_Model
 
 	public function getAllSnippetByAuthor()
 	{
-		$this->db->select('
+		// $this->db->select('
 
-		');
-		$this->db->where('code_author',getSession('sess_id'));
-		$this->db->order_by('code_upload','desc');
-		return $this->db->get('snip')->result_array();
+		// ');
+		// $this->db->where('code_author',getSession('sess_id'));
+		// $this->db->order_by('code_upload','desc');
+		// return $this->db->get('snip')->result_array();
 	}
 
 	public function getValidAuthSnippet($serial)
 	{
-		$this->db->select('t1.u_id');
-		$this->db->from('users AS t1');
-		$this->db->join('snip AS t2','t2.code_author = t1.u_id');
-		$this->db->where(['t2.code_id' => $serial, 't1.u_id' => getSession('sess_id')]);
-		return $this->db->get()->num_rows();
+		// $this->db->select('t1.u_id');
+		// $this->db->from('users AS t1');
+		// $this->db->join('snip AS t2','t2.code_author = t1.u_id');
+		// $this->db->where(['t2.code_id' => $serial, 't1.u_id' => getSession('sess_id')]);
+		// return $this->db->get()->num_rows();
 	}
 
 	public function getAllListCdn()
 	{
-		$this->db->where(['id !=' => 1]);
-		$this->db->order_by('cdn_name','asc');
-		$x = $this->db->get('cdn');
-		return $x->result_array();
+	// 	$this->db->where(['id !=' => 1]);
+	// 	$this->db->order_by('cdn_name','asc');
+	// 	$x = $this->db->get('cdn');
+	// 	return $x->result_array();
 	}  
 
 	public function getCdnJquery()
 	{
-		$this->db->where('id', 1);
-		$this->db->order_by('cdn_name','asc');
-		$x = $this->db->get('cdn');
-		return $x->result_array();
+		// $this->db->where('id', 1);
+		// $this->db->order_by('cdn_name','asc');
+		// $x = $this->db->get('cdn');
+		// return $x->result_array();
 	}
 
 	public function getCommentSnippet($serial,$limit,$addWhere=[])
@@ -355,62 +355,62 @@ class Read_model extends CI_Model
 
 	public function getHomeTimeLine()
 	{
-		$this->db->select('
-			users.u_username AS line_user,
-			users.u_image AS line_pic,
-			snip.code_id AS line_code_id,
-			snip.code_title AS line_code_title,
-			snip.code_desc AS line_code_desc,
-			tutors.snip_id AS line_tutor_id,
-			timeline.id AS timeline_id,
-			timeline.category AS timeline_cat,
-			timeline.relation AS timeline_rel,
-			timeline.created AS timeline_time
-		');
-		$this->db->join('tutors','tutors.snip_id = timeline.relation','left');
-		$this->db->join('snip','snip.code_id = timeline.relation','left');
+		// $this->db->select('
+		// 	users.u_username AS line_user,
+		// 	users.u_image AS line_pic,
+		// 	snip.code_id AS line_code_id,
+		// 	snip.code_title AS line_code_title,
+		// 	snip.code_desc AS line_code_desc,
+		// 	tutors.snip_id AS line_tutor_id,
+		// 	timeline.id AS timeline_id,
+		// 	timeline.category AS timeline_cat,
+		// 	timeline.relation AS timeline_rel,
+		// 	timeline.created AS timeline_time
+		// ');
+		// $this->db->join('tutors','tutors.snip_id = timeline.relation','left');
+		// $this->db->join('snip','snip.code_id = timeline.relation','left');
 		
-		$this->db->join('users','users.u_id = timeline.user');
-		$this->db->where('timeline.publish',1);
-		$this->db->order_by('timeline.created','desc');
-		return $this->db->get($this->time)->result_array();
+		// $this->db->join('users','users.u_id = timeline.user');
+		// $this->db->where('timeline.publish',1);
+		// $this->db->order_by('timeline.created','desc');
+		// return $this->db->get($this->time)->result_array();
 	}
 
 	public function getTutorialByid($id)
 	{
-		$this->db->select('
-			tutors.snip_id AS id,
-			tutors.snip_order AS order,
-			tutors.snip_title AS judul,
-			tutors.snip_slug AS slug,
-			tutors.snip_meta AS meta,
-			tutors.snip_content AS konten,
-			tutors.snip_code AS kode,
-			tutors.snip_update AS update,
-			tutor_cat._name AS kategori,
-			tutor_lev._name AS level,
-		');
-		$this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
-		$this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
-		$this->db->where([
-			'tutors.snip_id' => $id,
-			'tutors.snip_publish' => 1,
-			'tutors.snip_bin' => 0,
+		// $this->db->select('
+		// 	tutors.snip_id AS id,
+		// 	tutors.snip_order AS order,
+		// 	tutors.snip_title AS judul,
+		// 	tutors.snip_slug AS slug,
+		// 	tutors.snip_meta AS meta,
+		// 	tutors.snip_content AS konten,
+		// 	tutors.snip_code AS kode,
+		// 	tutors.snip_update AS update,
+		// 	tutor_cat._name AS kategori,
+		// 	tutor_lev._name AS level,
+		// ');
+		// $this->db->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		// $this->db->join('tutor_cat','tutor_cat._id = tutors.snip_category');
+		// $this->db->where([
+		// 	'tutors.snip_id' => $id,
+		// 	'tutors.snip_publish' => 1,
+		// 	'tutors.snip_bin' => 0,
 
-		]);
-		return $this->db->get($this->tutor)->row_array();
+		// ]);
+		// return $this->db->get($this->tutor)->row_array();
 	}
 
 	public function countTutorials($category)
 	{
-		$resultDB = [];
-		$a = $this->db->where(['snip_category'=> $category ])->from($this->tutor);
-		$resultDB['total'] = $a->count_all_results();
-		$b = $this->db->where(['snip_category'=> $category, 'snip_publish' => 1 ])->from($this->tutor);
-		$resultDB['public'] = $b->count_all_results();
-		$c = $this->db->where(['snip_category'=> $category, 'snip_publish' => 0 ])->from($this->tutor); 
-		$resultDB['draft'] = $c->count_all_results();
-		return $resultDB;
+		// $resultDB = [];
+		// $a = $this->db->where(['snip_category'=> $category ])->from($this->tutor);
+		// $resultDB['total'] = $a->count_all_results();
+		// $b = $this->db->where(['snip_category'=> $category, 'snip_publish' => 1 ])->from($this->tutor);
+		// $resultDB['public'] = $b->count_all_results();
+		// $c = $this->db->where(['snip_category'=> $category, 'snip_publish' => 0 ])->from($this->tutor); 
+		// $resultDB['draft'] = $c->count_all_results();
+		// return $resultDB;
 	}
 
 	public function xhr_getProgress($user)
@@ -637,19 +637,19 @@ class Read_model extends CI_Model
 
 	public function getDataUser()
 	{
-		$this->db->select('
-			u_id AS uid,
-			u_provider AS provider,
-			u_username AS username,
-			u_password AS password,
-			u_email AS email,
-			u_gender AS gender,
-			u_name AS name,
-			u_bio AS bio,
-			u_web AS web
-		');
-		$this->db->where('u_id',getSession('sess_id'));
-		return $this->db->get('users')->row_array();
+		// $this->db->select('
+		// 	u_id AS uid,
+		// 	u_provider AS provider,
+		// 	u_username AS username,
+		// 	u_password AS password,
+		// 	u_email AS email,
+		// 	u_gender AS gender,
+		// 	u_name AS name,
+		// 	u_bio AS bio,
+		// 	u_web AS web
+		// ');
+		// $this->db->where('u_id',getSession('sess_id'));
+		// return $this->db->get('users')->row_array();
 	}
 
 	public function getUserDataByEmail($email)
