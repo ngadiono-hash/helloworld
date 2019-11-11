@@ -1,4 +1,5 @@
 <div class="overlay hide"></div>
+<div class="ajax-send hide"></div>
 <div id="result"></div>
 <!-- <button class="effect jello-vertical" id="toTop"><span><i class="fa fa-arrow-up fa-lg"></i></span></button> -->
 <?php if ( !whats_page(2,['reset','sign','change','s']) ) mainFooter(); ?>
@@ -14,15 +15,15 @@ function dialog_confirm(trigger){
     var href = $(this).data('href');
     Swal.fire({
       title : '<h1 class="header-swal danger">H<small>mm...</small></h1>',
-      html : 
+      html :
       '<div class="img-swal">' +
-      '<div class="text-focus-in"><img src="'+ host +'assets/img/feed/no.gif"></div>' + 
+      '<div class="text-focus-in"><img src="'+ host +'assets/img/feed/no.gif"></div>' +
       '</div>' +
       '<h3 class="info-swal danger">apa kamu yakin ?</p>',
       type : '',
       showCancelButton : true,
       confirmButtonText: '<span>Ya</span>',
-      cancelButtonText: '<span>Ngga</span>',
+      cancelButtonText: '<span>Tidak</span>',
       buttonsStyling : false,
       customClass: {
         confirmButton: 'effect effect-ok',
@@ -40,11 +41,11 @@ function dialog_confirm(trigger){
       				$(com).parents('.row-comment').remove();
       			}
       		},
-      		error : function(xhr){ handle_ajax(xhr) } 
+      		error : function(xhr){ handle_ajax(xhr) }
       	});
       }
     });
-  });	
+  });
 }
 let widthClass = function() {
   let ww = document.body.clientWidth;
@@ -58,7 +59,7 @@ let widthClass = function() {
 	  $(window).resize(function(){
 	    widthClass();
 	  });
-	  widthClass();		
+	  widthClass();
 		loading();
 		$("#coverflow").flipster();
 		$(function(){
@@ -135,13 +136,13 @@ let widthClass = function() {
 				},
 				complete: function(){
 					endAjax();
-				}	
+				}
 			});
 		});
 	  $('.side-info').on('click','#more button',function(){
     	var btn = $('#more button');
     	$(btn).children('img').toggleClass('hide');
-			$(btn).children('span').toggleClass('hide');  	
+			$(btn).children('span').toggleClass('hide');
       var datax = {
       	id : $(this).data('id'),
       	page : $('.content-snippet').data('id'),
@@ -154,12 +155,12 @@ let widthClass = function() {
         dataType : 'html',
         success : function(data){
     			$('.side-info').find('#more').remove();
-					$('#fetch-comment').append(data);       		
+					$('#fetch-comment').append(data);
         },
         error : function(xhr){ handle_ajax(xhr) },
         complete : function(){
 		    	$(btn).children('img').toggleClass('hide');
-					$(btn).children('span').toggleClass('hide');        	
+					$(btn).children('span').toggleClass('hide');
         }
       });
 	  });
@@ -200,8 +201,8 @@ let widthClass = function() {
 		backToTop.click(function() {
 			$("html, body").animate({scrollTop: 0}, 500);
 		});
-	});	
-</script>	
+	});
+</script>
 <?php } if (startSession('sess_id')) { ?>
 <script id="snippet-script">
 	$('#like-this').on('click',function(){
@@ -216,18 +217,21 @@ let widthClass = function() {
 			type : 'POST',
 			data : datax,
 			success : function(data){
-				$(liked).parents('li').addClass('active');
-
-			}
+				writeResult(data);
+				if (data.status == 1) {
+					$(liked).parents('li').addClass('active');
+				}
+			},
+			error : function(xhr){ handle_ajax(xhr) }
 		});
 	});
 	$('.submit-comment').on('click',function(){
 		var btn = $('.submit-comment');
-		var datax = { 
+		var datax = {
 			post : $('.content').data('id'),
 			owner : $('.content').data('author'),
-			comment : $('#comment').val(), 
-			csrf_token : csrf 
+			comment : $('#comment').val(),
+			csrf_token : csrf
 		};
 		$(btn).children('img').toggleClass('hide');
 		$(btn).children('span').toggleClass('hide');
@@ -242,14 +246,12 @@ let widthClass = function() {
 					var template = '';
 					arr[i] = arr.message[0];
 					template += `
-					<div class="row row-comment `+arr[i]['side']+`" id="`+arr[i]['id']+`">
+					<div class="row row-comment `+arr[i]['side']+`" id="`+arr[i]['created']+`">
 						<div class="col-xs-12">
 							<span class="action `+arr[i]['side-text']+`">
-								
 								<button class="btn btn-default btn-sm">edit</button>
-								<button class="btn btn-default btn-sm">hapus</button>
-								
-							</span>							
+								<button class="btn btn-default btn-sm" data-href="`+host+`xhru/delete_comment/`+arr[i]['created']+`">hapus</button>
+							</span>
 						</div>
 						<div class="col-img `+arr[i]['side-img']+`">
 							<img class="img-user-comm img-thumbnail" src="`+host+`assets/img/profile/`+arr[i]['img_comm']+`" alt="User Image">
@@ -261,12 +263,15 @@ let widthClass = function() {
 									<span class="time-stamp">`+arr[i]['create']+`</span>
 								</div>
 								<p>`+arr[i]['message']+`</p>
-							</div>						
+							</div>
 						</div>
 					</div>`;
 					$('#fetch-comment').prepend(template);
 					$('#fetch-comment').find('h1').remove();
 					$('#comment').val('');
+					$('.side-info-inner').animate({
+					  scrollTop: $('#fetch-comment').offset().top
+					}, 'slow');
 				} else {
 					$('.error').html(arr['message']);
 					$('#comment').focus();
@@ -277,7 +282,7 @@ let widthClass = function() {
 			},
 			complete : function(){
 				$(btn).children('img').toggleClass('hide');
-				$(btn).children('span').toggleClass('hide');				
+				$(btn).children('span').toggleClass('hide');
 			}
 		});
 	});
@@ -299,7 +304,7 @@ let widthClass = function() {
 		$('.forgot').on('click',function(){
 			$('.left-side').addClass('slide-out-left');
 			setTimeout(function(){
-				$('.left-side').removeClass('slide-out-left');	
+				$('.left-side').removeClass('slide-out-left');
 			},1000);
 			setTimeout(function(){
 				$('.left-side,.right-side').toggleClass('hide');
@@ -312,7 +317,7 @@ let widthClass = function() {
 			},1000);
 			setTimeout(function(){
 				$('.left-side,.right-side').toggleClass('hide');
-			},10);	
+			},10);
 		});
 		$('.form-group label').css('opacity',0);
 
@@ -324,9 +329,9 @@ let widthClass = function() {
 			$3 	= $('#input-pass_1');
 			$4 	= $('#input-pass_2');
 			if( $(this).val() != '' ){
-				$(this).parents('.form-group').find('label').css('opacity',1);	
+				$(this).parents('.form-group').find('label').css('opacity',1);
 			} else {
-				$(this).parents('.form-group').find('label').css('opacity',0); 
+				$(this).parents('.form-group').find('label').css('opacity',0);
 			}
 			$(this).parents('.form-group').find('#error').html('');
 	    if( $($1).val() != "" && $($2).val() != "" && $($3).val() != "" && $($4).val() != "" ){
@@ -345,7 +350,7 @@ let widthClass = function() {
 				$(this).parents('.form-group').find('label').css('opacity',1);
 
 			} else {
-				$(this).parents('.form-group').find('label').css('opacity',0); 
+				$(this).parents('.form-group').find('label').css('opacity',0);
 			}
 			$(this).parents('.form-group').find('#error').html('');
 	    if( $($1).val() != "" && $($2).val() != "" ){
@@ -359,42 +364,42 @@ let widthClass = function() {
 		let btnRest = $('.btn-reset');
 		$('#form-reset input').on('keyup',function(){
 			if( $(this).val() != '' ){
-				$(this).parents('.form-group').find('label').css('opacity',1);	
+				$(this).parents('.form-group').find('label').css('opacity',1);
 			} else {
-				$(this).parents('.form-group').find('label').css('opacity',0); 
+				$(this).parents('.form-group').find('label').css('opacity',0);
 			}
 			$(this).parents('.form-group').find('#error').html('');
-			$1 	= $('#input-reset_email');	
+			$1 	= $('#input-reset_email');
 	    if( $($1).val() != "" ){
 	      $('.btn-reset').removeAttr("disabled");
 	    }else{
 	      $('.btn-reset').attr("disabled", "disabled");
-	    }	
+	    }
 		});
 		let	btnChg  = $('.btn-change');
 		$('#form-change input').on('keyup',function(){
 			var $1,$2;
 			if( $(this).val() != '' ){
-				$(this).parents('.form-group').find('label').css('opacity',1);	
+				$(this).parents('.form-group').find('label').css('opacity',1);
 			} else {
-				$(this).parents('.form-group').find('label').css('opacity',0); 
+				$(this).parents('.form-group').find('label').css('opacity',0);
 			}
 			$(this).parents('.form-group').find('#error').html('');
 			$1 	= $('#input-pass_1');
-			$2 	= $('#input-pass_2');		
+			$2 	= $('#input-pass_2');
 	    if( $($1).val() != "" && $($2).val() != "" ){
 	      $(btnChg).removeAttr("disabled");
 	    } else {
 	      $(btnChg).attr("disabled", "disabled");
 	    }
-		});	
+		});
 
 
 		$('#form-register').submit(function(ev) {
 			ev.preventDefault();
 			$(btnReg).attr('disabled', 'disabled');
 			$(btnReg).children('img').toggleClass('hide');
-			$(btnReg).children('span').toggleClass('hide');	
+			$(btnReg).children('span').toggleClass('hide');
 			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
 			startAjax();
 			$.ajax({
@@ -408,7 +413,7 @@ let widthClass = function() {
 					});
 					if(data['status'] == 1){
 						writeResult(data);
-						$('.input-text').val('');		
+						$('.input-text').val('');
 						$('.register').addClass('off');
 						$('.login').removeClass('off');
 					} else {
@@ -488,7 +493,7 @@ let widthClass = function() {
 			ev.preventDefault();
 			$(btnChg).attr('disabled', 'disabled');
 			$(btnChg).children('img').toggleClass('hide');
-			$(btnChg).children('span').toggleClass('hide');		
+			$(btnChg).children('span').toggleClass('hide');
 			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
 			$.ajax({
 				url : host+'xhrm/set_pw_change',
@@ -511,7 +516,7 @@ let widthClass = function() {
 				}
 			});
 		});
-	});	
+	});
 </script>
 <?php } ?>
 </body>

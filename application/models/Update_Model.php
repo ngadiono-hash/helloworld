@@ -64,37 +64,31 @@ class Update_model extends CI_Model
   }
   public function updateSnippet()
   {
-    $code_id = $this->input->post('id');
-    $jquery = [$this->input->post('jquery')];
-    $framework = [$this->input->post('framework')];
-    $cdn = array_merge($jquery,$framework);
-    if ($jquery[0] == '') {
-      array_shift($cdn);
-    }
-    if ($framework[0] == '') {
-      array_pop($cdn);
-    }
-    // var_dump($jquery);
-    // var_dump($framework);
-    // var_dump($cdn);
-    // var_dump(implode(',', $cdn));
-
-    $set_snippets = [
-      'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
-      'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
-      'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
-      'code_tag'    => $this->input->post('tag'),
-      'code_html'   => htmlentities($this->input->post('html')),
-      'code_css'    => htmlentities($this->input->post('css')),
-      'code_js'     => htmlentities($this->input->post('js')),
-      'code_update' => time(),
-      'code_publish'=> $this->input->post('public')
-    ];
-    $set_timeline = ['publish' => $this->input->post('public')];
-    // die();
-    $this->db->update('snip',$set_snippets,['code_id' => $code_id]);
-    $this->db->update('timeline',$set_timeline,['relation' => $code_id]);
-    return true;
+    // $code_id = $this->input->post('id');
+    // $jquery = [$this->input->post('jquery')];
+    // $framework = [$this->input->post('framework')];
+    // $cdn = array_merge($jquery,$framework);
+    // if ($jquery[0] == '') {
+    //   array_shift($cdn);
+    // }
+    // if ($framework[0] == '') {
+    //   array_pop($cdn);
+    // }
+    // $set_snippets = [
+    //   'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
+    //   'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
+    //   'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
+    //   'code_tag'    => $this->input->post('tag'),
+    //   'code_html'   => htmlentities($this->input->post('html')),
+    //   'code_css'    => htmlentities($this->input->post('css')),
+    //   'code_js'     => htmlentities($this->input->post('js')),
+    //   'code_update' => time(),
+    //   'code_publish'=> $this->input->post('public')
+    // ];
+    // $set_timeline = ['publish' => $this->input->post('public')];
+    // $this->db->update('snip',$set_snippets,['code_id' => $code_id]);
+    // $this->db->update('timeline',$set_timeline,['relation' => $code_id]);
+    // return true;
   }
 // ================= USER PAGE
 	public function updateMarkReadAll($user)

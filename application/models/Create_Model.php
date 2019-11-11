@@ -35,43 +35,43 @@ class Create_model extends CI_Model
   public function insertSnippet()
   {
 
-	  $code_id = getRandStr(6);
-    $count = $this->db->get_where('snip',['code_id' => $code_id]);
-    if ($count->num_rows() > 0) {
-    	$code_id = getRandStr(6);
-    }
-    $jquery = [$this->input->post('jquery')];
-    $framework = [$this->input->post('framework')];
-    $cdn = array_merge($jquery,$framework);
-    if ($jquery[0] == '') {
-      array_shift($cdn);
-    }
-    if ($framework[0] == '') {
-      array_pop($cdn);
-    }
-    $data_snippets = [
-      'code_id'     => $code_id,
-      'code_author' => getSession('sess_id'),
-      'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
-      'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
-      'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
-      'code_tag'    => $this->input->post('tag'),
-      'code_html'   => htmlentities($this->input->post('html')),
-      'code_css'    => htmlentities($this->input->post('css')),
-      'code_js'     => htmlentities($this->input->post('js')),
-      'code_upload' => time(),
-      'code_update' => time(),
-      'code_publish' => $this->input->post('public')
-    ];
-    $data_timeline = [
-    	'category' => 2,
-    	'user' 		 => getSession('sess_id'),
-    	'relation' => $code_id,
-    	'created'  => time(),
-    	'publish'  => $this->input->post('public')
-    ];
-    $this->db->insert('snip',$data_snippets);
-    $this->db->insert('timeline',$data_timeline);
+	  // $code_id = getRandStr(6);
+   //  $count = $this->db->get_where('snip',['code_id' => $code_id]);
+   //  if ($count->num_rows() > 0) {
+   //  	$code_id = getRandStr(6);
+   //  }
+   //  $jquery = [$this->input->post('jquery')];
+   //  $framework = [$this->input->post('framework')];
+   //  $cdn = array_merge($jquery,$framework);
+   //  if ($jquery[0] == '') {
+   //    array_shift($cdn);
+   //  }
+   //  if ($framework[0] == '') {
+   //    array_pop($cdn);
+   //  }
+   //  $data_snippets = [
+   //    'code_id'     => $code_id,
+   //    'code_author' => getSession('sess_id'),
+   //    'code_title'  => trim(htmlspecialchars($this->input->post('title',true))),
+   //    'code_desc'   => trim(htmlspecialchars($this->input->post('description',true))),
+   //    'code_cdn'    => (!empty($cdn)) ? implode(',', $cdn) : null,
+   //    'code_tag'    => $this->input->post('tag'),
+   //    'code_html'   => htmlentities($this->input->post('html')),
+   //    'code_css'    => htmlentities($this->input->post('css')),
+   //    'code_js'     => htmlentities($this->input->post('js')),
+   //    'code_upload' => time(),
+   //    'code_update' => time(),
+   //    'code_publish' => $this->input->post('public')
+   //  ];
+   //  $data_timeline = [
+   //  	'category' => 2,
+   //  	'user' 		 => getSession('sess_id'),
+   //  	'relation' => $code_id,
+   //  	'created'  => time(),
+   //  	'publish'  => $this->input->post('public')
+   //  ];
+   //  $this->db->insert('snip',$data_snippets);
+   //  $this->db->insert('timeline',$data_timeline);
     return true;
   }
 
@@ -94,14 +94,14 @@ class Create_model extends CI_Model
   }
   public function insertComment($id,$comment)
   {
-    $data_comment = [
-      'id_user' => getSession('sess_id'),
-      'id_target' => $id,
-      'message' => htmlentities($comment),
-      'created' => time()
-    ];
-    $this->db->insert('comment',$data_comment);
-    return $this->db->insert_id(); 
+    // $data_comment = [
+    //   'id_user' => getSession('sess_id'),
+    //   'id_target' => $id,
+    //   'message' => htmlentities($comment),
+    //   'created' => time()
+    // ];
+    // $this->db->insert('comment',$data_comment);
+    // return $this->db->insert_id(); 
   }
 
 

@@ -22,7 +22,7 @@ $(document).ready(function() {
 		var samp = $(this).find('option:selected',this);
 		var tag_val = $(this).val();	
 		samp.each(function(){
-			tag_name.push('<a class="btn btn-sm btn-prm">'+ $(this).text() +'</a>');
+			tag_name.push('<a class="btn btn-sm btn-ok">'+ $(this).text() +'</a>');
 			$('#input-tag').val(tag_val);
 			$('#tag-name').html(tag_name.join(' - '));
 		});
@@ -32,22 +32,34 @@ $(document).ready(function() {
 		}		
 	});
 	$('#select-library').on('change',function(){
-		$('.add-library').removeClass('hide').fadeIn();
 		var selected_id = [];
 		var selected_name = [];
+		var selected_list = [];
+		var sel = [];
 		var sample = $(this).find('option:selected',this);
-		var selected_val = $(this).val();	
+		var selected_val = $(this).val();
+		var temp = '';
 		sample.each(function(){
 			selected_id.push($(this).data('id'));
 			selected_name.push('<a class="btn btn-sm btn-prm" title="'+$(this).val().match(uri_pattern).join('\n')+'">'+ $(this).text() +'</a>');
+			selected_list = $(this).val().match(uri_pattern);
+			sel.push($(this).val().match(uri_pattern));
 			$('#input-framework').val(selected_id);
 			$('#source-framework').val(selected_val.join('\n'));
 			$('#source-name').html(selected_name.join(' - '));
+			temp = '';
+			for(i=0;i<sel.length;i++){
+				for(j=0;j<sel[i].length;j++){
+					temp += '<li><a>'+sel[i][j]+'</a></li>';
+				}
+			}
+			$('#list-framework').html(temp);
 		});
 		if(sample.length == 0){
 			$('#input-framework').val('');
 			$('#source-framework').val('');
 			$('#source-name').text('tidak ada framework yang dipilih');
+			$('#list-framework').html('');
 		}
 		compilex();
 	});
@@ -58,12 +70,12 @@ $(document).ready(function() {
 			$('#input-jquery').val(check);
 			$('#source-jquery').val(jVal);
 			$('#jquery-name').html('<a class="btn btn-sm btn-prm" title="'+jVal.match(uri_pattern).join('\n')+'">jQuery</a>');
-			$('#badge-js').html('JS + jQuery');
+			$('#list-jquery').html('<li><a>'+jVal.match(uri_pattern)+'</a></li>');
 		} else {
 			$('#input-jquery').val('');
 			$('#source-jquery').val('');
 			$('#jquery-name').text('jQuery non-aktif');
-			$('#badge-js').html('Tab JAVASCRIPT');
+			$('#list-jquery').html('');
 		}
 		compilex();
 	});

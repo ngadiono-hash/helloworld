@@ -4,6 +4,9 @@
 		<div class="panel-container">
 			<div class="panel-left">
 				<ul class="nav nav-tabs" id="control-left">
+					<li class="center">
+						<a id="open-comment" class="mini"><i class="fa fa-info-circle"></i></a>
+					</li>
 					<li class="dropdown center">
 						<a class="dropdown-toggle mini" data-toggle="dropdown" href="#" aria-expanded="false">
 							<i class="fa fa-cog"></i>
@@ -45,15 +48,14 @@
 					</li>
 				</ul>
 				<ul class="nav nav-tabs pull-right" id="control-right">
+					<?php if($code['id_author'] == getSession('sess_id')) { ?>
 					<li class="center" data-toggle="tooltip" data-placement="top" title="BOOKMARK">
 						<a id="book-this" class="mini"><i class="fa fa-bookmark"></i></a>
 					</li>
-					<li class="center" data-toggle="tooltip" data-placement="top" title="LIKE">
+					<li class="center <?=$like?>" data-toggle="tooltip" data-placement="top" title="LIKE">
 						<a id="like-this" class="mini"><i class="fa fa-thumbs-up"></i></a>
 					</li>
-					<li class="center" data-toggle="tooltip" data-placement="top" title="INFO">
-						<a id="open-comment" class="mini"><i class="fa fa-info-circle"></i></a>
-					</li>
+					<?php } ?>
 				</ul>				
 				<ul class="nav nav-tabs pull-right">
 				</ul>
@@ -78,120 +80,123 @@
 				<iframe class="frame" id="result-frame"></iframe>
 			</div>
 		</div>
-
-		<div class="side-info scale-in-center hide">
-			<div class="side-info-inner">
-				<button class="btn btn-default btn-diss"><i class="fa fa-times"></i></button>
-				<div class="row row-info">
-					<div class="col-sm-12">
-						<div class="info-title center fred">
-							<?=$code['code_title']?>
+		<div class="wrapper-side-info hide">
+			<div class="side-info scale-in-center">
+				<div class="side-info-inner">
+					<button class="btn btn-default btn-diss"><i class="fa fa-times"></i></button>
+					<div class="row row-info">
+						<div class="col-sm-12">
+							<div class="info-title center fred">
+								<?=$code['code_title']?>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-8">
+							<div class="info-desc">
+								<p class="fred">deskripsi :</p>
+								<p><?=(!empty($code['code_desc'])) ? $code['code_desc'] : 'tidak ada deskripsi yang disematkan' ?></p>
+							</div>
+							<div class="info-link">
+								<p class="fred">dukungan library :</p>
+								<?php foreach ($framework as $k) {
+									$pieces = explode(',',$k['cdn_link']);
+									$singgle = implode(PHP_EOL, $pieces);
+									if($k != '') {
+										echo '<a class="btn btn-default" title="'.$singgle.'">'.$k['cdn_name'].' '.$k['cdn_version'].'</a> ';
+									} else {
+										echo "tidak ada (pure JS & pure CSS)";
+									}
+								} ?>
+							</div>
+						</div>
+						<div class="hidden-xs hidden-sm col-md-4">
+							<div class="info-author">
+								<h3 class="fred">author</h3>
+								<img style="width: 100px; height: 100px;" class="img-circle" src="<?=base_url('assets/img/profile/').$code['image_author']?>">
+								<h3 class="fred"><a class="base-link" href="#"><?=$code['user_author'] ?></a></h3>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<div class="col-sm-2 hidden-xs">
+							<div class="info-like">
+								<i class="fa fa-thumbs-up"></i>
+								<p><span class="fred"><?=$code['code_like']?></span></p>
+							</div>
+						</div>
+						<div class="col-sm-2 hidden-xs">
+							<div class="info-comment">
+								<i class="fa fa-comment-alt"></i>
+								<p><span class="fred"><?=$count_comm?></span></p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-8">
+							<div class="info-tags">
+								<i class="fas fa-tags"></i>
+							<?php foreach ($tags_snippet as $k) { ?>
+								<a href="#" class="base-link fred">#<?=$k['category_name']?></a>	
+							<?php	}	?>
+							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-8">
-						<div class="info-desc">
-							<p class="fred">deskripsi :</p>
-							<p><?=(!empty($code['code_desc'])) ? $code['code_desc'] : 'tidak ada deskripsi yang disematkan' ?></p>
+					<div class="clearfix" id="fetch-comment">
+						<?php if(!empty($comment)) { ?>	
+						<?php foreach ($comment as $k => $v) { ?>
+						<div class="row row-comment <?=$v['side']?>" id="<?=$v['created']?>">
+							<div class="col-xs-12">
+								<span class="action <?=$v['side-text']?>">
+									<?php if ( startSession('sess_id') && $v['id_comm'] == getSession('sess_id')) { ?>
+									<a class="btn btn-default btn-sm">edit</a>
+									<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$v['created']?>">hapus</a>
+									<?php } ?>
+								</span>							
+							</div>
+							<div class="col-img <?=$v['side-img']?>">
+								<img class="img-user-comm img-thumbnail" src="<?=base_url('assets/img/profile/').$v['img_comm']?>" alt="User Image">
+							</div>
+							<div class="col-text <?=$v['side-text']?>">
+								<div class="direct-chat-text">
+									<div class="direct-chat-info">
+										<span class="fred"><a href="" class="base-link"><?=$v['name_comm']?></a></span>
+										<span class="time-stamp"><?=$v['create']?></span>
+									</div>
+									<p><?=$v['message']?></p>
+								</div>						
+							</div>
 						</div>
-						<div class="info-link">
-							<p class="fred">dukungan library :</p>
-							<?php foreach ($framework as $k) {
-								$pieces = explode(',',$k['cdn_link']);
-								$singgle = implode(PHP_EOL, $pieces);
-								if($k != '') {
-									echo '<a class="btn btn-default" title="'.$singgle.'">'.$k['cdn_name'].' '.$k['cdn_version'].'</a> ';
-								} else {
-									echo "tidak ada (pure JS & pure CSS)";
-								}
-							} ?>
-						</div>
-					</div>
-					<div class="hidden-xs hidden-sm col-md-4">
-						<div class="info-author">
-							<h3 class="fred">author</h3>
-							<img style="width: 100px; height: 100px;" class="img-circle" src="<?=base_url('assets/img/profile/').$code['image_author']?>">
-							<h3 class="fred"><a class="base-link" href="#"><?=$code['user_author'] ?></a></h3>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-					<div class="col-xs-2">
-						<div class="info-like">
-							<i class="fa fa-thumbs-up"></i>
-							<p><span class="fred">4</span></p>
-						</div>
-					</div>
-					<div class="col-xs-2">
-						<div class="info-comment">
-							<i class="fa fa-comment-alt"></i>
-							<p><span class="fred"><?=$count_comm?></span></p>
-						</div>
-					</div>
-					<div class="col-xs-8">
-						<div class="info-tags">
-							<i class="fas fa-tags"></i>
-						<?php foreach ($tags_snippet as $k) { ?>
-							<a href="#" class="base-link fred">#<?=$k['category_name']?></a>	
-						<?php	}	?>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix" id="fetch-comment">
-					<?php if(!empty($comment)) { ?>	
-					<?php foreach ($comment as $k => $v) { ?>
-					<div class="row row-comment <?=$v['side']?>" id="<?=$v['created']?>">
-						<div class="col-xs-12">
-							<span class="action <?=$v['side-text']?>">
-								<?php if ( startSession('sess_id') && $v['id_comm'] == getSession('sess_id')) { ?>
-								<a class="btn btn-default btn-sm">edit</a>
-								<a class="btn btn-default btn-sm delete-comment" data-href="<?=base_url('xhru/delete_comment/').$v['created']?>">hapus</a>
-								<?php } ?>
-							</span>							
-						</div>
-						<div class="col-img <?=$v['side-img']?>">
-							<img class="img-user-comm img-thumbnail" src="<?=base_url('assets/img/profile/').$v['img_comm']?>" alt="User Image">
-						</div>
-						<div class="col-text <?=$v['side-text']?>">
-							<div class="direct-chat-text">
-								<div class="direct-chat-info">
-									<span class="fred"><a href="" class="base-link"><?=$v['name_comm']?></a></span>
-									<span class="time-stamp"><?=$v['create']?></span>
-								</div>
-								<pre><?=$v['message']?></pre>
-							</div>						
-						</div>
-					</div>
-					<?php } ?>
-					<div class="center" id="more">
-						<button data-id="<?=$v['created']?>" class="btn-default btn">
-							<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
-							<span>tampilkan lebih banyak komentar</span>
-						</button>
-					</div>
-					<?php } else { ?>
-						<h1 style="padding: 100px 0">belum ada komentar pada snippet ini</h1>
-					<?php } ?>
-				</div>
-				<div class="clearfix"></div>
-				<?php if (startSession('sess_id')) { ?>
-				<div class="box-comment">
-					<div class="row">
-						<div class="col-xs-8 col-sm-10">
-							<div class="error"></div>
-							<textarea id="comment" class="input-adjust text-area" placeholder="Tulis komentar di sini" spellcheck="false"></textarea>
-						</div>
-						<div class="col-xs-4 col-sm-2">
-							<button class="submit-comment btn-default">
+						<?php } ?>
+						<?php if($count_comm > 5) { ?>
+						<div class="center" id="more">
+							<button data-id="<?=$v['created']?>" class="btn-default btn">
 								<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
-								<span>POST</span>
+								<span>tampilkan lebih banyak komentar</span>
 							</button>
 						</div>
+						<?php } ?>
+						<?php } else { ?>
+							<h1 style="padding: 50px 0">belum ada komentar pada snippet ini</h1>
+						<?php } ?>
 					</div>
-				</div>				
-				<?php } else { ?>
-				<h4 class="center fred">silahkan login untuk memberikan komentar</h4>
-				<h3 class="center fred"><a class="effect effect-prm" href="<?=base_url('at/sign')?>"><span>login</span></a></h3>
-				<?php } ?>
-			</div>			
+					<div class="clearfix"></div>
+					<?php if (startSession('sess_id')) { ?>
+					<div class="box-comment">
+						<div class="row">
+							<div class="col-xs-8 col-sm-10" style="margin-right: -20px;">
+								<div class="error"></div>
+								<textarea id="comment" class="input-adjust text-area" placeholder="Tulis komentar di sini" spellcheck="false"></textarea>
+							</div>
+							<div class="col-xs-4 col-sm-2">
+								<button class="submit-comment btn-default">
+									<img class="hide" src="<?=base_url('assets/img/feed/bars.svg')?>" height="35">
+									<span>POST</span>
+								</button>
+							</div>
+						</div>
+					</div>				
+					<?php } else { ?>
+					<h4 class="center fred">silahkan login untuk memberikan komentar</h4>
+					<h3 class="center fred"><a class="effect effect-prm" href="<?=base_url('at/sign')?>"><span>login</span></a></h3>
+					<?php } ?>
+				</div>			
+			</div>
 		</div>
 	</div>
 <textarea class="hide" id="source-jquery"></textarea>
@@ -210,7 +215,6 @@
 		resizeHeight: false
 	});
 </script>
-
 <script>
 $(document).ready(function(){
 	compilex();
@@ -227,13 +231,13 @@ $(document).ready(function(){
 	}	
 	$('#open-comment').on('click',function(){
 		$(this).addClass('active');
-		$('.side-info').fadeIn().removeClass('hide');
+		$('.wrapper-side-info').fadeIn().removeClass('hide');
 		$('.overlay').removeClass('hide').fadeIn();
 	});
 	$('.btn-diss').on('click',function(){
 		$('#open-comment').removeClass('active');
 		$('.overlay').fadeOut();
-		$('.side-info').fadeOut();
+		$('.wrapper-side-info').fadeOut();
 	});
 	$('#comment').on('keyup',function(){
 		$('.error').html('');

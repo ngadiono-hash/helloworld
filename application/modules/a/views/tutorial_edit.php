@@ -8,8 +8,8 @@
     top: -1px;
     right: 60px;
     z-index: 9999;
-    width: 300px;	
-    text-align: center;	
+    width: 300px;
+    text-align: center;
 	}
 	.alert-auto h4 {
 		margin: 0;
@@ -41,18 +41,18 @@
 			<button class="btn btn-diss"><i class="fa fa-times"></i></button>
 		</div>
 		<iframe id="frame-pre" src=""></iframe>
-	</div>  	
+	</div>
 		<div class="wrap-table <?= $theme ?>" style="margin-right: 46px;">
 			<form id="tutorial-form" action="<?=base_url('xhra/update_tutorial')?>">
 				<input type="hidden" id="id" name="id" value="<?= $id ?>">
 				<input type="hidden" name="category" value="<?= $cat_name ?>">
 				<input type="hidden" name="public" value="<?= $public ?>">
-				
+
 					<ul class="nav nav-tabs">
 						<li class="center">
 							<a class="button btn-def" href="<?= $linkPrev ?>">
 						  	<i class="fa fa-arrow-left"></i>
-						  	<span class="hidden-xs hidden-sm">Prev</span> 
+						  	<span class="hidden-xs hidden-sm">Prev</span>
 						  </a>
 						</li>
 				  	<li class="active center">
@@ -76,7 +76,7 @@
 				  	<li class="center">
 							<a class="button btn-def" href="<?= $linkNext ?>">
 						  	<i class="fa fa-arrow-right"></i>
-						  	<span class="hidden-xs hidden-sm">Next</span> 
+						  	<span class="hidden-xs hidden-sm">Next</span>
 						  </a>
 						</li>
 					</ul>
@@ -106,20 +106,20 @@
 
 				<div class="icon-bar">
 				  <a class="a btn btn-prm" id="update">
-				  	<span>Update</span> <i class="fa fa-edit"></i> 
+				  	<span>Update</span> <i class="fa fa-edit"></i>
 				  </a>
 				  <a class="b btn btn-def" href="<?=base_url('lesson/'.$cat_name.'/'.$meta)?>" target="_blank">
-				  	<span>Open Link</span> <i class="fas fa-link"></i> 
-				  </a> 
+				  	<span>Open Link</span> <i class="fas fa-link"></i>
+				  </a>
 				  <a class="c btn btn-warn action-preview" data-href="<?=base_url('lesson/'.$cat_name.'/'.$meta) ?>">
-				  	<span>Preview</span> <i class="fa fa-eye"></i> 
+				  	<span>Preview</span> <i class="fa fa-eye"></i>
 				  </a>
 				  <a class="d btn btn-pub action-public <?=$btn?>" data-href="<?=base_url('xhra/update_tutorial_public/'. $id)?>">
 				  	<?= $fa ?>
-				  </a> 
+				  </a>
 				  <a class="e btn btn-no" href="<?=base_url('a/'.$cat_name) ?>">
-				  	<span>Back</span> <i class="fa fa-reply"></i> 
-				  </a> 
+				  	<span>Back</span> <i class="fa fa-reply"></i>
+				  </a>
 				  <a class="f btn btn-no btn-del" data-id="<?=$id?>" data-href="<?=base_url('xhra/delete_tutorial/'.$id)?>">
 				  	<span>Delete</span>
 				  	<i class="fa a-fw fa-trash-alt"></i>

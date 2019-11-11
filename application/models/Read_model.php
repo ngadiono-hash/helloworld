@@ -552,20 +552,20 @@ class Read_model extends CI_Model
 	}	
 	public function insertCookie($data_cookie)
 	{
-		$data = [
-			'created' 	=> time(),
-			'expired' 	=> $data_cookie['expired'],
-			'token' 		=> $data_cookie['token'],
-			'email' 		=> $data_cookie['email'],
-			'ip'  			=> $data_cookie['ip'],
-			'agent' 		=> $data_cookie['agent']
-		];
-		$this->db->insert('user_cookie',$data);
-		setcookie('c_user',$data_cookie['token'],$data_cookie['expired'],'/');
+		// $data = [
+		// 	'created' 	=> time(),
+		// 	'expired' 	=> $data_cookie['expired'],
+		// 	'token' 		=> $data_cookie['token'],
+		// 	'email' 		=> $data_cookie['email'],
+		// 	'ip'  			=> $data_cookie['ip'],
+		// 	'agent' 		=> $data_cookie['agent']
+		// ];
+		// $this->db->insert('user_cookie',$data);
+		// setcookie('c_user',$data_cookie['token'],$data_cookie['expired'],'/');
 	}	
 	public function insertBug($data)
 	{
-		$this->db->insert('bug',$data);
+		// $this->db->insert('bug',$data);
 	}
 	public function insertNotifLogin($data_notif)
 	{

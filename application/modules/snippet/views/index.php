@@ -21,7 +21,7 @@
           <iframe class="frame-views" src="<?= base_url('snippet/p/').$co['code_id'] ?>"></iframe>
 	        <div class="snippet-box-info">
 	        	<div class="image">
-	        		<img src="<?= base_url('assets/img/profile/').$co['image_author'] ?>">
+	        		<img class="img-thumbnail" src="<?= base_url('assets/img/profile/').$co['image_author'] ?>">
 	        	</div>
 	        	<div class="author">
 	        		<h4><?= $co['code_title'] ?></h4>
@@ -30,7 +30,7 @@
 						<div class="info-each-snippet">
 							<a class="btn btn-sm btn-prm"><i class="fa fa-eye"></i> 2</a> 
 							<a class="btn btn-sm btn-prm"><i class="fa fa-thumbs-up"></i> 4</a>
-							<a class="btn btn-sm btn-prm"><i class="fa fa-comment-alt"></i> 8</a>
+							<a class="btn btn-sm btn-prm"><i class="fa fa-comment-alt"></i> <?=$co['comment']?></a>
 						</div>	        	
 	        	<div class="clearfix"></div>
 	        </div>  

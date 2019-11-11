@@ -3,16 +3,26 @@ const host = 'http://'+window.location.hostname+'/helloworld/';
 const path = window.location.pathname;
 const imgLoad = '<img src="'+ host +'assets/img/feed/bars.svg" height="50">';
 const uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#img-upload').attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
 function startAjax(){
 	var temp = '<div class="loading">';
 	temp += '<img src="'+ host +'assets/img/feed/bars.svg" height="250" alt="ajax-send">';
 	temp += '</div>';
-	$('.overlay').removeClass('hide');
-	$('.overlay').html(temp);
+	$('.ajax-send').removeClass('hide');
+	$('.ajax-send').html(temp);
 }
 function endAjax(){
-	$('.overlay').addClass('hide');
-	$('.overlay').html('');
+	$('.ajax-send').addClass('hide');
+	$('.ajax-send').html('');
 }
 
 function loading(){
@@ -297,7 +307,7 @@ function convert_time(timeStamp,full=false){
 		$('#dm').html("<span>" + width + " x " + height + "</span>");
 		if(width > 750 ){
 			$('#control-right').fadeOut(1);
-			if (width > 950) {
+			if (width > 940) {
 				$('#control-left').fadeOut(1);
 			} else {
 				$('#control-left').fadeIn();	

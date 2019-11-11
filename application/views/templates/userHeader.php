@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 	<?php
+	reload_session();
 	bootstrap();
 	adminLte();
 	myGlobal();
@@ -35,17 +36,6 @@
 	}
 	.fix .content-wrapper {
 		padding-top: 50px;
-	}
-	.overlay {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background: rgba(0,0,0,0.3);
-		z-index: 1029;
 	}
 	.bootstrap-select .dropdown-toggle:focus { outline: none !important; }
 	.bootstrap-select button {
@@ -78,12 +68,12 @@
 		bottom: 0;
 	}
 	.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-	  background-color: burlywood;
+		background-color: burlywood;
 	}
 	/*MODAL*/
 	.custom-modal {
 		position: absolute;
-		z-index: 1029;
+		z-index: 1051;
 		top: 5px;
 		right: 5px;
 		left: 5px;
@@ -142,8 +132,11 @@
 		background: white;
 	}
 	/*THEME*/
+	.base-link {
+		font-family: 'Fredoka One', cursive;
+	}
 	.base-link:hover {
-		letter-spacing: 2px;
+		/*letter-spacing: 2px;*/
 		transition: .4s ease-in-out;
 	}
 	.small-box {
@@ -177,7 +170,7 @@
 		background: #F7D26E;
 	}
 </style>
-<?php if ( whats_page(1,['a']) ) { ?>
+<?php if ( whats_page(1,['a']) ) : ?>
 	<style id="style-admin">
 	/*=========== TABLE ===============*/
 	.dataTables_processing {
@@ -402,8 +395,8 @@
 		padding: 10px 30px;
 	}
 </style>
-<?php }
-if ( whats_page(1,['u']) ) { ?>
+<?php endif;
+if ( whats_page(1,['u']) ) : ?>
 	<style id="style-user">
 	/* ============== NAVBAR*/
 	.navbar .title-navbar {
@@ -423,8 +416,29 @@ if ( whats_page(1,['u']) ) { ?>
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
+	/*===============================*/
+	.nav>li>a:focus, .nav>li>a:hover {
+		text-decoration: none;
+		background-color: inherit;
+	}
+	.alert-absolute {
+		position: absolute;
+		z-index: 5;
+		left: 0;
+		top: 0;
+		bottom: 15%;
+		right: 0;
+	}
+	.alert-absolute h4 {
+		font-size: 22px;
+		font-family: 'Fredoka One', cursive;
+		letter-spacing: 2px;
+	}
+	.alert-absolute p {
+		font-size: 18px;
+	}
 	/* ============== NOTIFICATION*/
-	.side-notification {
+	/*.side-notification {
 		position: fixed;
 		right: 0;
 		top: 50px;
@@ -474,337 +488,338 @@ if ( whats_page(1,['u']) ) { ?>
 		left: 0;
 		right: 0;
 		bottom: 0;
-	}
-	.custom-image {
+		}*/
+	/*.custom-image {
 		float: left;
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
 		margin-right: 10px;
 		margin-top: 8px;
-	}
-	/* ============== PROFILE BOX*/
-	.profile-box-fixed {
-		position: fixed;
-		right: 15px;
-		width: 270px;
-	}
-	.profile-box-fixed .profile-user-img{
-		width: 150px;
-		height: 150px;
-	}
-	.content-home, .content-activity {
-		padding-right: 300px;
-	}
-	/* ============== CODE_CREATE*/
-	.content-create	.splitter {
-		flex: 0 0 auto;
-		width: 18px;
-		background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
-		min-height: 200px;
-		cursor: col-resize;
-		transition: all .3s ease-in-out;
-	}
-	.content-create	.splitter:hover {
-		background-color: #ccc;
-		border-radius: 3px;
-	}
-	.content-create	.panel-container {
-		display: flex;
-		flex-direction: row;
-		overflow: hidden;
-		height: 100%;
-		min-height: 87vh;
-		box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
-		xtouch-action: none;
-	}
-	/*SIDE LEFT*/
-	.content-create	.panel-left {
-		flex: 0 0 auto;
-		width: 50vw;
-		min-width: 5%;
-		max-width: 98%;
-		background-color: #ccc;
-	}
-	/*TAB*/
-	.checkin + label {
-		font-size: 1em;
-		letter-spacing: inherit;
-		margin: 8px;
-
-	}
-	.content-create .nav-tabs {
-		letter-spacing: 3px;
-		background: #ccc;
-		display: inline-block;
-		border-bottom: none;
-	}
-	.content-create .nav>li>a {
-		padding: 5px 10px;
-		min-width: 45px;
-	}
-	.content-create .nav-tabs li a {
-		text-shadow: none !important;
-		color: #808080;
-		margin-right: 0px;
-		font-size: 1.3em;
-	}
-	.content-create .nav-tabs li a:hover {
-		border-radius: 0px !important;
-		text-shadow: none !important;
-	}
-	.content-create .nav-tabs li.active a,
-	.content-create .nav-tabs li.active a:focus,
-	.content-create .nav-tabs li.active a:hover {
-		border-radius: 5px 5px 0 0;
-		text-shadow: none !important;
-		background: #1d1f21;
-		color: #f1f1f1;
-		opacity: 1;
-		cursor: pointer;
-	}
-	.content-create .tab-content {
-		min-height: 81vh;
-		margin-top: -6px;
-		border: 2px solid #1d1f21;
-		border-left: none;
-		border-radius: 0 5px 5px 0;
-		background-color: #ECF0F5;
-		position: relative;
-	}
-	.content-create .navigation {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		display: none;
-	}
-	.content-create .info-tab {
-		position: absolute;
-		display: inline-block;
-		top: -38px;
-		left: 135px;
-	}
-	.content-create .info-tab button {
-		font-family: 'Fredoka One', cursive;
-		width: 145px;
-	}
-	.content-create .info-tab span {
-		font-family: 'Rubik', Sans-serif;
-	}
-	.content-create .welcome-snippet {
-		font-size: 1.2em;
-		text-align: justify;
-	}
-	.info-snippet, .welcome-snippet {
-		overflow-y: auto;
-		padding: 10px;
-		max-height: 80vh;
-	}
-	.content-create .info-snippet hr {
-		margin: 15px 50px;
-		border: 0;
-		border-top: 2px solid #9E9E9E;
-	}
-	.content-create	.body-html, .content-create .body-css, .content-create .body-js {
-		height: 80vh;
-		padding: 0;
-	}
-	.input-adjust.text-area {
-		min-height: 150px;
-	}
-	/*SIDE RIGHT*/
-	#dm {
-		position: absolute;
-		right: 40px;
-		top: 20px;
-		font-size: 1em;
-	}
-	.content-create	.panel-right {
-		flex: 1 1 auto;
-		width: 100%;
-		min-height: 200px;
-		min-width: 400px;
-		background: #fff;
-	}
-	.content-create	.frame {
-		width: 100%;
-		height: 100%;
-		border: none;
-	}
-	.content-create .bootstrap-select .dropdown-menu li small {
-		padding-left: 0em;
-		position: absolute;
-		right: 50px;
-	}
-	/*IN MODAL*/
-	.nav-tab-config {
-		margin-bottom: 0;
-	}
-	.nav-tab-config .tab-content {
-		height: 80vh;
-	}
-	/* ============== CODE_USER*/
-	.snippet-box {
-		position: relative;
-		height: 350px;
-		background: transparent;
-		margin-bottom: 50px;
-		border-radius: 10px;
-		transition: all .4s ease-in-out;
-	}
-	.snippet-box:hover {
-		background: rgba(0, 0, 0, 0.3);
-		padding: 20px;
-		padding-bottom: 5px;
-	}
-	.frame-views {
-		height: 150%;
-		width: 200%;
-		border-radius: 20px;
-		pointer-events: none;
-		border: none;
-		transform: scale(0.5);
-		transform-origin: 0 0;
-	}
-	.snippet-box-info {
-		position: absolute;
-		top: 76%;
-		left: 0;
-		right: 0;
-		background: #337ab7ab;
-		border-radius: 10px;
-		padding: 10px;
-	}
-	.info-each-snippet {
-		position: absolute;
-		width: 100%;
-		left: 0;
-		bottom: -33px;
-		padding: 0 10px;
-		visibility: hidden;
-	}
-	.snippet-box-info .author h4 {
-		font-family: 'Fredoka One', cursive;
-		margin: 5px;
-		color: #f1f1f1;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-	}
-	.snippet-box-info .image img {
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-	}
-	.snippet-box a.open-to-editor {
-		position: absolute;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 85px;
-		border: 0 !important;
-		z-index: 1;
-	}
-	/*-----------------*/
-	.content-snippet-user .not-yet img {
-		display: block;
-		margin: 40px auto;
-		border: 3px solid #ccc;
-		border-radius: 50%;
-		padding: 5px;
-	}
-	.content-snippet-user .create-new{
-		text-align: center;
-		margin: 54px auto;
-		cursor: pointer;
-	}
-	.content-snippet-user .create-new img {
-		width: 100px;
-		height: 100px;
-	}
-	/* ============== ACTIVITY*/
-	.content-activity .profile-body {
-		min-height: 330px;
-		border : 2px solid;
-		position: relative;
-		font-size: 1.2em;
-	}
-	.content-activity .profile-body .edit {
-		position: absolute;
-		bottom: 0;
-		left: 5px;
-		right: 5px;
-		background-color: rgba(0, 0, 0, 0.15);
-		padding: 4px;
-	}
-	.content-activity .profile-body p.edit:hover {
-		background-color: burlywood;
-	}
-	.content-activity .profile-body .profile-user-img {
-		height: 100px;
-	}
-	/* ============== PROFILE*/
-	.content-profile .box {
-		position: relative;
-	}
-	/*MODAL*/
-	.content-profile .btn:hover {
-		background: burlywood;
-	}
-	.content-profile .btn-file {
-		position: relative;
-		overflow: hidden;
-	}
-	.content-profile .submit-photo, .content-profile .submit-identity, .content-profile .submit-account {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
-	.content-profile .btn-file input[type=file] {
-		position: absolute;
-		top: 0;
-		right: 0;
-		min-width: 100%;
-		min-height: 100%;
-		font-size: 100px;
-		text-align: right;
-		filter: alpha(opacity=0);
-		opacity: 0;
-		outline: none;
-		background: white;
-		display: block;
-	}
-	.content-profile #img-upload{
-		width: 160px;
-		height: 160px;
-	}
-	/*VIEW*/
-	.content-profile .box-photo .profile-user-img {
-		height: 160px;
-		width: 160px;
-	}
-	.content-profile .box-identity, .content-profile .box-photo, .content-profile .box-account {
-		min-height: 76vh;
-	}
-	.content-profile .box-identity p, .content-profile .box-account p {
-		margin-top: 10px;
-		font-size: 16px;
-		font-family: 'Fredoka One', cursive;
-	}
-
-	@media only screen and (max-width: 992px){
-		.content-home, .content-activity {
-			padding-right: 15px;
+		}*/
+		/* ============== PROFILE BOX*/
+		.profile-box-fixed {
+			position: fixed;
+			right: 15px;
+			width: 270px;
 		}
-	}
-</style>
-<?php }
+		.profile-box-fixed .profile-user-img{
+			width: 150px;
+			height: 150px;
+		}
+		.content-home, .content-activity {
+			padding-right: 300px;
+		}
+		/* ============== CODE_CREATE*/
+		.content-create	.splitter {
+			flex: 0 0 auto;
+			width: 18px;
+			background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
+			min-height: 200px;
+			cursor: col-resize;
+			transition: all .3s ease-in-out;
+		}
+		.content-create	.splitter:hover {
+			background-color: #ccc;
+			border-radius: 3px;
+		}
+		.content-create	.panel-container {
+			display: flex;
+			flex-direction: row;
+			overflow: hidden;
+			height: 100%;
+			min-height: 87vh;
+			box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+			xtouch-action: none;
+		}
+		/*SIDE LEFT*/
+		.content-create	.panel-left {
+			flex: 0 0 auto;
+			width: 50vw;
+			min-width: 5%;
+			max-width: 98%;
+			background-color: #ccc;
+		}
+		/*TAB*/
+		.checkin + label {
+			font-size: 1em;
+			letter-spacing: inherit;
+			margin: 8px;
+
+		}
+		.content-create .nav-tabs {
+			letter-spacing: 3px;
+			display: inline-block;
+			border-bottom: none;
+		}
+		.content-create .nav-tabs li a {
+			text-align: center;
+			text-shadow: none !important;
+			padding: 5px 10px;
+			color: #808080;
+			margin-right: 0px;
+			font-size: 1.3em;
+			margin: 0 1px;
+			width: 90px;
+			font-family: 'Fredoka One', cursive;
+			border-radius: 7px 7px 0 0;
+			text-shadow: none !important;
+			background: #1d1f21;
+			color: #f1f1f1;
+			opacity: 1;
+			cursor: pointer;
+
+			background: linear-gradient(#337ab7, transparent);
+			color: #f1f1f1;
+			text-shadow: none !important;
+		}
+		.content-create .nav-tabs li a.mini {
+			width: 45px;
+		}
+		.content-create .nav-tabs li a.tab-modal {
+			width: 125px;
+		}
+		.content-create .nav-tabs li.active a,
+		.content-create .nav-tabs li.active a:focus,
+		.content-create .nav-tabs li.active a:hover {
+			background: #1d1f21;
+			color: #f1f1f1;
+		}
+		.content-create .tab-content {
+			height: 81vh;
+			margin-top: -6px;
+			border: 2px solid #1d1f21;
+			border-left: none;
+			border-radius: 0 5px 5px 0;
+			background-color: #ECF0F5;
+			position: relative;
+		}
+		.content-create .welcome-snippet {
+			font-size: 1.2em;
+			text-align: justify;
+		}
+		.info-snippet, .welcome-snippet {
+			overflow-y: auto;
+			padding: 10px;
+			max-height: 78vh;
+		}
+		.content-create .info-snippet hr {
+			margin: 15px 50px;
+			border: 0;
+			border-top: 2px solid #9E9E9E;
+		}
+		.content-create	.body-html, .content-create .body-css, .content-create .body-js {
+			height: 80vh;
+			padding: 0;
+		}
+		.input-adjust.text-area {
+			min-height: 150px;
+		}
+		/*SIDE RIGHT*/
+		#dm {
+			position: absolute;
+			right: 40px;
+			top: 20px;
+			font-size: 1em;
+		}
+		.content-create	.panel-right {
+			flex: 1 1 auto;
+			width: 100%;
+			min-height: 200px;
+			min-width: 400px;
+			background: #fff;
+		}
+		.content-create	.frame {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+		.content-create .bootstrap-select .dropdown-menu li small {
+			padding-left: 0em;
+			position: absolute;
+			right: 50px;
+		}
+		/*IN MODAL*/
+		.nav-tab-config {
+			margin-bottom: 0;
+		}
+		.nav-tab-config .tab-content {
+			height: 70vh;
+			overflow-y: auto;
+		}
+		#list-jquery, #list-framework {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		#list-jquery li, #list-framework li {
+			padding: 5px 0;	
+		}
+		/* ============== CODE_USER*/
+		.snippet-box {
+			position: relative;
+			height: 350px;
+			background: transparent;
+			margin-bottom: 50px;
+			border-radius: 10px;
+			transition: all .4s ease-in-out;
+		}
+		.snippet-box:hover {
+			background: rgba(0, 0, 0, 0.3);
+			padding: 20px;
+			padding-bottom: 5px;
+		}
+		.frame-views {
+			height: 150%;
+			width: 200%;
+			border-radius: 20px;
+			pointer-events: none;
+			border: none;
+			transform: scale(0.5);
+			transform-origin: 0 0;
+		}
+		.snippet-box-info {
+			position: absolute;
+			top: 76%;
+			left: 0;
+			right: 0;
+			background: #337ab7ab;
+			border-radius: 10px;
+			padding: 10px;
+		}
+		.info-each-snippet {
+			position: absolute;
+			width: 100%;
+			left: 0;
+			bottom: -33px;
+			padding: 0 10px;
+			visibility: hidden;
+		}
+		.snippet-box-info .author h4 {
+			font-family: 'Fredoka One', cursive;
+			margin: 5px;
+			color: #f1f1f1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.snippet-box-info .image img {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+		}
+		.snippet-box a.open-to-editor {
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 85px;
+			border: 0 !important;
+			z-index: 1;
+		}
+		/*-----------------*/
+		.content-snippet-user .not-yet img {
+			display: block;
+			margin: 40px auto;
+			border: 3px solid #ccc;
+			border-radius: 50%;
+			padding: 5px;
+		}
+		.content-snippet-user .create-new{
+			text-align: center;
+			margin: 54px auto;
+			cursor: pointer;
+		}
+		.content-snippet-user .create-new img {
+			width: 100px;
+			height: 100px;
+		}
+		/* ============== ACTIVITY*/
+		.content-activity .profile-body {
+			min-height: 330px;
+			border : 2px solid;
+			position: relative;
+			font-size: 1.2em;
+		}
+		.content-activity .profile-body .edit {
+			position: absolute;
+			bottom: 0;
+			left: 5px;
+			right: 5px;
+			background-color: rgba(0, 0, 0, 0.15);
+			padding: 4px;
+		}
+		.content-activity .profile-body p.edit:hover {
+			background-color: burlywood;
+		}
+		.content-activity .profile-body .profile-user-img {
+			height: 100px;
+		}
+		/* ============== PROFILE*/
+		.content-profile .box {
+			position: relative;
+		}
+		/*MODAL*/
+		.content-profile .btn:hover {
+			background: burlywood;
+		}
+		.content-profile .btn-file {
+			position: relative;
+			overflow: hidden;
+		}
+		.content-profile .submit-photo, .content-profile .submit-identity, .content-profile .submit-account {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+		.content-profile .btn-file input[type=file] {
+			position: absolute;
+			top: 0;
+			right: 0;
+			min-width: 100%;
+			min-height: 100%;
+			font-size: 100px;
+			text-align: right;
+			filter: alpha(opacity=0);
+			opacity: 0;
+			outline: none;
+			background: white;
+			display: block;
+		}
+		.content-profile #img-upload{
+			width: 160px;
+			height: 160px;
+		}
+		/*VIEW*/
+		.content-profile .box-photo .profile-user-img {
+			height: 160px;
+			width: 160px;
+		}
+		.content-profile .box-identity, .content-profile .box-photo, .content-profile .box-account {
+			min-height: 76vh;
+		}
+		.content-profile .box-identity p, .content-profile .box-account p {
+			margin-top: 10px;
+			font-size: 16px;
+			font-family: 'Fredoka One', cursive;
+		}
+		@media only screen and (min-width: 768px){
+			.modal-dialog {
+				width: 700px;
+			}
+		}
+		@media only screen and (max-width: 992px){
+			.content-home, .content-activity {
+				padding-right: 15px;
+			}
+		}
+	</style>
+<?php endif;
 script_user();
 ?>
 </head>
 <body class="hold-transition fix skin-blue sidebar-mini">
-	<div class="overlay hide"></div>
 	<?php
 	loader();
 	echo (isset($jsonUrl)) ? '<div class="url-read hide" data-url="'.$jsonUrl.'"></div>' : '';

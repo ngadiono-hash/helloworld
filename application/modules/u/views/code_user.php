@@ -40,7 +40,7 @@
 							<div class="info-each-snippet">
 								<a class="btn btn-sm btn-default"><i class="fa fa-eye"></i> 2</a> 
 								<a class="btn btn-sm btn-default"><i class="fa fa-thumbs-up"></i> 4</a>
-								<a class="btn btn-sm btn-default"><i class="fa fa-comment-alt"></i> 8</a>
+								<a class="btn btn-sm btn-default"><i class="fa fa-comment-alt"></i> <?=$co['comment']?></a>
 								<a class="btn btn-sm btn-no pull-right" href="<?= base_url('u/snippet/edit/').$co['code_id'] ?>"><i class="fa fa-edit"></i> edit snippet</a>
 							</div>  
 							<div class="clearfix"></div>

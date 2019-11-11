@@ -23,7 +23,6 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	<?php myGlobal(); ?>
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/prisma.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
-	<!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/css/css_tutorial.css"> -->
 	<script src="<?= base_url(); ?>assets/js/loader.js"></script>
 	<?php script_user() ?>
 	<?php if ( startSession('sess_id') ) { ?>

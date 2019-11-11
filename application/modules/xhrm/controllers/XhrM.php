@@ -113,7 +113,7 @@ class XhrM extends CI_Controller
 			$this->Common_model->insert_record('bug',$data);
 		}
 	}
-	public function load_more_comment() //
+	public function load_more_comment() // ok
 	{
 		$limit = 5;
 		$id = $this->input->post('id');
@@ -131,7 +131,7 @@ class XhrM extends CI_Controller
 			['t1.id_target' => $serial,'t1.created <' => $id],
 			['t1.created','desc'],
 			false,true,5
-		);		
+		);
 		$load = append_comment($load);
 		foreach ($load as $k => $b) { ?>
 			<div class="row row-comment <?=$b['side']?>" id="<?=$b['created']?>">
@@ -192,6 +192,7 @@ class XhrM extends CI_Controller
 				$expired 				= $now + $defaultCookie;
 				$token 					= sha1($ip.$expired.$userLogged['email'].microtime());
 				$data = [
+					'created' 	=> $now,
 					'expired' 	=> $expired,
 					'token' 		=> $token,
 					'email' 		=> $userLogged['email'],
@@ -199,6 +200,7 @@ class XhrM extends CI_Controller
 					'agent' 		=> $agent,
 				];
 				$this->Common_model->insert_record('user_cookie',$data);
+				setcookie('c_user',$data['token'],$data['expired'],'/');
 			}
 			$user_session = [
 				'sess_id'    => $userLogged['id'],

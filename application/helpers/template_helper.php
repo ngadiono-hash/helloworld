@@ -7,7 +7,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 // TEMPLATE HEADER
 function myGlobal(){ ?>
 	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-	<script src="<?= base_url('assets/js/global.js') ?>"></script>
+	<script src="<?= base_url('assets/js/gl.js') ?>"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
 <?php	}
 

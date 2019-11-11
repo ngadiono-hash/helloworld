@@ -6,7 +6,7 @@
 </style>
 <div class="content-wrapper">
 	<section class="content content-home">
-	<?php temp_profile() ?>		
+	<?php temp_profile() ?>
 		<?php foreach ($record as $r) { ?>
 		<?php if($r['timeline_cat'] == 2 && $r['timeline_time'] > getSession('sess_reg')) { ?>
 		<div class="box box-sh">
@@ -21,21 +21,17 @@
 					</div>
 					<h3 class="fred"><?=$r['line_user']?> membuat snippet baru</h3>
 					<div class="row">
-						<div class="col-sm-6">	
+						<div class="col-sm-6">
 							<div class="snippet-box home">
 								<a class="open-to-editor" href="<?= base_url('snippet/s/').$r['line_code_id'] ?>"></a>
 								<iframe class="frame-views" src="<?= base_url('snippet/p/').$r['line_code_id'] ?>"></iframe>
-								<!-- <div class="snippet-box-info">
-									<div class="info-each-snippet">
-										<a class="btn btn-sm btn-no pull-right" href="<?= base_url('u/snippet/edit/').$r['line_code_id'] ?>"><i class="fa fa-edit"></i> edit snippet</a>
-									</div>  
-									<div class="clearfix"></div>
-								</div> -->
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<h3 class="fred text-muted"><?=$r['line_code_title']?></h3>
-							<?=$r['line_code_desc']?>
+							<p><?=readMore($r['line_code_desc'],200)?>...
+								<a class="base-link" href="<?=base_url('snippet/s/').$r['line_code_id']?>">selengkapnya</a>
+							</p>
 						</div>
 					</div>
 
@@ -76,20 +72,20 @@
 								<div class="icon">
 									<i class="fab <?= $icon ?>"></i>
 								</div>
-							</div>						
+							</div>
 						</div>
 						<div class="col-sm-6">
-							<p><?=$r['line_tutor_read']?>... 
+							<p><?=$r['line_tutor_read']?>...
 								<a class="base-link" href="<?=base_url('lesson/').$r['line_tutor_cat'].'/'.$r['line_tutor_meta']?>">selengkapnya</a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
 		<?php	} ?>
 		<?php	} ?>
-		
+
 	</section>
 </div>
 

@@ -12,6 +12,29 @@ class U extends CI_Controller
 		$this->load->model('User_model');
 	}
 
+	public function haha()
+	{
+		?>
+		<form method="post" action="">
+			<input type="hidden" name="csrf_token" value="<?= $this->security->get_csrf_hash(); ?>">
+			<input type="text" name="hehe">
+			<input type="text" name="huhu">
+			<input type="submit" name="kirim">
+		</form>
+		<?
+		$send = $this->input->post('kirim');
+		$a = $this->input->post('hehe');
+		$b = $this->input->post('huhu');
+		if ($send) {
+			$c = (strlen(trim($a)) == 0 ) && (strlen(trim($b)) == 0);
+			var_dump($c);
+			if($c) {
+				echo "harus diisi";
+			} else {
+				echo $a.' = '.$b;
+			}
+		}
+	}
 	private function getDataCurrentUser()
 	{
 		$query = $this->Common_model->select_fields_where(
@@ -35,7 +58,7 @@ class U extends CI_Controller
 
 
 
-	public function index()
+	public function index() // ok
 	{
 		$record = $this->Common_model->select_fields_where_join(
 			'timeline AS t1',
@@ -90,7 +113,7 @@ class U extends CI_Controller
 		_temp_user($data,'Beranda','index');
 	}
 
-	public function notification()//
+	public function notification() //
 	{
 		$user = $this->Read_model->getDataUser();
 		$security = $this->Read_model->getSecurityNotif($user['email']);
@@ -116,7 +139,7 @@ class U extends CI_Controller
 		_temp_user($data,'Pemberitahuan','notification');
 	}
 
-	public function activity()
+	public function activity() // ok
 	{	
 		$data['html_count'] = $this->User_model->countProgress('1');
 		$html = $this->User_model->countTutorials('1');
@@ -136,7 +159,7 @@ class U extends CI_Controller
 		_temp_user($data,'Timeline - ' . ucwords(getSession('sess_user')),'activity');	
 	}
 
-	public function profile()
+	public function profile() // ok
 	{
 		$fetch = $this->getDataCurrentUser();
 		$data['provider']	= $fetch['provider'];
@@ -150,9 +173,9 @@ class U extends CI_Controller
 		_temp_user($data,'Profil - '.ucwords(getSession('sess_user')),'profile');
 	}
 
-	public function snippet($p1='',$serial='')
+	public function snippet($p1='',$serial='') // ok
 	{
-		$data['code'] = $this->Common_model->select_fields_where(
+		$code = $this->Common_model->select_fields_where(
 			'snip',
 			'*',
 			['code_author' => getSession('sess_id')],
@@ -160,6 +183,10 @@ class U extends CI_Controller
 			true,
 			['code_upload','desc']
 		);
+		foreach ($code as $k => $v) {
+			$code[$k]['comment'] = $this->Common_model->count_record('user_comment','id',['id_target' => $v['code_id']],true);
+		}
+		$data = ['code' => $code];
 		if($p1 == '') {
 			_temp_user($data,'Snippet Saya','code_user');		
 		}
@@ -182,6 +209,15 @@ class U extends CI_Controller
 			if($cek == 0) {
 				not_found();
 			} else {
+				$framework = $this->Common_model->select_fields_where(
+					'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
+				);
+				$jQuery = $this->Common_model->select_fields_where(
+					'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
+				);
+				$tag = $this->Common_model->select_fields_where(
+					'snip_cat','*',[],false,true,['category_name','asc']
+				);
 				$code = $this->Common_model->select_fields_where_join(
 					'snip AS t1',
 					'
@@ -196,22 +232,19 @@ class U extends CI_Controller
 					],
 					['t1.code_id' => $serial],'',true
 				);
-				$fm_id = explode(',',$code['code_cdn']);
-				$framework = $this->Common_model->select_fields_where(
-					'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
-				);
 				$tag_id = explode(',',$code['code_tag']);
-				$tag = $this->Common_model->select_fields_where(
-					'snip_cat','*',[],false,true,['category_name','asc']
-				);
-				$jQuery = $this->Common_model->select_fields_where(
-					'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
-				);
+				$cdn_id = (!empty($code['code_cdn'])) ? explode(',',$code['code_cdn']) : [];
+				$frame_id = [];
+				if(in_array(1,$cdn_id)){
+					$frame_id = array_slice($cdn_id,1);
+				}
+				
 				$data = [
 					'code' => $code,
 					'tag_snippet' => $tag_id,
 					'tag' => $tag,
-					'fm_snippet' => $fm_id,
+					'cdn_snippet' => $cdn_id,
+					'frame_id' => $frame_id,
 					'jQuery' => $jQuery,
 					'framework' => $framework
 				];
