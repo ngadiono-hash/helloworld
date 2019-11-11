@@ -14,6 +14,14 @@ $(document).ready(function() {
 	loading();
 	activeSide();
 });
+function preview_frame(target,href) {
+	$(target).fadeIn().attr('src',''+href+'');
+	$(target).after('<button class="close-frame btn btn-default"><i class="fa fa-times"></i></button>');
+	$(document).on('click','.close-frame',function(){
+		$(target).attr('src','').fadeOut();
+		$(this).remove();
+	});	
+}
 </script>
 
 <?php if ( whats_page(1,['a']) ) { ?>
@@ -167,14 +175,8 @@ $(document).ready(function() {
 			});
 			// =================== PREVIEW
 			tutorialsTable.on('click','.action-preview',function(){
-				$('.custom-modal').removeClass('hide').toggleClass('scale-in-center').fadeIn('fast');
-				$('.overlay').removeClass('hide');
 				var href = $(this).data('href');
-				preview(href);
-			});
-			$('.content-tutorials .btn-diss').on('click',function(){
-				$(this).parents('.custom-modal').addClass('hide').toggleClass('scale-in-center').fadeOut('slow');
-				$('.overlay').addClass('hide');
+				preview_frame('#frame-full',href)
 			});
 			// =================== ADD TUTORIAL
 			$('#create-tutorial-form').submit(function(e){
@@ -271,14 +273,8 @@ $(document).ready(function() {
 				});
 			// =================== PREVIEW
 			edited.on('click','.action-preview',function(){
-				$('.custom-modal').removeClass('hide').toggleClass('scale-in-center').fadeIn('fast');
-				$('.overlay').removeClass('hide');
 				var href = $(this).data('href');
-				preview(href);
-			});
-			$('.content-edit .btn-diss').on('click',function(){
-				$(this).parents('.custom-modal').addClass('hide').toggleClass('scale-in-center').fadeOut('slow');
-				$('.overlay').addClass('hide');
+				preview_frame('#frame-full',href);
 			});
 		});
 	</script>

@@ -448,23 +448,23 @@ class Read_model extends CI_Model
 // ================= ADMINISTRATOR
 	function Ignited_dt($select,$table,$where,$order)
 	{
-		$this->datatables->select($select);
-		$this->datatables->from($table);
-		$this->datatables->where($where);
-		$this->db->order_by($order,'asc');
-		return $this->datatables->generate();
+		// $this->datatables->select($select);
+		// $this->datatables->from($table);
+		// $this->datatables->where($where);
+		// $this->db->order_by($order,'asc');
+		// return $this->datatables->generate();
 	}	
 	public function getAllLevelName()
 	{
-		$this->db->select('_id AS level_id, _cat AS category_id, _name AS level_name');
-		$this->db->order_by('_cat','asc');
-		return $this->db->get($this->tutorLev)->result_array();
+		// $this->db->select('_id AS level_id, _cat AS category_id, _name AS level_name');
+		// $this->db->order_by('_cat','asc');
+		// return $this->db->get($this->tutorLev)->result_array();
 	}
 	public function getAllCategoryName()
 	{
-		$this->db->select('_id AS category_id, _name AS category_name');
-		$this->db->order_by('_id','asc');
-		return $this->db->get($this->tutorCat)->result_array();
+		// $this->db->select('_id AS category_id, _name AS category_name');
+		// $this->db->order_by('_id','asc');
+		// return $this->db->get($this->tutorCat)->result_array();
 	}    
 
 	public function getLevelName($level)//
@@ -475,20 +475,20 @@ class Read_model extends CI_Model
 
 	public function getLevel($category,$level)
 	{
-		$aa = $this->db->select('_name')->get_where($this->tutorLev,['_cat' => $category])->result_array();
-		for ($i=0; $i < count($level); $i++) { 
-			$ab[$i] = $this->db->where(['snip_level' => $level[$i], 'snip_bin' => 0])->from($this->tutor)->count_all_results();
-		}
-		$ac = [];
-		foreach ($aa as $key => $ax) {
-			$ac [] = ['level_name' => $ax['_name'], 'counter' =>$ab[$key] ];
-		}
-		return $ac;
+		// $aa = $this->db->select('_name')->get_where($this->tutorLev,['_cat' => $category])->result_array();
+		// for ($i=0; $i < count($level); $i++) { 
+		// 	$ab[$i] = $this->db->where(['snip_level' => $level[$i], 'snip_bin' => 0])->from($this->tutor)->count_all_results();
+		// }
+		// $ac = [];
+		// foreach ($aa as $key => $ax) {
+		// 	$ac [] = ['level_name' => $ax['_name'], 'counter' =>$ab[$key] ];
+		// }
+		// return $ac;
 	}
 
 	public function getTutorialByOrder($category_id,$order)
 	{
-		return $this->db->get_where($this->tutor,['snip_order'=>$order,'snip_category'=>$category_id])->row_array();
+		// return $this->db->get_where($this->tutor,['snip_order'=>$order,'snip_category'=>$category_id])->row_array();
 	}
 
 	public function getTutorITimeline($id)
@@ -503,12 +503,12 @@ class Read_model extends CI_Model
 
 	public function getNextTutor($category_id,$order)
 	{
-		$this->db->where('snip_order >',$order);
-		$this->db->where('snip_category',$category_id);
-		$this->db->limit(1);
-		$this->db->order_by('snip_order', 'ASC');
-		$query = $this->db->get($this->tutor)->row_array(); 
-		return $query['snip_order'];
+		// $this->db->where('snip_order >',$order);
+		// $this->db->where('snip_category',$category_id);
+		// $this->db->limit(1);
+		// $this->db->order_by('snip_order', 'ASC');
+		// $query = $this->db->get($this->tutor)->row_array(); 
+		// return $query['snip_order'];
 	}  
 
 	public function getPrevTutor($category_id,$order)

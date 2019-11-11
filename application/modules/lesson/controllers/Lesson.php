@@ -23,7 +23,7 @@ class Lesson extends CI_Controller
 		if(!$checkMeta){
 			not_found();
 		} else {
-			$tutor_public = $this->Common_model->select_spec('tutors','snip_publish',['snip_meta' => $meta]);	
+			$tutor_public = $this->Common_model->select_spec('tutors','snip_publish',['snip_meta' => $meta]);
 			if($tutor_public == 0){
 				not_found();
 			} else {
@@ -62,7 +62,7 @@ class Lesson extends CI_Controller
 					['t2._name' => $q['level'],'t1.snip_publish' => 1],
 					['t1.snip_order','asc'],
 					false,true
-				);				
+				);
 				$data = [
 					'id'  		=> $q['id'],
 					'order' 	=> $q['order'],
@@ -83,16 +83,16 @@ class Lesson extends CI_Controller
 				];
 				$this->load->view('templates/edHeader', $data);
 				$this->load->view('main_lesson',$data);
-				$this->load->view('templates/edFooter');				
+				$this->load->view('templates/edFooter');
 			}
-		}		
+		}
 	}
 
 	public function html()
 	{
 		$meta  = $this->uri->segment(3);
 		$this->_temp($meta,1,['btn-html','html_logo.png','#E44D26','#EE8F77']);
-	}	
+	}
 
 	public function css()
 	{

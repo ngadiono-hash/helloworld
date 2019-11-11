@@ -36,12 +36,6 @@
   	<div class="alert alert-success alert-auto hide">
   		<h4><i class="fa fa-check"></i> sucessfully updated</h4>
   	</div>
-	<div class="custom-modal hide box-sh">
-		<div>
-			<button class="btn btn-diss"><i class="fa fa-times"></i></button>
-		</div>
-		<iframe id="frame-pre" src=""></iframe>
-	</div>
 		<div class="wrap-table <?= $theme ?>" style="margin-right: 46px;">
 			<form id="tutorial-form" action="<?=base_url('xhra/update_tutorial')?>">
 				<input type="hidden" id="id" name="id" value="<?= $id ?>">
@@ -129,18 +123,5 @@
 		</div>
 	</section>
 </div>
-
-<script>
-CKEDITOR.on('instanceReady', function(evt) {
-  var editor = evt.editor;
-  editor.on('focus', function(e) {
-  	// console.log('focus');
-  	// setInterval(autoUpdateTutor,60 * 5 * 1000);
-  });
-  editor.on('blur', function(e) {
-  	// console.log('blur');
-  	// setInterval(autoUpdateTutor,60 * 5 * 1000);
-  });
-});
-CKEDITOR.replace('text-editor');
-</script>
+<iframe id="frame-full" style="display: none" src=""></iframe>
+<script>CKEDITOR.replace('text-editor')</script>

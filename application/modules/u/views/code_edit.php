@@ -1,19 +1,3 @@
-<style>
-#frame-full {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	border: none;
-	z-index: 1050;	
-}	
-.close-frame {
-	position: fixed;
-	top: 10px;
-	right: 15px;
-	z-index: 1051;			
-}
-</style>
 <script>$('body').addClass('sidebar-collapse')</script>
 <div class="content-wrapper">
 	<section class="content content-create">
@@ -238,14 +222,5 @@
 		$('#btn-full').on('click',function(){
 			preview_frame('#frame-full',$(this).data('href'));
 		});
-		$(document).on('click','.close-frame',function(){
-			$('#frame-full').fadeOut();
-			$(this).remove();
-		});
-
 	});
-	function preview_frame(target,href) {
-		$(target).css('display','block').attr('src',''+href+'');
-		$(target).after('<button class="close-frame btn btn-default"><i class="fa fa-times"></i></button>');
-	}	
 </script>

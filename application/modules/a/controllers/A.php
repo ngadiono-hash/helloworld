@@ -11,53 +11,77 @@ class A extends CI_Controller
 		reload_session();
 		is_login();
 		is_admin();
-		$this->load->model('Create_model');
-		$this->load->model('Read_model');
-		$this->load->model('Update_model');
-		$this->load->model('Delete_model');
+		$this->load->model('Common_model');
+	}
+
+	private function countTutorials($cat)
+	{
+		$resultDB = [];
+		$resultDB['total'] = $this->Common_model->count_record('tutors','id',['snip_category' => $cat]);
+		$resultDB['public'] = $this->Common_model->count_record('tutors','id',['snip_category' => $cat, 'snip_publish' => 1]);
+		$resultDB['draft'] = $this->Common_model->count_record('tutors','id',['snip_category' => $cat, 'snip_publish' => 0]);
+		return $resultDB;
+	}
+
+	private function getLevel($cat,$lev)
+	{
+		$ac = [];
+		$aa = $this->Common_model->select_fields_where('tutor_lev','_name',['_cat' => $cat]);
+		for ($i=0; $i < count($lev); $i++) {
+			$ab[$i] = $this->Common_model->count_record('tutors','id',['snip_level' => $lev[$i], 'snip_bin' => 0]);
+		}
+		foreach ($aa as $key => $ax) {
+			$ac [] = ['level_name' => $ax['_name'], 'counter' => $ab[$key] ];
+		}
+		return $ac;
+	}
+
+	private function onModalAdd($table,$data,$order)
+	{
+		return $this->Common_model->select_fields($table,$data,false,true,$order);
 	}
 
 // =================== DASHBOARD
 	public function index()
 	{
-		$data['html'] = $this->Read_model->countTutorials('1');		
-		$data['level_html'] = $this->Read_model->getLevel('1',['h1','h2','h3']);
-		$data['css'] = $this->Read_model->countTutorials('2');
-		$data['level_css'] 	= $this->Read_model->getLevel('2',['c1','c2','c3']);
-		$data['js'] = $this->Read_model->countTutorials('3');
-		$data['level_js'] 	= $this->Read_model->getLevel('3',['j1','j2','j3']);
+		$data['html'] = $this->countTutorials('1');
+		$data['level_html'] = $this->getLevel('1',['h1','h2','h3']);
+		$data['css'] = $this->countTutorials('2');
+		$data['level_css'] 	= $this->getLevel('2',['c1','c2','c3']);
+		$data['js'] = $this->countTutorials('3');
+		$data['level_js'] 	= $this->getLevel('3',['j1','j2','j3']);
 		_temp_admin($data,'Welcome Administrator','index');
 	}
 
 	public function html()
 	{
-		$data['cat_name'] = $this->Read_model->getAllCategoryName();
-		$data['lev_name'] = $this->Read_model->getAllLevelName();		
+		$data['cat_name'] = $this->onModalAdd('tutor_cat','_id AS category_id, _name AS category_name',['_id','asc']);
+		$data['lev_name'] = $this->onModalAdd('tutor_lev','_id AS level_id, _cat AS category_id, _name AS level_name',['_cat','asc']);
 		$data['jsonUrl'] = 'xhra/dt_read_html';
 		_temp_admin($data,'Tutorial HTML','tutorial_table');
 	}
 
 	public function css()
 	{
-		$data['cat_name'] = $this->Read_model->getAllCategoryName();
-		$data['lev_name'] = $this->Read_model->getAllLevelName();
+		$data['cat_name'] = $this->onModalAdd('tutor_cat','_id AS category_id, _name AS category_name',['_id','asc']);
+		$data['lev_name'] = $this->onModalAdd('tutor_lev','_id AS level_id, _cat AS category_id, _name AS level_name',['_cat','asc']);
 		$data['jsonUrl'] = 'xhra/dt_read_css';
-		_temp_admin($data,'Tutorial CSS','tutorial_table');		
+		_temp_admin($data,'Tutorial CSS','tutorial_table');
 	}
 
 	public function javascript()
 	{
-		$data['cat_name'] = $this->Read_model->getAllCategoryName();
-		$data['lev_name'] = $this->Read_model->getAllLevelName();
+		$data['cat_name'] = $this->onModalAdd('tutor_cat','_id AS category_id, _name AS category_name',['_id','asc']);
+		$data['lev_name'] = $this->onModalAdd('tutor_lev','_id AS level_id, _cat AS category_id, _name AS level_name',['_cat','asc']);
 		$data['jsonUrl'] = 'xhra/dt_read_js';
-		_temp_admin($data,'Tutorial JAVASCRIPT','tutorial_table');		
+		_temp_admin($data,'Tutorial JAVASCRIPT','tutorial_table');
 	}
 
 	// public function deleted()
 	// {
 	// 	$data['jsonUrl'] = 'a/dt_deleted_tutorial';
 	// 	_temp_admin($data,'Tutorial DELETED','tutorial_table');
-	// }	
+	// }
 
 	public function tutorial()
 	{
@@ -76,8 +100,11 @@ class A extends CI_Controller
 		  	$data['cat_name'] = 'javascript';
 		  	$data['theme'] = 'wrap-js';
 		  	$cat_id = '3';
-		  }		
-			$edit = $this->Read_model->getTutorialByOrder($cat_id,$order);
+		  }
+			$edit = $this->Common_model->select_fields_where(
+				'tutors','*',['snip_order' => $order,'snip_category' => $cat_id],true
+			);
+			// debug($edit);
 			$data['id'] 		= $edit['snip_id'];
 			$data['order'] 	= $edit['snip_order'];
 			$data['titlex'] = $edit['snip_title'];
@@ -95,13 +122,15 @@ class A extends CI_Controller
 		    $data['btn'] = 'btn-no';
 		    $data['fa']  = '<i class="fa fa-code"></i>';
 			}
-			$next = $this->Read_model->getNextTutor($cat_id,$order);
-			$prev = $this->Read_model->getPrevTutor($cat_id,$order);
+			$next = $this->Common_model->select_spec(
+				'tutors','snip_order',['snip_order >' => $order, 'snip_category',$cat_id],['snip_order', 'ASC'],1
+			);
+			$prev = $this->Common_model->select_spec(
+				'tutors','snip_order',['snip_order <' => $order, 'snip_category',$cat_id],['snip_order', 'DESC'],1
+			);
 			$data['linkNext'] = ($next) ? base_url('a/tutorial/'.$catName.'/'.$next) : '#';
 			$data['linkPrev'] = ($prev) ? base_url('a/tutorial/'.$catName.'/'.$prev) : '#';
 			_temp_admin($data,'Edit - '.$edit['snip_slug'],'tutorial_edit');
-		} else {
-			$this->not_found();
 		}
 	}
 
@@ -114,7 +143,7 @@ class A extends CI_Controller
 	public function users()
 	{
 		$data['jsonUrl'] = 'xhra/dt_users_list';
-		_temp_admin($data,'Admin - List Users','users_table');		
+		_temp_admin($data,'Admin - List Users','users_table');
 	}
 
 // END OF FILE

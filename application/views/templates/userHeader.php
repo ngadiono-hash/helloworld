@@ -169,6 +169,21 @@
 		color: white;
 		background: #F7D26E;
 	}
+	/*FRAME*/
+	#frame-full {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border: none;
+		z-index: 1050;
+	}
+	.close-frame {
+		position: fixed;
+		top: 10px;
+		right: 15px;
+		z-index: 1051;
+	}
 </style>
 <?php if ( whats_page(1,['a']) ) : ?>
 	<style id="style-admin">

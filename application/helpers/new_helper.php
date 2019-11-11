@@ -9,11 +9,15 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	function change_host($content)
 	{
-		$find = ["/http:\/\/localhosts\/helloworld\//"];
-		# $find = ["/http:\/\/localhost\/helloworld\//"]
-		$replace 		= ["".base_url().""];
-		$newContent = preg_replace($find,$replace,$content);
-		return $newContent;		
+		// $find = ["/http:\/\/localhost\/helloworld\//"]
+		// $replace 		= ["".base_url().""];
+		// $find = '';
+		// $replace = '';
+		if(isset($find) && isset($replace)){
+			return preg_replace($find,$replace,$content);
+		} else {
+			return $content;
+		}		
 	}
 
 	function getIp() 

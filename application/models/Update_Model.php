@@ -37,15 +37,15 @@ class Update_model extends CI_Model
 // ================= SNIPPET
   public function updateLiked($action,$id_post,$countLike);
   {
-    if ($action == 'add') {
-      $this->db->update('snip',['code_like' => ($countLike + 1)],['code_id' => $id_post]);
-    } else {
-      if ($countLike != 0) {
-        $this->db->update('snip',['code_like' => ($countLike - 1)],['code_id' => $id_post]);
-      } else {
-        return true;
-      }
-    }
+    // if ($action == 'add') {
+    //   $this->db->update('snip',['code_like' => ($countLike + 1)],['code_id' => $id_post]);
+    // } else {
+    //   if ($countLike != 0) {
+    //     $this->db->update('snip',['code_like' => ($countLike - 1)],['code_id' => $id_post]);
+    //   } else {
+    //     return true;
+    //   }
+    // }
   }
   public function updateCdn()
   {

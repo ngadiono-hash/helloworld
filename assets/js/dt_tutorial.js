@@ -92,7 +92,7 @@ $(document).ready(function() {
 
 			var pre;
 			if(status == '1'){
-				pre = '<a class="button btn-block btn-warn btn-pre action-preview" data-toggle="modal" data-target="#preview" data-keyboard="true" data-href="'+host+'/lesson/'+catName+'/'+meta+'">'+
+				pre = '<a class="button btn-block btn-warn btn-pre action-preview" data-href="'+host+'lesson/'+catName+'/'+meta+'">'+
 				  '<i class="fa fa-eye"></i></a>';
 			} else {
 				pre = '';

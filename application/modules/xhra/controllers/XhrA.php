@@ -1,24 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
 class XhrA extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
 		reload_session();
-		// is_login();
-		// is_admin();
 		is_send_ajax();
-		$this->load->model('Create_model');
-		$this->load->model('Read_model');
-		$this->load->model('Update_model');
-		$this->load->model('Delete_model');
+		$this->load->model('Common_model');
 	}
 
 	public function dt_read_html()
 	{
-		echo $this->Read_model->Ignited_dt(
+		echo $this->Common_model->Ignited_dt(
 			'snip_id,snip_category,snip_level,snip_order,snip_title,snip_slug,snip_content,snip_meta,snip_code,snip_publish,snip_update',
 			'tutors',
 			['snip_category' => '1', 'snip_bin' => '0'],
@@ -27,7 +22,7 @@ class XhrA extends CI_Controller
 	}
 	public function dt_read_css()
 	{
-		echo $this->Read_model->Ignited_dt(
+		echo $this->Common_model->Ignited_dt(
 			'snip_id,snip_category,snip_level,snip_order,snip_title,snip_slug,snip_content,snip_meta,snip_code,snip_publish,snip_update',
 			'tutors',
 			['snip_category' => '2', 'snip_bin' => '0'],
@@ -36,7 +31,7 @@ class XhrA extends CI_Controller
 	}
 	public function dt_read_js()
 	{
-		echo $this->Read_model->Ignited_dt(
+		echo $this->Common_model->Ignited_dt(
 			'snip_id,snip_category,snip_level,snip_order,snip_title,snip_slug,snip_content,snip_meta,snip_code,snip_publish,snip_update',
 			'tutors',
 			['snip_category' => '3', 'snip_bin' => '0'],
@@ -50,7 +45,7 @@ class XhrA extends CI_Controller
 	public function dt_users_list()//
 	{
 		echo $this->Read_model->Ignited_dt(
-			'id,u_id,u_provider,u_role,u_username,u_email,u_active,u_register', 
+			'id,u_id,u_provider,u_role,u_username,u_email,u_active,u_register',
 			'users',
 			['u_role !=' => 1],
 			''
@@ -59,7 +54,7 @@ class XhrA extends CI_Controller
 	public function dt_cdn_list()//
 	{
 		echo $this->Read_model->Ignited_dt(
-			'id,cdn_author,cdn_name,cdn_version,cdn_link,cdn_status', 
+			'id,cdn_author,cdn_name,cdn_version,cdn_link,cdn_status',
 			'cdn',
 			[],
 			''
@@ -117,10 +112,20 @@ class XhrA extends CI_Controller
 
 	public function update_tutorial()
 	{
-		$this->Update_model->updateTutorial();
+		$id = $this->input->post('id');
+		$desc = preg_replace('/&nbsp;/',' ',$this->input->post('desc'));
+		$data = [
+		  'snip_title'      => ucwords($this->input->post('title')),
+		  'snip_slug'       => $this->input->post('slug'),
+		  'snip_code'       => $this->input->post('code'),
+		  'snip_content'    => $desc,
+		  'snip_meta'       => trim(create_slug($this->input->post('slug'))),
+		  'snip_update'     => time()
+		];
+		$this->Common_model->update('tutors',$data,['snip_id' => $id]);
 		$result['status'] = 1;
 		$result['last'] = date('d M, Y H:i',time());
-		echo json_encode($result);    
+		echo json_encode($result);
 	}
 
 	public function update_tutorial_title()
@@ -132,7 +137,7 @@ class XhrA extends CI_Controller
 			$this->Update_model->updateTitle();
 			$result = 1;
 		}
-		echo json_encode($result); 
+		echo json_encode($result);
 	}
 
 	public function update_tutorial_slug()
@@ -176,7 +181,7 @@ class XhrA extends CI_Controller
 			$result = 0;
 		}
 		echo json_encode($result);
-	}  
+	}
 
 	public function update_cdn()//
 	{
@@ -189,8 +194,8 @@ class XhrA extends CI_Controller
 			$this->Update_model->updateCdn();
 			$result = 1;
 		}
-		echo json_encode($result);					
-	}	
+		echo json_encode($result);
+	}
 
 	public function delete_tutorial($id)
 	{

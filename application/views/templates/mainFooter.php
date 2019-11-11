@@ -1,7 +1,6 @@
 <div class="overlay hide"></div>
 <div class="ajax-send hide"></div>
 <div id="result"></div>
-<!-- <button class="effect jello-vertical" id="toTop"><span><i class="fa fa-arrow-up fa-lg"></i></span></button> -->
 <?php if ( !whats_page(2,['reset','sign','change','s']) ) mainFooter(); ?>
 
 <?php if ( whats_page(1,['','at','lesson','snippet']) ) { ?>

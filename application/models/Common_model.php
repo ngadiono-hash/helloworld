@@ -8,6 +8,14 @@ class Common_model extends CI_Model
 		// $this->load->library('Datatables');
 	}
 // ================= READ QUERY
+	function Ignited_dt($select,$table,$where,$order)
+	{
+		$this->datatables->select($select);
+		$this->datatables->from($table);
+		$this->datatables->where($where);
+		$this->db->order_by($order,'asc');
+		return $this->datatables->generate();
+	}	
 	function check_exist($table,$where)
 	{
 		$this->db->where($where);
@@ -26,11 +34,25 @@ class Common_model extends CI_Model
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
-	function select_spec($tbl,$data,$where)
+	function select_spec($tbl,$data,$where,$order='',$limit='')
 	{
 		$this->db->select($data);
 		$this->db->from($tbl);
 		$this->db->where($where);
+		if($order !== ''){
+			if(is_array($order)){
+				$this->db->order_by($order[0],$order[1]);
+			}else{
+				$this->db->order_by($order);
+			}
+		}
+		if($limit != ''){
+			if(is_array($limit)){
+				$this->db->limit($limit[0],$limit[1]);
+			}else{
+				$this->db->limit($limit);
+			}
+		}
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return $query->row()->$data;

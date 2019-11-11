@@ -35,7 +35,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 		<div class="modal-header" style="padding: 5px"> 
-			<h2>ADD NEW LESOON</h2>
+			<h2>ADD NEW LESSON</h2>
 		</div>
 			<form id="create-tutorial-form" method="post">
 				<div class="row" style="margin: 10px 20px">
@@ -71,6 +71,7 @@
 		</div>
 	</div>
 </div>
+<iframe id="frame-full" style="display: none" src=""></iframe>
 <script>
 	$("#lvl-snip").chained("#cat-snip");
 	$("#lvl-snip").change(function(){
