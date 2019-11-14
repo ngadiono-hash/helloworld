@@ -133,9 +133,10 @@ function script_user(){ ?>
 // LOADING PAGE
 function loader(){ ?>
 	<div class="preloader">
-		<div class="loading">
+		<div class="loading center">
 			<img src="<?= base_url('assets/img/feed/waiting.gif') ?>" alt="loading...">
-			<h3 class="center">Loading...</h3>
+			<h3>Loading...</h3>
+			<noscript>Sorry... Your browser does not support JavaScript!</noscript>
 		</div>
 	</div>
 <?php }

@@ -8,7 +8,6 @@
 	<meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Lobster">
 	<link rel="stylesheet" href="<?=base_url('assets/css/jquery.flipster.min.css')?>">
-
 	<?php
 	reload_session();
 	bootstrap().myGlobal().typing();

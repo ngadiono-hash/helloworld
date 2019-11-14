@@ -354,7 +354,7 @@
 	.icon-bar {
 		position: fixed;
 		top: 12%;
-		right: 0px;
+		right: 20px;
 		z-index: 9999;
 		direction: rtl;
 	}

@@ -5,7 +5,12 @@ $keys = getTags($content, 'h3');
 <style>
 .d { padding: 10px !important; }
 .content-edit .nav-tabs li {
-	width: 20%;
+	min-width: 100px;
+}
+@media (max-width: 992px){
+	.content-edit .nav-tabs li {
+		min-width: 50px;
+	}
 }
 .alert-auto {
 	position: fixed;
@@ -56,29 +61,17 @@ $keys = getTags($content, 'h3');
 		<div class="alert alert-success alert-auto hide">
 			<h4><i class="fa fa-check"></i> sucessfully updated</h4>
 		</div>
-		<div class="wrap-table <?= $theme ?>" style="margin-right: 46px;">
+		<div class="wrap-table <?= $theme ?>">
 			<form id="tutorial-form" action="<?=base_url('xhra/update_tutorial')?>">
 				<input type="hidden" id="id" name="id" value="<?= $id ?>">
 				<input type="hidden" name="category" value="<?= $cat_name ?>">
 				<input type="hidden" name="public" value="<?= $public ?>">
 
 				<ul class="nav nav-tabs">
-					<li class="center">
-						<a class="button btn-def" href="<?= $linkPrev ?>">
-							<i class="fa fa-arrow-left"></i>
-							<span class="hidden-xs hidden-sm">Prev</span>
-						</a>
-					</li>
 					<li class="active center">
 						<a class="button btn-def" data-toggle="tab" href="#desk">
 							<i class="fa fa-book fa-lg"></i>
 							<span class="hidden-xs hidden-sm"> Desc</span>
-						</a>
-					</li>
-					<li class="center">
-						<a class="button btn-def" data-toggle="tab" href="#snip">
-							<i class="fa fa-code fa-lg"></i>
-							<span class="hidden-xs hidden-sm"> Snippet</span>
 						</a>
 					</li>
 					<li class="center">
@@ -88,9 +81,42 @@ $keys = getTags($content, 'h3');
 						</a>
 					</li>
 					<li class="center">
+						<a class="button btn-warn action-preview" data-href="<?=base_url('lesson/'.$cat_name.'/'.$meta) ?>">
+							<i class="fa fa-eye"></i> 
+							<span class="hidden-xs hidden-sm">View</span> 
+						</a>
+					</li>
+					<li class="center">
+						<a class="button btn-def" href="<?=base_url('lesson/'.$cat_name.'/'.$meta)?>" target="_blank">
+							<i class="fas fa-link"></i> 
+							<span class="hidden-xs hidden-sm">Link</span>
+						</a>
+					</li>
+					<li class="center">
+						<a class="button btn-pub action-public <?=$btn?>" data-href="<?=base_url('xhra/update_tutorial_public/'. $id)?>"><?= $fa ?></a>
+					</li>
+					<li class="center">
+						<a class="button btn-def" href="<?= $linkPrev ?>">
+							<i class="fa fa-arrow-left"></i>
+							<span class="hidden-xs hidden-sm">Prev</span>
+						</a>
+					</li>
+					<li class="center">
 						<a class="button btn-def" href="<?= $linkNext ?>">
-							<i class="fa fa-arrow-right"></i>
 							<span class="hidden-xs hidden-sm">Next</span>
+							<i class="fa fa-arrow-right"></i>
+						</a>
+					</li>
+					<li class="center">
+						<a class="button btn-def" href="<?=base_url('a/'.$cat_name) ?>">
+							<i class="fa fa-reply"></i> 
+							<span class="hidden-xs hidden-sm">Back</span>
+						</a>
+					</li>
+					<li class="center">
+						<a class="button btn-def btn-del" data-id="<?=$id?>" data-href="<?=base_url('xhra/delete_tutorial/'.$id)?>">
+							<i class="fa a-fw fa-trash-alt"></i>
+							<span class="hidden-sm hidden-xs">Delete</span>
 						</a>
 					</li>
 				</ul>
@@ -114,8 +140,6 @@ $keys = getTags($content, 'h3');
 						<label class="label-created">Created : <span><?= date('d M, Y H:i',$upload) ?></span></label>
 						<label class="label-updated">Last Updated : <span><?= date('d M, Y H:i',$update) ?></span></label>
 					</div>
-					<div id="snip" class="tab-pane fade">
-					</div>
 					<div id="info" class="tab-pane fade">
 						<div class="row">
 							<div class="col-sm-6">
@@ -133,22 +157,6 @@ $keys = getTags($content, 'h3');
 				<div class="icon-bar">
 					<a class="a btn btn-prm" id="update">
 						<span>Update</span> <i class="fa fa-edit"></i>
-					</a>
-					<a class="b btn btn-def" href="<?=base_url('lesson/'.$cat_name.'/'.$meta)?>" target="_blank">
-						<span>Open Link</span> <i class="fas fa-link"></i>
-					</a>
-					<a class="c btn btn-warn action-preview" data-href="<?=base_url('lesson/'.$cat_name.'/'.$meta) ?>">
-						<span>Preview</span> <i class="fa fa-eye"></i>
-					</a>
-					<a class="d btn btn-pub action-public <?=$btn?>" data-href="<?=base_url('xhra/update_tutorial_public/'. $id)?>">
-						<?= $fa ?>
-					</a>
-					<a class="e btn btn-no" href="<?=base_url('a/'.$cat_name) ?>">
-						<span>Back</span> <i class="fa fa-reply"></i>
-					</a>
-					<a class="f btn btn-no btn-del" data-id="<?=$id?>" data-href="<?=base_url('xhra/delete_tutorial/'.$id)?>">
-						<span>Delete</span>
-						<i class="fa a-fw fa-trash-alt"></i>
 					</a>
 				</div>
 			</form>
