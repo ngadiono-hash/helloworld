@@ -63,7 +63,7 @@ class Lesson extends CI_Controller
 					['t1.snip_order','asc'],
 					false,true
 				);
-				$data = [
+				$data['lesson'] = [
 					'id'  		=> $q['id'],
 					'order' 	=> $q['order'],
 					'title' 	=> $q['slug'],

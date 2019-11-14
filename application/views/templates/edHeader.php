@@ -1,26 +1,25 @@
 <?php 
 reload_session();
-$content = (isset($content) ? $content : '' );
+$content = (isset($lesson['content']) ? $lesson['content'] : '' );
 $description = readMore($content,250);
 $keys = getTags($content, 'h3');
 $keys = strtolower(implode(', ', $keys));
-$keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '.strtolower($title).', '. $keys;
+$keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($lesson['level']).', '.strtolower($lesson['title']).', '. $keys;
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title><?= $title; ?></title>
+	<title><?= $lesson['title']; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 	<meta name="description" content="<?= $description ?>">
 	<meta name="keywords" content="<?= $keyword ?>">
-	<meta name ="revised" content ="Hello World, <?= date('m/d/Y',$update) ?>">
+	<meta name ="revised" content ="Hello World, <?= date('m/d/Y',$lesson['update']) ?>">
 	<meta name="author" content="Hello World">
-	<?php bootstrap(); ?>
-	<?php jqueryUi() ?>
-	<?php myGlobal(); ?>
+	<?php bootstrap().jqueryUi().myGlobal() ?>
+	<?php // if(startSession('sess_role') && getSession('sess_role') == 1) ckEditor() ?>
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/prisma.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
 	<script src="<?= base_url(); ?>assets/js/loader.js"></script>
@@ -592,7 +591,7 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.main-content em { font-weight: 600; font-style: normal; }
 	.main-content .table thead tr th { text-align: center !important; text-transform: capitalize !important; }
 	.code-toolbar { max-width: 800px; margin: 10px auto; }
-	.main-content pre { overflow: hidden; max-height: 480px; max-width: 800px; margin: 10px auto; box-shadow: 1px 2px 2px rgba(0,0,0,0.5); }
+	.main-content pre { overflow: auto; max-height: 480px; max-width: 800px; margin: 10px auto; box-shadow: 1px 2px 2px rgba(0,0,0,0.5); }
 	.html-attr, .css-code { font-weight: bold; font-size: .8rem; font-family: Consolas; }
 	.html-attr { color: #90ca1c;  }
 	.css-code { color: #18c4e7; font-style: italic; }
@@ -604,19 +603,19 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 	.toolEditor ul li select:hover,
 	.toolEditor ul li select:focus,
 	.toolEditor ul li a.selectedtool { 
-		background: <?= $tmLight; ?> !important;
+		background: <?= $lesson['tmLight']; ?> !important;
 	}
 	.execute:hover{ 
-		border: 2px solid <?= $tmDark ?>; 
-		background: <?= $tmDark ?>; 
+		border: 2px solid <?= $lesson['tmDark'] ?>; 
+		background: <?= $lesson['tmDark'] ?>; 
 		text-shadow: none !important;
 	}
-	.box-desc, .side-menu li a:hover { background: <?= $tmLight ?>; }  
-	.col-left { border-right: 5px solid <?= $tmLight ?>; }
-	.main-content .wrapper-content { border: 10px solid <?= $tmLight; ?>; border-top: none; border-right: none; }
-	.main-content h3 { border-top: 10px solid <?= $tmLight ?>; } 
+	.box-desc, .side-menu li a:hover { background: <?= $lesson['tmLight'] ?>; }  
+	.col-left { border-right: 5px solid <?= $lesson['tmLight'] ?>; }
+	.main-content .wrapper-content { border: 10px solid <?= $lesson['tmLight']; ?>; border-top: none; border-right: none; }
+	.main-content h3 { border-top: 10px solid <?= $lesson['tmLight'] ?>; } 
 	.main-content h3, .main-footer .right-side .next-lesson, #next p
-	{ text-shadow: -1px -1px 0 <?= $tmDark; ?>, 1px -1px 0 <?= $tmDark; ?>, -1px 1px 0 <?= $tmDark; ?>, 1px 1px 0 <?= $tmDark; ?>; }  
+	{ text-shadow: -1px -1px 0 <?= $lesson['tmDark']; ?>, 1px -1px 0 <?= $lesson['tmDark']; ?>, -1px 1px 0 <?= $lesson['tmDark']; ?>, 1px 1px 0 <?= $lesson['tmDark']; ?>; }  
 
 	/*============ MEDIUM ==============*/
 	@media only screen and (max-width: 992px) {
@@ -644,4 +643,4 @@ $keyword = 'belajar '.strtolower($category).', belajar '.strtolower($level).', '
 
 </head>
 <body>
-	<?php loader(); ?>
+<?php loader(); ?>

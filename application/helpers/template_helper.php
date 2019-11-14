@@ -1,4 +1,4 @@
-<?php 
+<?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // ========= ALL PAGE ==========
@@ -24,10 +24,10 @@ function userJs(){ ?>
 
 <?php }
 function snipCss(){ ?>
-	
+
 <?php }
 function snipJs(){ ?>
-	
+
 <?php }
 
 function selectBS(){ ?>
@@ -95,7 +95,7 @@ function blank_page($status) { ?>
 	    width: 350px;
 		}
 		h1{
-			font-family: Stencil, Fantasy; 
+			font-family: Stencil, Fantasy;
 		}
 	</style>
 	</head>
@@ -139,7 +139,7 @@ function loader(){ ?>
 		</div>
 	</div>
 <?php }
- 
+
 
 // ========= MAIN NAVBAR =======
 function mainNav($code=[]) { ?>
@@ -155,12 +155,12 @@ function mainNav($code=[]) { ?>
 	</a>
 	<a class="nav-adjust" href="<?=base_url('snippet')?>">
 		<span class="hidden-xs hidden-sm">Snippet</span>
-		<span class="visible-xs visible-sm"><i class="fa fa-code"></i></span>	
+		<span class="visible-xs visible-sm"><i class="fa fa-code"></i></span>
 	</a>
 	<a class="nav-adjust" href="#">
 		<span class="hidden-xs hidden-sm">Artikel</span>
-		<span class="visible-xs visible-sm"><i class="fa fa-file"></i></span>		
-	</a> 
+		<span class="visible-xs visible-sm"><i class="fa fa-file"></i></span>
+	</a>
 	<?php } elseif (whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
 	<a href="<?= base_url('snippet') ?>"><i class="fa fa-arrow-left"></i></a>
 	<a style="width: 30vw" class="hidden-xs"><?=$code['code_title']?></a>
@@ -169,7 +169,7 @@ function mainNav($code=[]) { ?>
 	<?php if (!whats_page(2,['sign'])) { ?>
 	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">
 		<span class="hidden-xs hidden-sm">Login</span>
-		<span class="visible-xs visible-sm"><i class="fa fa-sign-in-alt"></i></span>		
+		<span class="visible-xs visible-sm"><i class="fa fa-sign-in-alt"></i></span>
 	</a>
 	<?php } ?>
 	<?php } else { ?>
@@ -233,7 +233,7 @@ function navbar($title) {
 	// if($cekNotif['c'] == 1 || $cekNotif['l'] == 1 || $cekNotif['s'] == 1){
 	// 	$com  = $CI->Read_model->countNotifCom();
 	// 	$like = $CI->Read_model->countNotifLike();
-	// 	$sec  = $CI->Read_model->countNotifSec(['user' => $user['email'], 'status' => 1]);	
+	// 	$sec  = $CI->Read_model->countNotifSec(['user' => $user['email'], 'status' => 1]);
 	// 	$countNotif = [
 	// 		'all' => $com + $sec + $like
 	// 	];
@@ -301,7 +301,7 @@ function side_notification($countNotif,$contentNotif){ ?>
 								<img class="custom-image" src="<?=base_url('assets/img/profile/').$v['image']?>">
 									<span class="fred"><?=$v['post']?></span><br>
 									<?php if ($v['author'] == getSession('sess_id')) { ?>
-									<span><?=$v['commentator']?> menambahkan sebuah komentar</span><br> 
+									<span><?=$v['commentator']?> menambahkan sebuah komentar</span><br>
 									<?php } else { ?>
 									<span><?=$v['commentator']?> membalas komentar kamu</span><br>
 									<?php } ?>
@@ -319,12 +319,12 @@ function side_notification($countNotif,$contentNotif){ ?>
 								<a href="<?=base_url('snippet/s/').$v['id']?>"></a>
 								<img class="custom-image" src="<?=base_url('assets/img/profile/').$v['image']?>">
 									<span class="fred"><?=$v['post']?></span><br>
-									<span><?=$v['liker']?> menyukai postingan kamu</span><br> 
+									<span><?=$v['liker']?> menyukai postingan kamu</span><br>
 									<small class=""><?=time_elapsed_string('@'.$v['created'])?></small>
 							</li>
 					<?php	}
 					?>
-					</ul>				
+					</ul>
 				</div>
 				<div class="tab-pane" id="tab3">
 					<ul class="content-notification">
@@ -353,7 +353,7 @@ function sidebar() { ?>
 				<li class="header">Administrator</li>
 				<li class="treeview">
 					<a>
-						<i class="fas fa-fw fa-tachometer-alt"></i> 
+						<i class="fas fa-fw fa-tachometer-alt"></i>
 						<span>Chart</span>
 						<span class="pull-right-container">
 							<i class="fa fa-angle-left pull-right"></i>
@@ -390,10 +390,10 @@ function sidebar() { ?>
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						
+
 						<li><a href="<?= base_url('a/menus'); ?>"><i class="fa fa-fw fa-bars"></i> Menu Access </a></li>
 					</ul>
-				</li>						
+				</li>
 				<?php endif; ?>
 				<li class="header" style="margin-top: 10px;">Member</li>
 				<li class="treeview">
@@ -432,9 +432,9 @@ function temp_profile(){
 				<p class="text-muted text-center fred">
 				<?php if (getSession('sess_role') == '1') : ?>
 					<span>Administrator</span>
-				<?php else : ?>	
+				<?php else : ?>
 					<span>Member</span>
-				<?php endif; ?>					
+				<?php endif; ?>
 				</p>
 				<p class="text-muted center">bergabung sejak <?=time_elapsed_string('@'.$reg)?></p>
 				<p class="text-muted center"><?= ($bio) ? '"'.$bio.'"' : 'belum ada info tentang '.getSession('sess_user') ?></p>
@@ -447,17 +447,17 @@ function temp_profile(){
 // =============================
 
 // MENU
-function _menus($menu,$level,$category){ ?>
+function _menus($lesson){ ?>
 	<div class="menu-wrap">
 		<div class="control">
 			<span><a class="tip-bottom backTo fa fa-home" href="<?=base_url()?>"></a></span>
-			<span><h4><?=$level?></h4></span>
+			<span><h4><?=$lesson['level']?></h4></span>
 			<span><a class="tip-bottom closed-menu fa fa-times"></a></span>
 		</div>
 		<ul class="side-menu">
-		<?php	
-			foreach ($menu as $list) {
-			$menu_href 	= base_url('lesson/').$category.'/'.$list['meta']; ?>
+		<?php
+			foreach ($lesson['menu'] as $list) {
+			$menu_href 	= base_url('lesson/').$lesson['category'].'/'.$list['meta']; ?>
 			<li><a class="tip-right link-menu" href="<?=$menu_href?>" title="<?=$list['slug']?>"><?=$list['title']?></a></li>
 			<?php	} ?>
 		</ul>
@@ -482,7 +482,7 @@ function _toolEditor() { ?>
 						<option value="2">2s</option>
 						<option value="3">3s</option>
 					</select>
-				</div>	
+				</div>
 			</li>
 			<li><a href="#runcode" title="run code" class="tip-bottom fa fa-fw fa-play fa-lg"></a></li>
 		</ul>
@@ -490,18 +490,31 @@ function _toolEditor() { ?>
 <?php }
 
 // CODE-EDITOR
-function _codeEditor($code,$tmLight,$tmDark,$category,$title,$logo,$meta) { ?>
-	<div id="jkcodeinput"> 
+function _codeEditor($lesson) { ?>
+	<div id="jkcodeinput">
 		<div id="jksourceCode"></div>
-<textarea id="jkregulartextarea" class="jkdefault" style="display: none;">		
-<?php
-if(isset($code)) {
-	if($code != '') {
-		showCode($code);
-	}	else {
-		defaultCode($tmLight,$tmDark,$category,$title,$logo);
-	} 
-} ?>
+<textarea id="jkregulartextarea" class="jkdefault" style="display: none;">
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/external-demo.css">
+	<style>
+		body {
+			background-image: linear-gradient(<?= $lesson['tmLight'] ?>,#DDD);
+			background-repeat: no-repeat;
+		}
+		.intro h1, .intro h2 { color: <?= $lesson['tmDark'] ?>; }
+	</style>
+</head>
+<body>
+	<div class="intro">
+		<h1 class="text-focus-in"><?= $lesson['category'] ?></h1>
+		<h2 class="text-focus-in"><?= $lesson['title'] ?></h2>
+		<img class="bounce-in-top" src="<?= base_url('assets/img/feed/') . $lesson['logo'] ?>">
+		<p>arahkan pointer mouse ke sebelah kiri layar untuk membuka dokumentasi</p>
+	</div>
+</body>
+</html>
 </textarea>
 		<div id="jkdragbar"></div>
 	</div>
@@ -514,108 +527,52 @@ if(isset($code)) {
 					<span class="dot" style="background:#FDD800;"></span>
 					<span class="dot" style="background:#5AC05A;"></span>
 				</div>
-				<input class="input-window" type="text" value="<?=base_url('lesson/').$category.'/'.$meta?>">
+				<input class="input-window" type="text" value="<?=base_url('lesson/').$lesson['category'].'/'.$lesson['meta']?>">
 			</div>
 		</div>
 		<div id="dm"></div>
 		<iframe id="jktargetCode"></iframe>
-	</div>		
+	</div>
 <?php }
 
 // MAIN DOCUMENTATION
-function _mainContent($id,$order,$title,$titles,$level,$category,$content,$update,$next,$btn) { ?>
+function _mainContent($lesson) { ?>
 	<div class="col-left visible-md visible-lg">
 		<a class="close-col btn btn-def visible-sm visible-xs"><i class="fa fa-angle-double-left"></i></a>
 		<div class="info-desc">
 			<p><i class="fas fa-tachometer-alt"></i> kategori</p>
-			<span><?= strtoupper($category) ?></span>
+			<span><?= strtoupper($lesson['category']) ?></span>
 			<p><i class="far fa-hand-point-right"></i> kelas</p>
-			<span><?= $level ?></span>
+			<span><?= $lesson['level'] ?></span>
 			<p><i class="far fa-clock"></i> update</p>
-			<span><?= time_elapsed_string('@'.$update) ?></span>
+			<span><?= time_elapsed_string('@'.$lesson['update']) ?></span>
 		</div>
 		<hr>
-		<h4 class="second-title"><?=$titles?></h4>
-		<h4 class="second-title"><?=$title?></h4>
-		<hr>		
+		<h4 class="second-title"><?= $lesson['titles'] ?></h4>
+		<h4 class="second-title"><?= $lesson['title'] ?></h4>
+		<hr>
 		<div id="point"></div>
 	</div>
 	<div class="inner-desc">
 		<div class="main-content">
 			<div class="col-right">
-			<?php 
-				if($content != '') {
-					showDoc($content);
-					footerDoc($id,$next,$category,$level,$btn);		
-				} else {
-					emptyDoc();
-				}
-			?>
-			</div>
-		</div>
-	</div>
-<?php }
-
-// ========= HELPER EDITOR =====
-// =============================
-// TEMPLATE CODE
-function showCode($code) {
-	$newCode = change_host($code);
-echo $newCode;
-}
-
-function defaultCode($tmLight,$tmDark,$category,$title,$logo) { ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/external-demo.css">
-	<style>
-		body { 
-			background-image: linear-gradient(<?= $tmLight ?>,#DDD); 
-			background-repeat: no-repeat;
-		}
-		.intro h1, .intro h2 { color: <?= $tmDark ?>; }
-	</style>
-</head>
-<body>
-	<div class="intro">
-		<h1 class="text-focus-in"><?= $category; ?></h1>
-		<h2 class="text-focus-in"><?= $title; ?></h2>
-		<img class="bounce-in-top" src="<?= base_url('assets/img/feed/') . $logo; ?>">
-		<p>arahkan pointer mouse ke sebelah kiri layar untuk membuka dokumentasi</p>
-	</div>
-</body>
-</html>
-<?php }
-
-// TEMPLATE CONTENT
-function showDoc($content) {
-	$newContent = change_host($content);
-	echo $newContent;	
-}
-
-function emptyDoc() { ?>
-	<h1>Maaf...</h1>
-	<h2>Materinya belum siap nih...</h2>
-	<div class="center">
-		<img class="img-feed" style='width: 400px; margin: 20px auto; display: block;' src="<?= base_url('assets/img/feed/maaf.gif') ?>" alt="sorry">
-	</div>
-<?php }
-
-function footerDoc($id,$next,$category,$level,$btn) { ?>
-	<div class="row main-footer">
-		<div class="col-lg-12">
-			<div class="right-side box-sh">
-				<p class="next-lesson sh" style="margin-bottom: 15px;">materi ini telah habis<br>selanjutnya belajar apa lagi</p>
-				<button id="btn-next" class="button <?= $btn; ?> jello-vertical"><i class="fas fa-question"></i></button>
-				<div id="next" class="hide bounce-in-top" style="margin-top: 10px;">	
-					<?php if(!empty($next)) { ?>
-					<p><?= $next['title'] ?></p>
-					<a href="<?= base_url('lesson/').$category.'/'.$next['meta']; ?>" class="base-link"><?= $next['slug']; ?></a>
-					<?php } else { ?>
-						<p>materi <?= $level; ?> ini sudah habis</p>
-						<a href="<?= base_url('lesson') ?>">silahkan kembali ke index</a>
-					<?php } ?>
+			<?=	change_host($lesson['content']) ?>
+				<div class="row main-footer">
+					<div class="col-sm-6">
+						<div class="right-side box-sh">
+							<p class="next-lesson sh" style="margin-bottom: 15px;">materi ini telah habis<br>selanjutnya belajar apa lagi</p>
+							<button id="btn-next" class="button <?= $lesson['btn'] ?> jello-vertical"><i class="fas fa-question"></i></button>
+							<div id="next" class="hide bounce-in-top" style="margin-top: 10px;">
+								<?php if(!empty($lesson['next'])) { ?>
+								<p><?= $lesson['next']['title'] ?></p>
+								<a href="<?= base_url('lesson/').$lesson['category'].'/'.$lesson['next']['meta']; ?>" class="base-link"><?= $lesson['next']['slug']; ?></a>
+								<?php } else { ?>
+									<p>materi <?= $lesson['level']; ?> ini sudah habis</p>
+									<a href="<?= base_url('lesson') ?>">silahkan kembali ke index</a>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

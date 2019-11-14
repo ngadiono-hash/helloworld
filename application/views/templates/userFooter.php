@@ -18,7 +18,7 @@ function preview_frame(target,href) {
 	$(target).fadeIn().attr('src',''+href+'');
 	$(target).after('<button class="close-frame btn btn-default"><i class="fa fa-times"></i></button>');
 	$(document).on('click','.close-frame',function(){
-		$(target).attr('src','').fadeOut();
+		$(target).fadeOut().attr('src','');
 		$(this).remove();
 	});	
 }
@@ -26,32 +26,32 @@ function preview_frame(target,href) {
 
 <?php if ( whats_page(1,['a']) ) { ?>
 	<script id="adm">
-		function strip(html) {
-			if (true) {
-				return html.replace(/\[.*?\]/gi, '');
-			}
-			var tmp = document.createElement("div");
-			// Add filter before strip
-			html = filter(html);
-			tmp.innerHTML = html;
+		// function strip(html) {
+		// 	if (true) {
+		// 		return html.replace(/\[.*?\]/gi, '');
+		// 	}
+		// 	var tmp = document.createElement("div");
+		// 	// Add filter before strip
+		// 	html = filter(html);
+		// 	tmp.innerHTML = html;
 
-			if (tmp.textContent == "" && typeof tmp.innerText == "undefined") {
-				return "";
-			}
-			return tmp.textContent || tmp.innerText;
-		}
-		function countWords(text) {
-			var normalizedText = text.replace(/(\r\n|\n|\r)/gm, " ").replace(/^\s+|\s+$/g, "")
-			.replace("&nbsp;", " ");
-			normalizedText = strip(normalizedText);
-			var words = normalizedText.split(/\s+/);
-			for (var wordIndex = words.length - 1; wordIndex >= 0; wordIndex--) {
-				if (words[wordIndex].match(/^([\s\t\r\n]*)$/)) {
-					words.splice(wordIndex, 1);
-				}
-			}
-			return (words.length);
-		}
+		// 	if (tmp.textContent == "" && typeof tmp.innerText == "undefined") {
+		// 		return "";
+		// 	}
+		// 	return tmp.textContent || tmp.innerText;
+		// }
+		// function countWords(text) {
+		// 	var normalizedText = text.replace(/(\r\n|\n|\r)/gm, " ").replace(/^\s+|\s+$/g, "");
+		// 	normalizedText = strip(normalizedText);
+		// 	var words = normalizedText.split(/\s+/);
+		// 	for (var wordIndex = words.length - 1; wordIndex >= 0; wordIndex--) {
+		// 		if (words[wordIndex].match(/^([\s\t\r\n]*)$/)) {
+		// 			words.splice(wordIndex, 1);
+		// 		}
+		// 	}
+		// 	return (words.length);
+		// }
+
 		$(document).ready(function() {
 			// TUTORIAL TABLE
 			let tutorialsTable = $('#tutorials');
@@ -66,7 +66,7 @@ function preview_frame(target,href) {
 					$.ajax({
 						url: host + "xhra/update_tutorial_order",
 						method:"POST",
-						data: {snip_order : snip_order},
+						data: { snip_order : snip_order },
 						success:function(ord){
 							var parse = $.parseJSON(ord);
 							if(parse === 1){
@@ -178,6 +178,9 @@ function preview_frame(target,href) {
 				var href = $(this).data('href');
 				preview_frame('#frame-full',href)
 			});
+			$('#frame-full').on('load', function() {
+			  $(this).contents().find(".box-desc").removeClass('hide').addClass('slide-in-left');
+			});
 			// =================== ADD TUTORIAL
 			$('#create-tutorial-form').submit(function(e){
 				e.preventDefault();
@@ -220,10 +223,14 @@ function preview_frame(target,href) {
 			// =================== UPDATE
 			edited.on('click', '#update', function(e) {
 				e.preventDefault();
+				var aa = '';
 				for (instance in CKEDITOR.instances){
 					CKEDITOR.instances[instance].updateElement();
 				}
-				var data 	= edited.serialize();
+				var words = $('#cke_wordcount_text-editor').text().replace(',','');
+				words = words.split(' ');
+				words = words[3];
+				var data 	= edited.serialize()+'&'+$.param({ count_words: words });
 				$.ajax({
 					url : host + 'xhra/update_tutorial',
 					type : 'post',
@@ -238,6 +245,10 @@ function preview_frame(target,href) {
 							}, 4000);
 						}
 						$('.label-updated span').html(data['last']);
+						data['affect'].forEach(function(el){
+							aa += '<a class="btn btn-default">'+el+'</a>';
+						});
+						$('.haha').html(aa);
 					}
 				});
 			});

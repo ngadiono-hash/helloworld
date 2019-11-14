@@ -33,7 +33,7 @@ $(document).ready(function() {
 			title = data['snip_title'];
 			slug  = data['snip_slug'];
 			category = data['snip_category'];
-			content = data['snip_content'];
+			content = (data['snip_code']) ? data['snip_code'] : null;
 			updates = data['snip_update'];
 			status = data['snip_publish'];
 
@@ -70,9 +70,7 @@ $(document).ready(function() {
 				'<a class="btn btn-hr" title="'+ convert_time(Number(times),true) +'">'+ timeElapsed(times) +'</a>'
 			);
 			// word count
-			$(cells[6]).html(
-				'<span>'+ countWords(content) + '</span>'
-			);
+			$(cells[6]).html('<span>'+ content + '</span>');
 			// status public
 			var set; 
 			if(status == '1'){
@@ -83,7 +81,7 @@ $(document).ready(function() {
 			$(cells[7]).html(set);
 
 			var target, targetLink;
-			if(countWords(content) == ''){
+			if(content == null){
 				target = '<a href="#" class="button btn-block btn-no btn-ready"> <i class="fa fa-thumbs-down"></i></a>';
 			} else {
 				target = '<a href="'+ host +'lesson/'+ catName +'/'+ meta +'" class="button btn-block btn-ok btn-ready" target="_blank"> <i class="fa fa-thumbs-up"></i></a>';

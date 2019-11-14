@@ -78,4 +78,4 @@
 	  $('.selectpicker').selectpicker('refresh');
 	});
 </script>
-<script src="<?=base_url('assets/js/dt_tutorial.js')?>"></script>
+<script src="<?=base_url('assets/js/dt_tutors.js')?>"></script>

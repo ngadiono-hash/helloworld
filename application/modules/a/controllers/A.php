@@ -104,17 +104,17 @@ class A extends CI_Controller
 			$edit = $this->Common_model->select_fields_where(
 				'tutors','*',['snip_order' => $order,'snip_category' => $cat_id],true
 			);
-			// debug($edit);
 			$data['id'] 		= $edit['snip_id'];
 			$data['order'] 	= $edit['snip_order'];
 			$data['titlex'] = $edit['snip_title'];
 			$data['slug'] 	= $edit['snip_slug'];
 			$data['meta'] 	= $edit['snip_meta'];
-			$data['content']= htmlentities($edit['snip_content']);
+			$data['content']= $edit['snip_content'];
 			$data['code'] 	= $edit['snip_code'];
 			$data['upload'] = $edit['snip_upload'];
 			$data['update'] = $edit['snip_update'];
 			$data['public'] = $edit['snip_publish'];
+			// debug(strip_tags($data['content']));
 			if($data['public'] == 1){
 		    $data['btn'] = 'btn-ok';
 		    $data['fa']  = '<i class="fa fa-globe-asia"></i>';
@@ -123,10 +123,10 @@ class A extends CI_Controller
 		    $data['fa']  = '<i class="fa fa-code"></i>';
 			}
 			$next = $this->Common_model->select_spec(
-				'tutors','snip_order',['snip_order >' => $order, 'snip_category',$cat_id],['snip_order', 'ASC'],1
+				'tutors','snip_order',['snip_order >' => $order, 'snip_category' => $cat_id],['snip_order', 'ASC'],1
 			);
 			$prev = $this->Common_model->select_spec(
-				'tutors','snip_order',['snip_order <' => $order, 'snip_category',$cat_id],['snip_order', 'DESC'],1
+				'tutors','snip_order',['snip_order <' => $order, 'snip_category' => $cat_id],['snip_order', 'DESC'],1
 			);
 			$data['linkNext'] = ($next) ? base_url('a/tutorial/'.$catName.'/'.$next) : '#';
 			$data['linkPrev'] = ($prev) ? base_url('a/tutorial/'.$catName.'/'.$prev) : '#';

@@ -278,7 +278,7 @@
 
 	.wrap-table {
 		box-shadow: 2px 3px 3px rgba(0,0,0,0.5);
-		padding: 10px 20px;
+		padding: 10px;
 	}
 
 	.content a.btn-modal {
@@ -336,10 +336,6 @@
 		color: #f1f1f1;
 		opacity: 1;
 	}
-
-	.tab-content {
-		border: 2px solid #5F5F5F;
-	}
 	.tab-content #info {
 		padding: 10px;
 	}
@@ -353,25 +349,6 @@
 		font-weight: 700;
 		font-size: 18px;
 		cursor: pointer;
-	}
-
-	.text-code {
-		background: #e1e1e1;
-		color: #333;
-		margin: 5px 10px;
-		padding: 20px;
-		font-family: Consolas;
-		overflow-y: auto;
-		overflow-x: hidden;
-
-		width: 98%;
-		height: 439px;
-		resize: none;
-		font-weight: bold;
-		outline: none;
-		white-space: pre;
-		cursor: unset;
-		text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 	}
 
 	.icon-bar {

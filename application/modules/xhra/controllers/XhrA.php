@@ -117,24 +117,31 @@ class XhrA extends CI_Controller
 		$data = [
 		  'snip_title'      => ucwords($this->input->post('title')),
 		  'snip_slug'       => $this->input->post('slug'),
-		  'snip_code'       => $this->input->post('code'),
+		  'snip_code'       => $this->input->post('count_words'),
 		  'snip_content'    => $desc,
 		  'snip_meta'       => trim(create_slug($this->input->post('slug'))),
 		  'snip_update'     => time()
 		];
 		$this->Common_model->update('tutors',$data,['snip_id' => $id]);
-		$result['status'] = 1;
-		$result['last'] = date('d M, Y H:i',time());
+		$affect = $this->Common_model->select_spec('tutors','snip_content',['snip_id' => $id]);
+		$affect = getTags($affect,'h3');
+		$result = [
+			'status' => 1,
+			'last' => date('d M, Y H:i',time()),
+			'affect' => $affect
+		];
 		echo json_encode($result);
 	}
 
 	public function update_tutorial_title()
 	{
+		$id = $this->input->post('id');
+		$title = $this->input->post('title');
 		$this->form_validation->set_rules('title','Title','required|trim');
 		if($this->form_validation->run() == FALSE){
 			$result = 0;
 		}else{
-			$this->Update_model->updateTitle();
+			$this->Common_model->update('tutors',['snip_title' => $title],['snip_id' => $id]);
 			$result = 1;
 		}
 		echo json_encode($result);
@@ -142,11 +149,19 @@ class XhrA extends CI_Controller
 
 	public function update_tutorial_slug()
 	{
+		$id = $this->input->post('id');
+		$slug  = $this->input->post('slug');
 		$this->form_validation->set_rules('slug','Slug','required|trim');
 		if($this->form_validation->run() == FALSE){
 			$result = 0;
 		}else{
-			$this->Update_model->updateSlug();
+			$slug  = str_replace(',','', $slug);
+			$meta  = create_slug($slug);
+			$data = [
+			  'snip_slug' => trim($slug),
+			  'snip_meta' => trim($meta)
+			];
+			$this->Common_model->update('tutors',$data,['snip_id' => $id]);
 			$result = 1;
 		}
 		echo json_encode($result);
@@ -154,12 +169,14 @@ class XhrA extends CI_Controller
 
 	public function update_tutorial_public($id)
 	{
-		$cek = $this->Read_model->getStatusPublic($id);
-		if($cek == '0'){
-			$this->Update_model->updatePublish($id);
+		$cek = $this->Common_model->select_spec('tutors','snip_publish',['snip_id' => $id]);
+		if($cek == 0){
+			$this->Common_model->update('tutors',['snip_publish' => 1],['snip_id' => $id]);    
+			$this->Common_model->update('timeline',['publish' => 1],['relation' => $id]);
 			$result = 1;
-		} elseif($cek == '1') {
-			$this->Update_model->updateDraft($id);
+		} else {
+			$this->Common_model->update('tutors',['snip_publish' => 0],['snip_id' => $id]);    
+			$this->Common_model->update('timeline',['publish' => 0],['relation' => $id]);
 			$result = 0;
 		}
 		echo json_encode($result);
@@ -168,13 +185,10 @@ class XhrA extends CI_Controller
 	public function update_tutorial_order()
 	{
 		$post_order = isset($_POST["snip_order"]) ? $_POST["snip_order"] : [];
-		// var_dump($post_order);
 		if(count($post_order) > 0){
-			for($no = 0; $no < count($post_order); $no++)
+			for($i = 0; $i < count($post_order); $i++)
 			{
-				$this->db->set('snip_order', ($no + 1));
-				$this->db->where('snip_id', $post_order[$no]);
-				$this->db->update('tutors');
+				$this->Common_model->update('tutors',['snip_order' => ($i+1)],['snip_id' => $post_order[$i]]);
 			}
 			$result = 1;
 		} else {

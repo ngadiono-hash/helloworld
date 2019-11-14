@@ -4,10 +4,9 @@
 	<script src="<?= base_url('assets/js/fieldtoclipboard.js') ?>"></script>
 	<script src="<?= base_url('assets/js/classie.js') ?>"></script>
 	<script src="<?= base_url('assets/js/main.js') ?>"></script>
-	<script src="<?= base_url('assets/js/prisma.js') ?>"></script>
-	<!-- <script src="<?= base_url() ?>assets/js/js_tutorial.js"></script> -->
+	<script src="<?= base_url('assets/js/prism.js') ?>"></script>
 
-	<script type="text/javascript">
+	<script>
 		function onScroll(event){
 			var scrollPos = $(document).scrollTop();
 			$('#point a').each(function () {
@@ -47,14 +46,36 @@
 			loading();			
 			jkglobals.jkruncode();
 
+			// $(document).on('dblclick','.col-right',function(event) {
+			//   // console.log("clicked: " + event.currentTarget);
+			//   // event.target is the clicked object
+			//   var view = $(event.target);
+			//   var viewParentDiv = view.parent(".col-right");
+			//   var uniqueIdforCurrentElement = Math.random().toString();
+			//   if (viewParentDiv.attr('id') === undefined || viewParentDiv.attr('id') === '') {
+			//     viewParentDiv.attr('id', uniqueIdforCurrentElement);
+			//   } else {
+			//     uniqueIdforCurrentElement = view.attr('id');
+			//   }
+			//   var ck = CKEDITOR.instances[uniqueIdforCurrentElement];
+			//   console.log(uniqueIdforCurrentElement, ck);
+			//   if (ck) {
+			//     ck.destroy(true);
+			//   }
+			//   viewParentDiv.attr('contenteditable', true);
+			//   CKEDITOR.disableAutoInline = true;
+			//   CKEDITOR.inline(viewParentDiv.get(0));
+			// });			
+
 			// DOCUMENT CONTENT
-			$('.main-content p > a').addClass('base-link');
+			$('.main-content p > a').addClass('base-link fred');
+			$('.main-content li > a').addClass('base-link fred');
 			$('.wrapper-content').after('<hr>');
 			$('.wrapper-content i:last-of-type').after('<div class="clear"></div>');
 			$('.img-right').after('<div class="clear"></div>');	
 
 			$('.wrapper-content').attr('id', function(){
-				return $(this).prev("h3").text().replace(/\s+/g, '-').toLowerCase();
+				return $(this).prev("h3").text().replace(/\s+/g, '_').toLowerCase();
 			});
 			var res = [];
 			res = $('.wrapper-content').map(function(){
@@ -62,7 +83,7 @@
 			}).get();
 			var result = "";
 			for (var i = 0; i < res.length; i++) {
-				result += "<h5><a class='base-link' href='#" + res[i].toLowerCase().replace(/\s+/g, '-') + "'> "+ res[i].replace(/-/g, ' ') + "</a></h5>";
+				result += "<h5><a class='base-link' href='#" + res[i].toLowerCase().replace(/\s+/g, '_') + "'> "+ res[i].replace(/-/g, ' ') + "</a></h5>";
 			}
 			$('#point').html(result);	
 			$('.inner-desc').on("scroll", onScroll);

@@ -513,17 +513,17 @@ class Read_model extends CI_Model
 
 	public function getPrevTutor($category_id,$order)
 	{
-		$this->db->where('snip_order <',$order);
-		$this->db->where('snip_category',$category_id);
-		$this->db->limit(1);
-		$this->db->order_by('snip_order', 'DESC');
-		$query = $this->db->get($this->tutor)->row_array(); 
-		return $query['snip_order'];
+		// $this->db->where('snip_order <',$order);
+		// $this->db->where('snip_category',$category_id);
+		// $this->db->limit(1);
+		// $this->db->order_by('snip_order', 'DESC');
+		// $query = $this->db->get($this->tutor)->row_array(); 
+		// return $query['snip_order'];
 	}
 	public function getStatusPublic($id)
 	{
-		$query = $this->db->get_where($this->tutor,['snip_id' => $id])->row_array();
-		return $query['snip_publish'];
+		// $query = $this->db->get_where($this->tutor,['snip_id' => $id])->row_array();
+		// return $query['snip_publish'];
 	}
 
 
