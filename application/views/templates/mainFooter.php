@@ -6,6 +6,11 @@
 <?php if ( whats_page(1,['','at','lesson','snippet']) ) { ?>
 <script src="<?=base_url('assets/js/jquery.flipster.min.js')?>"></script>
 <script id="main_script">
+	$(function(){
+	  $('.frame-views').on('load', function() {
+	    $(this).contents().find("#user-body").css("overflow", "hidden");
+	  });
+	});
 dialog_confirm('.delete-comment');
 function dialog_confirm(trigger){
   $(document).on('click',trigger, function(e){

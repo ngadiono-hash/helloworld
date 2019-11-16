@@ -3,7 +3,24 @@
  * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
-
+ CKEDITOR.editorConfig = function( config ) {
+ 	config.toolbarGroups = [
+ 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+ 		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+ 		{ name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
+ 		{ name: 'forms', groups: [ 'forms' ] },
+ 		{ name: 'styles', groups: [ 'styles' ] },
+ 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+ 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+ 		{ name: 'links', groups: [ 'links' ] },
+ 		{ name: 'insert', groups: [ 'insert' ] },
+ 		{ name: 'colors', groups: [ 'colors' ] },
+ 		{ name: 'others', groups: [ 'others' ] },
+ 		{ name: 'tools', groups: [ 'tools' ] },
+ 		{ name: 'about', groups: [ 'about' ] }
+ 	];
+ 	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,JustifyRight,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,Replace,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,JustifyLeft,JustifyCenter,JustifyBlock,HorizontalRule,Smiley,SpecialChar,Iframe,Font,About';
+ };
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
@@ -24,19 +41,18 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
 		{ name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
 		{ name: 'forms', groups: [ 'forms' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
 		{ name: 'links', groups: [ 'links' ] },
 		{ name: 'insert', groups: [ 'insert' ] },
 		{ name: 'colors', groups: [ 'colors' ] },
-		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'others', groups: [ 'others' ] },
 		{ name: 'tools', groups: [ 'tools' ] },
 		{ name: 'about', groups: [ 'about' ] }
 	];
-
-	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,JustifyRight,Cut,Copy,Paste,Font,PageBreak,Anchor,Undo,Redo';
-
+	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,Replace,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,HorizontalRule,Smiley,SpecialChar,Iframe,Font,About,JustifyLeft';
+	
 	// autogrow	
 	// config.autoGrow_minHeight = 250;
 	// config.autoGrow_maxHeight = 650;
@@ -50,7 +66,7 @@ CKEDITOR.editorConfig = function( config ) {
     	html: 'language-markup'
 	};
 	// size
-	config.height = 350;
+	config.height = 420;
 
 	// wordcount
 	config.wordcount = {

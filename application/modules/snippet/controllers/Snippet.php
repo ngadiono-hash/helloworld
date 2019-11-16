@@ -18,7 +18,7 @@ class Snippet extends CI_Controller
 		$code = [];
 		$code = $this->Common_model->select_fields_where_join(
 			'snip AS t1',
-			't1.code_id,t1.code_title,t2.u_username AS user_author,t2.u_image AS image_author',
+			't1.code_id,t1.code_title,t1.code_like AS liked,t1.code_view AS view,t2.u_username AS user_author,t2.u_image AS image_author',
 			[
 				['table' => 'users AS t2', 'condition' => 't2.u_id = t1.code_author', 'type' => '']
 			],

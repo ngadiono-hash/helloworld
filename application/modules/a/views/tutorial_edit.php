@@ -1,9 +1,4 @@
-<?
-$keys = getTags($content, 'h3');
-// debug($keys);
-?>
 <style>
-.d { padding: 10px !important; }
 .content-edit .nav-tabs li {
 	min-width: 100px;
 }
@@ -25,10 +20,10 @@ $keys = getTags($content, 'h3');
 }
 .label-created,.label-updated {
 	position: absolute;
-	bottom: 38px;
+	bottom: 27px;
 	font-size: 0.9em;
 	color: #ccc;
-	text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;
+	/*text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;*/
 }
 .label-created {
 	left: 200px;
@@ -68,55 +63,55 @@ $keys = getTags($content, 'h3');
 				<input type="hidden" name="public" value="<?= $public ?>">
 
 				<ul class="nav nav-tabs">
+					<li class="center">
+						<a class="btn" href="<?=base_url('a/'.$cat_name) ?>">
+							<i class="fa fa-reply"></i> 
+							<span class="hidden-xs hidden-sm">Back</span>
+						</a>
+					</li>
 					<li class="active center">
-						<a class="button btn-def" data-toggle="tab" href="#desk">
+						<a class="btn btn-def" data-toggle="tab" href="#desk">
 							<i class="fa fa-book fa-lg"></i>
 							<span class="hidden-xs hidden-sm"> Desc</span>
 						</a>
 					</li>
 					<li class="center">
-						<a class="button btn-def" data-toggle="tab" href="#info">
+						<a class="btn" data-toggle="tab" href="#info">
 							<i class="fa fa-info-circle fa-lg"></i>
 							<span class="hidden-xs hidden-sm"> Info</span>
 						</a>
 					</li>
 					<li class="center">
-						<a class="button btn-warn action-preview" data-href="<?=base_url('lesson/'.$cat_name.'/'.$meta) ?>">
+						<a class="btn action-preview" data-href="<?=base_url('lesson/'.$cat_name.'/'.$meta) ?>">
 							<i class="fa fa-eye"></i> 
 							<span class="hidden-xs hidden-sm">View</span> 
 						</a>
 					</li>
 					<li class="center">
-						<a class="button btn-def" href="<?=base_url('lesson/'.$cat_name.'/'.$meta)?>" target="_blank">
+						<a class="btn" href="<?=base_url('lesson/'.$cat_name.'/'.$meta)?>" target="_blank">
 							<i class="fas fa-link"></i> 
 							<span class="hidden-xs hidden-sm">Link</span>
 						</a>
 					</li>
 					<li class="center">
-						<a class="button btn-pub action-public <?=$btn?>" data-href="<?=base_url('xhra/update_tutorial_public/'. $id)?>"><?= $fa ?></a>
+						<a class="btn action-public" data-href="<?=base_url('xhra/update_tutorial_public/'. $id)?>"><?= $fa ?></a>
 					</li>
 					<li class="center">
-						<a class="button btn-def" href="<?= $linkPrev ?>">
+						<a class="btn btn-del" data-id="<?=$id?>" data-href="<?=base_url('xhra/delete_tutorial/'.$id)?>">
+							<i class="fa a-fw fa-trash-alt"></i>
+							<span class="hidden-sm hidden-xs">Delete</span>
+						</a>
+					</li>
+					<li class="center">
+						<a class="btn" href="<?= $linkPrev ?>">
 							<i class="fa fa-arrow-left"></i>
 							<span class="hidden-xs hidden-sm">Prev</span>
 						</a>
 					</li>
 					<li class="center">
-						<a class="button btn-def" href="<?= $linkNext ?>">
+						<a class="btn" href="<?= $linkNext ?>">
 							<span class="hidden-xs hidden-sm">Next</span>
 							<i class="fa fa-arrow-right"></i>
-						</a>
-					</li>
-					<li class="center">
-						<a class="button btn-def" href="<?=base_url('a/'.$cat_name) ?>">
-							<i class="fa fa-reply"></i> 
-							<span class="hidden-xs hidden-sm">Back</span>
-						</a>
-					</li>
-					<li class="center">
-						<a class="button btn-def btn-del" data-id="<?=$id?>" data-href="<?=base_url('xhra/delete_tutorial/'.$id)?>">
-							<i class="fa a-fw fa-trash-alt"></i>
-							<span class="hidden-sm hidden-xs">Delete</span>
 						</a>
 					</li>
 				</ul>
@@ -130,9 +125,11 @@ $keys = getTags($content, 'h3');
 							<div class="col-sm-2 hidden-xs">
 								<div class="haha">
 									<?php
+									if ($content != '') {
 									$keys = getTags($content,'h3');
 									foreach ($keys as $k) { ?>
 										<a class="btn btn-default"><?=$k?></a>
+									<?php	}	?>										
 									<?php	}	?>
 								</div>
 							</div>
@@ -165,3 +162,5 @@ $keys = getTags($content, 'h3');
 </div>
 <iframe id="frame-full" style="display: none" src=""></iframe>
 <script>CKEDITOR.replace('text-editor')</script>
+
+

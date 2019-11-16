@@ -28,8 +28,8 @@
 	        		<h4><?= $co['user_author'] ?></h4>
 	        	</div>
 						<div class="info-each-snippet">
-							<a class="btn btn-sm btn-prm"><i class="fa fa-eye"></i> 2</a> 
-							<a class="btn btn-sm btn-prm"><i class="fa fa-thumbs-up"></i> 4</a>
+							<a class="btn btn-sm btn-prm"><i class="fa fa-eye"></i> <?=$co['view']?></a> 
+							<a class="btn btn-sm btn-prm"><i class="fa fa-thumbs-up"></i> <?=$co['liked']?></a>
 							<a class="btn btn-sm btn-prm"><i class="fa fa-comment-alt"></i> <?=$co['comment']?></a>
 						</div>	        	
 	        	<div class="clearfix"></div>
@@ -43,9 +43,6 @@
 
 <script>
 $(document).ready(function () {
-  $('.frame-views').on('load', function() {
-    $(this).contents().find("#user-body").css("overflow", "hidden");
-  });
 	$('.snippet-box').on({
 		'mouseenter': function(){
 			$(this).find('.info-each-snippet').css('visibility','visible');

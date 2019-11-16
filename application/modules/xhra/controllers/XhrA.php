@@ -124,7 +124,9 @@ class XhrA extends CI_Controller
 		];
 		$this->Common_model->update('tutors',$data,['snip_id' => $id]);
 		$affect = $this->Common_model->select_spec('tutors','snip_content',['snip_id' => $id]);
-		$affect = getTags($affect,'h3');
+		if (!empty($affect)) {
+			$affect = getTags($affect,'h3');
+		}
 		$result = [
 			'status' => 1,
 			'last' => date('d M, Y H:i',time()),

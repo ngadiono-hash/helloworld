@@ -1,25 +1,25 @@
 
 <div id="cats" style="display: none;"><?= $category ?></div>
 <?php aceEditor() ?>	
-	<script src="<?= base_url('assets/js/fieldtoclipboard.js') ?>"></script>
-	<script src="<?= base_url('assets/js/classie.js') ?>"></script>
-	<script src="<?= base_url('assets/js/main.js') ?>"></script>
-	<script src="<?= base_url('assets/js/prism.js') ?>"></script>
+<script src="<?= base_url('assets/js/fieldtoclipboard.js') ?>"></script>
+<script src="<?= base_url('assets/js/classie.js') ?>"></script>
+<script src="<?= base_url('assets/js/main.js') ?>"></script>
+<script src="<?= base_url('assets/js/prism.js') ?>"></script>
 
-	<script>
-		function onScroll(event){
-			var scrollPos = $(document).scrollTop();
-			$('#point a').each(function () {
-				var currentLink = $(this);
-				var div = $(currentLink.attr("href"));
-				if ((div.position().top -200) < scrollPos && (div.position().top -200) + div.outerHeight() > scrollPos) {
-					$(currentLink).removeClass("active");
-					$(currentLink).addClass("active");
-				}else{
-					$(currentLink).removeClass("active");
-				}
-			});
-		}
+<script>
+	function onScroll(event){
+		var scrollPos = $(document).scrollTop();
+		$('#point a').each(function () {
+			var currentLink = $(this);
+			var div = $(currentLink.attr("href"));
+			if ((div.position().top -200) < scrollPos && (div.position().top -200) + div.outerHeight() > scrollPos) {
+				$(currentLink).removeClass("active");
+				$(currentLink).addClass("active");
+			}else{
+				$(currentLink).removeClass("active");
+			}
+		});
+	}
 		// ACTIVE MENU
 		$(function(){
 			var url = window.location.pathname,
@@ -46,27 +46,6 @@
 			loading();			
 			jkglobals.jkruncode();
 
-			// $(document).on('dblclick','.col-right',function(event) {
-			//   // console.log("clicked: " + event.currentTarget);
-			//   // event.target is the clicked object
-			//   var view = $(event.target);
-			//   var viewParentDiv = view.parent(".col-right");
-			//   var uniqueIdforCurrentElement = Math.random().toString();
-			//   if (viewParentDiv.attr('id') === undefined || viewParentDiv.attr('id') === '') {
-			//     viewParentDiv.attr('id', uniqueIdforCurrentElement);
-			//   } else {
-			//     uniqueIdforCurrentElement = view.attr('id');
-			//   }
-			//   var ck = CKEDITOR.instances[uniqueIdforCurrentElement];
-			//   console.log(uniqueIdforCurrentElement, ck);
-			//   if (ck) {
-			//     ck.destroy(true);
-			//   }
-			//   viewParentDiv.attr('contenteditable', true);
-			//   CKEDITOR.disableAutoInline = true;
-			//   CKEDITOR.inline(viewParentDiv.get(0));
-			// });			
-
 			// DOCUMENT CONTENT
 			$('.main-content p > a').addClass('base-link fred');
 			$('.main-content li > a').addClass('base-link fred');
@@ -88,8 +67,8 @@
 			$('#point').html(result);	
 			$('.inner-desc').on("scroll", onScroll);
 			
-		 // SMOOTH SCROOL
-		 $('a[href^="#"]').on('click', function (e) {
+		// SMOOTH SCROOL
+		$('#point a').on('click', function (e) {
 		 	e.preventDefault();
 		 	$('.inner-desc').off("scroll");  
 		 	$('#point a').each(function () {

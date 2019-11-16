@@ -22,7 +22,6 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 	<?php // if(startSession('sess_role') && getSession('sess_role') == 1) ckEditor() ?>
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/prisma.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
-	<script src="<?= base_url(); ?>assets/js/loader.js"></script>
 	<?php script_user() ?>
 	<?php if ( startSession('sess_id') ) { ?>
 		<?php if ( getSession('sess_role') != 1 ) { ?>

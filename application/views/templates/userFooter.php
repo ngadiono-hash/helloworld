@@ -9,7 +9,11 @@
 </div> <!-- wrapper -->
 
 <script>
-// setInterval(C_Session, 1800000);
+$(function(){
+  $('.frame-views').on('load', function() {
+    $(this).contents().find("#user-body").css("overflow", "hidden");
+  });
+});	
 $(document).ready(function() {
 	loading();
 	activeSide();
@@ -25,285 +29,251 @@ function preview_frame(target,href) {
 </script>
 
 <?php if ( whats_page(1,['a']) ) { ?>
-	<script id="adm">
-		// function strip(html) {
-		// 	if (true) {
-		// 		return html.replace(/\[.*?\]/gi, '');
-		// 	}
-		// 	var tmp = document.createElement("div");
-		// 	// Add filter before strip
-		// 	html = filter(html);
-		// 	tmp.innerHTML = html;
-
-		// 	if (tmp.textContent == "" && typeof tmp.innerText == "undefined") {
-		// 		return "";
-		// 	}
-		// 	return tmp.textContent || tmp.innerText;
-		// }
-		// function countWords(text) {
-		// 	var normalizedText = text.replace(/(\r\n|\n|\r)/gm, " ").replace(/^\s+|\s+$/g, "");
-		// 	normalizedText = strip(normalizedText);
-		// 	var words = normalizedText.split(/\s+/);
-		// 	for (var wordIndex = words.length - 1; wordIndex >= 0; wordIndex--) {
-		// 		if (words[wordIndex].match(/^([\s\t\r\n]*)$/)) {
-		// 			words.splice(wordIndex, 1);
-		// 		}
-		// 	}
-		// 	return (words.length);
-		// }
-
-		$(document).ready(function() {
-			// TUTORIAL TABLE
-			let tutorialsTable = $('#tutorials');
-			// =================== EDIT ORDER
-			$("#tutorials tbody").sortable({
-				placeholder : "ui-state-highlight",
-				update  : function(event, ui) {
-					var snip_order = new Array();
-					$('#tutorials tbody tr').each(function(){
-						snip_order.push($(this).data("id"));
-					});
-					$.ajax({
-						url: host + "xhra/update_tutorial_order",
-						method:"POST",
-						data: { snip_order : snip_order },
-						success:function(ord){
-							var parse = $.parseJSON(ord);
-							if(parse === 1){
-								reloadTable('#tutorials');
-							} else {
-								alert('something error');
-							}
-						}
-					});
-				}
-			});
-			// =================== EDIT TITLE
-			tutorialsTable.on('dblclick','.action-title',function(e){
-				e.preventDefault();
-				var id = $(this).data('id');
-				var text = $(this).text();
-				$(this).append(
-					'<form class="form-title" method="post" autocomplete="off">'
-					+ '<input type="hidden" name="id" value="'+ id +'">'
-					+ '<input class="input-title" type="text" name="title" value="'+text+'" spellcheck="false">'
-					+ '</form>'
-					);
-				$('.input-title').focus().change().keydown(function(e){
-					if (e.keyCode === 13) {
-						var datax = $('.form-title').serialize();
-						$.ajax({
-							data : datax,
-							method : 'post',
-							url  : host + 'xhra/update_tutorial_title',
-							success : function(resultTitle){
-								var parse = $.parseJSON(resultTitle);
-								if(parse == 1){
-									$('.form-title').remove();
-									reloadTable('#tutorials');
-								} else{
-									alert('something error');
-								}
-							}
-						});
-						$('.form-title').remove();
-					}
+<script id="adm">
+	$(document).ready(function() {
+		// TUTORIAL TABLE
+		let tutorialsTable = $('#tutorials');
+		$('#frame-full').on('load', function() {
+			$(this).contents().find(".box-desc").removeClass('hide').addClass('slide-in-left');
+		});
+		// =================== EDIT ORDER
+		$("#tutorials tbody").sortable({
+			placeholder : "ui-state-highlight",
+			update  : function(event, ui) {
+				var snip_order = new Array();
+				$('#tutorials tbody tr').each(function(){
+					snip_order.push($(this).data("id"));
 				});
-			});
-			// =================== EDIT SLUG
-			tutorialsTable.on('dblclick','.action-slug',function(e){
-				e.preventDefault();
-					// $('.btn-slug').attr('disabled', 'disabled');
-					var id   = $(this).data('id');
-					var text = $(this).text();
-					$(this).append(
-						'<form class="form-slug" method="post" autocomplete="off">'
-						+ '<input type="hidden" name="id" value="'+ id +'">'
-						+ '<input class="input-slug" type="text" name="slug" value="'+ text +'">'
-						+ '</form>'
-						);
-					$('.input-slug').focus().change().keydown(function(e){
-						if (e.keyCode === 13) {
-							var datax = $('.input-slug').val();
-							$.ajax({
-								data : { 'id' : id, 'slug' : datax },
-								method : 'post',
-								url  : host + 'xhra/update_tutorial_slug',
-								success : function(data){
-									var parse = $.parseJSON(data);
-									if(parse == 1){
-										$('.form-slug').remove();
-										reloadTable('#tutorials');
-									} else {
-										alert('something error');
-									}
-								}
-							});
-							$('.form-slug').remove();
-						}
-					});
-				});
-			// =================== EDIT PUBLIC
-			$('.icon-bar').on('click','.action-public',function(e){
-				e.preventDefault();
-				var button = $(this);
-				var href = $(this).data('href');
 				$.ajax({
-					url : href,
-					type: 'post',
-					success : function(data){
-						var parse = $.parseJSON(data);
-						if(parse == 1){
-							button.toggleClass('btn-ok btn-no').html('<i class="fa fa-globe-asia"></i>');
-						}else{
-							button.toggleClass('btn-no btn-ok').html('<i class="fa fa-code"></i>');
-						}
-					}
-				});
-			});
-			$('#tutorials').on('click','.action-public',function(e){
-				e.preventDefault();
-				var button = $(this);
-				var href = $(this).data('href');
-				$.ajax({
-					url : href,
-					type: 'post',
-					success : function(data){
-						reloadTable('#tutorials');
-					}
-				});
-			});
-			// =================== PREVIEW
-			tutorialsTable.on('click','.action-preview',function(){
-				var href = $(this).data('href');
-				preview_frame('#frame-full',href)
-			});
-			$('#frame-full').on('load', function() {
-			  $(this).contents().find(".box-desc").removeClass('hide').addClass('slide-in-left');
-			});
-			// =================== ADD TUTORIAL
-			$('#create-tutorial-form').submit(function(e){
-				e.preventDefault();
-				var data = $(this).serialize();
-				$.ajax({
-					url : host + 'xhra/create_tutorial',
-					type : 'POST',
-					data : data,
-					success : function(data) {
-						var parse = $.parseJSON(data);
-						if(parse == '1'){
-							$('#modal-tutorial').modal('hide');
-							$('#create-tutorial-form input select').val('');
-							flashAlert('success','tutorials has been added');
+					url: host + "xhra/update_tutorial_order",
+					method:"POST",
+					data: { snip_order : snip_order },
+					success:function(ord){
+						var parse = $.parseJSON(ord);
+						if(parse === 1){
 							reloadTable('#tutorials');
 						} else {
 							alert('something error');
 						}
 					}
 				});
-			});
-
-			// TUTORIAL EDIT
-			let edited = $('#tutorial-form');
-			// =================== BTN EDIT
-			$('.a,.b,.c,.d,.e,.f,.g').on({
-				'mouseover' : function(){
-					$(this).children('span').css({
-						display : 'inline-block',
-						opacity : 1
-					});
-				},
-				'mouseleave' : function(){
-					$(this).children('span').css({
-						display : 'none',
-						opacity : 0
-					});
-				}
-			});
-			// =================== UPDATE
-			edited.on('click', '#update', function(e) {
-				e.preventDefault();
-				var aa = '';
-				for (instance in CKEDITOR.instances){
-					CKEDITOR.instances[instance].updateElement();
-				}
-				var words = $('#cke_wordcount_text-editor').text().replace(',','');
-				words = words.split(' ');
-				words = words[3];
-				var data 	= edited.serialize()+'&'+$.param({ count_words: words });
-				$.ajax({
-					url : host + 'xhra/update_tutorial',
-					type : 'post',
-					data : data,
-					dataType : 'json',
-					success : function(data){
-						var parse = $.parseJSON(data['status']);
-						if(parse == 1){
-							$('.alert-auto').removeClass('hide').fadeIn(1000);
-							setTimeout(function(){
-								$('.alert-auto').fadeOut(1000);
-							}, 4000);
-						}
-						$('.label-updated span').html(data['last']);
-						data['affect'].forEach(function(el){
-							aa += '<a class="btn btn-default">'+el+'</a>';
-						});
-						$('.haha').html(aa);
-					}
-				});
-			});
-			// =================== DELETE
-			edited.on('click','.btn-del',function(e){
-				e.preventDefault();
-				var href = $(this).data('href');
-					// var vals = $(this).data('value');
-					Swal.fire({
-						title : 'Are you sure ?',
-						html : '<p class="html-swal">This snippet will be removed</p>',
-						type : 'warning',
-						showCancelButton : true,
-						buttonsStyling : false,
-						customClass: {
-							confirmButton: 'effect effect-prm',
-							cancelButton: 'effect effect-no'
-						},
-						confirmButtonText: '<span>Yes</span>',
-						cancelButtonText: '<span>No</span>',
-					}).then((result) => {
-						if(result.value){
-							$.ajax({
-								url : href,
-								type : 'post',
-								success : function(data){
-									alertSuccess('blank',['success','tutorial has been deleted',''+imgLoad+''],'');
-									window.history.back();
-								}
-							});
+			}
+		});
+		// =================== EDIT TITLE
+		tutorialsTable.on('dblclick','.action-title',function(e){
+			e.preventDefault();
+			var id = $(this).data('id');
+			var text = $(this).text();
+			$(this).append(
+				'<form class="form-title" method="post" autocomplete="off">'
+				+ '<input type="hidden" name="id" value="'+ id +'">'
+				+ '<input class="input-title" type="text" name="title" value="'+text+'" spellcheck="false">'
+				+ '</form>'
+				);
+			$('.input-title').focus().change().keydown(function(e){
+				if (e.keyCode === 13) {
+					var datax = $('.form-title').serialize();
+					$.ajax({
+						data : datax,
+						method : 'post',
+						url  : host + 'xhra/update_tutorial_title',
+						success : function(resultTitle){
+							var parse = $.parseJSON(resultTitle);
+							if(parse == 1){
+								$('.form-title').remove();
+								reloadTable('#tutorials');
+							} else{
+								alert('something error');
+							}
 						}
 					});
-				});
-			// =================== PREVIEW
-			edited.on('click','.action-preview',function(){
-				var href = $(this).data('href');
-				preview_frame('#frame-full',href);
+					$('.form-title').remove();
+				}
 			});
 		});
-	</script>
+		// =================== EDIT SLUG
+		tutorialsTable.on('dblclick','.action-slug',function(e){
+			e.preventDefault();
+			var id   = $(this).data('id');
+			var text = $(this).text();
+			$(this).append(
+				'<form class="form-slug" method="post" autocomplete="off">'
+				+ '<input type="hidden" name="id" value="'+ id +'">'
+				+ '<input class="input-slug" type="text" name="slug" value="'+ text +'">'
+				+ '</form>'
+				);
+			$('.input-slug').focus().change().keydown(function(e){
+				if (e.keyCode === 13) {
+					var datax = $('.input-slug').val();
+					$.ajax({
+						data : { 'id' : id, 'slug' : datax },
+						method : 'post',
+						url  : host + 'xhra/update_tutorial_slug',
+						success : function(data){
+							var parse = $.parseJSON(data);
+							if(parse == 1){
+								$('.form-slug').remove();
+								reloadTable('#tutorials');
+							} else {
+								alert('something error');
+							}
+						}
+					});
+					$('.form-slug').remove();
+				}
+			});
+		});
+		// =================== PREVIEW
+		tutorialsTable.on('click','.action-preview',function(){
+			var href = $(this).data('href');
+			preview_frame('#frame-full',href)
+		});			
+		// =================== EDIT PUBLIC
+		tutorialsTable.on('click','.action-public',function(e){
+			e.preventDefault();
+			var button = $(this);
+			var href = $(this).data('href');
+			$.ajax({
+				url : href,
+				type: 'post',
+				success : function(data){
+					reloadTable('#tutorials');
+				}
+			});
+		});
+		// =================== ADD TUTORIAL
+		$('#create-tutorial-form').submit(function(e){
+			e.preventDefault();
+			var data = $(this).serialize();
+			$.ajax({
+				url : host + 'xhra/create_tutorial',
+				type : 'POST',
+				data : data,
+				success : function(data) {
+					var parse = $.parseJSON(data);
+					if(parse == '1'){
+						$('#modal-tutorial').modal('hide');
+						$('#create-tutorial-form input select').val('');
+						flashAlert('success','tutorials has been added');
+						reloadTable('#tutorials');
+					} else {
+						alert('something error');
+					}
+				}
+			});
+		});
+
+		// TUTORIAL EDIT
+		let edited = $('#tutorial-form');
+		// =================== BTN EDIT
+		$('.icon-bar a').on({
+			'mouseover' : function(){
+				$(this).children('span').css({
+					display : 'inline-block',
+					opacity : 1
+				});
+			},
+			'mouseleave' : function(){
+				$(this).children('span').css({
+					display : 'none',
+					opacity : 0
+				});
+			}
+		});
+		// =================== UPDATE
+		edited.on('click', '#update', function(e) {
+			e.preventDefault();
+			var aa = '';
+			for (instance in CKEDITOR.instances){
+				CKEDITOR.instances[instance].updateElement();
+			}
+			var words = $('#cke_wordcount_text-editor').text().replace(',','');
+			words = words.split(' ');
+			words = words[3];
+			var data 	= edited.serialize()+'&'+$.param({ count_words: words });
+			$.ajax({
+				url : host + 'xhra/update_tutorial',
+				type : 'post',
+				data : data,
+				dataType : 'json',
+				success : function(data){
+					var parse = $.parseJSON(data['status']);
+					if(parse == 1){
+						$('.alert-auto').removeClass('hide').fadeIn(1000);
+						setTimeout(function(){
+							$('.alert-auto').fadeOut(1000);
+						}, 4000);
+					}
+					$('.label-updated span').html(data['last']);
+					if(data['affect'] != ''){
+						data['affect'].forEach(function(el){
+							aa += '<a class="btn btn-default">'+el+'</a>';
+						});						
+					}
+					$('.haha').html(aa);
+				}
+			});
+		});
+		// =================== DELETE
+		edited.on('click','.btn-del',function(e){
+			e.preventDefault();
+			var href = $(this).data('href');
+				// var vals = $(this).data('value');
+			Swal.fire({
+				title : 'Are you sure ?',
+				html : '<p class="html-swal">This snippet will be removed</p>',
+				type : 'warning',
+				showCancelButton : true,
+				buttonsStyling : false,
+				customClass: {
+					confirmButton: 'effect effect-prm',
+					cancelButton: 'effect effect-no'
+				},
+				confirmButtonText: '<span>Yes</span>',
+				cancelButtonText: '<span>No</span>',
+			}).then((result) => {
+				if(result.value){
+					$.ajax({
+						url : href,
+						type : 'post',
+						success : function(data){
+							alertSuccess('blank',['success','tutorial has been deleted',''+imgLoad+''],'');
+							window.history.back();
+						}
+					});
+				}
+			});
+		});
+		// =================== PREVIEW
+		edited.on('click','.action-preview',function(){
+			var href = $(this).data('href');
+			preview_frame('#frame-full',href);
+		});
+		// =================== PUBLIC
+		edited.on('click','.action-public',function(e){
+			e.preventDefault();
+			var button = $(this);
+			var href = $(this).data('href');
+			$.ajax({
+				url : href,
+				type: 'post',
+				success : function(data){
+					var parse = $.parseJSON(data);
+					if(parse == 1){
+						button.toggleClass('btn-ok btn-no')
+						.html('<i class="fa fa-globe-asia"></i> <span class="hidden-sm hidden-xs">Public</span>');
+					}else{
+						button.toggleClass('btn-no btn-ok')
+						.html('<i class="fa fa-code"></i> <span class="hidden-sm hidden-xs">Draft</span>');
+					}
+				}
+			});
+		});
+	});
+</script>
 <?php }
 if (whats_page(1,['u'])) { ?>
 	<script id="usr">
-	// NOTIFICATION
-	// $('.notifications-menu').on('click',function(){
-	// 	$('.overlay').toggleClass('hide');
-	// 	$('body').toggleClass('body-fix');
-	// 	$('.side-notification').removeClass('hide');
-	// 	$('.side-notification').toggleClass('slide-in-left slide-out-left');
-	// 	if ($('.side-notification').hasClass('slide-out-left')) {
-	// 		$('.side-notification').fadeOut(1000);
-	// 	} else {
-	// 		$('.side-notification').fadeIn();
-	// 	}
-	// });
 	// ACTIVITY
 	myModal('#html-request,#css-request,#js-request','#modal-progress','#diss-progress');
 	$('#diss-progress').click(function(){

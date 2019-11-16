@@ -260,12 +260,6 @@
 	td a.action {
 		border-color: transparent;
 	}
-	#frame-pre {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		border: none;
-	}
 	.btn {
 		border-radius: 4px;
 		background: transparent;
@@ -298,9 +292,6 @@
 	.wrap-js {
 		background: #F7D26E;
 	}
-	.arrow {
-		width: 50%;
-	}
 	.row-style {
 		margin: -10px -20px 20px -20px;
 		padding: 10px 15px;
@@ -315,23 +306,24 @@
 	}
 
 	.nav-tabs li a {
-		border-radius: 30px !important;
+		/*border-radius: 30px !important;*/
 		text-shadow: none !important;
 		color: #808080;
+		padding: 5px;
 		opacity: 1;
 	}
 
 	.nav-tabs li a:hover {
-		border-radius: 30px !important;
+		/*border-radius: 30px !important;*/
 		text-shadow: none !important;
 	}
 
 	.nav-tabs li.active a,
 	.nav-tabs li.active a:focus,
 	.nav-tabs li.active a:hover {
-		border: 3px solid #5F5F5F;
+		/*border: 3px solid #5F5F5F;*/
 		text-shadow: none !important;
-		border-radius: 30px !important;
+		/*border-radius: 30px !important;*/
 		background: #5F5F5F;
 		color: #f1f1f1;
 		opacity: 1;
@@ -370,18 +362,9 @@
 		position: absolute;
 		max-height: 55px;
 	}
-	a.a span, a.b span, a.c span, a.d span, a.e span, a.f span, a.g span{ display: none; position: relative; }
-	.icon-bar a.a{ top: 0; }
-	.icon-bar a.b{ top: 50px; }
-	.icon-bar a.c{ top: 100px; }
-	.icon-bar a.d{ top: 150px; }
-	.icon-bar a.e{ top: 200px; }
-	.icon-bar a.f{ top: 250px; }
-	.icon-bar a.g{ top: 300px; }
-
-	a.a:hover,a.b:hover,a.c:hover,a.d:hover,a.e:hover,a.f:hover,a.g:hover {
-		width: 150px;
-	}
+	a.a span { display: none; position: relative; }
+	.icon-bar a.a { top: 0; }
+	a.a:hover { width: 150px; }
 
 	.list-cat {
 		padding: 10px 30px;

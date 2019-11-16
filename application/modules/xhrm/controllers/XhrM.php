@@ -113,6 +113,14 @@ class XhrM extends CI_Controller
 			$this->Common_model->insert_record('bug',$data);
 		}
 	}
+
+	public function count_view_snippet()
+	{
+		$page = $this->input->post('page');
+		$count = $this->Common_model->select_spec('snip','code_view',['code_id' => $page]);
+		$this->Common_model->update('snip',['code_view' => ($count + 1)],['code_id' => $page]);
+	}
+
 	public function load_more_comment() // ok
 	{
 		$limit = 5;

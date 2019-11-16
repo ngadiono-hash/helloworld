@@ -117,10 +117,10 @@ class A extends CI_Controller
 			// debug(strip_tags($data['content']));
 			if($data['public'] == 1){
 		    $data['btn'] = 'btn-ok';
-		    $data['fa']  = '<i class="fa fa-globe-asia"></i>';
+		    $data['fa']  = '<i class="fa fa-globe-asia"></i> <span class="hidden-sm hidden-xs">Public</span>';
 			} else {
 		    $data['btn'] = 'btn-no';
-		    $data['fa']  = '<i class="fa fa-code"></i>';
+		    $data['fa']  = '<i class="fa fa-code"></i> <span class="hidden-sm hidden-xs">Draft</span>';
 			}
 			$next = $this->Common_model->select_spec(
 				'tutors','snip_order',['snip_order >' => $order, 'snip_category' => $cat_id],['snip_order', 'ASC'],1

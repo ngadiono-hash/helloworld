@@ -246,6 +246,18 @@ $(document).ready(function(){
 		$('.side-info').fadeIn().removeClass('hide');
 		$('.overlay').fadeIn().removeClass('hide');
 	}
-
+});
+$(function(){
+	$(window).on('unload',function(e) {
+		$.ajax({
+			url : host + 'xhrm/count_view_snippet',
+			type : 'post',
+			async : false,
+			data : { 
+				page : $('.content-snippet').data('id'),
+				csrf_token : csrf 
+			},
+		}).done();
+	});
 });
 </script>
