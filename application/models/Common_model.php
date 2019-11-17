@@ -5,7 +5,6 @@ class Common_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-		// $this->load->library('Datatables');
 	}
 // ================= READ QUERY
 	function Ignited_dt($select,$table,$where,$order)

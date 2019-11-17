@@ -1,18 +1,8 @@
-<section class="main" id="sub-page">
-	<header class="wrapper-header">
-		<div class="welcome text-focus-in">
-			<h1 class="h-one text-sh">Index Pelajaran</h1>
-			<div class="container fred">
-				<h3>Semua materi telah tersusun berdasarkan kategori dan kelas kategori masing-masing.</h3>
-				<h3>Kamu bisa memilih materi mana yang akan kamu pelajari hari ini.</h3>
-			</div>
-		</div>
-	</header>	
-</section>
 <?php mainNav() ?>
 <div class="hello">
 	<div class="container">
 		<div class="row hello-fiture">
+			<h1>index materi</h1>
 			<h1>pilih materi yang akan dipelajarai</h1>
 			<br><br>
 			<div class="row ex">

@@ -15,7 +15,7 @@
 	if (true) { ?>
 		<!-- <link rel="stylesheet" href="<?= base_url('assets/css/css_main.css'); ?>">	 -->
 		<style>
-		section { background-image: url('<?= base_url('assets/img/feed/main-background.jpg') ?>'); }
+		section { background-image: url('<?= base_url('assets/img/feed/login.jpg') ?>'); }
 		.hello { background-image: url('<?= base_url('assets/img/feed/designs.png') ?>'); }
 		.about-practice {	background-image: url('<?= base_url('assets/img/feed/practice.gif') ?>'); }
 		.about-sign { background-image: url('<?= base_url('assets/img/feed/sign.gif') ?>'); }
@@ -542,10 +542,8 @@
 			min-height: 89vh;
 		}
 		.wrapper-sign {
-			background: rgba(0,0,0,0.3);
 			min-height: 92.8vh;
-			border-radius: 10px;
-			padding: 10px;
+			padding: 10px 0;
 			position: relative;
 		}
 		.login, .register, .reset, .change {
@@ -554,9 +552,8 @@
 		.info-login, .info-register, .info-reset, .info-change {
 			text-align: center;
 			font-size: 0.9em;
-			min-height: 500px;
 			color: #f1eded;
-			padding: 20px;
+			padding: 20px 0;
 		}
 		.info-reset {
 			text-align: left;
@@ -564,7 +561,7 @@
 		.info-login h1, .info-register h1, .info-reset h1, .info-change h1 {
 			letter-spacing: 2px;
 		}
-		.info-login p, .info-register p, .info-reset li, .info-change p, .info-change li {
+		.info-login p, .info-login li, .info-reset li, .info-change p, .info-change li {
 			font-family: 'Fredoka One', cursive;
 			font-size: 1.5em;
 			line-height: 1.5;
@@ -622,7 +619,7 @@
 			}
 		}
 
-		/*============ SNIPPET =============*/
+	/*============ SNIPPET =============*/
 		.snippet-box {
 			position: relative;
 			height: 350px;
@@ -1034,18 +1031,22 @@
 			.login .border {
 				border-right: none;
 				border-bottom: 3px solid #3535D3;
+				min-height: 55vh;
 			}
 			.reset .border {
 				border-right: none;
 				border-bottom: 3px solid #3535D3;
+				min-height: 55vh;
 			}
 			.change .border {
 				border-right: none;
 				border-bottom: 3px solid #3535D3;
+				min-height: 55vh;
 			}
 			.register .border {
 				border-right: none;
 				border-bottom: 3px solid #449D44;
+				min-height: 55vh;
 			}
 			.content-snippet .side-info {
 				right: 2%;
