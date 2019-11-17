@@ -51,6 +51,7 @@
 	a.base-link {
 		display: inline-block;
 		color: #3c8dbc;
+		font-family: 'Fredoka One', cursive;
 	}
 
 	a.base-link:hover {

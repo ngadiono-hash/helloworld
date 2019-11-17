@@ -176,7 +176,7 @@ let widthClass = function() {
 			waitUntilVisible: true
 		})
 		.pause(3000)
-		.type("<a>Situs Belajar Programing Website Bahasa Indonesia</a>")
+		.type("<a>Situs Belajar FrontEnd Web Indonesia</a>")
 		.go();
 
 		new TypeIt('#str1,#str2,#quote', {

@@ -168,32 +168,30 @@ function mainNav($code=[]) { ?>
 <div class="main-navbar box-sh">
 	<?php if (whats_page(1,['','at','snippet','lesson']) && !whats_page(2,['s'])) { ?>
 	<a class="" href="<?= base_url() ?>">
-		<span class="hidden-xs hidden-sm">Home</span>
+		<span class="hidden-xs hidden-sm">Beranda</span>
 		<span class="visible-xs visible-sm"><i class="fa fa-home"></i></span>
 	</a>
 	<a class="nav-adjust" href="<?=base_url('lesson')?>">
-		<span class="hidden-xs hidden-sm">Pelajaran</span>
+		<span class="hidden-xs hidden-sm">Materi</span>
 		<span class="visible-xs visible-sm"><i class="fa fa-book"></i></span>
 	</a>
 	<a class="nav-adjust" href="<?=base_url('snippet')?>">
 		<span class="hidden-xs hidden-sm">Snippet</span>
 		<span class="visible-xs visible-sm"><i class="fa fa-code"></i></span>
 	</a>
-	<a class="nav-adjust" href="#">
+<!-- 	<a class="nav-adjust" href="#">
 		<span class="hidden-xs hidden-sm">Artikel</span>
 		<span class="visible-xs visible-sm"><i class="fa fa-file"></i></span>
-	</a>
+	</a> -->
 	<?php } elseif (whats_page(1,['snippet']) && whats_page(2,['s'])) { ?>
 	<a href="<?= base_url('snippet') ?>"><i class="fa fa-arrow-left"></i></a>
 	<a style="width: 30vw" class="hidden-xs"><?=$code['code_title']?></a>
 	<?php } ?>
 	<?php if (!startSession('sess_user')) { ?>
-	<?php if (!whats_page(2,['sign'])) { ?>
 	<a class="pull-right right-nav" href="<?= base_url('at/sign') ?>">
-		<span class="hidden-xs hidden-sm">Login</span>
+		<span class="hidden-xs hidden-sm">Masuk</span>
 		<span class="visible-xs visible-sm"><i class="fa fa-sign-in-alt"></i></span>
 	</a>
-	<?php } ?>
 	<?php } else { ?>
 	<a class="pull-right right-nav" id="btn-nav"><i class="fa fa-user"></i></a>
 	<div class="drop hide slide-in-left">

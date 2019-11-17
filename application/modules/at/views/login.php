@@ -8,11 +8,11 @@
 						<div class="col-md-6 col-lg-6 border">
 							<div class="info-login">
 								<h1>silahkan masuk...</h1>
-								<p>lihat semua pencapaian belajarmu di halaman dashboard</p>
 								<br>
-								<p>belum punya akun ? </p>
-								<a class="effect social to-register"><span>buat akun baru</span></a>
-								<hr>
+								<br>
+								<p>belum punya akun ? <a class="base-link to-register"><span>buat akun baru</span></a></p>
+								
+								<p>atau</p>
 								<a href="<?= $this->facebook->login_url(); ?>" class="effect effect-prm social"><span><i class="fab fa-facebook"></i> Login via Facebook</span></a>
 							</div>
 						</div>
@@ -47,13 +47,16 @@
 				
 					<div class="register off scale-in-center text-focus-in col-lg-12">
 						<div class="col-md-6 col-lg-6 border">
-							<div class="info-register">
+							<div class="info-login">
 								<h1>silahkan daftar...</h1>
-								<p>cukup dengan mendaftarkan email aktif dan membuat username</p>
-								<p>kamu bisa mengakses fitur dashboard serta berinteraksi dengan anggota lainnya</p>
 								<br>
-								<p>sudah punya akun ? </p>
-								<a class="effect social to-login"><span>login</span></a>
+								<ul style="text-align: left;">
+									<li>gunakan email aktif untuk mendaftar</li>
+									<li>lakukan verifikasi setelah berhasil mendaftar</li>
+								</ul>
+								<br>
+								<p>sudah punya akun ? <a class="base-link to-login"><span>masuk ke akun</span></a></p>
+								
 							</div>
 						</div>
 						<div class="col-md-6 col-lg-6">
@@ -98,12 +101,11 @@
 					<div class="reset scale-in-center col-lg-12">
 						<div class="col-md-6 col-lg-6 border">
 							<div class="info-reset">
-								<h1>reset password</h1>
+								<h1>Reset Password</h1>
 								<br>
 								<ul>
-									<li>reset password digunakan untuk mengatur ulang password dari sebuah akun</li>
-									<li>kami akan mengirimkan link verifikasi pada alamat email yang tertaut pada akun Hello World</li>
-									<li>pastikan bahwa akunmu telah terverifikasi sebelumnya untuk dapat mereset passwordnya kembali</li>
+									<li>link reset akan dikirim ke alamat email yang tertaut pada akun</li>
+									<li>pastikan akun telah terverifikasi untuk dapat mereset passwordnya kembali</li>
 								</ul>
 							</div>
 						</div>

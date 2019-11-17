@@ -1,17 +1,7 @@
-<section class="main" id="sub-page">
-	<header class="wrapper-header">
-		<div class="welcome text-focus-in">
-			<h1 class="h-one text-sh">Snippet Program</h1>
-			<div class="container fred">
-				<h3>Snippet program dari para member Hello World terkumpul di sini.</h3>
-				<h3>Kamu bisa membuat snippet kode program berdasarkan pengetahuan tentang kode programming seputar HTML, CSS dan JavaScript.</h3>
-				<h3>Kembangkan kreatifitasmu dalam membuat kode program untuk bisa memberi manfaat bagi para pengunjung lainnya.</h3>
-			</div>
-		</div>
-	</header>
-</section>
 <?php mainNav() ?>
 <div class="hello" style="overflow-x: hidden;">
+	<h1>Snippet program</h1>
+	<br>
 	<div class="container">
 		<div class="">
 		<?php foreach ($code as $co) { ?>

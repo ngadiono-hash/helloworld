@@ -6,7 +6,6 @@ class At extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('At_model');
 		$this->load->model('Common_model');
 	}
 
