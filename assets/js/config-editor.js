@@ -1,4 +1,21 @@
-$(document).ready(function() {	
+if (window.addEventListener) {
+	$('.splitter').on('mousedown',function(e){
+		dragstart(e);
+	});
+	$(window).on('mousemove',function(e){
+		dragmove(e,'result-frame');
+	});
+	$(window).on('mouseup',function(e){
+		dragend();
+	});
+}
+$(function(){
+	$(".panel-left").resizable({
+		handleSelector: ".splitter",
+		resizeHeight: false
+	});
+});
+$(document).ready(function(){	
 	compilex();
 	$('#input-title').on('change',function() {
 		$('#title-snippet').text($(this).val());

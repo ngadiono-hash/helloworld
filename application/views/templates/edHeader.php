@@ -1,7 +1,7 @@
 <?php 
 reload_session();
 $content = (isset($lesson['content']) ? $lesson['content'] : '' );
-$description = readMore($content,250);
+$description = read_more($content,250);
 $keys = getTags($content, 'h3');
 $keys = strtolower(implode(', ', $keys));
 $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($lesson['level']).', '.strtolower($lesson['title']).', '. $keys;
@@ -13,42 +13,17 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?= $lesson['title']; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
+	<meta name="csrf" content="<?=$this->security->get_csrf_hash() ?>">
+	<meta name="id" content="<?=$lesson['id']?>">
 	<meta name="description" content="<?= $description ?>">
 	<meta name="keywords" content="<?= $keyword ?>">
-	<meta name ="revised" content ="Hello World, <?= date('m/d/Y',$lesson['update']) ?>">
 	<meta name="author" content="Hello World">
+	<meta name ="revised" content ="Hello World, <?= date('m/d/Y',$lesson['update']) ?>">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One|Rubik">
 	<?php bootstrap().jqueryUi().myGlobal() ?>
-	<?php // if(startSession('sess_role') && getSession('sess_role') == 1) ckEditor() ?>
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/prisma.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
 	<?php script_user() ?>
-	<?php if ( startSession('sess_id') ) { ?>
-		<?php if ( getSession('sess_role') != 1 ) { ?>
-			<script>
-				$(function(){
-					var start = null;
-					$(window).on('load',function(e) {
-						start = e.timeStamp;
-					});
-					$(window).on('unload',function(e) {
-						var time = e.timeStamp - start;
-						var datax = {
-							time : time,
-							id_page : <?= $id ?>,
-							id_user : userData.id
-						}
-						$.ajax({
-							url : host+'xhru/create_progress',
-							type : 'post',
-							async : false,
-							data : datax,
-						}).done();
-					});
-				}); 
-			</script>
-		<?php } ?>
-	<?php } ?>
 	<style>
 	html { font-size: 18px; }
 	html, body {
@@ -57,7 +32,8 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 	/*============ ALL =================*/
 	body { 
 		color: #808080; 
-		font-family: Rubik, Sans-serif; 
+		background: linear-gradient(135deg, #f5f5f5, #000000ab);
+		/*font-family: Rubik, Sans-serif; */
 		width: 100%;
 		height: 100%;
 		min-width: 640px;
@@ -349,16 +325,17 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 	.box-desc {
 		padding: 25px 0;
 		position: absolute;
-		top: 0px;
-		bottom: 0px;
-		right: 0%;
-		left: 0%;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
 		border: 3px solid #808080;
 		border-left: none;
 		border-right: none;
 		min-width: 500px;
 		cursor: default;
 		z-index: 100;
+		overflow: hidden;
 	}
 	.inner-desc { 
 		margin-top: 20px;
@@ -372,8 +349,8 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 	}
 
 	.main-content { 
-		font-family: Rubik, Sans-serif; 
-		padding: 50px 10px;
+		/*font-family: Rubik, Sans-serif; */
+		/*padding: 50px 10px;*/
 	}
 	.main-title { 
 		margin-top: -25px;
@@ -642,4 +619,4 @@ $keyword = 'belajar '.strtolower($lesson['category']).', belajar '.strtolower($l
 
 </head>
 <body>
-<?php loader(); ?>
+	<?php loader(); ?>

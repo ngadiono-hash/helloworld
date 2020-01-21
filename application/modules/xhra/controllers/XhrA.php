@@ -60,6 +60,30 @@ class XhrA extends CI_Controller
 			''
 		);
 	}
+	public function getTutorial()
+	{
+		$id = $this->input->post('id');
+		$edit = $this->Common_model->select_spec('tutors','snip_content',['snip_id' => $id]);
+		// echo (htmlentities($edit));
+		// echo ($edit);
+		$result = [
+			'left' => htmlentities($edit),
+			'right' => $edit
+		];
+		echo json_encode($result);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	public function get_detail_user()//
 	{
 		$id = $this->input->post('id');
@@ -110,17 +134,36 @@ class XhrA extends CI_Controller
 		echo json_encode($result);
 	}
 
+	public function inline_tutorial()
+	{
+		$id = $this->input->post('id');
+		$desc = preg_replace('/&nbsp;/',' ',$this->input->post('desc'));
+		$data = [
+		  'snip_code'   => $this->input->post('count_words'),
+		  'snip_content'=> $desc,
+		  'snip_key'		=> trim(strtolower(implode(',',getTags($desc,'h3')))),
+		];
+		$this->Common_model->update('tutors',$data,['snip_id' => $id]);
+		$affect = $this->Common_model->select_spec('tutors','snip_content',['snip_id' => $id]);
+		if (!empty($affect)) {
+			echo json_encode($affect);
+		} else {
+			echo '<script>alert("something wrong")</script>';
+		}		
+	}
+
 	public function update_tutorial()
 	{
 		$id = $this->input->post('id');
 		$desc = preg_replace('/&nbsp;/',' ',$this->input->post('desc'));
 		$data = [
-		  'snip_title'      => ucwords($this->input->post('title')),
-		  'snip_slug'       => $this->input->post('slug'),
-		  'snip_code'       => $this->input->post('count_words'),
-		  'snip_content'    => $desc,
-		  'snip_meta'       => trim(create_slug($this->input->post('slug'))),
-		  'snip_update'     => time()
+		  'snip_title'  => ucwords($this->input->post('title')),
+		  'snip_slug'   => $this->input->post('slug'),
+		  'snip_code'   => $this->input->post('count_words'),
+		  'snip_content'=> $desc,
+		  'snip_key'		=> trim(strtolower(implode(',',getTags($desc,'h3')))),
+		  'snip_meta'   => trim(create_slug($this->input->post('slug'))),
+		  // 'snip_update' => time()
 		];
 		$this->Common_model->update('tutors',$data,['snip_id' => $id]);
 		$affect = $this->Common_model->select_spec('tutors','snip_content',['snip_id' => $id]);

@@ -40,9 +40,11 @@ class Snippet extends CI_Controller
 
 	public function s($serial)
 	{
-		$check = $this->Common_model->check_exist('snip',['code_id' => $serial]);
+		$check = $this->Common_model->check_exist('snip',['code_id' => $serial, 'code_publish' => 1]);
 		if (!$check) {
-			not_found();
+			$data['exist'] = false;
+			$data['code'] = [];
+			$data['title'] = 'Oops';
 		} else {
 			$code = $this->Common_model->select_fields_where_join(
 				'snip AS t1',
@@ -95,8 +97,8 @@ class Snippet extends CI_Controller
 					'user_liked',['id_user' => getSession('sess_id'),'id_target' => $serial]
 				);				
 			}
-			// $count_like = $this->Common_model->count_record()
 			$data = [
+				'exist' => true,
 				'title' => $code['code_title'],
 				'code' => $code,
 				'fm_snippet' => $fm_id,
@@ -104,12 +106,12 @@ class Snippet extends CI_Controller
 				'tags_snippet' => $tags,
 				'count_comm' => $count_comm,
 				'comment' => (!empty($comment)) ? append_comment($comment) : [],
-				'like' => ($like) ? 'active' : '' 
+				'like' => ($like) ? 'active' : ''
 			];
-			$this->load->view('templates/mainHeader', $data);
-			$this->load->view('single', $data);
-			$this->load->view('templates/mainFooter', $data);			
 		}
+		$this->load->view('templates/mainHeader', $data);
+		$this->load->view('single_snippet', $data);
+		$this->load->view('templates/mainFooter', $data);			
 	}
 
 	public function p($serial) // ok
@@ -131,7 +133,7 @@ class Snippet extends CI_Controller
 			for ($i = 0; $i < count($cdn); $i++) {
 				$data['extract'][$i] = popu($cdn[$i]['cdn_link']);
 			}
-			$this->load->view('thumbs',$data);
+			$this->load->view('thumbs_snippet',$data);
 		}
 	}
 

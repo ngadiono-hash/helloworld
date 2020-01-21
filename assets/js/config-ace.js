@@ -25,62 +25,57 @@ function compilex(delay){
 		  field.resultFrame.close();
     }, delay);
 }
-	let field = {
-		title : document.getElementById('input-title'),
-		html : ace.edit('html'),
-		css : ace.edit('css'),
-		js : ace.edit('js'),
-		query : document.getElementById('source-jquery'), 
-		framework : document.getElementById('source-framework'),
-		resultFrame : document.getElementById('result-frame').contentWindow.document
-	};
-  let use = { liveEdit: false };
-	let opt = {
-		showFoldWidgets: true,
-		showLineNumbers: true,
-		showPrintMargin: false,
-		minLines: 2,
-		wrap: false,
-		fontSize: 15,
-		tabSize: 2,
-		highlightActiveLine: true,
-		highlightSelectedWord: true,
-		enableBasicAutocompletion: true,
-		enableLiveAutocompletion: true,
-		enableSnippets: true
-	};
-		field.html.setOptions(opt);
-		field.html.session.setMode("ace/mode/html");
-		field.html.setTheme("ace/theme/tomorrow_night");
-		field.css.setOptions(opt);
-		field.css.session.setMode("ace/mode/css");
-		field.css.setTheme("ace/theme/tomorrow_night");
-		field.js.setOptions(opt);
-		field.js.session.setMode("ace/mode/javascript");
-		field.js.setTheme("ace/theme/tomorrow_night");
 
-	// CONTROL
-	if(window.addEventListener){
-		$("#liveEdit").on("click", function() {
-	    use.liveEdit ? use.liveEdit = false: use.liveEdit = true;
-	    $(this).parent('li').toggleClass("active");
-	    $(this).find('i').toggleClass('fa-pause fa-sync');
-	   	$(this).parent('li').siblings('.run').toggleClass('hide');
-	  });
-		$('#run').on('click', function() {
-	  	var a =  $(this).parent('li');
-	    a.addClass("active");
-			setTimeout(function() {
-			  a.removeClass('active');
-			}, 300);
-			compilex();
-		});
-		$('#html,#css,#js').on('keyup',function() {
-			if(use.liveEdit) compilex(1000);
-		});
+let field = {
+	title : document.getElementById('input-title'),
+	html : ace.edit('html'),
+	css : ace.edit('css'),
+	js : ace.edit('js'),
+	query : document.getElementById('source-jquery'), 
+	framework : document.getElementById('source-framework'),
+	resultFrame : document.getElementById('result-frame').contentWindow.document
+};
+let use = { liveEdit: false };
+let opt = {
+	showFoldWidgets: true,
+	showLineNumbers: true,
+	showPrintMargin: false,
+	minLines: 2,
+	wrap: false,
+	fontSize: 15,
+	tabSize: 2,
+	highlightActiveLine: true,
+	highlightSelectedWord: true,
+	enableBasicAutocompletion: true,
+	enableLiveAutocompletion: false,
+	enableSnippets: true
+};
+field.html.setOptions(opt);
+field.html.session.setMode("ace/mode/html");
+field.html.setTheme("ace/theme/tomorrow_night");
+field.css.setOptions(opt);
+field.css.session.setMode("ace/mode/css");
+field.css.setTheme("ace/theme/tomorrow_night");
+field.js.setOptions(opt);
+field.js.session.setMode("ace/mode/javascript");
+field.js.setTheme("ace/theme/tomorrow_night");
 
-	}
-	$(".content-create .panel-left").resizable({
-		handleSelector: ".splitter",
-		resizeHeight: false
+if(window.addEventListener){
+	$("#liveEdit").on("click", function() {
+    use.liveEdit ? use.liveEdit = false: use.liveEdit = true;
+    $(this).parent('li').toggleClass("active");
+    $(this).find('i').toggleClass('fa-pause fa-sync');
+   	$(this).parent('li').siblings('.run').toggleClass('hide');
+  });
+	$('#run').on('click', function() {
+  	var a =  $(this).parent('li');
+    a.addClass("active");
+		setTimeout(function() {
+		  a.removeClass('active');
+		}, 300);
+		compilex();
 	});
+	$('#html,#css,#js').on('keyup',function() {
+		if(use.liveEdit) compilex(1000);
+	});
+}

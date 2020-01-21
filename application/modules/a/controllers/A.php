@@ -77,12 +77,6 @@ class A extends CI_Controller
 		_temp_admin($data,'Tutorial JAVASCRIPT','tutorial_table');
 	}
 
-	// public function deleted()
-	// {
-	// 	$data['jsonUrl'] = 'a/dt_deleted_tutorial';
-	// 	_temp_admin($data,'Tutorial DELETED','tutorial_table');
-	// }
-
 	public function tutorial()
 	{
 		$catName = $this->uri->segment(3);
@@ -114,7 +108,6 @@ class A extends CI_Controller
 			$data['upload'] = $edit['snip_upload'];
 			$data['update'] = $edit['snip_update'];
 			$data['public'] = $edit['snip_publish'];
-			// debug(strip_tags($data['content']));
 			if($data['public'] == 1){
 		    $data['btn'] = 'btn-ok';
 		    $data['fa']  = '<i class="fa fa-globe-asia"></i> <span class="hidden-sm hidden-xs">Public</span>';

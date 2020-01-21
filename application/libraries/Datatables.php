@@ -54,7 +54,7 @@
       $this->ci->db = $db_data;
     }
 
-    /**
+    /** 
     * Generates the SELECT portion of the query
     *
     * @param string $columns

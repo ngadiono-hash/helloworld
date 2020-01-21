@@ -11,6 +11,8 @@ class XhrU extends CI_Controller
 		$this->load->model('Common_model');
 	}
 
+
+
 	public function create_cdn()
 	{
 		$result = [];
@@ -35,7 +37,7 @@ class XhrU extends CI_Controller
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
-	public function validate_url($url) {
+	function validate_url($url) {
 		if (strlen($url) > 0){
 			if ( (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) ) {
 				$this->form_validation->set_message('validate_url','alamat URL tidak valid');
@@ -45,7 +47,7 @@ class XhrU extends CI_Controller
 			}
 		}
 	}
-	public function validate_numeric($str)
+	function validate_numeric($str)
 	{
 		if (strlen($str) > 0){
 			if (!preg_match('/^[0-9 .]+$/i',$str) ) {
@@ -56,7 +58,7 @@ class XhrU extends CI_Controller
 			}
 		}
 	}
-	public function create_comment() // BELUM
+	public function create_comment()
 	{
 		$result = [];
 		checkSession($result);
@@ -103,10 +105,9 @@ class XhrU extends CI_Controller
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
-	public function create_like() // BELUM
+	public function create_like()
 	{
 		$result = [];
-		checkSession($result);
 		if (!startSession('sess_id')) {
 			$result = [
 				'status' => 0,
@@ -129,32 +130,73 @@ class XhrU extends CI_Controller
 					'status' => 1,
 					'message' => "flashAlert('terima kasih','terima kasih '+ userData.username +' atas jempolnya')"
 				];
-			}			
+			}
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
-
-	public function create_progress() // OK
+	public function create_book()
+	{
+		$result = [];
+		if (!startSession('sess_id')) {
+			$result = [
+				'status' => 0,
+				'message' => "alertDanger('ok','kamu harus login dulu untuk bisa menandai snippet ini')"
+			];
+		} else {
+			$id_post = $this->input->post('post');
+			$owner_post = $this->input->post('owner');
+			$cek = $this->Common_model->check_exist('user_book',['id_user' => getSession('sess_id'), 'id_target' => $id_post]);
+			if ($cek == false) {
+				$data = [
+					'id_user' => getSession('sess_id'),
+					'id_target' => $id_post,
+					'created' => time()
+				];
+				$this->Common_model->insert_record('user_book',$data);
+				$result = [
+					'status' => 1,
+					'message' => "flashAlert('berhasil','snippet telah ditandai <br> silahkah lihat di dashboard kamu')"
+				];
+			}
+		}
+		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
+	}
+	public function create_progress()
 	{
 		$time    = intval($this->input->post('time'));
 		$id_page = $this->input->post('id_page');
 		$id_user = $this->input->post('id_user');
-		if( $time > (60000) ) {
-			$check 	= $this->Common_model->check_exist('user_progress',['id_snip' => $id_page, 'id_user' => $id_user]);
-			if ( $check == 0  ) {
-				$data = [
-					'id_snip' => $id_page,
-					'id_user' => $id_user
-				];
-				$this->db->insert_record('user_progress',$data);
-			}
+		if( $time > (60) ) {
+			// if( $time > (60000) ) {
+				$check = $this->Common_model->check_exist('user_progress',['id_snip' => $id_page,'id_user' => $id_user]);
+				if ($check) {
+					$this->Common_model->update(
+						'user_progress',
+						['timing' => time()],
+						['id_snip' => $id_page,'id_user' => $id_user]
+					);
+					echo "update";					
+				} else {
+					echo "inserting <br>";
+					$data = [
+						'id_snip' => $id_page,
+						'id_user' => $id_user,
+						'timing'    => time()
+					];
+					$inserting = $this->Common_model->insert_record('user_progress',$data);
+					if ($inserting) {
+						$count = $this->Common_model->count_record('user_progress','id',['id_user' => $id_user]);
+						if ( $count == 6 ) {
+							echo "deleting";
+							$this->db->query("DELETE FROM user_progress WHERE id_user = $id_user ORDER BY timing ASC LIMIT 1");
+						}						
+					}
+				}
 		}
 	}
-
 	public function update_photo() // OK
 	{
 		$result = [];
-		checkSession($result);
 		$photo = $_FILES['photo']['name'];
 		if($photo){
 			$config['upload_path']    = './assets/img/profile/';
@@ -165,28 +207,26 @@ class XhrU extends CI_Controller
 			$config['encrypt_name'] 	= FALSE;
 			$this->load->library('upload', $config);
 			if ($this->upload->do_upload('photo')) {
-				$old_photo = $this->Read_model->getOldPhoto(getSession('sess_id'));
-				if($old_photo['u_image'] != 'default.gif') {
-					unlink(FCPATH . 'assets/img/profile/' . $old_photo['u_image']);
-				}
+				$old_photo = $this->Common_model->select_spec('users','u_image',['u_id' => getSession('sess_id')]);
+				if ($old_photo != 'default.gif') unlink(FCPATH . 'assets/img/profile/' . $old_photo);
 				$new_photo = $this->upload->data('file_name');
-				$this->Update_model->updatePhotoPassword(['u_image' => $new_photo],getSession('sess_id'));
+				$this->Common_model->update('users',['u_image' => $new_photo],['u_id' => getSession('sess_id')]);
 				$_SESSION['sess_image'] = base_url('assets/img/profile/') . $new_photo;
 				$locate = base_url('u/profile');
 				$result = [
 					'status' => 1,
-					'message' => "alertSuccess('blank',['sukses','foto profilmu berhasil diubah',' '+imgLoad+' '],'".$locate."')"
+					'message' => "alertSuccess('ok',['sukses','foto profilmu berhasil diubah',' '+imgLoad+' '],'".$locate."')"
 				];
 			}	else {
 				$result = [
 					'status' => 0,
-					'message' => $this->upload->display_errors('<p class="text-danger center">', '</p>')
+					'message' => $this->upload->display_errors('<p class="text-danger">', '</p>')
 				];
 			}
 		} else {
 			$result = [
 				'status' => 0,
-				'message' => '<p class="text-danger center">tidak ada foto untuk diupload</p>'
+				'message' => '<p class="text-danger">tidak ada foto untuk diupload</p>'
 			];
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
@@ -195,40 +235,40 @@ class XhrU extends CI_Controller
 	{
 		$result = [];
 		checkSession($result);
-		$this->form_validation->set_rules('name', 'Nama Lengkap', 'trim|required');
-		$this->form_validation->set_rules('bio', 'Biografi', 'max_length[500]');
-		$this->form_validation->set_rules('web', 'URL Web', 'trim|prep_url');
-		$this->form_validation->set_message('required','{field} harus diisi');
-		$this->form_validation->set_message('max_length','{field} terlalu panjang');
+		$this->form_validation->set_rules('name', 'nama lengkap', 'trim');
+		$this->form_validation->set_rules('bio', 'biografi', 'max_length[500]');
+		$this->form_validation->set_rules('web', 'URL website', 'callback_validate_url['.$this->input->post('web').']');
 
 		if ($this->form_validation->run() === FALSE) {
 			$result = [
-				'name' => form_error('name','<p class="text-danger">','</p>'),
-				'gender' => form_error('gender','<p class="text-danger">','</p>'),
-				'bio' => form_error('bio','<p class="text-danger">','</p>'),
-				'web' => form_error('web','<p class="text-danger">','</p>')
+				'name' 		=> form_error('name','<p class="text-danger">','</p>'),
+				'gender' 	=> form_error('gender','<p class="text-danger">','</p>'),
+				'bio' 		=> form_error('bio','<p class="text-danger">','</p>'),
+				'web' 		=> form_error('web','<p class="text-danger">','</p>')
 			];
 		} else {
-			$this->Update_model->updateProfile();
+			$data = [
+			  'u_modified'  => time(),
+			  'u_name'      => htmlspecialchars($this->input->post('name')),
+			  'u_gender'    => $this->input->post('gender'),
+			  'u_bio'       => htmlspecialchars($this->input->post('bio')),
+			  'u_web'       => $this->input->post('web')
+			];
+			$this->Common_model->update('users',$data,['u_id' => getSession('sess_id')]);
 			$result = [
 				'status' => 1,
-				'message' => "flashAlert('sukses','info tentang profilmu berhasil diubah')"
+				'message' => "alertSuccess('ok',['sukses','info profilmu berhasil diupdate',''])"
 			];
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
-	public function update_password() // OK
+	public function update_password()
 	{
 		$result = [];
 		checkSession($result);
-		$this->form_validation->set_rules('pass_0', 'Password Lama', 'trim|required');
-		$this->form_validation->set_rules('pass_1', 'Password', 'trim|required|min_length[6]',
-			array('min_length' => '{field} minimal 6 karakter')
-		);
-		$this->form_validation->set_rules('pass_2', 'Password Konfirmasi', 'trim|required|matches[pass_1]',
-			array('matches' => '{field} tidak cocok')
-		);
-		$this->form_validation->set_message('required','{field} harus diisi');
+		$this->form_validation->set_rules('pass_0', 'password aktif', 'trim|required');
+		$this->form_validation->set_rules('pass_1', 'password baru', 'trim|required|min_length[6]');
+		$this->form_validation->set_rules('pass_2', 'password konfirmasi', 'trim|required|matches[pass_1]');
 		if ($this->form_validation->run() == FALSE) {
 			$result = [
 				'pass_0'    => form_error('pass_0','<p class="text-danger">','</p>'),
@@ -238,8 +278,8 @@ class XhrU extends CI_Controller
 		} else {
 			$old = $this->input->post('pass_0');
 			$new = $this->input->post('pass_1');
-			$fetch = $this->Read_model->getDataUser();
-			if (!password_verify($old,$fetch['password'])) {
+			$current = $this->Common_model->select_spec('users','u_password',['u_id' => getSession('sess_id')]);
+			if (!password_verify($old,$current)) {
 				$result = [
 					'message' => "alertDanger('ok','password aktif saat ini salah')"
 				];
@@ -250,7 +290,7 @@ class XhrU extends CI_Controller
 					];
 				} else {
 					$hash = password_hash($new, PASSWORD_DEFAULT);
-					$this->Update_model->updatePhotoPassword(['u_password' => $hash],getSession('sess_id'));
+					$this->Common_model->update('users',['u_password' => $hash],['u_id' => getSession('sess_id')]);
 					$locate = base_url('at/logout');
 					$result = [
 						'message' => "alertSuccess('blank',['password berhasil diubah','silahkan coba login kembali',' '+imgLoad+' '],'".$locate."')"
@@ -277,7 +317,7 @@ class XhrU extends CI_Controller
 		} elseif ( strlen($codeTag) == 0 ) {
 			$result = [
 				'status' => 1,
-				'message' => "alertDanger('ok','periksa Tag snippet <br> kolom ini harus diisi')"
+				'message' => "alertDanger('ok','periksa Tag snippet <br> pilih maksimal 3 tag')"
 			];
 		} elseif (empty($codeHtml)) {
 			$result = [
@@ -367,7 +407,7 @@ class XhrU extends CI_Controller
 			$this->db->update('snip',$set_snippets,['code_id' => $code_id]);
 			$this->db->update('timeline',$set_timeline,['relation' => $code_id]);
 
-			$result['message'] = "flashAlert('sukses','perubahan berhasil disimpan')";
+			$result['message'] = "alertSuccess('ok',['sukses','perubahan berhasil disimpan',''])";
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}

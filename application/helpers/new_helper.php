@@ -127,7 +127,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		if(!startSession('sess_id')) {
 			$result['message'] = "<script>alertDanger('ok','server mendeteksi bahwa tidak ada sesi login, <br> silahkan login terlebih dahulu')</script>";
 			echo json_encode($result);
-			die();
 		}
 	}	
 	function is_login()
@@ -140,10 +139,14 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		if (startSession('sess_id')) {
 			return true;
 		} else {
-			$_SESSION['reff_page'] = $_SERVER['REQUEST_URI'];
+			$_SESSION['reff_page'] = current_url();
 			blank_page($status);
 			die();
 		} 
+	}
+
+	function check_admin(){
+		return (startSession('sess_role') && getSession('sess_role') == 1) ? true : false;
 	}
 
 	function is_admin()
@@ -151,9 +154,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		$status = [
 			'title' => '403',
 			'image' => 'blocked.png',
-			'message' => 'kamu tidak punya hak akses ke halman ini'
+			'message' => 'kamu tidak punya hak akses ke halaman ini'
 		];		
-		if (startSession('sess_role') && getSession('sess_role') == 1 ) {
+		if ( check_admin() ) {
 			return true;
 		} else {
 			blank_page($status);
@@ -254,7 +257,18 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		}
 		return $data;
 	}
-
+	function append_tutor($data){
+		foreach ($data as $k => $v) {
+			if ($v['category'] == 'html') {
+				$data[$k]['theme'] = 'theme-html';
+			} elseif($v['category'] == 'css') {
+				$data[$k]['theme'] = 'theme-css';
+			} else {
+				$data[$k]['theme'] = 'theme-js';
+			}
+		}
+		return $data;
+	}
 // TIMING
 	function time_elapsed_string($datetime,$full=false,$lang='id') {
 		$now = new DateTime;
@@ -310,7 +324,7 @@ function getTags($string, $tagname){
   }
   return $return;
 }
-function readMore($string,$length){
+function read_more($string,$length){
 	$delTags = strip_tags($string);
 	$replaceTab = preg_replace('/\s\s+/',' ', $delTags);
 	$cut = substr($replaceTab, 0,$length);
@@ -343,4 +357,19 @@ function popu($str){
 		}
 	}
 	return implode(' ', $ret);
+}
+
+function greeting($user)
+{
+	$time = date("H");
+	$timezone = date("e");
+	if ($time < "10") {
+	  return "selamat pagi ". $user;
+	} elseif ($time >= "10" && $time < "14") {
+	  return "selamat siang ". $user;
+	} else if ($time >= "14" && $time < "18") {
+	  return "selamat sore ". $user;
+	} elseif ($time >= "19") {
+	  return "selamat malam ". $user;
+	}
 }

@@ -1,21 +1,14 @@
-	@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
-	@import url('https://fonts.googleapis.com/css?family=Rubik');
-
-	/*===================================================*/
 	html {
 		scroll-behavior: smooth;
 	}
 
-	body {
-		font-family: Rubik, Sans-serif;
-	}
-
 	::-webkit-scrollbar {
 		width: 10px;
+		height: 10px;
 	}
 
 	::-webkit-scrollbar-track {
-		background-image: linear-gradient(#FFF, #808080);
+		background: #fff;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -26,6 +19,7 @@
 	::-webkit-scrollbar-thumb:hover {
 		background: #555;
 	}
+
 
 	a:hover,
 	button:hover {
@@ -84,65 +78,25 @@
 	input:focus {
 		outline: none !important;
 	}
+	img {
+		cursor: pointer;
+	}
 
 	[readonly] {
 		pointer-events: none;
 	}
 
-	/*=================== tooltip =======================*/
-	.tip+.tooltip .tooltip-inner {
-		background: #f1f1f1;
-		color: #808080;
-		padding: 5px;
-		font-size: 14px;
-		border: 2px solid gray;
-		font-family: 'Rubik', Sans-serif;
-		min-width: 125px;
-	}
-
-	.tip+.tooltip.bottom .tooltip-arrow {
-		border-bottom: 5px solid gray;
-	}
-
-	.mytooltip {
-		border-radius: 5px !important;
-		background-color: #f1f1f1;
-		color: #808080 !important;
-		padding: 5px;
-		margin: 50px;
-		text-align: center;
-		font-size: 14px;
-		border: 2px solid gray !important;
-		min-width: 125px;
-		max-width: 400px;
-		font-family: Rubik, Sans-serif;
-	}
-
-	.mytooltip:hover:after {
-		background: #f1f1f1;
-		bottom: 26px;
-		color: #808080;
-		content: attr(title);
-		right: 20%;
-		padding: 5px;
-		position: absolute;
-		z-index: 888;
-	}
-
-	.mytooltip:hover:before {
-		bottom: 10px;
-		content: "";
-		right: 50%;
-		position: absolute;
-		z-index: 999;
-	}
-
 
 	/*=================== bootstrap =====================*/
+	.modal-dialog {
+		width: 800px;
+		margin: 10px auto;
+	}
 	.modal-content {
 		border-radius: 5px !important;
 		border: 3px solid gray;
 		background: #f1f1f1;
+		height: max-content;
 	}
 
 	.modal-body {
@@ -152,7 +106,9 @@
 	.btn {
 		border-radius: 0px;
 	}
-
+	.breadcrumb {
+		margin-bottom: 0px;
+	}
 	/*=================== sweet alert ===================*/
 	.swal2-popup .swal2-header {
 		background-image: linear-gradient(#ccc, #fff);
@@ -192,7 +148,7 @@
 
 	.message-swal {
 		color: inherit;
-		font-family: 'Rubik', Sans-serif;
+		font-family: 'PT Sans', Sans-serif;
 		font-weight: bold;
 		padding-top: 25px;
 		padding-left: 10px;
@@ -265,7 +221,7 @@
 		background: rgba(0,0,0,0.3);		
 	}
 	.ajax-send {
-		top: 51px;
+		top: 45px;
 		z-index: 1055;
 	}	
 	.overlay {
@@ -273,6 +229,33 @@
 		z-index: 1050;
 	}
 	/*=================== haha ==========================*/
+	.theme-html {
+		color: #E44D26;
+		border: 2px solid;
+		transition: .4s ease-in-out;
+	}
+	.theme-html:hover {
+		color: white;
+		background: #EE8F77;
+	}
+	.theme-css {
+		color: #264DE4;
+		border: 2px solid;
+		transition: .4s ease-in-out;
+	}
+	.theme-css:hover {
+		color: white;
+		background: #778FEE;
+	}
+	.theme-js {
+		color: #F3BE30;
+		border: 2px solid;
+		transition: .4s ease-in-out;
+	}
+	.theme-js:hover {
+		color: white;
+		background: #F7D26E;
+	}
 	h1,
 	h2 {
 		text-align: center;
@@ -281,6 +264,9 @@
 
 	.fred {
 		font-family: 'Fredoka One', cursive;
+	}
+	.great {
+		font-family: 'Fredericka the Great', cursive;
 	}
 
 	.center {
@@ -302,7 +288,7 @@
 		border: 2px solid #808080;
 		border-radius: 5px;
 		background: #eee;
-		font-family: 'Font Awesome 5 Free', 'Rubik', sans-serif;
+		font-family: 'Font Awesome 5 Free', 'PT Sans', sans-serif;
 		font-weight: bold;
 		transition: width 0.3s;
 		width: 100%;
@@ -348,15 +334,14 @@
 		margin: 3px;
 		cursor: pointer;
 		padding: 1px;
-		letter-spacing: 2px;
-		font-family: Rubik, sans-serif;
+		font-family: 'PT Sans', sans-serif;
 	}
 
 	.checkin {
 		display: none;
 	}
 
-	.checkin+label:before {
+	.checkin + label:before {
 		content: "\2714";
 		border: 2px solid #5F5F5F;
 		border-radius: 2px;
@@ -392,7 +377,7 @@
 		border-color: transparent;
 	}
 
-/*=================== button ========================*/
+	/*=================== button ========================*/
 	.button {
 		margin: 5px;
 		padding: 10px;
@@ -587,21 +572,6 @@
 		top: 0px;
 	}
 
-	.effect.effect-html::before,
-	.effect.effect-html::after {
-		background: #E44D26;
-	}
-
-	.effect.effect-css::before,
-	.effect.effect-css::after {
-		background: #264DE4;
-	}
-
-	.effect.effect-js::before,
-	.effect.effect-js::after {
-		background: #F3BE30;
-	}
-
 	.effect.effect-ok::before,
 	.effect.effect-ok::after {
 		background: #449D44;
@@ -612,172 +582,9 @@
 		background: #d1332e;
 	}
 
-	.effect.effect-warn::before,
-	.effect.effect-warn::after {
-		background: #c3911d;
-	}
-
-	.effect.effect-prm::before,
-	.effect.effect-prm::after {
-		background: #3535d3;
-	}
-
-	.effect.effect-info::before,
-	.effect.effect-info::after {
-		background: #76c0ec;
-	}
-
-
 	.ef-sm {
 		min-width: 75px;
 	}
-
-	/*=================== ARROW BOX =====================*/
-	.arrow_box {
-		position: relative;
-		background: #f1f1f1;
-		border: 5px solid #808080;
-		border-top-right-radius: 25px;
-		border-bottom-left-radius: 25px;
-		max-width: 922px;
-		padding: 20px;
-		display: block;
-		margin: 5px auto;
-	}
-
-	.arrow_box.round {
-		border-radius: 40%;
-		background: #fff;
-		display: inline-block;
-	}
-
-	.arrow_left:after,
-	.arrow_left:before {
-		left: 20%;
-	}
-
-	.arrow_mid:after,
-	.arrow_mid:before {
-		left: 50%;
-	}
-
-	.arrow_right:after,
-	.arrow_right:before {
-		left: 80%;
-	}
-
-	.arrow_box:after,
-	.arrow_box:before {
-		bottom: 100%;
-		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		background: initial;
-		pointer-events: none;
-	}
-
-	.arrow_box:after {
-		border-color: rgba(241, 241, 241, 0);
-		border-bottom-color: #f1f1f1;
-		border-width: 20px;
-		margin-left: -18px;
-	}
-
-	.arrow_box:before {
-		border-color: rgba(245, 245, 245, 0);
-		border-bottom-color: #808080;
-		border-width: 27px;
-		margin-left: -25px;
-	}
-
-	/*=================== main navbar ========================*/
-/*	.main-navabar .nav .open>a,
-	.main-navabar .nav .open>a:focus,
-	.main-navabar .nav .open>a:hover {
-		background-color: transparent;
-		border-color: transparent;
-	}
-
-	.main-navabar .nav>li>a:focus,
-	.main-navabar .navbar-nav>li>a:hover,
-	.main-navabar .navbar-nav>li>a:active {
-		background: transparent;
-		outline: none;
-	}
-
-	.user-name {
-		text-transform: capitalize;
-	}
-
-	.main-navabar.navbar {
-		border-radius: 0px !important;
-		background: transparent;
-		margin-bottom: 0;
-		border: none;
-	}
-
-	.main-navabar .btn-collapse {
-		border-radius: 30px;
-		color: #ccc;
-		border: 3px solid #ccc;
-		cursor: pointer;
-		margin: 5px;
-		padding: 7px;
-		background: rgba(0, 0, 0, 0.5);
-		min-width: 75px;
-		text-align: center;
-	}
-
-	.main-navabar .dropdown-menu {
-		background-color: transparent;
-	}
-
-	.main-navabar .dropdown-menu>li>a {
-		color: #ccc;
-	}
-
-	.main-navabar .dropdown-menu>li>a:hover {
-		color: #ccc;
-		background-color: transparent;
-	}
-
-	.main-navabar .collapse.in {
-		background: rgba(50, 50, 50, 0.8);
-	}
-
-	@media (min-width: 768px) {
-
-		.main-navabar .navbar-nav>li>a,
-		.navbar-right>li>a {
-			padding-top: 7px;
-			padding-bottom: 7px;
-			line-height: inherit;
-		}
-
-		.main-navabar .fixout {
-			min-width: 75px !important;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.main-navabar .fix {
-			min-width: 75px !important;
-		}
-
-		.main-navabar .navbar-nav {
-			margin: 0px auto;
-			text-align: center;
-			width: 70%;
-		}
-
-		.main-navabar a i.visible-xs,
-		.main-navabar a b.visible-xs {
-			display: inline-block !important;
-		}
-
-	}*/
 
 	/*=================== jello-horizontal ==================*/
 	.jello-horizontal {
@@ -1121,7 +928,7 @@
 		}
 	}
 
-/*=================== slide-out-left ====================*/
+	/*=================== slide-out-left ====================*/
 	.slide-out-left {
 		-webkit-animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 		animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
@@ -1155,7 +962,7 @@
 		}
 	}
 
-/*=================== slide-in-left ====================*/
+	/*=================== slide-in-left ====================*/
 	.slide-in-left {
 		-webkit-animation: slide-in-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) reverse both;
 		animation: slide-in-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) reverse both;
@@ -1189,7 +996,7 @@
 		}
 	}
 
-/*=================== jello-vertical ====================*/
+	/*=================== jello-vertical ====================*/
 	.jello-vertical {
 		-webkit-animation: jello-vertical 1.2s linear infinite;
 		animation: jello-vertical 1.2s linear infinite;
@@ -1269,7 +1076,7 @@
 		}
 	}
 
-/*=================== ping ==============================*/
+	/*=================== ping ==============================*/
 	.ping {
 		-webkit-animation: ping 1.8s ease-in-out infinite both;
 		animation: ping 1.8s ease-in-out infinite both;
@@ -1315,7 +1122,7 @@
 		}
 	}
 
-/*=================== scale-in-center ===================*/
+	/*=================== scale-in-center ===================*/
 	.scale-in-center {
 		-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 		animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;

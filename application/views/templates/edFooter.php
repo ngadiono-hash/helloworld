@@ -5,7 +5,30 @@
 <script src="<?= base_url('assets/js/classie.js') ?>"></script>
 <script src="<?= base_url('assets/js/main.js') ?>"></script>
 <script src="<?= base_url('assets/js/prism.js') ?>"></script>
-
+<?php if ( ( startSession('sess_role') ) && (getSession('sess_role') != false) ) { ?>
+<script>
+	$(function(){
+		var start = null;
+		$(window).on('load',function(e) {
+			start = e.timeStamp;
+		});
+		$(window).on('unload',function(e) {
+			var time = e.timeStamp - start;
+			var datax = {
+				time : time,
+				id_page : $('meta[name="id"]').attr('content'),
+				id_user : userData.id
+			}
+			$.ajax({
+				url : host+'xhru/create_progress',
+				type : 'post',
+				async : false,
+				data : datax,
+			}).done();
+		});
+	}); 
+</script>
+<?php } ?>
 <script>
 	function onScroll(event){
 		var scrollPos = $(document).scrollTop();
@@ -48,7 +71,7 @@
 
 			// DOCUMENT CONTENT
 			$('.main-content p > a').addClass('base-link fred');
-			$('.main-content li > a').addClass('base-link fred');
+			$('.main-content li > a').addClass('base-link');
 			$('.wrapper-content').after('<hr>');
 			$('.wrapper-content i:last-of-type').after('<div class="clear"></div>');
 			$('.img-right').after('<div class="clear"></div>');	
@@ -80,8 +103,8 @@
 		 	menu   	= target,
 		 	$target = $(target);
 		 	$('.inner-desc').stop().animate({
-		 		'scrollTop': $target.offset().top+2
-		 	}, 500, 'swing', function(){
+		 		'scrollTop': $target.offset().top
+		 	}, 500, function(){
 		 		window.location.hash = target;
 		 		$('.inner-desc').on("scroll", onScroll);
 		 	});
@@ -125,7 +148,7 @@
 			});
 
 			// EXECUTE BUTTON
-			codeTool.append('<button class="execute jello-horizontal">run code</button>');
+			codeTool.append('<button class="execute">run code</button>');
 			$('.execute').click(function() {
 				var snippet = $(this).siblings('pre').children('code').text();
 				edit.getSession().setValue(snippet);

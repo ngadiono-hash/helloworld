@@ -1,6 +1,6 @@
 <?php mainNav() ?>
-<div class="hello" style="overflow-x: hidden;">
-	<h1>Snippet program</h1>
+<article class="index-snippet">
+	<h1>Snippet Program</h1>
 	<br>
 	<div class="container">
 		<div class="">
@@ -29,7 +29,7 @@
 			<?php } ?>
 		</div>
 	</div>
-</div>
+</article>
 
 <script>
 $(document).ready(function () {

@@ -20,10 +20,8 @@
 }
 .label-created,.label-updated {
 	position: absolute;
-	bottom: 27px;
-	font-size: 0.9em;
-	color: #ccc;
-	/*text-shadow: -1px -1px 0 royalblue, 1px -1px 0 royalblue, -1px 1px 0 royalblue, 1px 1px 0 royalblue;*/
+  bottom: 25px;
+  font-size: 0.9em;
 }
 .label-created {
 	left: 200px;
@@ -134,16 +132,16 @@
 								</div>
 							</div>
 						</div>
-						<label class="label-created">Created : <span><?= date('d M, Y H:i',$upload) ?></span></label>
-						<label class="label-updated">Last Updated : <span><?= date('d M, Y H:i',$update) ?></span></label>
+						<label class="label-created hidden-xs">Created : <span><?= date('d M, Y H:i',$upload) ?></span></label>
+						<label class="label-updated hidden-xs">Last Updated : <span><?= date('d M, Y H:i',$update) ?></span></label>
 					</div>
 					<div id="info" class="tab-pane fade">
 						<div class="row">
 							<div class="col-sm-6">
 								<label for="title">Title Snippet</label>
-								<input type="text" class="input-adjust" id="title" spellcheck="false" name="title" value="<?= $titlex; ?>" placeholder="Edit this Title">
+								<input type="text" class="input-adjust" id="title" name="title" value="<?= $titlex; ?>" placeholder="Edit this Title">
 								<label for="slug">Slug Snippet</label>
-								<input type="text" class="input-adjust" id="slug" spellcheck="false" name="slug" value="<?= $slug; ?>" placeholder="Edit this Slug">
+								<input type="text" class="input-adjust" id="slug" name="slug" value="<?= $slug; ?>" placeholder="Edit this Slug">
 								<label for="level">Level Snippet</label>
 								<input class="input-adjust" id="level" name="level" value="<?= $cat_name; ?>" disabled>
 							</div>
@@ -153,7 +151,7 @@
 
 				<div class="icon-bar">
 					<a class="a btn btn-prm" id="update">
-						<span>Update</span> <i class="fa fa-edit"></i>
+						<span>UPDATE</span> <i class="fa fa-edit"></i>
 					</a>
 				</div>
 			</form>

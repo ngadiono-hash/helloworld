@@ -42,54 +42,57 @@ class XhrM extends CI_Controller
 		}
 	}
 
-	public function get_list_menu() //
+	public function search_tutor() //
 	{
 		$result = [];
-		$category = $this->input->post('request');
-		$on_user = $this->input->post('user');
-		if (!empty($on_user)) {
-			// $app = $this->Common_model->xhrm_getProgress($on_user);
-			$as = [];
-			foreach ($app as $a) {
-				$as[] = $a['id'];
-			}
-		}
-		$all_category = $this->Common_model->select_fields_where(
-			'tutor_lev',
-			'_name AS Lname',
-			['_cat' => $category]
+		$search = htmlspecialchars($this->input->post('request'));
+		$clause = strpos($search,' ');
+		$this->db->select(
+			't1.snip_title AS title,t1.snip_slug AS slug,t1.snip_meta AS meta,t1.snip_content AS content,t1.snip_update AS update, t2._name AS level,t3._name AS category'
 		);
-		foreach ($all_category as $l) {
-			$result['cat'][] = $l['Lname'];
-		}
-		$all_category_by_cat = $this->Common_model->select_fields_where_join(
-			'tutors AS t1',
-			't1.snip_id AS id,t1.snip_title AS title,t1.snip_slug AS slug,t1.snip_meta AS meta,t2._name AS level,t3._name AS category',
-			[
-				['table' => 'tutor_lev AS t2', 'condition' => 't2._id = t1.snip_level', 'type' => ''],
-				['table' => 'tutor_cat AS t3', 'condition' => 't3._id = t1.snip_category', 'type' => '']
-			],
-			['t1.snip_category' => $category, 't1.snip_bin' => 0, 't1.snip_publish' => 1],
-			['t1.snip_order','asc']
-		);
-		foreach ($all_category_by_cat as $k) {
-			$result['list'][] = [
-				'category' 	=> $k['category'],
-				'level' 		=> $k['level'],
-				'title' 		=> $k['title'],
-				'slug' 			=> $k['slug'],
-				'link' 			=> base_url('lesson/').$k['category'].'/'.$k['meta']
-			];
-		}
-		if (!empty($on_user)) {
-			foreach ($all_category_by_cat as $k) {
-				$result['list'][] = [
-					'match' 		=> (in_array($k['id'], $as)) ? 1 : 0
+		$this->db->from('tutors AS t1');
+		$this->db->join('tutor_lev AS t2','t2._id = t1.snip_level');
+		$this->db->join('tutor_cat AS t3','t3._id = t1.snip_category');
+		if ($clause !== false) {
+    	$exp = explode(' ',$search);
+    	$this->db->like('t1.snip_key',trim($exp[0]),'before');
+    	// $this->db->or_like('t1.snip_slug',trim($exp[0]),'before');
+    	unset($exp[0]);
+      foreach ($exp as $term){
+        $this->db->or_like('t1.snip_key',trim($term),'before');
+        // $this->db->or_like('t1.snip_slug',trim($term),'before');
+      }
+    } else {
+      $this->db->like('t1.snip_key',$search,'before');
+      // $this->db->or_like('t1.snip_slug',$search,'before');
+    }
+		$this->db->where(['t1.snip_bin' => 0, 't1.snip_publish' => 1]);
+		$this->db->order_by('snip_update','desc');
+		$query = $this->db->get();
+		$all_search = $query->result_array();
+		if (count($all_search) > 0) {
+			foreach ($all_search as $k) {
+				$rest[] = [
+					'category' 	=> $k['category'],
+					'update'    => date('d M Y',$k['update']),
+					'level' 		=> $k['level'],
+					'title' 		=> $k['title'],
+					'slug' 			=> $k['slug'],
+					'link' 			=> base_url('lesson/').$k['category'].'/'.$k['meta'],
+					'content'   => read_more($k['content'],250)
 				];
-			}
+			}			
+			$result['count'] = count($rest);
+			$result['list'] = append_tutor($rest);
+		} else {
+			$result['count'] = 0;
+			$result['list'] = [];
 		}
+		$result['keyword'] = $search;
+		$result['db'] = $this->db->last_query();
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
 	}
+
 	public function create_report() // OK
 	{
 		$ip 	= $this->input->post('ip');
@@ -114,7 +117,7 @@ class XhrM extends CI_Controller
 		}
 	}
 
-	public function count_view_snippet()
+	public function add_view_snippet()
 	{
 		$page = $this->input->post('page');
 		$count = $this->Common_model->select_spec('snip','code_view',['code_id' => $page]);
@@ -160,7 +163,7 @@ class XhrM extends CI_Controller
 							<span class="fred"><a href="" class="base-link"><?=$b['name_comm']?></a></span>
 							<span class="time-stamp"><?=$b['create']?></span>
 						</div>
-						<p><?=$b['message']?></p>
+						<pre><?=$b['message']?></pre>
 					</div>
 				</div>
 			</div>
@@ -219,13 +222,12 @@ class XhrM extends CI_Controller
 			];
 			$this->session->set_userdata($user_session);
 			$this->Common_model->delete('login',['log_email' => $userLogged['email']]);
-			$refPage = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('u');
+			$refPage = (startSession('reff_page')) ? getSession('reff_page') : base_url('u');
 			$printResult = [
 				'status' => 1,
 				'message' => "alertSuccess('blank',['kamu berhasil masuk','mohon tunggu sebentar',' '+imgLoad+' '],'".$refPage."')"
 			];
 			$this->session->unset_userdata('reff_page');
-
 		}
 		$this->output->set_content_type('aplication/json')->set_output(json_encode($printResult));
 	}

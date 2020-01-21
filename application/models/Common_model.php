@@ -197,7 +197,62 @@ class Common_model extends CI_Model
 		}
 	}
 
-
+	function select_fields_where_like_orLikes_join($tbl='',$data,$joins='',$where='',$single=FALSE,$field='',$value='',$orLikes='',$group_by='',$order_by='',$limit='')
+	{
+		if (is_array($data) and isset($data[1])){
+			$this->db->select($data[0],$data[1]);
+		}else{
+			$this->db->select($data);
+		}
+		$this->db->from($tbl);
+		if ($joins != '') {
+			foreach ($joins as $k => $v) {
+				$this->db->join($v['table'], $v['condition'], $v['type']);
+			}
+		}
+		if ($value !== '') {
+			// $this->db->like('LOWER(' . $field . ')', strtolower($value));
+			$this->db->like($field,strtolower($value));
+		}
+		if($orLikes != '' and is_array($orLikes)){
+			foreach($orLikes as $key => $array){
+				$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
+			}
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		if($order_by != ''){
+			if(is_array($order_by)){
+				$this->db->order_by($order_by[0],$order_by[1]);
+			}else{
+				$this->db->order_by($order_by);
+			}
+		}
+		if($limit != ''){
+			if(is_array($limit)){
+				$this->db->limit($limit[0],$limit[1]);
+			}else{
+				$this->db->limit($limit);
+			}
+		}
+		$query = $this->db->get();
+		//return $this->db->last_query();
+		if ($query->num_rows() > 0) {
+		// query returned results
+			if ($single == TRUE) {
+				return $query->row();
+			} else {
+				return $query->result();
+			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}
 
 
 
@@ -269,61 +324,7 @@ class Common_model extends CI_Model
 			return FALSE;
 		}
 	}
-	function select_fields_where_like__orLikes_join($tbl = '', $data, $joins = '', $where = '', $single = FALSE, $field = '', $value = '', $orLikes = '', $group_by='',$order_by = '',$limit = '')
-	{
-		if (is_array($data) and isset($data[1])){
-			$this->db->select($data[0],$data[1]);
-		}else{
-			$this->db->select($data);
-		}
-		$this->db->from($tbl);
-		if ($joins != '') {
-			foreach ($joins as $k => $v) {
-				$this->db->join($v['table'], $v['condition'], $v['type']);
-			}
-		}
-		if ($value !== '') {
-			$this->db->like('LOWER(' . $field . ')', strtolower($value));
-		}
-		if($orLikes != '' and is_array($orLikes)){
-			foreach($orLikes as $key=>$array){
-				$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
-			}
-		}
-		if ($where != '') {
-			$this->db->where($where);
-		}
-		if($group_by != ''){
-			$this->db->group_by($group_by);
-		}
-		if($order_by != ''){
-			if(is_array($order_by)){
-				$this->db->order_by($order_by[0],$order_by[1]);
-			}else{
-				$this->db->order_by($order_by);
-			}
-		}
-		if($limit != ''){
-			if(is_array($limit)){
-				$this->db->limit($limit[0],$limit[1]);
-			}else{
-				$this->db->limit($limit);
-			}
-		}
-		$query = $this->db->get();
-		//return $this->db->last_query();
-		if ($query->num_rows() > 0) {
-		// query returned results
-			if ($single == TRUE) {
-				return $query->row();
-			} else {
-				return $query->result();
-			}
-		} else {
-		// query returned no results
-			return FALSE;
-		}
-	}
+
 
 
 
@@ -462,7 +463,7 @@ class Common_model extends CI_Model
 	}
 
 // DELETE QUERY
-	function delete($table , $where=NULL)
+	function delete($table,$where=NULL)
 	{
 		if(!empty($where))
 		{

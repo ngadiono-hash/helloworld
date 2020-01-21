@@ -1,65 +1,122 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
 class U extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		reload_session();
 		is_login();
 		$this->load->model('Common_model');
 		$this->load->model('User_model');
 	}
 
-	public function haha()
+	public function Name()
 	{
-		?>
-		<form method="post" action="">
-			<input type="hidden" name="csrf_token" value="<?= $this->security->get_csrf_hash(); ?>">
-			<input type="text" name="hehe">
-			<input type="text" name="huhu">
-			<input type="submit" name="kirim">
-		</form>
-		<?
-		$send = $this->input->post('kirim');
-		$a = $this->input->post('hehe');
-		$b = $this->input->post('huhu');
-		if ($send) {
-			$c = (strlen(trim($a)) == 0 ) && (strlen(trim($b)) == 0);
-			var_dump($c);
-			if($c) {
-				echo "harus diisi";
-			} else {
-				echo $a.' = '.$b;
-			}
-		}
+		$data['snippet']['total'] = $this->Common_model->count_record(
+			'snip','id',['code_author' => getSession('sess_id')]
+		);
+		$data['snippet']['public'] = $this->Common_model->count_record(
+			'snip','id',['code_author' => getSession('sess_id'),'code_publish' => 1]
+		);
 	}
+
 	private function getDataCurrentUser()
 	{
 		$query = $this->Common_model->select_fields_where(
 			'users',
-			'
-				u_id AS uid,
-				u_provider AS provider,
-				u_username AS username,
-				u_password AS password,
-				u_email AS email,
-				u_gender AS gender,
-				u_name AS name,
-				u_bio AS bio,
-				u_web AS web
-				',
+			'u_id AS uid,u_provider AS provider,u_role AS role,u_username AS username,u_password AS password,u_email AS email,u_gender AS gender,u_name AS name,u_bio AS bio,u_web AS web,u_register AS register',
 				['u_id' => getSession('sess_id')],
 				true
 		);
 		return $query;
 	}
 
-
-
-	public function index() // ok
+	public function progress()
 	{
+		$this->load->model('User_model');
+		echo $this->User_model->dataOnTable();
+	}
+	// ===================================================
+
+	public function index()
+	{
+		$data['user'] = $this->getDataCurrentUser();
+		$code = $this->Common_model->select_fields_where(
+			'snip','*',['code_author' => getSession('sess_id'), 'code_publish' => 1],false,true,['code_upload','desc']
+		);
+		if (!empty($code)) {
+			foreach ($code as $k => $v) {
+				$code[$k]['comment'] = $this->Common_model->count_record('user_comment','id',['id_target' => $v['code_id']],true);
+			}
+			$draft = $this->Common_model->select_fields_where(
+				'snip','*',['code_author' => getSession('sess_id'), 'code_publish' => 0],false,true,['code_upload','desc']
+			);
+			if (!empty($draft)) {
+				foreach ($draft as $k => $v) {
+					$draft[$k]['comment'] = $this->Common_model->count_record('user_comment','id',['id_target' => $v['code_id']],true);
+				}
+				$data['draft'] = $draft;
+			}
+			$data['code'] =  $code;
+		}
+		$book = $this->Common_model->select_fields_where_join(
+			'snip AS t1',
+			'
+			t1.code_id,t1.code_title,t1.code_desc,t1.code_cdn,t1.code_tag,
+			t1.code_html,t1.code_css,t1.code_js,t1.code_update,t1.code_upload,t1.code_publish,t1.code_like,
+			t2.u_id AS id_author,
+			t2.u_username AS user_author,
+			t2.u_image AS image_author
+			',
+			[
+				['table' => 'users AS t2', 'condition' => 't1.code_author = t2.u_id', 'type' => ''],
+				['table' => 'user_book AS t3', 'condition' => 't1.code_id = t3.id_target', 'type' => ''],
+			],
+			['t3.id_user' => getSession('sess_id')],'',false
+		);
+		$html = $this->User_model->countTutorials('1');
+		$css = $this->User_model->countTutorials('2');
+		$js = $this->User_model->countTutorials('3');
+
+		$last = $this->Common_model->select_fields_where_join(
+			'tutors',
+			'snip_title,snip_slug,snip_meta,_name,timing',
+			[
+				['table' => 'tutor_lev', 'condition' => 'tutor_lev._id = tutors.snip_level', 'type' => ''],
+				['table' => 'user_progress', 'condition' => 'user_progress.id_snip = tutors.snip_id', 'type' => '']
+			],
+			['user_progress.id_user' => getSession('sess_id')],
+			['timing','desc'],
+			false			
+		);
+
+		$data['title'] = 'Dashboard - '.getSession('sess_user');
+		$data['book'] = $book;
+		$data['last'] = $last;
+		$data['html'] = [
+			'prog' 		=> $this->User_model->countProgress('1'),
+			'all'	  	=> $html['public'] 
+		];
+		$data['css'] = [
+			'prog' 		=> $this->User_model->countProgress('2'),
+			'all'	  	=> $css['public'] 
+		];
+		$data['js'] = [
+			'prog' 		=> $this->User_model->countProgress('3'),
+			'all'	  	=> $js['public'] 
+		];
+
+
+		
+		$this->load->view('templates/mainHeader', $data);
+		$this->load->view('dashboard',$data);
+		$this->load->view('templates/mainFooter',$data);
+	}
+
+	public function timeline() // ok
+	{
+		$data['fetch'] = $this->getDataCurrentUser();
 		$record = $this->Common_model->select_fields_where_join(
 			'timeline AS t1',
 			'
@@ -106,11 +163,111 @@ class U extends CI_Controller
 				$record[$k]['line_tutor_meta'] = $query[$k]['meta'];
 				$record[$k]['line_tutor_cat'] = $query[$k]['kategori'];
 				$record[$k]['line_tutor_level'] = $query[$k]['level'];
-				$record[$k]['line_tutor_read'] = readMore($query[$k]['konten'],250);		
+				$record[$k]['line_tutor_read'] = read_more($query[$k]['konten'],250);
 			}
 		}
+		$data['user'] = $this->getDataCurrentUser();
 		$data['record'] = $record;
-		_temp_user($data,'Beranda','index');
+		$data['title'] = 'Timeline - '.getSession('sess_user');
+		$this->load->view('templates/mainHeader', $data);
+		$this->load->view('timeline',$data);
+		$this->load->view('templates/mainFooter',$data);
+	}
+
+	public function delete($param)
+	{
+		$auth = $this->Common_model->select_spec('snip','code_author',['code_id' => $param]);
+		if ($auth == getSession('sess_id')) {
+			$this->Common_model->delete('snip',['code_id' => $param]);
+			$this->Common_model->delete('user_comment',['id_target' => $param]);
+			$this->Common_model->delete('user_liked',['id_target' => $param]);
+			$this->Common_model->delete('timeline',['relation' => $param]);
+		}
+		redirect('u');
+	}
+
+	public function create($param)
+	{
+		if (empty($param)) {
+			not_found();
+		} else {
+			if ($param == 'snippet') {
+				$data['tag'] = $this->Common_model->select_fields_where(
+					'snip_cat','*',[],false,true,['category_name','asc']
+				);
+				$data['jQuery'] = $this->Common_model->select_fields_where(
+					'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
+				);
+				$data['framework'] 	= $this->Common_model->select_fields_where(
+					'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
+				);
+				$data['title'] = 'Buat Snippet';
+				$this->load->view('templates/mainHeader', $data);
+				$this->load->view('create_snippet',$data);
+				$this->load->view('templates/mainFooter',$data);	
+			}
+		}
+	}
+
+	public function edit($param)
+	{
+		if (empty($param)) {
+			not_found();
+		} else {
+			$serial = $this->uri->segment(4);
+			if ($param == 'snippet' && !empty($serial)) {
+				$cek = $this->User_model->getValidAuthSnippet($serial);
+				if($cek == 0) {
+					not_found();
+				} else {
+					$framework = $this->Common_model->select_fields_where(
+						'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
+					);
+					$jQuery = $this->Common_model->select_fields_where(
+						'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
+					);
+					$tag = $this->Common_model->select_fields_where(
+						'snip_cat','*',[],false,true,['category_name','asc']
+					);
+					$code = $this->Common_model->select_fields_where_join(
+						'snip AS t1',
+						'
+						t1.code_id,t1.code_title,t1.code_desc,t1.code_cdn,t1.code_tag,
+						t1.code_html,t1.code_css,t1.code_js,t1.code_update,t1.code_upload,t1.code_publish,t1.code_like,
+						t2.u_id AS id_author,
+						t2.u_username AS user_author,
+						t2.u_image AS image_author
+						',
+						[
+							['table' => 'users AS t2', 'condition' => 't1.code_author = t2.u_id', 'type' => '']
+						],
+						['t1.code_id' => $serial],'',true
+					);
+					$tag_id = explode(',',$code['code_tag']);
+					$cdn_id = (!empty($code['code_cdn'])) ? explode(',',$code['code_cdn']) : [];
+					$frame_id = [];
+					if(in_array(1,$cdn_id)){
+						$frame_id = array_slice($cdn_id,1);
+					}
+
+					$data = [
+						'code' => $code,
+						'tag_snippet' => $tag_id,
+						'tag' => $tag,
+						'cdn_snippet' => $cdn_id,
+						'frame_id' => $frame_id,
+						'jQuery' => $jQuery,
+						'framework' => $framework
+					];
+					$data['title'] = 'Edit Snippet - '.$data['code']['code_title'];
+					$this->load->view('templates/mainHeader', $data);
+					$this->load->view('edit_snippet',$data);
+					$this->load->view('templates/mainFooter',$data);	
+				}			
+			} else {
+				not_found();
+			}
+		}
 	}
 
 	public function notification() //
@@ -140,130 +297,22 @@ class U extends CI_Controller
 	}
 
 	public function activity() // ok
-	{	
-		$data['html_count'] = $this->User_model->countProgress('1');
-		$html = $this->User_model->countTutorials('1');
-		$data['html_all'] = $html['public'];
-		$data['html_pro'] = round(floor($data['html_count'] * 100 / $data['html_all']));
+	{
 
-		$data['css_count'] = $this->User_model->countProgress('2');
-		$css = $this->User_model->countTutorials('2');
-		$data['css_all'] = $css['public'];
-		$data['css_pro'] = round(floor($data['css_count'] * 100 / $data['css_all']));
-
-		$data['js_count'] = $this->User_model->countProgress('3');
-		$js = $this->User_model->countTutorials('3');
-		$data['js_all'] = $js['public'];
-		$data['js_pro'] = round(floor($data['js_count'] * 100 / $data['js_all']));
-
-		_temp_user($data,'Timeline - ' . ucwords(getSession('sess_user')),'activity');	
+		// _temp_user($data,'Timeline - ' . ucwords(getSession('sess_user')),'activity');
 	}
 
 	public function profile() // ok
 	{
-		$fetch = $this->getDataCurrentUser();
-		$data['provider']	= $fetch['provider'];
-		$data['email']		= $fetch['email'];
-		$data['name']			= $fetch['name'];
-		$data['gender']		= $fetch['gender'];
-		$data['icon_gen']  = ($data['gender'] == 'Laki-laki') ? 'fa-mars' : 'fa-venus';
-		$data['web']			= $fetch['web'];
-		$data['bio']			= $fetch['bio'];
 
-		_temp_user($data,'Profil - '.ucwords(getSession('sess_user')),'profile');
+		$data['fetch'] = $this->getDataCurrentUser();
+		$data['title'] = 'Profil - '.ucwords(getSession('sess_user'));
+		$this->load->view('templates/mainHeader', $data);
+		$this->load->view('edit_profile',$data);
+		$this->load->view('templates/mainFooter',$data);
 	}
 
-	public function snippet($p1='',$serial='') // ok
-	{
-		$code = $this->Common_model->select_fields_where(
-			'snip',
-			'*',
-			['code_author' => getSession('sess_id')],
-			false,
-			true,
-			['code_upload','desc']
-		);
-		foreach ($code as $k => $v) {
-			$code[$k]['comment'] = $this->Common_model->count_record('user_comment','id',['id_target' => $v['code_id']],true);
-		}
-		$data = ['code' => $code];
-		if($p1 == '') {
-			_temp_user($data,'Snippet Saya','code_user');		
-		}
 
-		elseif($p1 == 'create'){
-			$data['tag'] = $this->Common_model->select_fields_where(
-				'snip_cat','*',[],false,true,['category_name','asc']
-			);
-			$data['jQuery'] = $this->Common_model->select_fields_where(
-				'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
-			);
-			$data['framework'] 	= $this->Common_model->select_fields_where(
-				'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
-			);
-			_temp_user($data,'Buat Snippet','code_create');				
-		}
-
-		elseif (($p1 == 'edit') && !empty($serial)) {
-			$cek = $this->User_model->getValidAuthSnippet($serial);
-			if($cek == 0) {
-				not_found();
-			} else {
-				$framework = $this->Common_model->select_fields_where(
-					'snip_cdn','*',['id !=' => 1],false,true,['cdn_name','asc']
-				);
-				$jQuery = $this->Common_model->select_fields_where(
-					'snip_cdn','*',['id' => 1],false,true,['cdn_name','desc']
-				);
-				$tag = $this->Common_model->select_fields_where(
-					'snip_cat','*',[],false,true,['category_name','asc']
-				);
-				$code = $this->Common_model->select_fields_where_join(
-					'snip AS t1',
-					'
-					t1.code_id,t1.code_title,t1.code_desc,t1.code_cdn,t1.code_tag,
-					t1.code_html,t1.code_css,t1.code_js,t1.code_update,t1.code_upload,t1.code_publish,t1.code_like,
-					t2.u_id AS id_author,
-					t2.u_username AS user_author,
-					t2.u_image AS image_author
-					',
-					[
-						['table' => 'users AS t2', 'condition' => 't1.code_author = t2.u_id', 'type' => '']
-					],
-					['t1.code_id' => $serial],'',true
-				);
-				$tag_id = explode(',',$code['code_tag']);
-				$cdn_id = (!empty($code['code_cdn'])) ? explode(',',$code['code_cdn']) : [];
-				$frame_id = [];
-				if(in_array(1,$cdn_id)){
-					$frame_id = array_slice($cdn_id,1);
-				}
-				
-				$data = [
-					'code' => $code,
-					'tag_snippet' => $tag_id,
-					'tag' => $tag,
-					'cdn_snippet' => $cdn_id,
-					'frame_id' => $frame_id,
-					'jQuery' => $jQuery,
-					'framework' => $framework
-				];
-				_temp_user($data,"Edit Snippet - ".$data['code']['code_title'],'code_edit');				
-			}
-		}
-
-		elseif($p1 == 'delete'){	
-			if($serial){
-				$this->Snippet_model->deleteSnippet($serial);
-				$res = 1;
-			}else{
-				$res = 0;
-			}
-			echo json_encode($res);
-		} else {
-			not_found();
-		}
-	}	
 
 
 // END OF FILE

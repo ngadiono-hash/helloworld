@@ -77,9 +77,11 @@ $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
 	'xhra.*+',
 	'xhru/update_photo',
+	'u/progress',
 	'xhru/create_progress',
 	'xhrm/create_report',
-	'xhrm/get_list_menu'
+	'xhrm/search_tutor',
+	'xhrm/load_more_menu'
 );
 
 $config['compress_output'] = FALSE;

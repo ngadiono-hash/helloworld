@@ -35,4 +35,19 @@ class User_model extends CI_Model
 		$this->db->where(['t2.code_id' => $serial, 't1.u_id' => getSession('sess_id')]);
 		return $this->db->get()->num_rows();
 	}	
+	public function dataOnTable()
+	{
+		$select = 'snip_title,snip_slug,snip_meta,snip_category,_name';
+		$this->datatables->select($select);
+		$this->datatables->from('tutors');
+		$this->datatables->join('tutor_lev','tutor_lev._id = tutors.snip_level');
+		$this->datatables->join('user_progress','user_progress.id_snip = tutors.snip_id');
+
+		$this->datatables->where(['user_progress.id_user' => getSession('sess_id')]);
+		return $this->datatables->generate();
+	}
+	public function deleting()
+	{
+
+	}
 }

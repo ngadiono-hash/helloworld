@@ -1,46 +1,60 @@
 <?php mainNav() ?>
-<div class="hello">
-	<div class="container">
-		<div class="row hello-fiture">
-			<h1>index materi</h1>
-			<h1>pilih materi yang akan dipelajarai</h1>
-			<br><br>
-			<div class="row ex">
-		    <div id="coverflow">
-		      <ul class="flip-items">
-		        <li data-flip-title="Red">
-		        	<a href="#lessons" data-request="1" data-value="html">
-		          	<img src="<?=base_url('assets/img/feed/html_logo.png')?>">
-		          </a>
-		          <p class="fred center">HTML</p>
-		        </li>
-		        <li data-flip-title="Razzmatazz" data-flip-category="Purples">
-		          <a href="#lessons" data-request="2" data-value="css">
-		          	<img src="<?=base_url('assets/img/feed/css_logo.png')?>">
-		        	</a>
-		        	<p class="fred center">CSS</p>
-		         </li>
-		        <li data-flip-title="Deep Lilac" data-flip-category="Purples">
-		          <a href="#lessons" data-request="3" data-value="javascript">
-		          	<img src="<?=base_url('assets/img/feed/js_logo.png')?>">
-		          </a>
-		          <p class="fred center">JavaScript</p>
-		        </li>
-		      </ul>
-		    </div>
+<article class="lesson">
+	<h1>silahkan pilih materi</h1>
+	<div class="container" style="padding: 20px;">
+		<div class="choose">
+			<div id="flow-index-materi">
+				<ul class="flip-items">
+					<li>
+						<a href="<?=base_url('lesson/html')?>" class="hidden-link"></a>
+						<img src="<?=base_url('assets/img/feed/html_logo.png')?>">
+						<p>HTML</p>
+					</li>
+					<li>
+						<a href="<?=base_url('lesson/css')?>" class="hidden-link"></a>
+						<img src="<?=base_url('assets/img/feed/css_logo.png')?>">
+						<p>CSS</p>
+					</li>
+					<li>
+						<a href="<?=base_url('lesson/javascript')?>" class="hidden-link"></a>
+						<img src="<?=base_url('assets/img/feed/js_logo.png')?>">
+						<p>JavaScript</p>
+					</li>
+				</ul>
 			</div>
-			<br id="lessons">
-			<div class="content arrow_box arrow_mid hide">
-				<div class="result"></div>
-			</div>
-		</div>		
+		</div>
 	</div>
-</div>
+	<h1>atau silahkan ketik di pencarian</h1>
+	<div class="container">	
+		<div class="search-box">
+		  <div class="search_bar">
+		    <input class="search_input" type="text" placeholder="Cari..." spellcheck="false">
+		    <a href="#break" class="search_icon"><i class="fas fa-search"></i></a>
+		  </div>
+		</div>
+		<br id="break">
+		<div class="result"></div>
+	</div>
+</article>
 <script>
-	$('a[href*=\\#]:not([href$=\\#])').click(function(e) {
-	  e.preventDefault();
-	  $('html, body').animate({
-	      scrollTop: $($.attr(this,'href')).offset().top
-	  }, 500);
-	});	
+	$("#flow-index-materi").flipster({
+		style: 'carousel',
+		spacing: -0.3,
+		scrollwheel: false,
+		click: true
+	});
+
+	// $('a[href*=\\#]:not([href$=\\#])').click(function(e) {
+	//   e.preventDefault();
+	//   $('html, body').animate({ scrollTop: $($.attr(this,'href')).offset().top }, 500);
+	// });
+
+	$('.search_bar').on('keypress',function(e) {
+		if (e.which == 13) {	
+			searching_tutorial();
+		}
+	});
+	$('.search_bar').on('click','a',function(){
+		searching_tutorial();
+	});
 </script>

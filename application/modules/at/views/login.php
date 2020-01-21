@@ -1,4 +1,13 @@
 <?php mainNav() ?>
+<style type="text/css">
+	.to-fb img {
+		width: 250px;
+	}
+	.to-fb img:hover {
+		transition: .3s ease;
+		width: 260px;
+	}
+</style>
 <main>
 	<div class="container">
 		<div class="row">
@@ -13,7 +22,9 @@
 								<p>belum punya akun ? <a class="base-link to-register"><span>buat akun baru</span></a></p>
 								
 								<p>atau</p>
-								<a href="<?= $this->facebook->login_url(); ?>" class="effect effect-prm social"><span><i class="fab fa-facebook"></i> Login via Facebook</span></a>
+								<a href="<?= $this->facebook->login_url(); ?>" class="to-fb">
+									<img src="<?=base_url('assets/img/feed/fb-button.png')?>">
+								</a>
 							</div>
 						</div>
 						<div class="col-md-6 col-lg-6">
@@ -133,3 +144,225 @@
 		</div>
 	</div>
 </main>
+<script id="log-script">
+	$(document).ready(function() {
+		$('.to-register,.to-login').click(function() {
+			$('.login,.register').toggleClass('off');
+		});
+		$('.forgot').on('click',function(){
+			$('.left-side').addClass('slide-out-left');
+			setTimeout(function(){
+				$('.left-side').removeClass('slide-out-left');
+			},1000);
+			setTimeout(function(){
+				$('.left-side,.right-side').toggleClass('hide');
+			},1000);
+		});
+		$('.back-login').on('click',function(){
+			$('.left-side').addClass('slide-in-left');
+			setTimeout(function(){
+				$('.left-side').removeClass('slide-in-left');
+			},1000);
+			setTimeout(function(){
+				$('.left-side,.right-side').toggleClass('hide');
+			},10);
+		});
+		$('.form-group label').css('opacity',0);
+
+		let btnReg  = $('.btn-reg');
+		$('#form-register input').on('keyup',function(){
+			var $1,$2,$3,$4;
+			$1 	= $('#input-username');
+			$2 	= $('#input-email');
+			$3 	= $('#input-pass_1');
+			$4 	= $('#input-pass_2');
+			if( $(this).val() != '' ){
+				$(this).parents('.form-group').find('label').css('opacity',1);
+			} else {
+				$(this).parents('.form-group').find('label').css('opacity',0);
+			}
+			$(this).parents('.form-group').find('#error').html('');
+	    if( $($1).val() != "" && $($2).val() != "" && $($3).val() != "" && $($4).val() != "" ){
+	      $(btnReg).removeAttr("disabled");
+	    }else{
+	      $(btnReg).attr("disabled", "disabled");
+	    }
+		});
+		let btnLog = $('.btn-log');
+		$('#form-login input').on('keyup',function(){
+			var rmb, $1,$2,$3;
+			rmb = $('#remember');
+			$1 	= $('#input-key_email');
+			$2 	= $('#input-key_pass');
+			if( $(this).val() != '' ){
+				$(this).parents('.form-group').find('label').css('opacity',1);
+
+			} else {
+				$(this).parents('.form-group').find('label').css('opacity',0);
+			}
+			$(this).parents('.form-group').find('#error').html('');
+	    if( $($1).val() != "" && $($2).val() != "" ){
+	      $(btnLog).removeAttr("disabled");
+	      $(rmb).removeAttr("disabled");
+	    }else{
+	      $(btnLog).attr("disabled", "disabled");
+	      $(rmb).attr("disabled", "disabled");
+	    }
+		});
+		let btnRest = $('.btn-reset');
+		$('#form-reset input').on('keyup',function(){
+			if( $(this).val() != '' ){
+				$(this).parents('.form-group').find('label').css('opacity',1);
+			} else {
+				$(this).parents('.form-group').find('label').css('opacity',0);
+			}
+			$(this).parents('.form-group').find('#error').html('');
+			$1 	= $('#input-reset_email');
+	    if( $($1).val() != "" ){
+	      $('.btn-reset').removeAttr("disabled");
+	    }else{
+	      $('.btn-reset').attr("disabled", "disabled");
+	    }
+		});
+		let	btnChg  = $('.btn-change');
+		$('#form-change input').on('keyup',function(){
+			var $1,$2;
+			if( $(this).val() != '' ){
+				$(this).parents('.form-group').find('label').css('opacity',1);
+			} else {
+				$(this).parents('.form-group').find('label').css('opacity',0);
+			}
+			$(this).parents('.form-group').find('#error').html('');
+			$1 	= $('#input-pass_1');
+			$2 	= $('#input-pass_2');
+	    if( $($1).val() != "" && $($2).val() != "" ){
+	      $(btnChg).removeAttr("disabled");
+	    } else {
+	      $(btnChg).attr("disabled", "disabled");
+	    }
+		});
+
+
+		$('#form-register').submit(function(ev) {
+			ev.preventDefault();
+			$(btnReg).attr('disabled', 'disabled');
+			$(btnReg).children('img').toggleClass('hide');
+			$(btnReg).children('span').toggleClass('hide');
+			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
+			startAjax();
+			$.ajax({
+				url : host+'xhrm/set_register',
+				data : datax,
+				type : 'post',
+				dataType : 'json',
+				success : function(data){
+					$.each(data, function(key, value){
+						$('#input-' + key).parents('.form-group').find('#error').html(value);
+					});
+					if(data['status'] == 1){
+						writeResult(data);
+						$('.input-text').val('');
+						$('.register').addClass('off');
+						$('.login').removeClass('off');
+					} else {
+						writeResult(data);
+					}
+				},
+				error : function(xhr) {
+					handle_ajax(xhr);
+				},
+				complete : function(){
+					endAjax();
+					$(btnReg).children('img').addClass('hide');
+					$(btnReg).children('span').removeClass('hide');
+				}
+			});
+		});
+
+		$('#form-login').submit(function(ev) {
+			ev.preventDefault();
+			$(btnLog).attr('disabled', 'disabled');
+			$(btnLog).children('img').toggleClass('hide');
+			$(btnLog).children('span').toggleClass('hide');
+			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
+			startAjax();
+			$.ajax({
+				url : host+'xhrm/set_login',
+				data : datax,
+				type : 'post',
+				dataType : 'json',
+				success : function(data){
+					$.each(data, function(key, value){
+						$('#input-' + key).parents('.form-group').find('#error').html(value);
+					});
+					writeResult(data);
+				},
+				error : function(xhr) {
+					handle_ajax(xhr);
+				},
+				complete : function(){
+					endAjax();
+					$(btnLog).children('img').addClass('hide');
+					$(btnLog).children('span').removeClass('hide');
+				}
+			});
+		});
+
+		$('#form-reset').submit(function(ev) {
+			ev.preventDefault();
+			$(btnRest).attr('disabled', 'disabled');
+			$(btnRest).children('img').toggleClass('hide');
+			$(btnRest).children('span').toggleClass('hide');
+			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
+			startAjax();
+			$.ajax({
+				url : host+'xhrm/set_pw_reset',
+				data : datax,
+				type : 'post',
+				dataType : 'json',
+				success : function(data){
+					$.each(data, function(key, value){
+						$('#input-' + key).parents('.form-group').find('#error').html(value);
+					});
+					writeResult(data);
+				},
+				error : function(xhr) {
+					handle_ajax(xhr);
+				},
+				complete : function(){
+					endAjax();
+					$(btnRest).children('img').addClass('hide');
+					$(btnRest).children('span').removeClass('hide');
+				}
+			});
+		});
+
+		$('#form-change').submit(function(ev) {
+			ev.preventDefault();
+			$(btnChg).attr('disabled', 'disabled');
+			$(btnChg).children('img').toggleClass('hide');
+			$(btnChg).children('span').toggleClass('hide');
+			var datax = $(this).serialize()+'&'+$.param({ csrf_token: csrf });
+			$.ajax({
+				url : host+'xhrm/set_pw_change',
+				data : datax,
+				type : 'post',
+				dataType : 'json',
+				success : function(data){
+					$.each(data, function(key, value){
+						$('#input-' + key).parents('.form-group').find('#error').html(value);
+					});
+					writeResult(data);
+				},
+				error : function(xhr) {
+					handle_ajax(xhr);
+				},
+				complete : function(){
+					endAjax();
+					$(btnChg).children('img').addClass('hide');
+					$(btnChg).children('span').removeClass('hide');
+				}
+			});
+		});
+	});
+</script>

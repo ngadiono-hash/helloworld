@@ -18,14 +18,7 @@ $(document).ready(function() {
 	loading();
 	activeSide();
 });
-function preview_frame(target,href) {
-	$(target).fadeIn().attr('src',''+href+'');
-	$(target).after('<button class="close-frame btn btn-default"><i class="fa fa-times"></i></button>');
-	$(document).on('click','.close-frame',function(){
-		$(target).fadeOut().attr('src','');
-		$(this).remove();
-	});	
-}
+
 </script>
 
 <?php if ( whats_page(1,['a']) ) { ?>
@@ -359,198 +352,17 @@ if (whats_page(1,['u'])) { ?>
 	$("#i-photo").change(function(){
 		readURL(this);
 	});
-	$('#form-identity input,#form-identity select, #form-account input').keyup(function() {
-		$(this).parents('.form-group').find('.errors').html('');
-	});
 
-	$('#form-photo').submit(function(e){
-		e.preventDefault();
-		var x = new FormData(this);
-		startAjax();
-		$.ajax({
-			url : host + 'xhru/update_photo',
-			type : 'POST',
-			cache: false,
-			contentType: false,
-			async: false,
-			processData: false,
-			data : x,
-			success: function(data){
-				if(data['status'] == 1){
-					$('#modal-photo').toggleClass('scale-in-center').fadeOut('slow');
-					$('.overlay').addClass('hide');
-					writeResult(data);
-				} else {
-					$.each(data, function(value){
-						$('#form-photo').find('.errors').html(value);
-					});
-				}
-			},
-			error: function(xhr){
-				handle_ajax(xhr)
-			},
-			complete : function(){
-				endAjax();
-			}
-		});
-	});
 
-	$('.content-profile').on('click','#btn-update-profile',function(e){
-		e.preventDefault();
-		var datax = $('#form-identity').serialize()+'&'+$.param({ csrf_token: csrf });
-		startAjax();
-		$.ajax({
-			url: host + 'xhru/update_profile',
-			type: 'POST',
-			dataType: 'json',
-			data: datax,
-			success : function(data){
-				$.each(data, function(key, value){
-					$('#i-' + key).parents('.form-group').find('.errors').html(value);
-				});
-				if(data['status'] == 1){
-					$('#modal-identity').removeClass('scale-in-center').addClass('hide').fadeOut('slow');
-					$('.overlay').addClass('hide');
-					writeResult(data);
-				}
-			},
-			error : function(xhr){
-				handle_ajax(xhr);
-			},
-			complete : function(){
-				endAjax();
-			}
-		});
-	});
 
-	$('.content-profile').on('click','#btn-update-account',function(e){
-		e.preventDefault();
-		var datax = $('#form-account').serialize()+'&'+$.param({ csrf_token: csrf });
-		startAjax();
-		$.ajax({
-			url: host + 'xhru/update_password',
-			type: 'POST',
-			dataType: 'json',
-			data: datax,
-			success : function(data){
-				$.each(data, function(key, value){
-					$('#i-' + key).parents('.form-group').find('.errors').html(value);
-				});
-				writeResult(data);
-			},
-			error : function(xhr){
-				handle_ajax(xhr);
-			},
-			complete : function(){
-				endAjax();
-			}
-		});
-	});
+
+
+
+
 	// CREATE
-	$('#form-add-cdn').on('click','#submit-cdn',function(e){
-		e.preventDefault();
-		var btn = $('#submit-cdn');
-		var datax = $('#form-add-cdn').serialize()+'&'+$.param({ csrf_token: csrf });
-		$(btn).children('img').toggleClass('hide');
-		$(btn).children('span').toggleClass('hide');
-		startAjax();
-		$.ajax({
-			url : host + 'xhru/create_cdn',
-			type : 'POST',
-			data : datax,
-			success : function(data){
-				$('#form-add-cdn').siblings('.alert').remove();
-				$.each(data, function(key, value){
-					$('#'+key).html(value);
-				});
-				writeResult(data);
-				if (data.status == 1) {
-					$("#form-add-cdn")[0].reset();
-					$('#modal-add-library').modal('hide');
-				}
-			},
-			error : function(xhr){
-				handle_ajax(xhr);
-			},
-			complete : function(){
-				endAjax();
-				$(btn).children('img').toggleClass('hide');
-				$(btn).children('span').toggleClass('hide');
-			}
-		});
-	});
-	$('#submit-snippet').on('click', function(){
-		var datax = {
-			title: $('#input-title').val(),
-			tag : $('#input-tag').val(),
-			framework: $('#input-framework').val(),
-			jquery: $('#input-jquery').val(),
-			html: field.html.session.getValue(),
-			css: field.css.session.getValue(),
-			js: field.js.session.getValue(),
-			description : $('#input-desc').val(),
-			public : $('#input-public').val(),
-			csrf_token : csrf
-		};
-		startAjax();
-		$.ajax({
-			url : host + 'xhru/create_snip',
-			type : 'post',
-			dataType: 'json',
-			data : datax,
-			success : function(data){
-				writeResult(data);
-				if (data.status == 1) {
-					$('.nav-tab-config .nav-tabs').children('li').removeClass('active');
-					$('.tab-info').parent('li').addClass('active');
-					$('.nav-tab-config .tab-pane').removeClass('in active');
-					$('#tab_one').addClass('in active');
-				} else if (data.status == 2) {
-					$('#modal-config-snip').modal('hide');
-					$('.tab-html').parent('li').addClass('active');
-					$('.panel-left .tab-pane').removeClass('in active');
-					$('#third').addClass('in active');
-				}
-			},
-			error : function(xhr){
-				handle_ajax(xhr);
-			},
-			complete : function(){
-				endAjax();
-			}
-		});
-	});
-	$('#update-snippet').on('click', function(){
-		startAjax();
-		var datax = {
-			id: $('#input-id').val(),
-			title: $('#input-title').val(),
-			tag : $('#input-tag').val(),
-			jquery : $('#input-jquery').val(),
-			framework : $('#input-framework').val(),
-			html: field.html.session.getValue(),
-			css: field.css.session.getValue(),
-			js: field.js.session.getValue(),
-			description : $('#input-desc').val(),
-			public : $('#input-public').val(),
-			csrf_token : csrf
-		};
-		$.ajax({
-			url : host + 'xhru/update_snip',
-			type : 'post',
-			dataType: 'json',
-			data : datax,
-			success : function(data){
-				writeResult(data);
-			},
-			error : function(xhr){
-				handle_ajax(xhr);
-			},
-			complete : function(){
-				endAjax();
-			}
-		});
-	});
+
+
+
 
 </script>
 <?php } ?>

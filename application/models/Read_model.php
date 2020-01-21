@@ -441,7 +441,7 @@ class Read_model extends CI_Model
 	// }  
 	public function getOldPhoto($id)
 	{
-		return $this->db->select('u_image')->get_where('users',['u_id' => $id])->row_array();
+		// return $this->db->select('u_image')->get_where('users',['u_id' => $id])->row_array();
 	}
 
 

@@ -1,35 +1,52 @@
 
 <section class="main">
-	<header class="wrapper-header">
-		<div class="welcome">
-			<h1 class="h-one text-sh text-focus-in">Selamat Datang</h1>
-			<h3 class="fred text-sh text-focus-in">di</h3>
-			<div class="main-brand">
-				<h1 class="h-two bounce-in-top">Hello World</h1>			
-			</div>
-			<div class="typing" id="typing"></div>
-		</div>
+	<header class="main-header">
+		<h1 class="welcome text-focus-in">Selamat Datang</h1>
+			<h1 class="bounce-in-top">
+				<span class="to fred text-focus-in">di</span> 
+				<span class="hello-world">Hello World</span>
+			</h1>
+		<div class="typing" id="typing"></div>
 	</header>
 </section>
 <?php mainNav() ?>
+<div class="bg main box-sh"></div>
 <article class="introduction">
-	<div class="bg box-sh"></div>
-	<div class="container" style="padding: 80px 0;">
-
+	<div class="container" style="padding-top: 50px;">
+		<h2 id="str2">Apa yang ada di Hello World</h2>
 		<div class="intro-inner">
-			<h2 id="str1">Apa itu Hello World</h2>
-			<div class="arrow_box arrow_mid box-sh">
-				<img class="img-block img-responsive" src="<?=base_url('assets/img/feed/hello.gif')?>" alt="hello world">
-				<p>Istilah Hello World merupakan sebuah program komputer dasar yang ketika dijalankan akan menampilkan pesan <b>Hello World</b> ke layar. Hal tersebut dilakukan untuk mempresentasikan bahwa sebuah komputer diberikan perintah atau instruksi oleh manusia untuk menyapa dengan kata Hello World.</p>
-				<p>Seperti pada istilah Hello World yang merupakan program paling sederhana dari program komputer, media website ini memuat konten utama berupa kumpulan tutorial programing dasar yang diambil dari berbagai sumber lain di internet. Semuanya didokumentasikan sedemikian rupa untuk kemudian bisa dipelajari ulang oleh siapapun atau lebih khususnya kepada para programer pemula yang sedang mencari tutorial pembelajaran dalam bahasa Indonesia.</p>
+			<div class="row" style="min-height: 80vh;">
+				<div class="col-md-4">
+					<div class="box box-sh">
+						<a href="<?=base_url('lesson')?>"></a>
+						<img class="img-thumbnail img-responsive" src="<?= base_url('assets/img/feed/practice.gif') ?>" alt="hello world">
+						<h3>Materi Utama</h3>
+						<p>Tersedia belajar front-end web mulai dari hal yang paling dasar yaitu HTML, materi CSS, dan JavaScript</p>
+					</div>					
+				</div>
+				<div class="col-md-4">
+					<div class="box box-sh">
+						<a href="<?=base_url('snippet')?>"></a>
+						<img class="img-thumbnail img-responsive" src="<?= base_url('assets/img/feed/live.gif') ?>" alt="hello world">
+						<h3>Snippet Program</h3>
+						<p>Berbagi source code tentang front-end development di dalam potongan-potongan kode</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="box box-sh">
+						<a href="<?=base_url('u')?>"></a>
+						<img class="img-thumbnail img-responsive" src="<?= base_url('assets/img/feed/sign.gif') ?>" alt="hello world">
+						<h3>Dashboard Member</h3>
+						<p>Akses semua aktifitas dan koleksi kode kamu di dalam halaman dashbord Hello World</p>
+					</div>
+				</div>
 			</div>
-			<hr>
 		</div>
 
 	</div>
 </article>
 
-<div class="hello">
+<div class="hello hide">
 	<div class="container">
 		<h1 id="str2">Apa yang ada di Hello World</h1>
 		<div class="row">
@@ -40,20 +57,18 @@
 						<li data-target="#main-carousel" data-slide-to="1"></li>
 						<li data-target="#main-carousel" data-slide-to="2"></li>
 					</ol>
-						
+
 					<div class="carousel-inner">
 						<div class="item active">
 							<div class="about-live">							
 								<div class="desc-inner center">	
 									<div class="container">
-										<h2>Materi Utama</h2>
-										<p>Kami menyediakan materi pembelajaran website mulai dari hal yang paling dasar yaitu HTML, materi CSS, dan bahasa program yang sangat powerfull berupa JavaScript.</p>
-										<p>Semua materi terbuka untuk siapa pun.</p>
+										
 									</div>
 								</div>
-							<div class="direct-to">
-								<a class="effect" href="<?=base_url('lesson')?>"><span>Mulai Belajar</span></a>
-							</div>
+								<div class="direct-to">
+									<a class="effect" href="<?=base_url('lesson')?>"><span>Mulai Belajar</span></a>
+								</div>
 							</div>
 						</div>
 
@@ -61,8 +76,7 @@
 							<div class="about-practice">
 								<div class="desc-inner center">
 									<div class="container">
-										<h2>Snippet Program</h2>
-										<p>Praktekkan apa yang telah kamu pelajari dengan menulis snippet program untuk bisa diberikan apresiasi oleh para member lainnya.</p>
+										
 									</div>
 								</div>
 								<div class="direct-to">
@@ -81,8 +95,8 @@
 								</div>
 								<div class="direct-to">
 									<?php if (!startSession('sess_id')) { ?>
-									<a class="effect" href="<?=base_url('at/sign')?>"><span>Daftar</span></a>
-								<?php } ?>
+										<a class="effect" href="<?=base_url('at/sign')?>"><span>Daftar</span></a>
+									<?php } ?>
 								</div>
 							</div>
 						</div>  
@@ -103,7 +117,7 @@
 	</div>
 </div>
 
-<main class="main-blockquote">
+<main class="main-blockquote hide">
 	<div class="container container-blockquote">
 		<blockquote class="blockquote">
 			<p id="quote">pendidikan ilmu komputer tidak dapat membuat <br>siapapun menjadi ahli pemrograman, <br>maka jangan khawatir kalau hasil kode tidak berjalan baik, <br>jika kode program berjalan dengan baik seketika itu,<br> maka kau akan berhenti untuk berkembang</p> 
@@ -111,3 +125,29 @@
 		</blockquote>
 	</div>
 </main>
+
+<script type="text/javascript">
+	$('.introduction .box').on({
+		'mouseenter' : function(){
+			$(this).children('p').fadeIn().addClass('scale-in-center');
+		},
+		'mouseleave' : function(){
+			$(this).children('p').fadeOut().removeClass('scale-in-center');
+		}
+	});
+	new TypeIt('#typing', {
+		speed: 50,
+		html: true,
+		cursorChar: '',
+		waitUntilVisible: true
+	})
+	.pause(3000)
+	.type("<a>Komunitas Belajar FrontEnd Web Indonesia</a>")
+	.go();
+
+	new TypeIt('#str1,#str2,#quote', {
+		speed: 70,
+		cursorChar: '',
+		waitUntilVisible: true
+	}).go();
+</script>
