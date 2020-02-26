@@ -11,17 +11,7 @@ class At extends CI_Controller
 
 	public function haha()
 	{
-		var_dump($_SESSION);
-		$ip  = getIp();
-		$agent = $_SERVER['HTTP_USER_AGENT'];
-		$where = ['log_email' => 'naflafam@gmail.com', 'log_ip' => $ip, 'log_agent' => $agent];
-		$error_pass = $this->Common_model->select_fields_where('login','log_time,log_att',$where,true);
-		var_dump($error_pass);
-		if ($error_pass['log_time'] + 10 >= time()) {
-			echo "error";	
-		}	else {
-			echo "lanjut";
-		}
+
 	}
 
 	public function notFound()
@@ -32,7 +22,7 @@ class At extends CI_Controller
 // ================ HOME
 	public function index() // ok
 	{
-		$data['title'] = 'Selamat Datang di Hello World';
+		$data['title'] = 'Selamat Datang di My Note';
 		$this->load->view('templates/mainHeader',$data);
 		$this->load->view('index',$data);
 		$this->load->view('templates/mainFooter',$data);
@@ -70,7 +60,7 @@ class At extends CI_Controller
 				$user['gender']   = !empty($fb['gender']) ? $fb['gender'] : 'Laki-laki';
 				$checkIn = $this->At_model->checkUserFb($user);
 				if($checkIn){
-					$direct = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('u');
+					$direct = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('a');
 					redirect($direct);
 				}
 			}

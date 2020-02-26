@@ -1,3 +1,4 @@
+<!-- 
 <style>
 	.doc {
     position: absolute;
@@ -138,7 +139,6 @@
 	}
 	.cubic-right pre { overflow: auto; max-height: 480px; max-width: 800px; margin: 10px auto; box-shadow: 1px 2px 2px rgba(0,0,0,0.5); }
 	.cubic-right code[class*="language-"], pre[class*="language-"] {
-	  background: #5e5f59;
 	  line-height: 1.2;
 	}
 	pre[class*="language-"] { padding: .4em; }
@@ -189,10 +189,9 @@
 	.editable-result .cubic-right {
 		height: 89vh;
 	}
-
 </style>
+ -->
 <?php $tags = getTags($lesson['content'],'h3') ?>
-<?php mainNav('',$lesson) ?>
 <div class="main-lesson" data-id="<?=$lesson['id']?>">
 	<div class="panel-container">
 		<div id="menu" class="lesson-menu out" style="display: none;">
@@ -230,30 +229,11 @@
 				<ul class="nav nav-tabs control-left">
 					<li class="run"><a class="mini" id="run"><i class="fa fa-play fa-fw"></i></a></li>
 					<li><a class="mini" id="liveEdit"><i class="fa fa-sync fa-fw"></i></a></li>
+					<li><a class="mini" id="wraps"><i class="fa fa-home fa-fw"></i></a></li>
 				</ul>
 				<div class="tab-content">
 				<div id="first" class="tab-pane fade in active">
-					<div class="body-html" id="source-code">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;link rel="stylesheet" href="<?=base_url('assets/css/external-demo.css')?>"&gt;
-&lt;style&gt;
-  body {
-	  background-image: linear-gradient(<?=$lesson['tmLight']?>,#DDD);
-	  background-repeat: no-repeat;
-	}
-	.intro h1, .intro h2 { color: <?=$lesson['tmDark']?>; }
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class="intro text-focus-in"&gt;
-	&lt;h1&gt;<?=$lesson['category']?>&lt;/h1&gt;
-	&lt;h2&gt;<?=$lesson['title']?>&lt;/h2&gt;
-	&lt;img src="<?=base_url('assets/img/feed/').$lesson['logo'] ?>"&gt;
-	&lt;p&gt;arahkan pointer mouse ke sebelah kiri layar untuk membuka dokumentasi&lt;/p&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;</div>
+					<div class="body-html" id="source-code"></div>
 					</div>
 				</div>
 			</div>
@@ -339,14 +319,14 @@
 		var plainText = '';
 	  plainText += source.getValue();
 	  delay = delay || 0;
-	    var timer = null;
-	    if (timer) clearTimeout(timer);
-	    timer = setTimeout(function() {
-	      timer = null;
-			  resultFrame.open();
-			  resultFrame.writeln(plainText);
-			  resultFrame.close();
-	    }, delay);
+    var timer = null;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function() {
+      timer = null;
+		  resultFrame.open();
+		  resultFrame.writeln(plainText);
+		  resultFrame.close();
+    }, delay);
 	}
 	function onScroll(){
 		var scrollPos = $(document).scrollTop();
@@ -382,8 +362,13 @@
 	source.session.setMode("ace/mode/html");
 	source.setTheme("ace/theme/tomorrow_night");
 	if (window.addEventListener) {
+		$("#wraps").on("click", function() {
+			source.setOptions({
+				wrap: true,
+			});
+		});
 		$("#liveEdit").on("click", function() {
-	    use.liveEdit ? use.liveEdit = false: use.liveEdit = true;
+	    use.liveEdit ? use.liveEdit = false : use.liveEdit = true;
 	    $(this).parent('li').toggleClass("active");
 	    $(this).find('i').toggleClass('fa-pause fa-sync');
 	   	$(this).parent('li').siblings('.run').toggleClass('hide');

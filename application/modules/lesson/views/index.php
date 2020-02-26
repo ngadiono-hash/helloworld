@@ -1,60 +1,181 @@
-<?php mainNav() ?>
-<article class="lesson">
-	<h1>silahkan pilih materi</h1>
-	<div class="container" style="padding: 20px;">
-		<div class="choose">
-			<div id="flow-index-materi">
-				<ul class="flip-items">
-					<li>
-						<a href="<?=base_url('lesson/html')?>" class="hidden-link"></a>
-						<img src="<?=base_url('assets/img/feed/html_logo.png')?>">
-						<p>HTML</p>
-					</li>
-					<li>
-						<a href="<?=base_url('lesson/css')?>" class="hidden-link"></a>
-						<img src="<?=base_url('assets/img/feed/css_logo.png')?>">
-						<p>CSS</p>
-					</li>
-					<li>
-						<a href="<?=base_url('lesson/javascript')?>" class="hidden-link"></a>
-						<img src="<?=base_url('assets/img/feed/js_logo.png')?>">
-						<p>JavaScript</p>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<h1>atau silahkan ketik di pencarian</h1>
-	<div class="container">	
-		<div class="search-box">
-		  <div class="search_bar">
-		    <input class="search_input" type="text" placeholder="Cari..." spellcheck="false">
-		    <a href="#break" class="search_icon"><i class="fas fa-search"></i></a>
-		  </div>
-		</div>
-		<br id="break">
-		<div class="result"></div>
-	</div>
-</article>
-<script>
-	$("#flow-index-materi").flipster({
-		style: 'carousel',
-		spacing: -0.3,
-		scrollwheel: false,
-		click: true
-	});
 
-	// $('a[href*=\\#]:not([href$=\\#])').click(function(e) {
-	//   e.preventDefault();
-	//   $('html, body').animate({ scrollTop: $($.attr(this,'href')).offset().top }, 500);
-	// });
+<main id="main">
+  <div class="hero-section inner-page">
+    <div class="wave">
+      
+      <svg width="1920px" height="265px" viewBox="0 0 1920 265" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
+                  <path d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,667 L1017.15166,667 L0,667 L0,439.134243 Z" id="Path"></path>
+              </g>
+          </g>
+      </svg>
 
-	$('.search_bar').on('keypress',function(e) {
-		if (e.which == 13) {	
-			searching_tutorial();
-		}
-	});
-	$('.search_bar').on('click','a',function(){
-		searching_tutorial();
-	});
-</script>
+    </div>
+
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <div class="row justify-content-center">
+            <div class="col-md-7 text-center hero-text">
+              <h1 data-aos="fade-up" data-aos-delay="">Materi JavaScript</h1>
+              <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Tersedia materi pembelajaran JavaScript dari dasar sampai tingkat lanjutan</p>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  
+
+  <div class="site-section pb-0">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4 mr-auto">
+          <h2 class="mb-4">Dasar-dasar JavaScript</h2>
+          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
+          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/beginner">Mulai Belajar</a></p>
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div> <!-- .site-section -->
+
+  <div class="site-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4 ml-auto order-2">
+          <h2 class="mb-4">DOM JavaScript</h2>
+          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
+          <p><a href="<?=base_url()?>lesson/intermediate">Read More</a></p>
+        </div>
+        <div class="col-md-6" data-aos="fade-right">
+          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div> <!-- .site-section -->
+
+  <div class="site-section pb-0">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4 mr-auto">
+          <h2 class="mb-4">JavaScript Tingkat Lanjut</h2>
+          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
+          <p><a href="<?=base_url()?>lesson/advanced">Read More</a></p>
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div> <!-- .site-section -->
+
+
+  <div class="site-section border-top border-bottom">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-4">
+          <h2 class="section-heading">Review From Our Users</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+          <div class="owl-carousel testimonial-carousel">
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>Excellent App!</h3>
+              <blockquote>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
+              </blockquote>
+
+              
+
+              <p class="review-user">
+                <img src="img/person_1.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                <span class="d-block">
+                  <span class="text-black">Jean Doe</span>, &mdash; App User
+                </span>
+              </p>
+
+            </div>
+
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>This App is easy to use!</h3>
+              <blockquote>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
+              </blockquote>
+
+              
+
+              <p class="review-user">
+                <img src="img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                <span class="d-block">
+                  <span class="text-black">Johan Smith</span>, &mdash; App User
+                </span>
+              </p>
+
+            </div>
+
+
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>Awesome functionality!</h3>
+              <blockquote>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
+              </blockquote>
+
+              
+
+              <p class="review-user">
+                <img src="img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                <span class="d-block">
+                  <span class="text-black">Jean Thunberg</span>, &mdash; App User
+                </span>
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="site-section cta-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 mr-auto text-center text-md-left mb-5 mb-md-0">
+          <h2>Starts Publishing Your Apps</h2>
+        </div>
+        <div class="col-md-5 text-center text-md-right">
+          <p><a href="#" class="btn"><span class="icofont-brand-apple mr-3"></span>App store</a> <a href="#" class="btn"><span class="icofont-ui-play mr-3"></span>Google play</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	function debug($param)
+	function deb($param)
 	{
 		var_dump($param);
 		die();
@@ -20,6 +20,70 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		}		
 	}
 
+	function crypto_rand_secure($min, $max)
+	{
+		$range = $max - $min;
+		if ($range < 1) return $min;
+		$log = ceil(log($range, 2));
+		$bytes = (int) ($log / 8) + 1;
+		$bits = (int) $log + 1;
+		$filter = (int) (1 << $bits) - 1;
+		do {
+				$rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
+				$rnd = $rnd & $filter;
+		} while ($rnd > $range);
+		return $min + $rnd;
+	}
+	function getRandStr($length)
+	{
+		$str = "";
+		$codeAlphabet = "";
+		$codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		$codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+		$codeAlphabet.= "0123456789";
+		$max = strlen($codeAlphabet);
+		for ($i=0; $i < $length; $i++) {
+			$str .= $codeAlphabet[crypto_rand_secure(0, $max-1)];
+		}
+		return $str;
+	}
+
+	function create_rand($label)
+	{
+		$rand = getRandStr(6);
+		if($label == 'beginner'){
+			$id = 'B'.$rand;
+		} elseif ($label == 'intermediate') {
+			$id = 'I'.$rand;
+		} else {
+			$id = 'A'.$rand;
+		}
+		return $id;
+	}
+
+	function validate_input($posted)
+	{
+		$CI = get_instance();
+		$str = $CI->input->post($posted);
+	  $str = trim($str);
+	  $str = htmlspecialchars($str);
+	  return $str;
+	}
+
+	function create_slug($str)
+	{
+		return trim(strtolower(str_replace(' ', '-', $str)));
+	}
+
+
+
+
+
+
+
+
+
+
 	function getIp() 
 	{
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -31,68 +95,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
     }
     return $ip;
 	}
-	function crypto_rand_secure($min, $max)
-	{
-		$range = $max - $min;
-		if ($range < 1) return $min; // not so random...
-		$log = ceil(log($range, 2));
-		$bytes = (int) ($log / 8) + 1; // length in bytes
-		$bits = (int) $log + 1; // length in bits
-		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
-		do {
-				$rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
-				$rnd = $rnd & $filter; // discard irrelevant bits
-		} while ($rnd > $range);
-		return $min + $rnd;
-	}
-	function getRandStr($length)
-	{
-		$str = "";
-		$codeAlphabet = "";
-		// $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		$codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-		$codeAlphabet.= "0123456789";
-		$max = strlen($codeAlphabet);
-		for ($i=0; $i < $length; $i++) {
-			$str .= $codeAlphabet[crypto_rand_secure(0, $max-1)];
-		}
-		return $str;
-	}
-	
-	function timing()
-	{
-		// function ubahFormat($time){
-		// 	$tgl = date('d',$time);
-		// 	$bulan = date('n',$time);
-		// 	$tahun = date('Y',$time);
-		// 	$jam = date('H',$time);
-		// 	$menit = date('i',$time);
-		// 	$arrayBulan = [
-		// 		1 => 'Januari',
-		// 		2 => 'Februari',
-		// 		3 => 'Maret',
-		// 		4 => 'April',
-		// 		5 => 'Mei',
-		// 		6 => 'Juni',
-		// 		7 => 'Juli',
-		// 		8 => 'Agustus',
-		// 		9 => 'September',
-		// 		10 => 'Oktober',
-		// 		11 => 'November',
-		// 		12 => 'Desember'
-		// 	];
-		// 	$formatWaktu = $tgl .' '. $arrayBulan[$bulan] .' '. $tahun .' '. $jam .':'. $menit;
-		// 	return $formatWaktu;      
-		// }
-		// $waktu_sekarang = date('Y-m-d H:i:s');
-		// $waktu_sekarang = 3600;
-		// echo "hari ini " . date('Y-m-d H:i:s');
-		// echo "<br>";
-		// echo "format waktu indonesia ". ubahFormat($waktu_sekarang);
-		// echo "<br>";
-		// echo "format tanggal daari timestamp : " . date("d-m-Y",$waktu_sekarang);
-	}
-// VALIDATION
+
 	function buildSession($name,$value=null)
 	{
 		return (empty($_SESSION[$name])) ? $_SESSION[$name] = $value : false;	
@@ -123,12 +126,12 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		blank_page($status);
 		die();
 	}
-	function checkSession($result){
-		if(!startSession('sess_id')) {
-			$result['message'] = "<script>alertDanger('ok','server mendeteksi bahwa tidak ada sesi login, <br> silahkan login terlebih dahulu')</script>";
-			echo json_encode($result);
-		}
-	}	
+	// function checkSession($result){
+	// 	if(!startSession('sess_id')) {
+	// 		$result['message'] = "<script>alertDanger('ok','server mendeteksi bahwa tidak ada sesi login, <br> silahkan login terlebih dahulu')</script>";
+	// 		echo json_encode($result);
+	// 	}
+	// }	
 	function is_login()
 	{
 		$status = [
@@ -137,16 +140,12 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			'message' => 'kamu harus <a href="'.base_url("at/sign").'">login</a> dulu untuk lanjut ke halaman ini'
 		];
 		if (startSession('sess_id')) {
-			return true;
+			return TRUE;
 		} else {
 			$_SESSION['reff_page'] = current_url();
 			blank_page($status);
 			die();
 		} 
-	}
-
-	function check_admin(){
-		return (startSession('sess_role') && getSession('sess_role') == 1) ? true : false;
 	}
 
 	function is_admin()
@@ -156,7 +155,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			'image' => 'blocked.png',
 			'message' => 'kamu tidak punya hak akses ke halaman ini'
 		];		
-		if ( check_admin() ) {
+		if ( startSession('sess_role') && getSession('sess_role') == 1 ) {
 			return true;
 		} else {
 			blank_page($status);
@@ -223,52 +222,11 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		];
 		$data['title']    = $title;
 
-		$CI->load->view('templates/userHeader',$data);
+		$CI->load->view('templates/adminHeader',$data);
 		$CI->load->view($page,$data);
-		$CI->load->view('templates/userFooter',$data);
+		$CI->load->view('templates/adminFooter',$data);
 	}
 
-	function _temp_user($data=null,$title,$page){
-		$CI = get_instance();
-		$fet = fetch_data();		
-		$data['inUser'] = [
-			'register' =>  $fet['u_register'],
-			'email'	=>  $fet['u_email']
-		];
-		$data['title']    = $title;
-
-		$CI->load->view('templates/userHeader',$data);
-		$CI->load->view($page,$data);
-		$CI->load->view('templates/userFooter',$data);
-	}
-
-	function append_comment($data){
-		foreach ($data as $k => $v) {
-			$data[$k]['create'] = time_elapsed_string('@'.$v['created']);
-			if ($v['id_comm'] == $v['author']) {
-				$data[$k]['side'] = 'right';
-				$data[$k]['side-img'] = 'pull-right';
-				$data[$k]['side-text'] = 'pull-left';
-			} else {
-				$data[$k]['side'] = 'left';
-				$data[$k]['side-img'] = 'pull-left';
-				$data[$k]['side-text'] = 'pull-right';
-			}
-		}
-		return $data;
-	}
-	function append_tutor($data){
-		foreach ($data as $k => $v) {
-			if ($v['category'] == 'html') {
-				$data[$k]['theme'] = 'theme-html';
-			} elseif($v['category'] == 'css') {
-				$data[$k]['theme'] = 'theme-css';
-			} else {
-				$data[$k]['theme'] = 'theme-js';
-			}
-		}
-		return $data;
-	}
 // TIMING
 	function time_elapsed_string($datetime,$full=false,$lang='id') {
 		$now = new DateTime;
@@ -278,7 +236,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		$diff->d -= $diff->w * 7;
 
 		if ($lang == 'id') {
-			$string = array(
+			$str = array(
 					'y' => 'tahun',
 					'm' => 'bulan',
 					'w' => 'minggu',
@@ -288,7 +246,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 					's' => 'detik',
 			);
 		} else {
-			$string = array(
+			$str = array(
 					'y' => 'years',
 					'm' => 'months',
 					'w' => 'weeks',
@@ -298,34 +256,36 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 					's' => 'seconds',
 			);
 		}
-		foreach ($string as $k => &$v) {
+		foreach ($str as $k => &$v) {
 				if ($diff->$k) {
 						$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? '' : '');
 				} else {
-						unset($string[$k]);
+						unset($str[$k]);
 				}
 		}
 
-		if (!$full) $string = array_slice($string, 0, 1);
+		if (!$full) $str = array_slice($str, 0, 1);
 		if ($lang == 'id') {
-			return $string ? implode(', ', $string) . ' yang lalu' : 'baru saja';
+			return $str ? implode(', ', $str) . ' yang lalu' : 'baru saja';
 		} else {
-			return $string ? implode(', ', $string) . ' ago' : 'just now';
+			return $str ? implode(', ', $str) . ' ago' : 'just now';
 		}
 }
 
 // META CONTENT 
-function getTags($string, $tagname){
-  $d = new DOMDocument();
-  $d->loadHTML($string);
-  $return = array();
-  foreach($d->getElementsByTagName($tagname) as $item){
-      $return[] = $item->textContent;
+function getTags($str, $tagname){
+  if (!empty($str)) {
+	  $d = new DOMDocument();
+	  $d->loadHTML($str);
+	  $return = array();
+	  foreach($d->getElementsByTagName($tagname) as $item){
+	      $return[] = $item->textContent;
+	  }
+	  return $return;
   }
-  return $return;
 }
-function read_more($string,$length){
-	$delTags = strip_tags($string);
+function read_more($str,$length){
+	$delTags = strip_tags($str);
 	$replaceTab = preg_replace('/\s\s+/',' ', $delTags);
 	$cut = substr($replaceTab, 0,$length);
 	$pieces = explode(' ', $cut);
@@ -334,42 +294,4 @@ function read_more($string,$length){
 	return $result;	
 }
 
-// SLUG
-function create_slug($string){
-	$str = strtolower(str_replace(' ', '-', $string));
-	return $str;
-}
-// 
-function popu($str){
-	$isArray = explode(',',$str);
-	$ret = [];
-	for ($i=0; $i < count($isArray) ; $i++) { 
-		$exp[$i] = explode('.',$isArray[$i]);
-		$pop[$i] = array_pop($exp[$i]);
-		if(count($isArray) != 0){
-			if($pop[$i] == 'css'){
-				$ret[$i] = "<link rel=\"stylesheet\" href=\"".$isArray[$i]."\">\n";
-			} else {
-				$ret[$i] = "<script src=\"".$isArray[$i]."\"></script>\n";
-			}
-		} else {
-			$ret[$i] = '';
-		}
-	}
-	return implode(' ', $ret);
-}
 
-function greeting($user)
-{
-	$time = date("H");
-	$timezone = date("e");
-	if ($time < "10") {
-	  return "selamat pagi ". $user;
-	} elseif ($time >= "10" && $time < "14") {
-	  return "selamat siang ". $user;
-	} else if ($time >= "14" && $time < "18") {
-	  return "selamat sore ". $user;
-	} elseif ($time >= "19") {
-	  return "selamat malam ". $user;
-	}
-}
