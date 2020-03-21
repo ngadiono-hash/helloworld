@@ -1,4 +1,4 @@
-<?php 
+<?php
 $tablePage = whats_page(2,['less']);
 $editPage = whats_page(2,['editor']);
 ?>
@@ -10,10 +10,23 @@ $editPage = whats_page(2,['editor']);
 </div> <!-- End of Page Wrapper -->
 
 <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
-
+<div class="modal fade" id="modal-logout">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h3 class="text-center">Are You Sure ?</h3>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group btn-block">
+					<button class="btn btn-outline-danger" data-dismiss="modal">No</button>
+					<button class="btn btn-outline-primary" onclick="logout()">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <script src="<?=base_url()?>assets/vendor/jquery/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
-<script src="<?=base_url()?>assets/js/globa.js"></script>
+<script src="<?=base_url()?>assets/js/glo.js"></script>
 <script src="<?=base_url()?>assets/vendor/bootstrap/popper.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/easing.js"></script>
@@ -30,11 +43,14 @@ echo '<script src="'.base_url().'assets/vendor/ckeditor/adapters/jquery.js"></sc
 echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>';
 echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>';
 echo '<script src="'.base_url().'assets/vendor/resize/resiz.js"></script>';
-echo '<script src="'.base_url().'assets/js/ace-config.js"></script>';
+echo '<script src="'.base_url().'assets/js/conf.js"></script>';
 } ?>
 
 
 <script id="main-script">
+function logout(){
+  window.location.href = host + 'at/logout';
+}
 $(function(){
 	var url = window.location;
 	$('.sidebar a').filter(function() {
@@ -44,16 +60,11 @@ $(function(){
 	$('.sidebar a').filter(function() {
 			return this.href == url;
 	}).parentsUntil("collapse").removeClass('show').addClass('show');
-	// $('td.cke_dialog_ui_select').addClass('d-flex').after('<button class="">copy</button>');
-
 });
 </script>
 
 
 <?php if($tablePage) { ?>
-<script id="lesson-page">
-
-</script>
 <script id="lesson-dataTable">
 	let lessonTable = $('#lesson-table');
 	let label = window.location.pathname.split('/').pop();
@@ -94,14 +105,10 @@ $(function(){
 			dataType : 'json',
 			data : data,
 			success : function(data) {
-				if(data == 'success'){
-					$('#modal-lesson').modal('hide');
-					$('#lesson-form input').val('');
-					flashAlert('success','lesson has been added');
-					reloadTable('#lesson-table');
-				} else {
-					alert(data);
-				}
+				myAlert(data);
+				reloadTable('#lesson-table');
+				$('#modal-lesson').modal('hide');
+				$('#lesson-form input').val('');
 			}
 		});
 	});
@@ -110,7 +117,7 @@ $(function(){
 		var text = $(this).text();
 		var id = $(this).parents('tr').data('id');
 		var newText = prompt("Enter new content for:", text);
-		
+
 		if (newText != null) {
 			var data = {
 				'id' : id,
@@ -123,11 +130,8 @@ $(function(){
 				dataType : 'json',
 				data : data,
 				success : function(data){
-					if(data == 'success'){
-						reloadTable('#lesson-table');
-					} else {
-						alert(data);
-					}
+					myAlert(data);
+					reloadTable('#lesson-table');
 				}
 			});
 	  }
@@ -173,14 +177,14 @@ $(function(){
 								api.search(this.value).draw();
 				});
 			},
-			ajax: 
+			ajax:
 			{
 				url : host + $('.url').data('url'),
 				type : "POST",
 				data : { param : label }
 			},
 			createdRow: function( row, data, dataIndex, cells ) {
-				var	meta 	= data['les_meta'],
+				var	meta 	= data['les_slug'].replace(/\s/g,'-').toLowerCase(),
 						order = data['les_order'],
 						id 		= data['les_id'],
 						title = data['les_title'],
@@ -222,7 +226,7 @@ $(function(){
 				// public
 				$(cells[6]).html('<button class="btn btn-block btn-sm btn-public '+public.btn+'"><i class="'+public.icon+'""></i></button>');
 				// ready
-				$(cells[7]).html(linkTarget);	
+				$(cells[7]).html(linkTarget);
 				// preview
 				$(cells[8]).html(preview);
 			},
@@ -260,7 +264,7 @@ $(function(){
 			"serverSide": true,
 			"order": [[1,"asc"]],
 			"oLanguage": {
-				sProcessing: '<i class="fa fa-cog fa-spin fa-10x fa-fw"></i>',  
+				sProcessing: '<i class="fa fa-cog fa-spin fa-10x fa-fw"></i>',
 			},
 			rowCallback: function(row, data, iDisplayIndex) {
 				var info = this.fnPagingInfo();
@@ -272,47 +276,53 @@ $(function(){
 				  $('body').tooltip({
 				  	selector: '[data-toggle="tooltip"]',
 				  	tooltipClass: "mytooltip",
-				  	position: { 
-				  		my: "left+15 center", 
-				  		at: "right center" 
-				  	} 
+				  	position: {
+				  		my: "left+15 center",
+				  		at: "right center"
+				  	}
 				  });
-            	// var r = '';
-            	// var keys = $(this).data('con');
-
-            	// keys = (keys != null) ? keys.split(',') : [];
-				console.log(typeof keys);
 				  $('body').popover({
             html: true,
             selector: '.btn-preview',
             trigger: 'hover click',
             placement: 'left',
             content : function() {
-            	// console.log(t);
-            	// t = t.split(',');
             	var keys = $(this).data('con').split(',').join('<hr class="m-1">');
-            	// console.log(this.keys);
             	return '<div class="card">'+keys+'</div>';
-            	// $.each(keys,index){
-            	// }
-            	// keys = (keys != null) ? keys.split(',') : [];
-            	// return '<div class="card">'+keys+'</div>';
             }
           });
 				});
 			}
-		});	
+		});
 	});
 </script>
 <?php } ?>
 
 <?php if($editPage) { ?>
-<script>
+<script id="editPage">
 	$(function(){
 		$('#temp').on('click', function(){
-			var temp = `<!DOCTYPE html>\n<html>\n<head>\n  <title></title>\n</head>\n\n</html>`;
+			let temp = ``;
+			temp += `<!DOCTYPE html>\n<html>\n<head>\n  <title></title>\n</head>`;
+			temp += `\n<body>\n  <h1></h1>\n\n<script><\/script>\n</body>\n</html>`;
 		  source.getSession().setValue(temp);
 		  source.gotoLine(6);
+		  source.focus();
+		});
+		$('#del').on('click', function() {
+			source.getSession().setValue('');
+			source.focus();
+		});
+		$("#close").on("click", function() {
+		  $('.wrapper-editor').addClass('slide-out-bl').fadeOut();
+		  $('.temp-editor').fadeIn(1200);
+		});
+		$('.temp-editor').on('click',function() {
+		  if ($('.wrapper-editor').hasClass('slide-out-bl')) {
+		    $('.wrapper-editor').removeClass('slide-out-bl');
+		  }
+		  $('.temp-editor').fadeOut();
+		  $('.wrapper-editor').fadeIn().addClass('scale-in-center');
 		  source.focus();
 		});
 	});
@@ -329,27 +339,8 @@ $(function(){
 	  `<link rel='stylesheet' href='${host}assets/vendor/bootstrap/bootstrap.min.css'>`+
 	  `<link rel='stylesheet' href='${host}assets/vendor/theme/theme.css'>`+
 	  `<link rel='stylesheet' href='${host}assets/vendor/prism/prism-line.css'>`+
-	  `<style>
-	  body{ padding : 30px; text-align: justify; }
-	  p + pre { 
-	    background: linear-gradient(45deg,#ddd,#d6c9c9); 
-	    padding: 10px; 
-	    max-width: 70%; 
-	    margin: 20px auto;
-		  border-radius: 10px; 
-	  }
-	  p img {
-	  	max-width: 70%;
-	  	border-radius: 5px;
-	  	border: 1px solid #dee2e6;
-	  	padding: 5px;
-	  	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-	  }
-	  a[href^="http"],a[href^="https"] {
-	  	color: #007bff;
-	  	font-weight: bold;
-	  }
-	  </style>`+
+	  `<link rel='stylesheet' href='${host}assets/css/content.css'>`+
+	  `<style>body { padding: 30px; text-align: justify; }</style>`+
 		container +
 		`<script src='${host}assets/vendor/prism/prism-line.js'><\/script>`+
 		`<script src='${host}assets/vendor/jquery/jquery.min.js'><\/script>`+
@@ -360,9 +351,9 @@ $(function(){
 	});
 	// =================== UPDATE
 	edited.on('click','#btn-update',function(){
-		var countWords = $('#cke_wordcount_ckedit').text().replace(',','').split(' ');
-		var data = {
-			'id': $('#input-id').val(), 
+		let countWords = $('#cke_wordcount_ckedit').text().replace(',','').split(' ');
+		let datax = {
+			'id': $('#input-id').val(),
 			'title' : $('#input-title').val(),
 			'slug' : $('#input-slug').val(),
 			'content' : CKEDITOR.instances.ckedit.getData(),
@@ -372,31 +363,37 @@ $(function(){
 			url : host + 'xhra/update_lesson',
 			type : 'post',
 			dataType : 'json',
-			data : data,
+			data : datax,
 			success : function(data){
 				myAlert(data);
-				if (data['status'] == 1) {
-					$('#input-update').val(data['last']);
-					var subs = '';
-					if(data['affect'] != ''){
-						data['affect'].forEach(function(el){
-							subs += '<button class="btn btn-sm btn-outline-primary">'+el+'</button>';
-						});						
+				if (data[0] == 1) {
+					$('#input-update').val(data[3]).css('color','red');
+					let h3 = '', h4 = '';
+					if(data[4] != ''){
+						data[4].forEach(function(el){
+							h3 += '<li>'+el+'</li>';
+						});
 					}
-					$('#sub').html(subs);
+					if (data[5] != '') {
+						data[5].forEach(function(el){
+							h4 += '<li>'+el+'</li>';
+						});
+					}
+					$('#sub-h3').html(h3);
+					$('#sub-h4').html(h4);
 				}
 			}
 		});
 	});
 	// =================== PUBLIC
 	edited.on('click','#btn-public',function(){
-		var button = $(this);
-		var id = $(button).data('id'); 
+		let button = $(this);
+		let id = $(button).data('id');
 		$.ajax({
 			url : host + 'xhra/update_lesson_public/' + id,
 			type: 'post',
 			success : function(data){
-				var parse = $.parseJSON(data);
+				let parse = $.parseJSON(data);
 				if(parse == 1){
 					button.toggleClass('btn-success btn-danger')
 					.html('<i class="fa fa-globe-asia"></i>');
@@ -410,7 +407,7 @@ $(function(){
 	// =================== DELETE
 	// edited.on('click','.btn-del',function(e){
 	// 	e.preventDefault();
-	// 	var href = $(this).data('href');
+	// 	let href = $(this).data('href');
 	// 		// var vals = $(this).data('value');
 	// 	Swal.fire({
 	// 		title : 'Are you sure ?',

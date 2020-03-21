@@ -1,3 +1,9 @@
+<style type="text/css">
+.hero-section > .container > .row {
+  height: 100vh;
+  min-height: 660px;
+}  
+</style>
 
 <main id="main">
   <div class="hero-section">
@@ -16,32 +22,41 @@
     <div class="container">
       <div class="row align-items-center">
 
-        <div class="col-12 hero-text-image" style="">
+        <div class="col-12 hero-text-image">
+          <?php if (startSession('access')) { ?>
           <div class="row">
             <div class="col-lg-7 text-center text-lg-left">
               <h1 data-aos="fade-right">Welcome Administrator</h1>
               <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Please login to enter your dashboard</p>
             </div>
             <div class="col-lg-5 iphone-wrap">
-            	<form id="form-login" method="post">
+            	<form id="form-login">
             	  <div class="form-group nd">
             	    <label class="text-white">Email</label>
-            	    <input type="text" name="key_email" class="form-control" placeholder="Enter email..." spellcheck="false" id="input-key_email">
+            	    <input type="text" name="key_email" class="form-control" placeholder="Enter email...">
             	    <div id="error"></div>
             	  </div>
             	  <div class="form-group nd">
             	    <label class="text-white">Password</label>
-            	    <input type="password" name="key_pass" class="form-control" placeholder="Password..." id="input-key_pass">
+            	    <input type="password" name="key_pass" class="form-control" placeholder="Password...">
             	    <div id="error"></div>
             	  </div>
-            	  <div class="form-group form-check">
-            	    <input type="checkbox" name="remember" value="1" class="checkin" id="remember">
+            	  <div class="form-group">
+            	    <input type="checkbox" id="remember" value="1" class="checkin">
             	    <label for="remember" class="text-white">Remember me?</label>
             	  </div>
-            	  <button type="submit" class="btn btn-primary btn-log">Submit</button>
+            	  <button class="btn btn-primary btn-log">Submit</button>
             	</form>
             </div>
           </div>
+          <?php } else { ?>
+          <div class="row">
+            <div class="col-lg-6 center-block">
+              <h1 data-aos="fade-right">Access Code</h1>
+              <input id="access" type="password" class="form-control" autofocus>
+            </div>
+          </div>
+          <?php } ?>
         </div>
       </div>
     </div>

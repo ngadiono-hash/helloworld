@@ -28,57 +28,85 @@
   </div>
   <section class="site-section">
     <div class="container">
+      
       <div class="row">
-        <div class="col-md-8 blog-content">
-          <p class="mb-5" data-aos="fade-up"  data-aos-delay="100"><?=date('M d, Y',$lesson['update'])?> &bullet; By <a href="#" class="text-mute">Admin</a></p>
+        <div class="col-lg-8 blog-content">
+          <h4 class="mt-5" data-aos="fade-up"  data-aos-delay="100">Kategori : <?php echo $label ?></h4>
+          <p class="mb-5" data-aos="fade-up"  data-aos-delay="100">Terakhir diperbarui <?=date('M d, Y',$lesson['update'])?> &bullet; Oleh <a href="#" class="text-mute">Admin</a></p>
           <?php echo $lesson['content'] ?>
-          <?php echo $lesson['disqus'] ?>
-        </div>
-        <div class="col-md-4 sidebar">
-          <div class="sidebar-box">
-            <form action="#" class="search-form">
-              <div class="form-group">
-                <span class="icon fa fa-search"></span>
-                <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-              </div>
-            </form>
-          </div>
-          <div class="sidebar-box">
-            <div class="categories lesson-menu">
-              <h3>List Menu</h3>
-              <?php foreach ($lesson['menu'] as $mn) { ?>
-                <li><a href="<?=$mn['link']?>"><?=$mn['title']?></a></li>
-              <?php  } ?>
+
+          <div class="row">
+            <div class="col-12 navigate">
+              <button class="btn btn-primary" data-href="<?=$linkPrev?>">
+                <i class="fa fa-lg fa-angle-left"></i> Sebelumnya
+              </button>
+              <button class="btn btn-primary float-right" data-href="<?=$linkNext?>">
+                Selanjutnya <i class="fa fa-lg fa-angle-right"></i>
+              </button>
             </div>
           </div>
+          <?php echo $lesson['disqus'] ?>
+        </div>
+        <div class="col-lg-4 sidebar">
           <div class="sidebar-box">
-            <img src="img/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">
-            <h3>About The Author</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-            <p><a href="#" class="btn btn-danger btn-sm">Read More</a></p>
+
+            <div class="accordion" id="accord" data-aos="fade-up" data-aos-delay="100">
+              <div class="card card-menu">
+                <div class="card-header">
+                  <a class="card-anchor" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true">Anchor Keyword<span class="ml-auto"></span></a>
+                </div>
+
+                <div id="collapseOne" class="collapse show" data-parent="#accord">
+                  <div class="card-body">
+                      <ul class="hint">
+                      <?php 
+                      foreach ($lesson['hint'] as $k => $v) {
+                        $hash[$k] = strtolower(str_replace(' ','-',$v)); 
+                        $linked[$k] = $v;
+                       ?>
+                        <li><a href="#<?=$hash[$k]?>" class="link"># <?=$linked[$k]?></a></li>
+                      <?php } ?>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a class="card-anchor collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false">List Menu <?php echo $label ?><span class="ml-auto"></span></a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accord">
+                  <div class="card-body">
+                    <ul class="lesson-menu">
+                    <?php foreach ($lesson['menu'] as $mn) { ?>
+                      <li><a href="<?=$mn['link']?>" class="link"><?=$mn['title']?></a></li>
+                    <?php } ?>
+                    </ul>                    
+                  </div>
+                </div>
+              </div>
+              <div class="card card-menu">
+                <div class="card-header">
+                  <a class="card-anchor collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">Search For<span class="ml-auto"></span></a>
+                </div>
+                <div id="collapseThree" class="collapse" data-parent="#accord">
+                  <div class="card-body">
+                    <form id="search-form" class="search-form my-4">
+                      <div class="form-group">
+                        <span class="icon fa fa-search"></span>
+                        <input type="text" class="form-control" placeholder="Cari...">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="sidebar-box">
-            <h3>Paragraph</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-          </div>
         </div>
       </div>
     </div>
   </section>
-
-  <div class="site-section cta-section">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6 mr-auto text-center text-md-left mb-5 mb-md-0">
-          <h2>Starts Publishing Your Apps</h2>
-        </div>
-        <div class="col-md-5 text-center text-md-right">
-          <p><a href="#" class="btn"><span class="icofont-brand-apple mr-3"></span>App store</a> <a href="#" class="btn"><span class="icofont-ui-play mr-3"></span>Google play</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 </main>

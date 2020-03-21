@@ -6,36 +6,23 @@ CKEDITOR.stylesSet.add( 'default', [
 		element: 'code', 
 		attributes: { 'class': 'language-html' }
 	},
-	{ 
-		name: 'Attr', 
-		element: 'code', 
-		attributes: { 'class': 'html-attr' }, 
-		styles: {
-			color: '#90ca1c',
-		}
-	},
-	{ 
-		name: 'CSS', 
-		element: 'code', 
-		attributes: { 'class': 'css-code' }, 
-		styles: {
-			color: '#18c4e7',
-		}
-	},
 	{ name: 'Keyboard',	element: 'kbd' },
 	
 	/* Block styles */
 	{
-		name: 'wrap',
+		name: 'wrapper',
 		element: 'div',
 		attributes: { class:'wrapper-content' }
 	},
 	{
 		name: 'note',
-		element: 'div',
-		attributes: { class:'note' }
+		element: 'p',
+		attributes: { class:'note' },
+		styles: {
+			'font-weight': 'bold'
+		}
 	},
-{
+  {
 		name: 'reff',
 		element: 'p',
 		attributes: { class:'reff' }

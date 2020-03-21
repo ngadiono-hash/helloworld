@@ -12,7 +12,6 @@ class Common_model extends CI_Model
 		$this->datatables->select($select);
 		$this->datatables->from($table);
 		$this->datatables->where($where);
-		// $this->db->order_by('les_length','ASC');
 		return $this->datatables->generate();
 	}	
 
@@ -27,6 +26,14 @@ class Common_model extends CI_Model
 		}
 	}
 
+	function check_materi($meta)
+	{
+		$where = "LOWER(les_slug)='".$meta."' AND les_publish='1'";
+		$this->db->where($where);
+		$query = $this->db->get('materi');
+		return ($query->num_rows() > 0) ? $query->row_array() : FALSE;
+	}
+
 	function counting($table,$where)
 	{
 		$this->db->from($table);
@@ -34,7 +41,7 @@ class Common_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	function select_where($table,$data,$where,$array=TRUE,$single=FALSE,$order='',$limit='')
+	function select_where($table,$data,$where='',$array=TRUE,$single=FALSE,$order='',$limit='')
 	{
 		if (is_array($data) && isset($data[1])) {
 			$this->db->select($data[0],$data[1]);
@@ -42,7 +49,9 @@ class Common_model extends CI_Model
 			$this->db->select($data);
 		}
 		$this->db->from($table);
-		$this->db->where($where);
+		if ($where != '') {
+			$this->db->where($where);
+		}
 		if($order !== ''){
 			if(is_array($order)){
 				$this->db->order_by($order[0],$order[1]);
@@ -73,7 +82,7 @@ class Common_model extends CI_Model
 				}
 			}
 		} else {
-			return $this->db->error();
+			return FALSE;
 		}
 	}
 
@@ -89,6 +98,42 @@ class Common_model extends CI_Model
 			return $this->db->error();
 		}
 	}
+	function select_like($table,$data,$where,$single=FALSE,$field,$value,$orLikes='',$group_by='')
+	{
+		// select_like('materi','les_title',['les_public'=>1],FALSE,'les_key',$kata_kunci);
+		$this->db->select($data);
+		$this->db->from($table);
+		$this->db->like('LOWER(' . $field . ')', strtolower($value));
+		if($orLikes != '' and is_array($orLikes)){
+			foreach($orLikes as $key=>$array){
+				$this->db->or_like('LOWER('.$array['field'].')', strtolower($array['value']));
+			}
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group_by != ''){
+			$this->db->group_by($group_by);
+		}
+		$query = $this->db->get();
+
+
+
+
+		
+		//return $this->db->last_query();
+		if ($query->num_rows() > 0) {
+		// query returned results
+			if ($single == TRUE) {
+				return $query->row();
+			} else {
+				return $query->result();
+			}
+		} else {
+		// query returned no results
+			return FALSE;
+		}
+	}	
 
 // ================= INSERT QUERY
 	function insert_record($table,$data)

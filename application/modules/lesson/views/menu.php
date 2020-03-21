@@ -18,7 +18,7 @@
           <div class="row justify-content-center">
             <div class="col-md-7 text-center hero-text">
               <h1 data-aos="fade-up" data-aos-delay=""><?=$label['description']?></h1>
-              <p class="mb-5" data-aos="fade-up"  data-aos-delay="100"><?=$label['content']?></p>  
+              <h3 class="mb-5 text-white" data-aos="fade-up"  data-aos-delay="100"><?=$label['slug']?></h3>  
             </div>
           </div>
         </div>
@@ -26,22 +26,22 @@
     </div>
     
   </div>
-
   
 
-  <div class="site-section" style="">
-    <div class="container">
+  <div class="site-section">
+    <div class="container menu">
       <div class="row mb-5">
         <?php foreach ($list as $k => $v) {
         ?>
-        <div class="col-md-4">
-          <div class="post-entry">
+        <div class="col-md-6 col-lg-4">
+          <div class="post-entry shadow p-2" data-aos="fade-up" data-aos-delay="">
+            <h3 class="post-title"><?=preg_replace('/^JS /', '',$v['title'])?></h3>
             <a href="<?=$v['link']?>" class="d-block mb-4">
-              <img src="<?=base_url('assets/img/feed/bars.svg')?>" alt="Image" class="img-fluid">
+              <img src="<?=base_url()?>assets/img/feed/jsblank.png" alt="Image" class="img-fluid">
             </a>
             <div class="post-text">
               <span class="post-meta"><?=$v['update']?> &bullet; By <a href="#">Admin</a></span>  
-              <h3><a href="<?=$v['link']?>"><?=$v['title']?> <br><small><?=$v['slug']?></small></a></h3>
+              <h3><a href="<?=$v['link']?>"><small><?=$v['slug']?></small></a></h3>
               
               <p><?=$v['content']?></p>
               <p><a href="<?=$v['link']?>" class="readmore">Selengkapnya</a></p>
@@ -60,5 +60,5 @@
     </div>
   </div>
 
-
+  <?php quotes() ?>
 </main>

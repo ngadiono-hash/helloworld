@@ -9,37 +9,39 @@ class A extends CI_Controller
 	{
 		parent::__construct();
 		reload_session();
-		is_login();
+		is_logged();
 		is_admin();
 		$this->load->model('Common_model');
 	}
 
-	private function countTutorials($cat)
+	private function countMateri($level)
 	{
-		$resultDB = [];
-		$resultDB['total'] = $this->Common_model->count_record('materi','id',['les_level' => $cat]);
-		$resultDB['public'] = $this->Common_model->count_record('materi','id',['les_level' => $cat, 'les_publish' => 1]);
-		$resultDB['draft'] = $this->Common_model->count_record('materi','id',['les_level' => $cat, 'les_publish' => 0]);
-		return $resultDB;
+		$DB = [];
+		$DB['nam'] = ucwords($level);
+		$DB['lin'] = base_url().'a/less/'.$level;
+		$DB['all'] = $this->Common_model->counting('materi',['les_level' => $level]);
+		$DB['pub'] = $this->Common_model->counting('materi',['les_level' => $level,'les_publish' => 1]);
+		$DB['dra'] = $this->Common_model->counting('materi',['les_level' => $level,'les_publish' => 0]);
+		return $DB;
 	}
 
-	private function getLevel($cat,$lev)
-	{
-		$ac = [];
-		$aa = $this->Common_model->select_fields_where('tutor_lev','_name',['_cat' => $cat]);
-		for ($i=0; $i < count($lev); $i++) {
-			$ab[$i] = $this->Common_model->count_record('materi','id',['snip_level' => $lev[$i], 'snip_bin' => 0]);
-		}
-		foreach ($aa as $key => $ax) {
-			$ac [] = ['level_name' => $ax['_name'], 'counter' => $ab[$key] ];
-		}
-		return $ac;
-	}
+	// private function getLevel($cat,$lev)
+	// {
+	// 	$ac = [];
+	// 	$aa = $this->Common_model->select_fields_where('tutor_lev','_name',['_cat' => $cat]);
+	// 	for ($i=0; $i < count($lev); $i++) {
+	// 		$ab[$i] = $this->Common_model->counting('materi','id',['snip_level' => $lev[$i], 'snip_bin' => 0]);
+	// 	}
+	// 	foreach ($aa as $key => $ax) {
+	// 		$ac [] = ['level_name' => $ax['_name'], 'counter' => $ab[$key] ];
+	// 	}
+	// 	return $ac;
+	// }
 
-	private function onModalAdd($table,$data,$order)
-	{
-		// return $this->Common_model->select_fields($table,$data,false,true,$order);
-	}
+	// private function onModalAdd($table,$data,$order)
+	// {
+	// 	// return $this->Common_model->select_fields($table,$data,false,true,$order);
+	// }
 	public function tes()
 	{
 		
@@ -47,7 +49,9 @@ class A extends CI_Controller
 // =================== DASHBOARD
 	public function index()
 	{
-		$data['kkk'] = '';
+		$data['t']['b'] = $this->countMateri('beginner');
+		$data['t']['i'] = $this->countMateri('intermediate');
+		$data['t']['a'] = $this->countMateri('advance');
 		_temp_admin($data,'Welcome Admin','index');
 	}
 
@@ -57,7 +61,7 @@ class A extends CI_Controller
 		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
 		if (!empty($third)) {
 			$data['getLesson'] = 'xhra/read_lesson/'.$third;
-			_temp_admin($data,'Lesson JavaScript '.$third,'lesson_table');
+			_temp_admin($data,'Lesson JavaScript '.$data['label'],'lesson_table');
 		} else {
 			not_found();
 		}
@@ -68,7 +72,6 @@ class A extends CI_Controller
 		$label = $this->uri->segment(3);
 		$order = $this->uri->segment(4);
 		if(!empty($label) && !empty($order)){
-			// select_where($table,$data,$where,$array=TRUE,$single=FALSE,$order='',$limit='')
 			$edit = $this->Common_model->select_where(
 				'materi','*',['les_order'=>$order,'les_level'=>$label],TRUE,TRUE
 			);
@@ -77,7 +80,7 @@ class A extends CI_Controller
 			$data['label'] 	= $edit['les_level'];
 			$data['titles'] = $edit['les_title'];
 			$data['slug'] 	= $edit['les_slug'];
-			$data['meta'] 	= $edit['les_meta'];
+			$data['meta'] 	= create_slug($edit['les_slug']);
 			$data['content']= $edit['les_content'];
 			$data['code'] 	= $edit['les_length'];
 			$data['upload'] = $edit['les_upload'];

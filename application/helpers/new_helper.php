@@ -1,7 +1,7 @@
-<?php 
+<?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	function deb($param)
+	function bug($param)
 	{
 		var_dump($param);
 		die();
@@ -17,7 +17,28 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			return preg_replace($find,$replace,$content);
 		} else {
 			return $content;
-		}		
+		}
+	}
+
+	function buildSession($name,$value=null)
+	{
+		return (empty($_SESSION[$name])) ? $_SESSION[$name] = $value : false;
+	}
+	function startSession($name)
+	{
+		return (!empty($_SESSION[$name])) ? true : false;
+	}
+	function getSession($name)
+	{
+		return $_SESSION[$name];
+	}
+	function startCookie($name)
+	{
+		return (isset($_COOKIE[$name])) ? true : false;
+	}
+	function getCookie($name)
+	{
+		return $_COOKIE[$name];
 	}
 
 	function crypto_rand_secure($min, $max)
@@ -34,6 +55,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		} while ($rnd > $range);
 		return $min + $rnd;
 	}
+
 	function getRandStr($length)
 	{
 		$str = "";
@@ -61,7 +83,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		return $id;
 	}
 
-	function validate_input($posted)
+	function trimChar_input($posted)
 	{
 		$CI = get_instance();
 		$str = $CI->input->post($posted);
@@ -75,16 +97,26 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		return trim(strtolower(str_replace(' ', '-', $str)));
 	}
 
+	function filterSearchKeys($query){
+	  $query = trim(preg_replace("/(\s+)+/", " ", $query));
+	  $words = array();
+	  // expand this list with your words.
+	  $list = ["di","itu","sebuah","ini","dari","atau","kami","kita","kalian","dalam","tetapi"];
+	  $c = 0;
+	  foreach(explode(" ", $query) as $key){
+	    if (in_array($key, $list)){
+	      continue;
+	    }
+	    $words[] = $key;
+	    if ($c >= count($list)){
+	      break;
+	    }
+	    $c++;
+	  }
+	  return $words;
+	}
 
-
-
-
-
-
-
-
-
-	function getIp() 
+	function getIp()
 	{
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -96,106 +128,81 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
     return $ip;
 	}
 
-	function buildSession($name,$value=null)
+	function reload_session()
 	{
-		return (empty($_SESSION[$name])) ? $_SESSION[$name] = $value : false;	
+		$CI = get_instance();
+			if ( !startSession('sess_log') && isset($_COOKIE['_lang']) && isset($_COOKIE['_no']) ){
+				$id = getCookie('_no');
+				$token = getCookie('_lang');
+				$check = $CI->db->where(['token' => $token, 'expired >' => time()])->get('user_cookie');
+
+				if ( $check->num_rows() > 0 ){
+					$user = $check->row_array();
+					$getData = $CI->db->select('u_id,u_role,u_email')->where(['u_id' => $id])->get('users')->row_array();
+					if ( $token === hash('sha256',$getData['u_email']) ){
+						$data = [
+							'sess_log' => true,
+							'sess_id'   => $getData['u_id'],
+							'sess_role' => $getData['u_role']
+						];
+						$CI->session->set_userdata($data);
+						return true;
+					}
+				} else {
+					$CI->db->delete('user_cookie',['token' => $token]);
+				}
+			}
 	}
-	function startSession($name)
-	{
-		return (!empty($_SESSION[$name])) ? true : false;
-	}
-	function getSession($name)
-	{
-		return $_SESSION[$name];
-	}
-	function startCookie($name)
-	{
-		return (!empty($_COOKIE[$name])) ? true : false;
-	}
-	function getCookie($name)
-	{
-		return $_COOKIE[$name];
-	}
+
+
+
+
 	function not_found()
 	{
-		$status = [
-			'title' => '404',
-			'image' => '404.gif',
-			'message' => 'halaman yang kamu cari tidak tersedia'
-		];
-		blank_page($status);
+		blank_page(404);
 		die();
 	}
-	// function checkSession($result){
-	// 	if(!startSession('sess_id')) {
-	// 		$result['message'] = "<script>alertDanger('ok','server mendeteksi bahwa tidak ada sesi login, <br> silahkan login terlebih dahulu')</script>";
-	// 		echo json_encode($result);
-	// 	}
-	// }	
-	function is_login()
+
+	function is_logged()
 	{
-		$status = [
-			'title' => '403',
-			'image' => 'blocked.png',
-			'message' => 'kamu harus <a href="'.base_url("at/sign").'">login</a> dulu untuk lanjut ke halaman ini'
-		];
-		if (startSession('sess_id')) {
-			return TRUE;
+		if (startSession('sess_log')) {
+			return true;
 		} else {
-			$_SESSION['reff_page'] = current_url();
-			blank_page($status);
+			buildSession('reff',current_url());
+			blank_page(403);
 			die();
-		} 
+		}
 	}
 
 	function is_admin()
 	{
-		$status = [
-			'title' => '403',
-			'image' => 'blocked.png',
-			'message' => 'kamu tidak punya hak akses ke halaman ini'
-		];		
-		if ( startSession('sess_role') && getSession('sess_role') == 1 ) {
-			return true;
-		} else {
-			blank_page($status);
-			die();
-		}
+		return ( startSession('sess_role') && getSession('sess_role') == 1 ) ? true : false;
 	}
 
 	function is_send_ajax(){
-		(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ? true : not_found();
+		(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ? true : not_found(404);
 	}
 
-	function reload_session(){
-		$CI = get_instance();			
-		if ((startSession('sess_id') == false) && (startCookie('c_user') == true)){
-			$token = getCookie('c_user');
-			$now   = time();
-			$ip    = getIp();
-			$agent = $_SERVER['HTTP_USER_AGENT'];
-			$check = $CI->db->from('user_cookie')->where(['token' => $token, 'expired >' => $now])->get();
-			
-			if ( $check->num_rows() > 0 ){
-					$check = $check->row_array();
-				if ( $check['ip'] ==  $ip || $check['agent'] == $agent){
-					$getData = $CI->db->get_where('users', ['u_email' => $check['email']])->row_array();
-					$data = [
-						'sess_id'   => $getData['u_id'],
-						'sess_role' => $getData['u_role'],
-						'sess_user' => $getData['u_username'],
-						'sess_reg'   => $getData['u_register'],
-						'sess_image' => base_url('assets/img/profile/').$getData['u_image']
-					];
-					$CI->session->set_userdata($data);
-					return true;
-				}
-			} else {
-				$CI->db->delete('user_cookie',['token' => $token]);
-			}
-		}
+	function getTags($str,$tagname){
+	  if (!empty($str)) {
+		  $return = [];
+		  $doc = new DOMDocument();
+		  $doc->loadHTML($str);
+		  foreach($doc->getElementsByTagName($tagname) as $item){
+		    $return[] = $item->textContent;
+		  }
+		  return $return;
+	  }
 	}
-
+	function read_more($str,$length){
+		$delTags = strip_tags($str);
+		$replaceTab = preg_replace('/\s\s+/',' ', $delTags);
+		$cut = substr($replaceTab, 0,$length);
+		$pieces = explode(' ', $cut);
+		array_pop($pieces);
+		$result = implode(' ', $pieces);
+		return $result;
+	}
 
 	function whats_page($uri,$page){
 		$CI = get_instance();
@@ -215,7 +222,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	function _temp_admin($data=null,$title,$page){
 		$CI = get_instance();
-		$fet = fetch_data();		
+		$fet = fetch_data();
 		$data['inUser'] = [
 			'register' =>  $fet['u_register'],
 			'email'	=>  $fet['u_email']
@@ -228,7 +235,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	}
 
 // TIMING
-	function time_elapsed_string($datetime,$full=false,$lang='id') {
+	function elapsed($datetime,$full=false,$lang='id') {
 		$now = new DateTime;
 		$ago = new DateTime($datetime);
 		$diff = $now->diff($ago);
@@ -272,26 +279,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		}
 }
 
-// META CONTENT 
-function getTags($str, $tagname){
-  if (!empty($str)) {
-	  $d = new DOMDocument();
-	  $d->loadHTML($str);
-	  $return = array();
-	  foreach($d->getElementsByTagName($tagname) as $item){
-	      $return[] = $item->textContent;
-	  }
-	  return $return;
-  }
-}
-function read_more($str,$length){
-	$delTags = strip_tags($str);
-	$replaceTab = preg_replace('/\s\s+/',' ', $delTags);
-	$cut = substr($replaceTab, 0,$length);
-	$pieces = explode(' ', $cut);
-	array_pop($pieces);
-	$result = implode(' ', $pieces);
-	return $result;	
-}
+
 
 

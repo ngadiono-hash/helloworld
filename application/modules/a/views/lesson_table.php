@@ -52,10 +52,6 @@ table thead tr th {
 .dataTable tbody tr td .btn.btn-slug {
 	text-align: left;
 }
-.DataTables_sort_icon.css_right.ui-icon {
-	/*display: inline;*/
-	/*background-image: none;*/
-}	
 </style>
 <div id="content">
   <div class="container-fluid">
@@ -72,7 +68,6 @@ table thead tr th {
   						<th><i class="fa fa-edit"></i></th>
   						<th>Title</th>
   						<th>Slug</th>
-  						<!-- <th><i class="fa fa-edit"></i></th> -->
   						<th><i class="fa fa-info-circle"></i></th>
   						<th><i class="fa fa-globe-asia"></i></th>
   						<th><i class="fa fa-thumbs-up"></i></th>

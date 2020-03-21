@@ -1,99 +1,198 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function playEditor() { ?>
-	<div class="wrapper-editor" style="display: none;">
-	  <div class="panel-editor">
-	    <div class="panel-left">
-	      <nav class="ctrl">
-	        <button id="close" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-lg fa-fw fa-times"></i></button>
-	        <button id="live" data-toggle="tooltip" data-placement="bottom" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
-	        <button id="clipboard" data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
-	        <button id="download" data-toggle="tooltip" data-placement="bottom" title="Download"><i class="fa fa-lg fa-fw fa-download"></i></button>
-	        <button id="snippet" data-toggle="tooltip" data-placement="bottom" title="Enable Snippet"><i class="fa fa-lg fa-fw fa-laptop-code"></i></button>
-	        <?php if (startSession('sess_role') && getSession('sess_role') == 1) { ?>
-	        <button id="temp"><i class="fa fa-lg fa-fw fa-pen"></i></button>
-	        <?php } ?>
-	      </nav>
-	      <div class="body-source" id="source-code"></div>
-	    </div>
-	    <div class="splitter"></div>
-	    <div class="panel-right">
-	      <iframe class="frame" id="result-frame"></iframe>
-	      <div class="dimension" id="dm"></div>
-	    </div>
-	  </div>
-	</div>
+function quotes() { ?>
+  <div class="site-section border-top border-bottom">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-6">
+          <h2 class="section-heading">Master of JavaScript</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+          <div class="owl-carousel testimonial-carousel">
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>Elegant Language</h3>
+              <blockquote>
+                <p>Fortunately, JavaScript has some extraordinarily good parts. In JavaScript, there is a beautiful, elegant, highly expressive language that is buried under a steaming pile of good intentions and blunders.</p>
+              </blockquote>
+
+
+
+              <p class="review-user">
+                <span class="d-block">
+                  <span class="text-black">&bullet; Douglas Crockford &bullet;</span>
+                </span>
+              </p>
+
+            </div>
+
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>Awesome Language</h3>
+              <blockquote>
+                <p>Technically, web browsers can control what users see, and sites using Javascript can overwrite anything coming from the original authors. Browsers heavily utilize Javascript to create an interactive Internet. Sites like YouTube, Facebook, and Gmail could be crippled without it.</p>
+              </blockquote>
+
+
+
+              <p class="review-user">
+                <!-- <img src="img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3"> -->
+                <span class="d-block">
+                  <span class="text-black">&bullet; Ben Shapiro &bullet;</span>
+                </span>
+              </p>
+
+            </div>
+
+
+            <div class="review text-center">
+              <p class="stars">
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star"></span>
+                <span class="icofont-star muted"></span>
+              </p>
+              <h3>Other Side</h3>
+              <blockquote>
+                <p>JavaScript: This is a super-popular programming language primarily used in web apps. But it doesn't have much to do with Java besides the name. JavaScript runs a lot of the modern web, but it also catches a lot of flak for slowing browsers down and sometimes exposing users to security vulnerabilities.</p>
+              </blockquote>
+
+
+
+              <p class="review-user">
+                <!-- <img src="img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3"> -->
+                <span class="d-block">
+                  <span class="text-black">&bullet; Dmitry Baranovskiy &bullet;</span>
+                </span>
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }
+
+function playEditor() { 
+  $adm = whats_page(1,['a']);
+  ?>
+
+  <div class="wrapper-editor" style="display: none;">
+    <div class="panel-editor">
+      <div class="panel-left">
+        <nav class="ctrl">
+          <button id="close" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-lg fa-fw fa-times"></i></button>
+          <button id="live" data-toggle="tooltip" data-placement="bottom" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
+          <button id="snippet" data-toggle="tooltip" data-placement="bottom" title="Enable Snippet"><i class="fa fa-lg fa-fw fa-laptop-code"></i></button>
+          <button id="clipboard" data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
+          <button id="newTab" data-toggle="tooltip" data-placement="bottom" title="open in New Tab"><i class="fa fa-lg fa-fw fa-external-link-alt"></i></button>
+          <?php if ($adm) { ?>
+          <button id="temp"><i class="fa fa-lg fa-fw fa-pen"></i></button>
+          <button id="del"><i class="fa fa-lg fa-fw fa-eraser"></i></button>
+          <?php } ?>
+        </nav>
+        <div class="body-source" id="source-code"></div>
+      </div>
+      <div class="splitter"></div>
+      <div class="panel-right">
+        <iframe class="frame" id="result-frame"></iframe>
+        <div class="dimension" id="dm"></div>
+        
+      </div>
+    </div>
+  </div>
+<?php }
+
+function blank_page($status) {
+  $currentURL = current_url();
+  ?>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Oops... <?=$status?></title>
+    <style>
+    div {
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      font-family: sans-serif;
+      max-width: 700px;
+      border: 2px solid #ccc;
+      color: #808080;
+    }
+    h1 { font-family: Stencil, Fantasy; }
+    img { width: 350px; }
+    button {
+      min-width: 220px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+  </style>
+  </head>
+  <body>
+    <div>
+      <img src="<?= base_url('assets/img/feed/404.gif') ?>">
+      <?php if($status == 404) { ?>
+        <h1>Invalid URL</h1>
+        <h3><small><?= $currentURL ?></small></h3>
+        <h3>URL tidak tersedia atau sedang dalam perbaikan</h3>
+        <button onclick="window.history.back()"><h3>kembali</h3></button>
+      <?php } elseif ($status == 403) { ?>
+        <h1>You must login to enter this page</h1>
+        <button onclick="window.location.href='<?=base_url("at/sign")?>'"><h3>Login</h3></button>
+      <?php } ?>
+    </div>
+  </body>
+  </html>
 <?php }
 
 function myGlobal(){ ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-	<script src="<?= base_url('assets/js/gl.js') ?>"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
-<?php	}
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
+  <script src="<?= base_url('assets/js/gl.js') ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
+<?php }
 
 function selectBS(){ ?>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-	<script src="<?=base_url('assets/js/jquery.chained.js')?>"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+  <script src="<?=base_url('assets/js/jquery.chained.js')?>"></script>
 <?php }
 
 function select2(){ ?>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js"></script>
 <?php }
 
 function bootstrap(){ ?>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-<?php	}
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<?php }
 
 function aceEditor(){ ?>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
-	<script src="<?= base_url('assets/js/resize.js')?>"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
+  <script src="<?= base_url('assets/js/resize.js')?>"></script>
 <?php }
 
 function dataTable(){ ?>
-	<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
-	<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
-<?php	}
-
-function blank_page($status) {
-	$currentURL = current_url();
-	$params   = (!empty($_SERVER['QUERY_STRING'])) ? '?'.$_SERVER['QUERY_STRING'] : '';
-	$fullURL = $currentURL.$params; 
-	?>
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<title>Hello World - <?=$status['title']?></title>
-		<style>
-		div {
-			margin: 20px auto;
-			text-align: center;
-			font-family: sans-serif;
-			width: 90vw;
-		}
-		img {
-			width: 350px;
-		}
-		h1 {
-			font-family: Stencil, Fantasy;
-		}
-	</style>
-</head>
-<body>
-	<div>
-		<img src="<?= base_url('assets/img/feed/').$status['image']; ?>">
-		<h1><?=$status['message']?></h1>
-		<?php if($status['title'] == '404' ) { ?>
-			<h3>kamu mencoba untuk mengakses url <u><?=$fullURL?></u></h3>
-			<h3>yang kemungkinan besar tidak tersedia pada server atau sedang dalam proses perbaikan</h3>
-			<button onclick="window.history.back()"><h3>silahkan kembali</h3></button>
-		<?php } ?>
-	</div>
-</body>
-</html>
+  <link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css"/>
+  <script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>
 <?php }

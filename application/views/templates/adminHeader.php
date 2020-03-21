@@ -9,12 +9,13 @@ $editPage = whats_page(2,['editor']);
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><?= $title; ?></title>
+<meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i|Roboto:300,400,700&display=swap">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
-<link rel="stylesheet" href="<?=base_url()?>assets/css/main.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/global.css">
 <?php if ($tablePage) {
 echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
 } ?>
@@ -29,7 +30,7 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
 #frame-preview {
 	border: none;
 	width: 100%;
-	min-height: 528px;
+	min-height: 560px;
 }
 .mytooltip {
   border-radius: 5px !important;
@@ -47,11 +48,18 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
 .btn.btn-ctrl:focus {
 	box-shadow: none !important;
 } 
+#frame-preview p + pre, #frame-preview ul + pre {
+  background: linear-gradient(45deg,#ddd,#d6c9c9);
+  padding: 10px;
+  max-width: 90%;
+  margin: 20px auto;
+  border-radius: 10px;
+}
 </style>
 </head>
 <body id="page-top">
 	<div class="alert-auto">
-		<h4 class="m-0"></h4>
+		<p class="m-1"></p>
 	</div>
   <div id="wrapper">
 		<?php if (!$editPage) { ?>
@@ -89,7 +97,7 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
             <!-- active -->
             <a class="collapse-item" href="<?=base_url('a')?>/less/beginner">Beginner</a>
             <a class="collapse-item" href="<?=base_url('a')?>/less/intermediate">Intermediate</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/less/advanced">Advanced</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/less/advance">Advance</a>
           </div>
         </div>
       </li>
@@ -127,7 +135,15 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
         </div>
       </li>
 
-      <hr class="sidebar-divider d-none d-md-block">
+      <hr class="sidebar-divider d-none d-md-block my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-logout">
+          <i class="fas fa-fw fa-sign-out-alt"></i>
+          <span>Logout</span></a>
+      </li>
+
+      <hr class="sidebar-divider">
 
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

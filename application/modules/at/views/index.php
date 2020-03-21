@@ -24,8 +24,8 @@
                     class="btn btn-outline-white">Ayo Pelajari</a></p>
               </div>
               <div class="col-lg-5 iphone-wrap">
-                <img src="assets/img/feed/snippet.png" alt="Image" class="phone-1" data-aos="fade-right">
-                <img src="assets/img/feed/easy.gif" alt="Image" class="phone-2" data-aos="fade-right" data-aos-delay="200">
+                <img src="<?=base_url()?>assets/img/feed/snippet.png" alt="Image" class="phone-1" data-aos="fade-right">
+                <img src="<?=base_url()?>assets/img/feed/easy.gif" alt="Image" class="phone-2" data-aos="fade-right" data-aos-delay="400">
               </div>
             </div>
           </div>
@@ -38,8 +38,8 @@
       <div class="container">
 
         <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-5" data-aos="fade-up">
-            <h2 class="section-heading">Dokumentasiku untuk JavaScript</h2>
+          <div class="col-md-6" data-aos="fade-up">
+            <h2 class="section-heading">Belajar JavaScript</h2>
           </div>
         </div>
 
@@ -47,28 +47,28 @@
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <span class="icon la la-users"></span>
+                <span class="icon fa fa-archive"></span>
               </div>
-              <h3 class="mb-3">Materi Belajar yang Simpel</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3 class="mb-3">Materi Belajar Simpel</h3>
+              <p>Tersedia materi belajar dengan metode yang simpel dan mudah dipahami.</p>
             </div>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <span class="icon la la-toggle-off"></span>
+                <span class="icon fa fa-laptop"></span>
               </div>
               <h3 class="mb-3">Dilengkapi Live Code Editor</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <p>Setiap materi disediakan contoh kode yang relevan dan siap untuk dijalankan.</p>
             </div>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <span class="icon la la-umbrella"></span>
+                <span class="icon fa fa-code"></span>
               </div>
-              <h3 class="mb-3">Kurikulum belajar yang Up to Date</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3 class="mb-3">Materi Up to Date</h3>
+              <p>Materi tentang JavaScript akan selalu kami berikan yang terupdate.</p>
             </div>
           </div>
         </div>
@@ -84,144 +84,29 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-4 mr-auto">
-            <h2 class="mb-4">Praktek menulis kode JavaScript</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio,
-              laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt
-              dolore mollitia esse natus beatae.</p>
-            <!-- <p><a href="#">Download Now</a></p> -->
+            <h2 class="mb-4">Praktek JavaScript</h2>
+            <p class="mb-4">Belajar tentang bagaimana sebuah program berbasis web dijalankan di dalam bahasa program JavaScript. Dari materi JavaScript yang paling dasar sampai pada materi tingkat yang paling lanjut, semua dokumentasinya tersedia di sini. Praktekkan kode snippet pada setiap materi yang ada untuk kemudian memahami bagaimana sistemnya bekerja.</p>
           </div>
           <div class="col-md-6" data-aos="fade-left">
-            <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+            <img src="<?=base_url()?>assets/img/feed/live.gif" alt="Image" class="img-fluid rounded shadow-lg">
           </div>
         </div>
       </div>
-    </div> <!-- .site-section -->
+    </div>
 
     <div class="site-section">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-4 ml-auto order-2">
-            <h2 class="mb-4">Kembangkan kreatifitas</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio,
-              laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt
-              dolore mollitia esse natus beatae.</p>
-            <p><a href="#">Download Now</a></p>
+            <h2 class="mb-4">Kembangkan Kreatifitas</h2>
+            <p class="mb-4">Berbekal pengetahuan tentang bahasa program JavaScript, mari bersama-sama untuk mengembangkan kreatifitas dalam membuat program yang bisa bermanfaat.</p>
           </div>
           <div class="col-md-6" data-aos="fade-right">
-            <img src="assets/img/feed/practice.gif" alt="Image" class="img-fluid">
-          </div>
-        </div>
-      </div>
-    </div> <!-- .site-section -->
-
-
-    <div class="site-section border-top border-bottom">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-4">
-            <h2 class="section-heading">Review From Our Users</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center text-center">
-          <div class="col-md-7">
-            <div class="owl-carousel testimonial-carousel">
-              <div class="review text-center">
-                <p class="stars">
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star muted"></span>
-                </p>
-                <h3>Excellent App!</h3>
-                <blockquote>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                    aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                    provident voluptates consectetur maiores quos.</p>
-                </blockquote>
-
-
-
-                <p class="review-user">
-                  <img src="img/person_1.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                  <span class="d-block">
-                    <span class="text-black">Jean Doe</span>, &mdash; App User
-                  </span>
-                </p>
-
-              </div>
-
-              <div class="review text-center">
-                <p class="stars">
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star muted"></span>
-                </p>
-                <h3>This App is easy to use!</h3>
-                <blockquote>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                    aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                    provident voluptates consectetur maiores quos.</p>
-                </blockquote>
-
-
-
-                <p class="review-user">
-                  <img src="img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                  <span class="d-block">
-                    <span class="text-black">Johan Smith</span>, &mdash; App User
-                  </span>
-                </p>
-
-              </div>
-
-
-              <div class="review text-center">
-                <p class="stars">
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star"></span>
-                  <span class="icofont-star muted"></span>
-                </p>
-                <h3>Awesome functionality!</h3>
-                <blockquote>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                    aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                    provident voluptates consectetur maiores quos.</p>
-                </blockquote>
-
-
-
-                <p class="review-user">
-                  <img src="img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                  <span class="d-block">
-                    <span class="text-black">Jean Thunberg</span>, &mdash; App User
-                  </span>
-                </p>
-
-              </div>
-            </div>
+            <img src="<?=base_url()?>assets/img/feed/practice.gif" alt="Image" class="img-fluid rounded shadow-lg">
           </div>
         </div>
       </div>
     </div>
 
-
-
-    <div class="site-section cta-section">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 mr-auto text-center text-md-left mb-5 mb-md-0">
-            <h2>Starts Publishing Your Apps</h2>
-          </div>
-          <div class="col-md-5 text-center text-md-right">
-            <p><a href="#" class="btn"><span class="icofont-brand-apple mr-3"></span>App store</a> <a href="#"
-                class="btn"><span class="icofont-ui-play mr-3"></span>Google play</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <?php quotes() ?>
   </main>

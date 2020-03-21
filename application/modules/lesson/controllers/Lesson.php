@@ -10,12 +10,9 @@ class Lesson extends CI_Controller
 
 	private function _temp_menu($lev)
 	{
-		$data['label'] = $this->Common_model->select_where(
-			'level',
-			'name,description,content',
-			['name' => $lev],
-			TRUE,TRUE
-		);
+		$data['label'] = $this->Common_model->select_where('level','*',['name' => $lev],TRUE,TRUE);
+		$slug = explode(' ',$data['label']['description']);
+		$data['label']['slug'] = 'Dokumentasi '.$slug[0].' Tingkat '.$slug[1];
 		$config['base_url'] = base_url('lesson/').$this->uri->segment(2);
 		$config['total_rows'] = $this->Common_model->counting(
 			'materi',['les_level'=>$lev,'les_publish'=>1]
@@ -25,8 +22,10 @@ class Lesson extends CI_Controller
 		$config['query_string_segment'] = 'page';
 		$config['per_page'] = 9;
 
-		$page = ($this->input->get('page')) ? $this->input->get('page') : 1;
-		$ilegal = round($config['total_rows']/$config['per_page']);
+		$pageNow = $this->input->get('page');
+		$page = ($pageNow) ? $pageNow : 1;
+		$ilegal = ceil($config['total_rows']/$config['per_page']);
+		// bug($config['total_rows']/9);
 		if ($page > $ilegal) {
 			not_found();
 			die();
@@ -34,7 +33,7 @@ class Lesson extends CI_Controller
 		$offset = ($page - 1) * $config['per_page'];
 		$all = $this->Common_model->select_where(
 			'materi',
-			'les_order,les_level,les_title,les_slug,les_meta,les_content,les_update',
+			'les_order,les_level,les_title,les_slug,les_content,les_update',
 			['les_level' => $lev,'les_publish' => 1],
 			TRUE,FALSE,
 			['les_order','asc'],
@@ -60,15 +59,15 @@ class Lesson extends CI_Controller
 			$rest[] = [
 				'num'			=> $k['les_order'],
 				'level' 	=> $k['les_level'],
-				'update'    => date('M d, Y',$k['les_update']),
-				'title' 		=> $k['les_title'],
-				'slug' 			=> $k['les_slug'],
-				'link' 			=> base_url('lesson/docs/').$k['les_meta'],
-				'content'   => read_more($k['les_content'],200)
+				'update'  => date('M d, Y',$k['les_update']),
+				'title' 	=> $k['les_title'],
+				'slug' 		=> $k['les_slug'],
+				'link' 		=> base_url('lesson/docs/').create_slug($k['les_slug']),
+				'content' => read_more($k['les_content'],200)
 			];
 		}
 		$data['list'] = $rest;
-		$data['title'] = 'Hello World - Materi '.$data['label']['description'];
+		$data['title'] = 'My Note - Materi '.$data['label']['description'];
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('menu',$data);
 		$this->load->view('templates/mainFooter');
@@ -77,37 +76,39 @@ class Lesson extends CI_Controller
 	private function _temp_main($meta)
 	{
 		$meta  = $this->uri->segment(3);
-		$checkMeta = $this->Common_model->check_exist('materi',['les_meta' => $meta,'les_publish' => 1]);
+		$meta = str_replace('-',' ',$meta);
+		$checkMeta = $this->Common_model->check_materi($meta);
 		if(!$checkMeta){
 			not_found();
 		} else {
 			$this->load->library('disqus');
-			$s = $this->Common_model->select_where(
-				'materi',
-				'les_id,les_order,les_level,les_title,les_slug,les_meta,les_content,les_upload,les_update',
-				['les_meta' => $meta],
-				TRUE,TRUE
-			);
+			$s = $checkMeta;
 			$all = $this->Common_model->select_where(
 				'materi',
-				'les_meta,les_title,les_slug',
-				['les_level'=>$s['les_level'],'les_publish'=>1],
+				'les_title,les_slug',
+				['les_level' => $s['les_level'],'les_publish' => 1],
 				TRUE,FALSE,
 				['les_order','asc']
 			);
 			$data['title'] = $s['les_slug'];
-			$keyword = getTags($s['les_content'],'h3');
-			$keyword = (!empty($keyword)) ? implode(',', $keyword) : '';
-			$keyword = strtolower('belajar javascript, belajar '.$s['les_title'].', '.$keyword);
+			$data['label'] = $this->Common_model->select_specific('level','description',['name' => $s['les_level']]);
+			// $some = getTags($s['les_content'],'pre');
+			// bug($some);
+			$key1 = getTags($s['les_content'],'h3');
+			$key2 = getTags($s['les_content'],'h4');
+			$keyword = array_merge($key1,$key2);
+			
+			$meta_key = strtolower('belajar javascript, '.$s['les_slug'].', '.implode(', ',$keyword));
 			$data['lesson'] = [
 				'id'  		=> $s['les_id'],
 				'order' 	=> $s['les_order'],
 				'title' 	=> $s['les_slug'],
 				'titles' 	=> $s['les_title'],
-				'meta' 		=> $s['les_meta'],
+				'meta' 		=> create_slug($s['les_slug']),
 				'content' => $s['les_content'],
 				'description' => read_more($s['les_content'],250),
-				'keyword' => $keyword,
+				'keyword' => $meta_key,
+				'hint'		=> $key1,
 				'upload'	=> $s['les_upload'],
 				'update'	=> $s['les_update'],
 				'level'		=> $s['les_level'], 
@@ -115,10 +116,20 @@ class Lesson extends CI_Controller
 			];
 			foreach ($all as $key) {
 				$data['lesson']['menu'][] = [
-					'link' => base_url('lesson/docs/').$key['les_meta'],
+					'link' => base_url('lesson/docs/').create_slug($key['les_slug']),
 					'title' => $key['les_slug']
 				];
 			}
+			// select_where($table,$data,$where='',$array=TRUE,$single=FALSE,$order='',$limit='')
+			$next = $this->Common_model->select_where(
+				'materi','les_slug',['les_order >'=> $s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','ASC'],1
+			);
+			$prev = $this->Common_model->select_where(
+				'materi','les_slug',['les_order <'=>$s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','DESC'],1
+			);
+			$data['linkNext'] = ($next) ? base_url('lesson/docs/'.create_slug($next['les_slug'])) : '#';
+			$data['linkPrev'] = ($prev) ? base_url('lesson/docs/'.create_slug($prev['les_slug'])) : '#';
+			// bug($data['linkNext']);
 			$this->load->view('templates/mainHeader', $data);
 			$this->load->view('single_lesson',$data);
 			$this->load->view('templates/mainFooter');
@@ -128,7 +139,10 @@ class Lesson extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Materi JavaScript';
+		$data['label'] = $this->Common_model->select_where('level','*','',TRUE,FALSE);
+		// bug($this->db->last_query());
+		// bug($data['label']);
+		$data['title'] = 'My Note - Materi JavaScript';
 		$this->load->view('templates/mainHeader',$data);
 		$this->load->view('index',$data);
 		$this->load->view('templates/mainFooter',$data);
@@ -136,25 +150,24 @@ class Lesson extends CI_Controller
 
 	public function beginner()
 	{
-		$data['title'] = 'Dasar-dasar JavaScript';
+		$data['title'] = 'My Note - JavaScript Dasar';
 		$data['list'] = $this->_temp_menu('beginner');
 	}
 	public function intermediate()
 	{
-		$data['title'] = 'DOM JavaScript';
+		$data['title'] = 'My Note - JavaScript DOM';
 		$data['list'] = $this->_temp_menu('intermediate');
 	}
-	public function advanced()
+	public function advance()
 	{
-		$data['title'] = 'JavaScript Lajutan';
-		$data['list'] = $this->_temp_menu('advanced');
+		$data['title'] = 'My Note - JavaScript Lajutan';
+		$data['list'] = $this->_temp_menu('advance');
 	}
 
 	public function docs($meta)
 	{
 		$this->_temp_main($meta);
 	}
-
 
 
 

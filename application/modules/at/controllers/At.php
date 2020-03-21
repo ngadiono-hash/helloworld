@@ -33,9 +33,10 @@ class At extends CI_Controller
 	{
 		$this->facebook->destroy_session();
 		session_destroy();
-		if ( isset($_COOKIE['c_user']) ) {
-			$token = $_COOKIE['c_user'];
-			delete_cookie('c_user');
+		if ( isset($_COOKIE['_no']) ) {
+			$token = $_COOKIE['_lang'];
+			delete_cookie('_no');
+			delete_cookie('_lang');
 			$this->Common_model->delete('user_cookie',['token' => $token]);
 		}
 		redirect('at/sign');
@@ -45,26 +46,9 @@ class At extends CI_Controller
 	public function sign()
 	{
 		if ( startSession('sess_id') ) {
-			redirect(base_url());
+			redirect('at');
 		} else {
-			$user = [];
-			if($this->facebook->is_authenticated()){
-				$fb = $this->facebook->request('get', '/me?fields=first_name,last_name,email,link,gender');
-				$user['provider'] = 'facebook';
-				$user['role']     = 3;
-				$user['uid']      = date('mdHis',time());
-				$user['username'] = !empty($fb['first_name']) && !empty($fb['last_name']) ? strtolower($fb['first_name']).' '.strtolower($fb['last_name']) : '';
-				$user['email']    = !empty($fb['email']) ? $fb['email'] : '';
-				$user['image']    = 'default.gif';
-				$user['name']     = !empty($fb['first_name']) && !empty($fb['last_name']) ? $fb['first_name'] .' '. $fb['last_name'] : '';
-				$user['gender']   = !empty($fb['gender']) ? $fb['gender'] : 'Laki-laki';
-				$checkIn = $this->At_model->checkUserFb($user);
-				if($checkIn){
-					$direct = (startSession('reff_page')) ? base_url(getSession('reff_page')) : base_url('a');
-					redirect($direct);
-				}
-			}
-			$data['title'] = 'Masuk atau Daftar di Hello World';
+			$data['title'] = 'Welcome Administrator';
 			$this->load->view('templates/mainHeader',$data);
 			$this->load->view('login',$data);
 			$this->load->view('templates/mainFooter',$data);

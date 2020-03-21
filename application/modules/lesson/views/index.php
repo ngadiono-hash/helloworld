@@ -19,7 +19,7 @@
           <div class="row justify-content-center">
             <div class="col-md-7 text-center hero-text">
               <h1 data-aos="fade-up" data-aos-delay="">Materi JavaScript</h1>
-              <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Tersedia materi pembelajaran JavaScript dari dasar sampai tingkat lanjutan</p>  
+              <h3 class="mb-5 text-white" data-aos="fade-up" data-aos-delay="100">Dokumentasi tentang bahasa program JavaScipt</h3>  
             </div>
           </div>
         </div>
@@ -28,154 +28,52 @@
     
   </div>
 
-  
+
 
   <div class="site-section pb-0">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-4 mr-auto">
-          <h2 class="mb-4">Dasar-dasar JavaScript</h2>
-          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
+          <h2 class="mb-4"><?=$label[0]['description']?></h2>
+          <p class="mb-4"><?=$label[0]['content']?></p>
           <p><a class="btn btn-primary" href="<?=base_url()?>lesson/beginner">Mulai Belajar</a></p>
         </div>
         <div class="col-md-6" data-aos="fade-left">
-          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+          <a href="<?=base_url()?>lesson/beginner"><img src="<?=base_url()?>assets/img/feed/jsbasic.png" alt="Image" class="img-fluid shadow-lg"></a>
         </div>
       </div>
     </div>
-  </div> <!-- .site-section -->
-
+  </div>
+  
   <div class="site-section">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-4 ml-auto order-2">
-          <h2 class="mb-4">DOM JavaScript</h2>
-          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
-          <p><a href="<?=base_url()?>lesson/intermediate">Read More</a></p>
+          <h2 class="mb-4"><?=$label[1]['description']?></h2>
+          <p class="mb-4"><?=$label[1]['content']?></p>
+          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/intermediate">Mulai Belajar</a></p>
         </div>
         <div class="col-md-6" data-aos="fade-right">
-          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
+          <a href="<?=base_url()?>lesson/intermediate"><img src="<?=base_url()?>assets/img/feed/jsmedium.png" alt="Image" class="img-fluid shadow-lg"></a>
         </div>
       </div>
     </div>
-  </div> <!-- .site-section -->
+  </div>
 
   <div class="site-section pb-0">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-4 mr-auto">
-          <h2 class="mb-4">JavaScript Tingkat Lanjut</h2>
-          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio, laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt dolore mollitia esse natus beatae.</p>
-          <p><a href="<?=base_url()?>lesson/advanced">Read More</a></p>
+          <h2 class="mb-4"><?=$label[2]['description']?></h2>
+          <p class="mb-4"><?=$label[2]['content']?></p>
+          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/advance">Mulai Belajar</a></p>
         </div>
         <div class="col-md-6" data-aos="fade-left">
-          <img src="assets/img/feed/live.gif" alt="Image" class="img-fluid">
-        </div>
-      </div>
-    </div>
-  </div> <!-- .site-section -->
-
-
-  <div class="site-section border-top border-bottom">
-    <div class="container">
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-md-4">
-          <h2 class="section-heading">Review From Our Users</h2>
-        </div>
-      </div>
-      <div class="row justify-content-center text-center">
-        <div class="col-md-7">
-          <div class="owl-carousel testimonial-carousel">
-            <div class="review text-center">
-              <p class="stars">
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star muted"></span>
-              </p>
-              <h3>Excellent App!</h3>
-              <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
-              </blockquote>
-
-              
-
-              <p class="review-user">
-                <img src="img/person_1.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                <span class="d-block">
-                  <span class="text-black">Jean Doe</span>, &mdash; App User
-                </span>
-              </p>
-
-            </div>
-
-            <div class="review text-center">
-              <p class="stars">
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star muted"></span>
-              </p>
-              <h3>This App is easy to use!</h3>
-              <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
-              </blockquote>
-
-              
-
-              <p class="review-user">
-                <img src="img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                <span class="d-block">
-                  <span class="text-black">Johan Smith</span>, &mdash; App User
-                </span>
-              </p>
-
-            </div>
-
-
-            <div class="review text-center">
-              <p class="stars">
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star"></span>
-                <span class="icofont-star muted"></span>
-              </p>
-              <h3>Awesome functionality!</h3>
-              <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi, provident voluptates consectetur maiores quos.</p>
-              </blockquote>
-
-              
-
-              <p class="review-user">
-                <img src="img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                <span class="d-block">
-                  <span class="text-black">Jean Thunberg</span>, &mdash; App User
-                </span>
-              </p>
-
-            </div>
-          </div>
+          <a href="<?=base_url()?>lesson/advance"><img src="<?=base_url()?>assets/img/feed/jsadvance.png" alt="Image" class="img-fluid shadow-lg"></a>
         </div>
       </div>
     </div>
   </div>
 
-  
-
-  <div class="site-section cta-section">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6 mr-auto text-center text-md-left mb-5 mb-md-0">
-          <h2>Starts Publishing Your Apps</h2>
-        </div>
-        <div class="col-md-5 text-center text-md-right">
-          <p><a href="#" class="btn"><span class="icofont-brand-apple mr-3"></span>App store</a> <a href="#" class="btn"><span class="icofont-ui-play mr-3"></span>Google play</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php quotes() ?>
 </main>

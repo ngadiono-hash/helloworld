@@ -75,13 +75,7 @@ $config['csrf_cookie_name'] = 'csrf_cookie';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
-	'xhra.*+',
-	'xhru/update_photo',
-	'u/progress',
-	'xhru/create_progress',
-	'xhrm/create_report',
-	'xhrm/search_tutor',
-	'xhrm/load_more_menu'
+	'xhra.*+'
 );
 
 $config['compress_output'] = FALSE;
