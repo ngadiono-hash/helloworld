@@ -13,7 +13,17 @@ class Common_model extends CI_Model
 		$this->datatables->from($table);
 		$this->datatables->where($where);
 		return $this->datatables->generate();
-	}	
+	}
+
+	function Ignited_join($select,$table,$tb,$fk,$tp,$where)
+	{
+		$this->datatables->select($select);
+		$this->datatables->from($table);
+		$this->datatables->join($tb,$fk,$tp);
+		$this->datatables->where($where);
+		$this->db->order_by('materi.les_order','asc');
+		return $this->datatables->generate();		
+	}
 
 	function check_exist($table,$where)
 	{
@@ -34,14 +44,16 @@ class Common_model extends CI_Model
 		return ($query->num_rows() > 0) ? $query->row_array() : FALSE;
 	}
 
-	function counting($table,$where)
+	function counting($table,$where='')
 	{
 		$this->db->from($table);
-		$this->db->where($where);
+		if ($where != '') {
+			$this->db->where($where);
+		}
 		return $this->db->count_all_results();
 	}
 
-	function select_where($table,$data,$where='',$array=TRUE,$single=FALSE,$order='',$limit='')
+	function select_where($table,$data,$where='',$array=TRUE,$single=FALSE,$order='',$limit='',$group='')
 	{
 		if (is_array($data) && isset($data[1])) {
 			$this->db->select($data[0],$data[1]);
@@ -65,6 +77,9 @@ class Common_model extends CI_Model
 			}else{
 				$this->db->limit($limit);
 			}
+		}
+		if($group != ''){
+			$this->db->group_by($group);
 		}
 		$query = $this->db->get();
 		if ($query) {
@@ -100,7 +115,6 @@ class Common_model extends CI_Model
 	}
 	function select_like($table,$data,$where,$single=FALSE,$field,$value,$orLikes='',$group_by='')
 	{
-		// select_like('materi','les_title',['les_public'=>1],FALSE,'les_key',$kata_kunci);
 		$this->db->select($data);
 		$this->db->from($table);
 		$this->db->like('LOWER(' . $field . ')', strtolower($value));
@@ -116,24 +130,57 @@ class Common_model extends CI_Model
 			$this->db->group_by($group_by);
 		}
 		$query = $this->db->get();
-
-
-
-
-		
-		//return $this->db->last_query();
 		if ($query->num_rows() > 0) {
-		// query returned results
 			if ($single == TRUE) {
 				return $query->row();
 			} else {
 				return $query->result();
 			}
 		} else {
-		// query returned no results
 			return FALSE;
 		}
-	}	
+	}
+
+	function select_join($table,$data,$join,$where='',$group,$order)
+	{
+		$this->db->select($data);
+		$this->db->from($table);
+		foreach ($joins as $k => $v) {
+			$this->db->join($v['table'], $v['condition'], $v['type'],(isset($v['escape'])?$v['escape']:TRUE));
+		}
+		if ($where != '') {
+			$this->db->where($where);
+		}
+		if($group != ''){
+			$this->db->group_by($group);
+		}
+		if($order !== ''){
+			if(is_array($order)){
+				$this->db->order_by($order[0],$order[1]);
+			}else{
+				$this->db->order_by($order);
+			}
+		}
+		$query = $this->db->get();
+		if ($query) {
+			if ($single == TRUE) {
+				if($array === FALSE) {
+					return $query->row();
+				}elseif($array === TRUE){
+					return $query->row_array();
+				}
+			} else {
+				if($array === FALSE){
+					return $query->result();
+				}elseif($array === TRUE){
+					return $query->result_array();
+				}
+			}
+		} else {
+			return FALSE;
+		}
+
+	}
 
 // ================= INSERT QUERY
 	function insert_record($table,$data)
@@ -146,9 +193,9 @@ class Common_model extends CI_Model
 		}
 	}
 
-	function insert_multiple($tbl, $data)
+	function insert_multiple($table, $data)
 	{
-		$query = $this->db->insert_batch($tbl, $data);
+		$query = $this->db->insert_batch($table, $data);
 		return $query;
 	}
 
@@ -168,11 +215,11 @@ class Common_model extends CI_Model
 	}
 
 // ================= UPDATE QUERY
-	function update($tbl,$data,$where)
+	function update($table,$data,$where)
 	{
 		$this->db->set($data);
 		$this->db->where($where);
-		$this->db->update($tbl);
+		$this->db->update($table);
 		$affectedRows = $this->db->affected_rows();
 		if ($affectedRows) {
 			return true;
@@ -180,10 +227,10 @@ class Common_model extends CI_Model
 			return $this->db->error();
 		}
 	}
-	function update_query($tbl, $field, $id, $data)
+	function update_query($table, $field, $id, $data)
 	{
 		$this->db->where($field, $id);
-		$this->db->update($tbl, $data);
+		$this->db->update($table, $data);
 		$affectedRows = $this->db->affected_rows();
 		if ($affectedRows) {
 			return TRUE;

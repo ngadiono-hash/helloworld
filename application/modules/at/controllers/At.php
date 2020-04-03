@@ -45,6 +45,7 @@ class At extends CI_Controller
 // ================ LOGIN / REGISTER
 	public function sign()
 	{
+		reload_session();
 		if ( startSession('sess_id') ) {
 			redirect('at');
 		} else {

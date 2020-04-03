@@ -1,9 +1,10 @@
 <?php
-$tablePage = whats_page(2,['less']);
+$lessonTable = whats_page(2,['less']);
 $editPage = whats_page(2,['editor']);
+$quizTable = whats_page(2,['quiz']);
 ?>
-	<div class="url d-none" data-url="<?=isset($getLesson) ? $getLesson : ''?>"></div>
-	<div id="result"></div>
+	<div class="url d-none" data-url="<?=isset($getData) ? $getData : ''?>"></div>
+	<!-- <div id="result"></div> -->
 
   </div> <!-- End of Content Wrapper -->
 
@@ -33,13 +34,20 @@ $editPage = whats_page(2,['editor']);
 
 <script src="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<?php if ($tablePage) {
+<script src="<?=base_url()?>assets/vendor/ckeditor/ckeditor.js"></script>
+<script src="<?=base_url()?>assets/vendor/ckeditor/adapters/jquery.js"></script>
+<?php
+if ($lessonTable || $quizTable) {
+	echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
+}
+if ($lessonTable) {
 echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
 // echo '<script src="'.base_url().'assets/js/dt_lesson.js"></script>';
-} ?>
-<?php if ($editPage) {
-echo '<script src="'.base_url().'assets/vendor/ckeditor/ckeditor.js"></script>';
-echo '<script src="'.base_url().'assets/vendor/ckeditor/adapters/jquery.js"></script>';
+}
+if ($quizTable) {
+echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>';
+}
+if ($editPage) {
 echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>';
 echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>';
 echo '<script src="'.base_url().'assets/vendor/resize/resiz.js"></script>';
@@ -47,9 +55,13 @@ echo '<script src="'.base_url().'assets/js/conf.js"></script>';
 } ?>
 
 
-<script id="main-script">
+<script id="mainScript">
+let label = window.location.pathname.split('/').pop();
 function logout(){
   window.location.href = host + 'at/logout';
+}
+function bug(n){
+	console.log(n)
 }
 $(function(){
 	var url = window.location;
@@ -62,12 +74,205 @@ $(function(){
 	}).parentsUntil("collapse").removeClass('show').addClass('show');
 });
 </script>
+<?php if ($quizTable) { ?>
+<script>
+	$(document).ready(function() {
+		const modalQuiz = $('#modal-quiz');
+		const tableQuiz = $('#table-quiz');
+		CKEDITOR.replace('ckquiz',{ customConfig: `${host}assets/js/cke.js` });
+		$('#select-for').selectpicker({ liveSearch: true,size: 5,title: 'select quiz' });
+		$('#select-answer').selectpicker({title: 'correct answer'});
+		
+		$('.btn-modal').click(function() {
+			modalQuiz.modal('show');
+			modalQuiz.find('h3').html('Add New Quiz');
+		});
+
+		modalQuiz.on('hide.bs.modal',function(){
+			CKEDITOR.instances.ckquiz.setData('');
+			$('#select-for,#select-answer').val('').attr('disabled',false).selectpicker('refresh');
+			modalQuiz.find('input').val('');
+		});
+
+		tableQuiz.on('click','.btn-quest',function(e) {
+			let id = $(e.target).parents('tr').data('id');
+			$.ajax({
+				url : host + 'xhra/fetch_quiz',
+				type : 'POST',
+				dataType : 'json',
+				data : { id: id },
+				success : function(data){
+					modalQuiz.modal('show');
+					modalQuiz.find('h3').html('Edit this Quiz : #' +id);
+					modalQuiz.find('#select-for').attr('disabled',true);
+					$('#id').val(data.id);
+					let answerInArr = data.q_answer.split(',');
+					for (let i = 0; i <= answerInArr.length; i++) {
+						$('#choice'+(i+1)).val(answerInArr[i]);
+					}
+					CKEDITOR.instances.ckquiz.setData(data.q_question);
+					$('#select-for').val(data.q_rel).selectpicker('refresh');
+					$('#select-answer').val(data.q_correct).selectpicker('refresh');
+				}
+			});
+		});
+		tableQuiz.on('click','.btn-trash',function(e) {
+			let id = $(e.target).parents('tr').data('id');
+			let conf = confirm('Are you sure want to delete this ?');
+			if (conf) {
+				$.ajax({
+					url : host + 'xhra/delete_quiz',
+					type : 'POST',
+					dataType : 'json',
+					data : { id: id },
+					success : function(data){
+						if (data[0] == 1) {
+							reloadTable('#table-quiz');
+						}
+						myAlert(data);
+					}
+				});
+			}
+		});
+		
+		modalQuiz.on('click','#btn-action-quiz',function() {
+			var inputs = $('#add-answer input[name="choice[]"]'),
+			    names  = [].map.call(inputs,function(input) {
+			      return input.value;
+			    }).join(',');
+			var datax = {
+				id : $('#id').val(),
+				rel : $('#select-for').val(),
+				label : label,
+				question : CKEDITOR.instances.ckquiz.getData(),
+				answer : names,
+				correct : $('#select-answer').val()
+			};
+			$.ajax({
+				url : host + 'xhra/create_quiz',
+				type : 'POST',
+				dataType : 'json',
+				data : datax,
+				success: function(data){
+					if (data[0] == 1) {
+						CKEDITOR.instances.ckquiz.setData('');
+						$('#select-for,#select-answer').val('').selectpicker('refresh');
+						modalQuiz.find('input').val('');
+						modalQuiz.modal('hide');
+						reloadTable('#table-quiz');
+					}
+					myAlert(data);
+				}
+			});
+		});
+
+		$.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings){
+			return {
+				"iStart": oSettings._iDisplayStart,
+				"iEnd": oSettings.fnDisplayEnd(),
+				"iLength": oSettings._iDisplayLength,
+				"iTotal": oSettings.fnRecordsTotal(),
+				"iFilteredTotal": oSettings.fnRecordsDisplay(),
+				"iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+				"iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+			};
+		};
+		tableQuiz.dataTable({
+			initComplete: function() {
+				var api = this.api();
+				$('#data-table_filter input')
+						.off('.DT')
+						.on('input.DT', function() {
+								api.search(this.value).draw();
+				});
+			},
+			ajax:
+			{
+				url : host + $('.url').data('url'),
+				type : "POST",
+				data : { param : label }
+			},
+			createdRow: function( row, data, dataIndex, cells ) {
+				var	id 		= data['id'],
+						cor   = data['q_correct'],
+						ans   = data['q_answer'].split(','),
+						quest = data['q_question'].replace(/<\/?[^>]+(>|$)/g,''),
+						correct = '';
+						switch(cor) {
+							case '1': 
+								correct = 'A'; break;
+							case '2': 
+								correct = 'B'; break;
+							case '3': 
+								correct = 'C'; break;
+							case '4': 
+								correct = 'D'; break;
+							default:
+								correct = '*'; 
+						}
+				$(row).attr('data-id', id);
+				$(cells[3]).html(`<button class="btn btn-block btn-outline-primary btn-quest">${quest.substr(0,75)}</button>`);
+				$(cells[4]).html(`<button class="btn btn-block btn-outline-primary btn-answer" data-correct="${cor}" data-choice="${ans}"><i class="fa fa-question"></i></button>`);
+				$(cells[5]).html(`<button class="btn btn-block btn-outline-danger btn-trash">${correct}</button>`);
+			}, 
+			"columnDefs": [
+				{ "targets": 0, "data": null, "width": "50px", orderable: false },
+				{ "targets": 1,	"data": 'les_title', "width": "130px", orderable: true, 'className': 'text-left' },
+				{ "targets": 2, "data": 'q_order', "width": "50px", orderable: true },
+				{ "targets": 3, "data": null, orderable: false },
+				{ "targets": 4, "data": null, "width": "100px", orderable: false },
+				{ "targets": 5, "data": null, "width": "50px", orderable: false }
+			],
+			"lengthMenu": [[10,20,30,50,100,-1], [10,20,30,50,100, "All"]],
+			"displayLength": 10,
+			"lengthChange": true,
+			"searching": false,
+			"info": true,
+			"scrollY": '70vh',
+			"scrollCollapse": false,
+			"paginate": true,
+			"filter": false,
+			"responsive": true,
+			"processing": true,
+			"serverSide": true,
+			"order": [[1,"asc"]],
+			"oLanguage": {
+				sProcessing: '<i class="fa fa-cog fa-spin fa-10x fa-fw"></i>',
+			},
+			rowCallback: function(row, data, iDisplayIndex) {
+				var info = this.fnPagingInfo();
+				var page = info.iPage;
+				var length = info.iLength;
+				var index = page * length + (iDisplayIndex + 1);
+				$('td:eq(0)', row).html(index);
+				$(function(){
+				  $('body').popover({
+            html: true,
+            selector: '.btn-answer',
+            trigger: 'hover',
+            placement: 'left',
+            content : function() {
+            	var cor = $(this).data('correct');
+            	var keys = $(this).data('choice').split(',').map(function(index,elem) {
+            		var i = '';
+            		i += `<span class="${(elem == (cor - 1)) ? 'text-danger': ''}">${index}</span>`;
+            		return i;
+            	});
+            	
+            	return '<div class="card"><div class="card-body">'+keys.join('<hr class="my-2">')+'</div></div>';
+            }
+          });
+				});
+			}
+		});
+	});
+</script>
+<?php } ?>
 
 
-<?php if($tablePage) { ?>
-<script id="lesson-dataTable">
+<?php if($lessonTable) { ?>
+<script id="lessonDataTable">
 	let lessonTable = $('#lesson-table');
-	let label = window.location.pathname.split('/').pop();
 	// =================== EDIT ORDER
 	$("#lesson-table tbody").sortable({
 		placeholder : "ui-state-highlight",

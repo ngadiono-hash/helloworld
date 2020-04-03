@@ -20,7 +20,7 @@
 }
 .blog-content .code-toolbar {
   max-width: 800px;
-  margin: 10px -20px;
+  margin: 10px;
   margin-bottom: 30px;
   position: relative;
 }
@@ -37,9 +37,7 @@
   background: linear-gradient(-45deg, #86dbe9, #27857e);
 }
 .blog-content .wrapper-content {
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+  padding-top: 20px;
 }
 .note {
   position: relative;
@@ -65,10 +63,10 @@
 :not(pre) > code[class*="language-"] {
   padding: 0 2px;
 }
-.blog-content .anchor {
+span.anchor {
   display: block;
-  height: 130px;
-  margin-top: -130px;
+  height: 155px;
+  margin-top: -155px;
   visibility: hidden;
 }
 

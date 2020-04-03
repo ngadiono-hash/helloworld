@@ -11,7 +11,6 @@ class XhrM extends CI_Controller
 
 	private function getUserDataByEmail($post_email)
 	{
-		// select_where($table,$data,$where,$array=TRUE,$single=FALSE,$order='',$limit='')
 		$query = $this->Common_model->select_where(
 			'users',
 			'u_id AS id,u_username AS username,u_email AS email,u_active AS active,u_register AS register,
@@ -21,6 +20,75 @@ class XhrM extends CI_Controller
 		);
 		return $query;
 	}
+
+	public function get_quiz()
+	{	
+		$score = 0;
+		$post = $this->input->post('quest');
+		foreach ($post as $k => $v) {
+			$test[$k] = $this->Common_model->select_where('quiz','*',['id'=>$v['id']],true,true);
+			$true[$k] = explode(',',html_entity_decode($test[$k]['q_answer']));
+			if (isset($v['ch'])) {
+				if ($v['ch'] == $test[$k]['q_correct']) {
+					$score++;
+					$return = true;
+				} else {
+					$return = false;
+				}
+			} else {
+				$return = false;
+			}
+			$result['evaluate'][$k] = [
+				'question' => $test[$k]['q_question'],
+				'correct' => $true[$k][$test[$k]['q_correct']-1],
+				'yours' => (isset($v['ch'])) ? $true[$k][$v['ch']-1] : null,
+				'result' => $return
+			];
+		}
+		$result['plain'] = [];
+		$result['score'] = $score / count($post) * 100;
+		  if ($result['score'] == 100) {
+		    $img = 'horray.gif';
+		    $h3 = 'baik sekali';
+		    $h4 = 'semua soal berhasil dijawab dengan benar';
+		  } else if ($result['score'] == 0) {
+		  	$img = 'no.gif';
+		  	$h3 = '...';
+		  	$h4 = 'tidak ada soal yang dijawab dengan benar';
+		  } else if ($result['score'] >= 75) {
+		    $img = 'ok.gif';
+		    $h3 = 'kamu punya bakat, tetap asah logikamu lagi';
+		    $h4 = 'dari '.count($post).' soal, '.$score.' di antaranya berhasil dijawab dengan benar';
+		  } else if ($result['score'] >= 50) {
+		    $img = 'mikir.gif';
+		    $h3 = 'lumayan bagus lah sejauh ini';
+		    $h4 = 'kamu bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		  } else if ($result['score'] >= 25) {
+		  	$img = 'hmm.gif';
+		  	$h3 = 'coba lebih serius dalam belajar';
+		  	$h4 = 'kamu hanya bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		  } else {
+		    $img = 'ouch.gif';
+		    $h3 = 'baca dokumentasi materi dengan lebih teliti';
+		    $h4 = 'kamu hanya bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		  }
+			$result['plain'] = ['img' => $img,'h3' => $h3,'h4' => $h4];
+		
+		echo json_encode($result);
+	}
+	
+	// public function get_exercise()
+	// { 
+	// 	$level = $this->input->post('level');
+	// 	$sql = "SELECT A.id,les_title,q_question,q_answer 
+	// 					FROM quiz AS A
+	// 					JOIN materi AS B ON B.les_id = A.q_rel
+	// 					WHERE q_level = '".$level."'
+	// 					GROUP BY q_rel
+	// 					ORDER BY les_order ASC";
+	// 	$result = $this->db->query($sql)->result_array();
+	// 	echo json_encode($result);
+	// }
 
 	public function search()
 	{
@@ -33,8 +101,6 @@ class XhrM extends CI_Controller
 					$search_exploded = filterSearchKeys($term);
 
 					foreach($search_exploded as $key){
-						// $this->db->like('les_title',strtolower($term));
-						// $this->db->or_like('les_slug',strtolower($term));
 						$this->db->or_like('les_key',strtolower($key));
 					}
 				} else {
@@ -43,7 +109,6 @@ class XhrM extends CI_Controller
 				$this->db->where('les_publish',1);
 				$run = $this->db->get();
 				$search_results = $run->num_rows();
-				// bug($this->db->last_query());
 				if ($search_results === 0) {
 				  $result = [0,'Maaf, tidak ada hasil ditemukan untuk pencarian <br><b>"'.$term.'"</b>'];
 				} else {
@@ -110,19 +175,21 @@ class XhrM extends CI_Controller
 				$check = $this->Common_model->check_exist('user_cookie',['email' => $post_email]);
 				if ($check) {
 					$this->Common_model->delete('user_cookie',['email' => $post_email]);
-				}
-				$exe = $this->Common_model->insert_record('user_cookie',$data);
-				if ($exe) {
-					setcookie('_no',$id,$expired,'/');
-					setcookie('_lang',$token,$expired,'/');
+				} else {
+					$exec = $this->Common_model->insert_record('user_cookie',$data);
+					if ($exec) {
+						setcookie('_no',$id,$expired,'/');
+						setcookie('_lang',$token,$expired,'/');
+					}
 				}
 			}
+			die();
 			$user_session = [
 				'sess_log'  => true,
 				'sess_id'   => $userLogged['id'],
 				'sess_role' => $userLogged['role']
 			];
-			$this->session->set_userdata($user_session);
+			// $this->session->set_userdata($user_session);
 			$direct = (startSession('reff')) ? getSession('reff') : 'a';
 			$this->session->unset_userdata(['reff','access']);
 			$result = [1,"Please Wait <i class='fa fa-spinner fa-spin'></i>",$direct];

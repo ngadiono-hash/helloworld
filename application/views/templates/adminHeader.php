@@ -1,6 +1,8 @@
 <?php
 reload_session();
-$tablePage = whats_page(2,['less']);
+// bug($_SESSION);
+$lessonTable = whats_page(2,['less']);
+$quizTable = whats_page(2,['quiz']);
 $editPage = whats_page(2,['editor']);
 ?>
 <!DOCTYPE html>
@@ -16,7 +18,10 @@ $editPage = whats_page(2,['editor']);
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/global.css">
-<?php if ($tablePage) {
+<?php if ($quizTable) {
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
+} ?>
+<?php if ($lessonTable) {
 echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
 } ?>
 <?php if ($editPage) {
@@ -54,6 +59,52 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
   max-width: 90%;
   margin: 20px auto;
   border-radius: 10px;
+}
+
+.btn-modal {
+  position: absolute;
+  top: 52px;
+  right: 30px;
+}
+.dataTables_processing {
+  position: absolute !important;
+  top: 235px !important;
+  right: 500px !important;
+}
+
+table thead tr th {
+  text-transform: capitalize;
+  text-align: center;
+  color: #808080;
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+.dataTable tbody tr {
+  border-bottom: 2px solid #808080;
+}
+.dataTable {
+  border-spacing: 1px;
+}
+.dataTable tbody .order {
+  cursor: grab;
+}
+.dataTable tbody tr td {
+  text-align: center;
+}
+.dataTable tbody tr:hover {
+  background-color: #d2d6de !important;
+}
+.dataTable tbody tr td .btn {
+  display: block;
+}
+.dataTable tbody tr td:hover {
+  background: linear-gradient(45deg,#ddd,#fff);
+  border-color: transparent;
+}
+.dataTable tbody tr td .btn.btn-title,
+.dataTable tbody tr td .btn.btn-slug,
+.dataTable tbody tr td .btn.btn-quest {
+  text-align: left;
 }
 </style>
 </head>
@@ -93,7 +144,6 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
         <!-- show -->
         <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">javascript</h6>
             <!-- active -->
             <a class="collapse-item" href="<?=base_url('a')?>/less/beginner">Beginner</a>
             <a class="collapse-item" href="<?=base_url('a')?>/less/intermediate">Intermediate</a>
@@ -105,15 +155,13 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
       <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Tutorials</span>
+          <span>Quiz</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Tutorial:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/beginner">Beginner</a>
+            <a class="collapse-item" href="utilities-border.html">Intermedate</a>
+            <a class="collapse-item" href="utilities-animation.html">Advance</a>
           </div>
         </div>
       </li>
@@ -129,7 +177,6 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="#">Login</a>
           </div>
         </div>

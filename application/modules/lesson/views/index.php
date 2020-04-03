@@ -1,44 +1,18 @@
 
 <main id="main">
-  <div class="hero-section inner-page">
-    <div class="wave">
-      
-      <svg width="1920px" height="265px" viewBox="0 0 1920 265" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
-                  <path d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,667 L1017.15166,667 L0,667 L0,439.134243 Z" id="Path"></path>
-              </g>
-          </g>
-      </svg>
-
-    </div>
-
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12">
-          <div class="row justify-content-center">
-            <div class="col-md-7 text-center hero-text">
-              <h1 data-aos="fade-up" data-aos-delay="">Materi JavaScript</h1>
-              <h3 class="mb-5 text-white" data-aos="fade-up" data-aos-delay="100">Dokumentasi tentang bahasa program JavaScipt</h3>  
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-
-
-
+  <?php wave('Materi JavaScript','Dokumentasi tentang bahasa program JavaScipt') ?>
   <div class="site-section pb-0">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4 mr-auto">
-          <h2 class="mb-4"><?=$label[0]['description']?></h2>
+      <div class="row align-items-center py-3">
+        <div class="col-md-6">
+          <h2 class="mb-4 text-center"><?=$label[0]['description']?></h2>
           <p class="mb-4"><?=$label[0]['content']?></p>
-          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/beginner">Mulai Belajar</a></p>
+          <div class="btn-block btn-group">
+            <a class="btn btn-default" href="<?=base_url()?>lesson/beginner">Mulai Belajar</a>
+            <a class="btn btn-default" href="<?=base_url()?>lesson/quiz/beginner">Mulai Latihan</a>
+          </div>
         </div>
-        <div class="col-md-6" data-aos="fade-left">
+        <div class="col-md-6 ml-auto" data-aos="fade-left">
           <a href="<?=base_url()?>lesson/beginner"><img src="<?=base_url()?>assets/img/feed/jsbasic.png" alt="Image" class="img-fluid shadow-lg"></a>
         </div>
       </div>
@@ -47,11 +21,14 @@
   
   <div class="site-section">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4 ml-auto order-2">
-          <h2 class="mb-4"><?=$label[1]['description']?></h2>
+      <div class="row align-items-center py-3">
+        <div class="col-md-6 mr-auto order-2">
+          <h2 class="mb-4 text-center"><?=$label[1]['description']?></h2>
           <p class="mb-4"><?=$label[1]['content']?></p>
-          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/intermediate">Mulai Belajar</a></p>
+          <div class="btn-block btn-group">
+            <a class="btn btn-default" href="<?=base_url()?>lesson/intermediate">Mulai Belajar</a>
+            <a class="btn btn-default" href="<?=base_url()?>lesson/quiz/intermediate">Mulai Latihan</a>
+          </div>
         </div>
         <div class="col-md-6" data-aos="fade-right">
           <a href="<?=base_url()?>lesson/intermediate"><img src="<?=base_url()?>assets/img/feed/jsmedium.png" alt="Image" class="img-fluid shadow-lg"></a>
@@ -60,15 +37,18 @@
     </div>
   </div>
 
-  <div class="site-section pb-0">
+  <div class="site-section pb-6">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4 mr-auto">
+      <div class="row align-items-center py-3">
+        <div class="col-md-6">
           <h2 class="mb-4"><?=$label[2]['description']?></h2>
           <p class="mb-4"><?=$label[2]['content']?></p>
-          <p><a class="btn btn-primary" href="<?=base_url()?>lesson/advance">Mulai Belajar</a></p>
+          <div class="btn-block btn-group">
+            <a class="btn btn-default" href="<?=base_url()?>lesson/advance">Mulai Belajar</a>
+            <a class="btn btn-default" href="<?=base_url()?>lesson/quiz/advance">Mulai Latihan</a>
+          </div>
         </div>
-        <div class="col-md-6" data-aos="fade-left">
+        <div class="col-md-6 ml-auto" data-aos="fade-left">
           <a href="<?=base_url()?>lesson/advance"><img src="<?=base_url()?>assets/img/feed/jsadvance.png" alt="Image" class="img-fluid shadow-lg"></a>
         </div>
       </div>

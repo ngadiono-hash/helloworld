@@ -75,6 +75,37 @@ class Lesson extends CI_Controller
 
 	private function _temp_main($meta)
 	{
+
+	}
+
+
+	public function index()
+	{
+		$data['label'] = $this->Common_model->select_where('level','*','',TRUE,FALSE);
+		$data['title'] = 'My Note - Materi JavaScript';
+		$this->load->view('templates/mainHeader',$data);
+		$this->load->view('index',$data);
+		$this->load->view('templates/mainFooter',$data);
+	}
+
+	public function beginner()
+	{
+		$data['title'] = 'My Note - JavaScript Dasar';
+		$data['list'] = $this->_temp_menu('beginner');
+	}
+	public function intermediate()
+	{
+		$data['title'] = 'My Note - JavaScript DOM';
+		$data['list'] = $this->_temp_menu('intermediate');
+	}
+	public function advance()
+	{
+		$data['title'] = 'My Note - JavaScript Lajutan';
+		$data['list'] = $this->_temp_menu('advance');
+	}
+
+	public function docs()
+	{
 		$meta  = $this->uri->segment(3);
 		$meta = str_replace('-',' ',$meta);
 		$checkMeta = $this->Common_model->check_materi($meta);
@@ -90,10 +121,14 @@ class Lesson extends CI_Controller
 				TRUE,FALSE,
 				['les_order','asc']
 			);
+			$data['quiz'] = $this->Common_model->select_where(
+				'quiz',
+				'id,q_question,q_answer',
+				['q_rel' => $s['les_id']]
+			);
 			$data['title'] = $s['les_slug'];
 			$data['label'] = $this->Common_model->select_specific('level','description',['name' => $s['les_level']]);
-			// $some = getTags($s['les_content'],'pre');
-			// bug($some);
+			
 			$key1 = getTags($s['les_content'],'h3');
 			$key2 = getTags($s['les_content'],'h4');
 			$keyword = array_merge($key1,$key2);
@@ -120,6 +155,7 @@ class Lesson extends CI_Controller
 					'title' => $key['les_slug']
 				];
 			}
+
 			// select_where($table,$data,$where='',$array=TRUE,$single=FALSE,$order='',$limit='')
 			$next = $this->Common_model->select_where(
 				'materi','les_slug',['les_order >'=> $s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','ASC'],1
@@ -129,74 +165,30 @@ class Lesson extends CI_Controller
 			);
 			$data['linkNext'] = ($next) ? base_url('lesson/docs/'.create_slug($next['les_slug'])) : '#';
 			$data['linkPrev'] = ($prev) ? base_url('lesson/docs/'.create_slug($prev['les_slug'])) : '#';
-			// bug($data['linkNext']);
 			$this->load->view('templates/mainHeader', $data);
 			$this->load->view('single_lesson',$data);
 			$this->load->view('templates/mainFooter');
 		}
 	}
 
-
-	public function index()
+	public function quiz()
 	{
-		$data['label'] = $this->Common_model->select_where('level','*','',TRUE,FALSE);
-		// bug($this->db->last_query());
-		// bug($data['label']);
-		$data['title'] = 'My Note - Materi JavaScript';
-		$this->load->view('templates/mainHeader',$data);
-		$this->load->view('index',$data);
-		$this->load->view('templates/mainFooter',$data);
+		$level = $this->uri->segment(3);
+		$fetch = $this->Common_model->check_exist('level',['name'=>$level]);
+		if (!$fetch) {
+			not_found();
+		} else {
+			$data['quiz'] = $this->Common_model->select_where(
+				'quiz',
+				'id,q_question,q_answer',
+				['q_level' => $level, 'q_active' => 1]
+			);
+			$data['title'] = 'My Note - Quiz JavaScript '.ucwords($level);
+			$data['titles'] = $this->Common_model->select_specific('level','description',['name' => $level]);
+			$this->load->view('templates/mainHeader', $data);
+			$this->load->view('quiz',$data);
+			$this->load->view('templates/mainFooter');
+		}
 	}
-
-	public function beginner()
-	{
-		$data['title'] = 'My Note - JavaScript Dasar';
-		$data['list'] = $this->_temp_menu('beginner');
-	}
-	public function intermediate()
-	{
-		$data['title'] = 'My Note - JavaScript DOM';
-		$data['list'] = $this->_temp_menu('intermediate');
-	}
-	public function advance()
-	{
-		$data['title'] = 'My Note - JavaScript Lajutan';
-		$data['list'] = $this->_temp_menu('advance');
-	}
-
-	public function docs($meta)
-	{
-		$this->_temp_main($meta);
-	}
-
-
-
-
-	// public function html($meta='')
-	// {
-	// 	if (empty($meta)) {
-	// 		$this->_temp_menu(1);
-	// 	} else {
-	// 		$this->_temp_main($meta,1,['btn-html','html_logo.png','#E44D26','#EE8F77']);
-	// 	}
-	// }
-
-	// public function css($meta='')
-	// {
-	// 	if (empty($meta)) {
-	// 		$this->_temp_menu(2);
-	// 	} else {
-	// 		$this->_temp_main($meta,2,['btn-css','css_logo.png','#264DE4','#778FEE']);
-	// 	}
-	// }
-
-	// public function javascript($meta='')
-	// {
-	// 	if (empty($meta)) {
-	// 		$this->_temp_menu(3);
-	// 	} else {
-	// 		$this->_temp_main($meta,3,['btn-js','js_logo.png','#F3BE30','#F7D26E']);
-	// 	}
-	// }
 
 } // END

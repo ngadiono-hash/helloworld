@@ -25,23 +25,6 @@ class A extends CI_Controller
 		return $DB;
 	}
 
-	// private function getLevel($cat,$lev)
-	// {
-	// 	$ac = [];
-	// 	$aa = $this->Common_model->select_fields_where('tutor_lev','_name',['_cat' => $cat]);
-	// 	for ($i=0; $i < count($lev); $i++) {
-	// 		$ab[$i] = $this->Common_model->counting('materi','id',['snip_level' => $lev[$i], 'snip_bin' => 0]);
-	// 	}
-	// 	foreach ($aa as $key => $ax) {
-	// 		$ac [] = ['level_name' => $ax['_name'], 'counter' => $ab[$key] ];
-	// 	}
-	// 	return $ac;
-	// }
-
-	// private function onModalAdd($table,$data,$order)
-	// {
-	// 	// return $this->Common_model->select_fields($table,$data,false,true,$order);
-	// }
 	public function tes()
 	{
 		
@@ -60,7 +43,7 @@ class A extends CI_Controller
 		$third = $this->uri->segment(3);
 		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
 		if (!empty($third)) {
-			$data['getLesson'] = 'xhra/read_lesson/'.$third;
+			$data['getData'] = 'xhra/read_lesson/'.$third;
 			_temp_admin($data,'Lesson JavaScript '.$data['label'],'lesson_table');
 		} else {
 			not_found();
@@ -103,6 +86,23 @@ class A extends CI_Controller
 			$data['linkNext'] = ($next) ? base_url('a/editor/'.$label.'/'.$next[0]['les_order']) : '#';
 			$data['linkPrev'] = ($prev) ? base_url('a/editor/'.$label.'/'.$prev[0]['les_order']) : '#';
 			_temp_admin($data,'Edit - '.$edit['les_slug'],'lesson_edit');
+		}
+	}
+
+
+
+	public function quiz()
+	{
+		$third = $this->uri->segment(3);
+		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
+		$data['quiz'] = $this->Common_model->select_where(
+			'materi','les_id,les_title',['les_level'=>$third],true,false,['les_order','asc']
+		);
+		if (!empty($third)) {
+			$data['getData'] = 'xhra/read_quiz/'.$third;
+			_temp_admin($data,'Quiz '.$data['label'],'quiz_table');
+		} else {
+			not_found();
 		}
 	}
 

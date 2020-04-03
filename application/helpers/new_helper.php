@@ -131,13 +131,14 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	function reload_session()
 	{
 		$CI = get_instance();
-			if ( !startSession('sess_log') && isset($_COOKIE['_lang']) && isset($_COOKIE['_no']) ){
-				$id = getCookie('_no');
-				$token = getCookie('_lang');
-				$check = $CI->db->where(['token' => $token, 'expired >' => time()])->get('user_cookie');
+		if ( !startSession('sess_log') && isset($_COOKIE['_lang']) && isset($_COOKIE['_no']) ){
+			$id = getCookie('_no');
+			$token = getCookie('_lang');
+			$check = $CI->db->where(['token'=>$token])->get('user_cookie');
 
-				if ( $check->num_rows() > 0 ){
-					$user = $check->row_array();
+			if ( $check->num_rows() > 0 ) {
+				$user = $check->row_array();
+				if ($user['expired'] > time()) {
 					$getData = $CI->db->select('u_id,u_role,u_email')->where(['u_id' => $id])->get('users')->row_array();
 					if ( $token === hash('sha256',$getData['u_email']) ){
 						$data = [
@@ -146,12 +147,16 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 							'sess_role' => $getData['u_role']
 						];
 						$CI->session->set_userdata($data);
-						return true;
+						return true;	
 					}
 				} else {
+					delete_cookie('_no');
+					delete_cookie('_lang');
 					$CI->db->delete('user_cookie',['token' => $token]);
+					return false;
 				}
 			}
+		}
 	}
 
 

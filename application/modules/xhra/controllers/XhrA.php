@@ -19,6 +19,109 @@ class XhrA extends CI_Controller
 		);
 	}
 
+	public function read_quiz($param)
+	{
+		$content = $this->Common_model->Ignited_join(
+			'les_id,les_title,quiz.id,q_order,q_level,q_question,q_answer,q_correct',
+			'quiz',
+			'materi',
+			'quiz.q_rel = materi.les_id',
+			null,
+			['materi.les_level' => $param]
+			
+		);
+		echo $content;
+	}
+
+	public function create_lesson()
+	{
+		$title = trimChar_input('title');
+		$slug  = trimChar_input('slug');
+		$label = trimChar_input('label');
+		if (!$title) {
+			$result = 'title field is required';
+		} else {
+			if(!$slug) {
+				$result = 'slug field is required';
+			} else {
+				$id = create_rand($label);
+				$check = $this->Common_model->check_exist('materi',['les_id'=>$id]);
+				if ($check) {
+					$id = create_rand($label);
+				} else {
+					$order = $this->Common_model->counting('materi',['les_level'=>$label]);
+					$data = [
+						'les_id'			 => $id,
+					  'les_order'    => $order + 1,
+					  'les_title'    => ucwords($title),
+					  'les_slug'     => $slug,
+					  'les_level'    => $label,
+					  'les_upload'   => time(),
+					  'les_update'   => time()
+					];
+					$exec = $this->Common_model->insert_record('materi',$data);
+					$result = ($exec) ? [1,'success',null] : [0,'something error',null];
+				}
+			}
+		}
+		echo json_encode($result);
+	}
+
+	public function fetch_quiz()
+	{
+		$id = trimChar_input('id');
+		$result = $this->Common_model->select_where('quiz','*',['id' => $id],true,true);
+		echo json_encode($result);
+	}
+
+	public function create_quiz()
+	{
+		$id = $this->input->post('id');
+		$rel = trimChar_input('rel');
+		$label = trimChar_input('label');
+		$question = preg_replace('/&nbsp;/',' ',$this->input->post('question'));
+		$answer = htmlentities(trimChar_input('answer'));
+		$lenghtA = explode(',',$answer);
+		$lenghtA = in_array('',$lenghtA);
+		$correct = trimChar_input('correct');
+		
+		if (strlen($rel) === 0 || strlen($question) === 0 || $lenghtA || strlen($correct) === 0) {
+			$result = [0,'all input required',null];
+		} else {
+			if ($id == '') {
+				$order = $this->Common_model->counting('quiz',['q_rel'=>$rel]);
+				$data = [
+					'q_order' => $order + 1,
+					'q_rel' => $rel,
+					'q_level' => $label,
+					'q_question' => $question,
+					'q_answer' => $answer,
+					'q_correct' => $correct
+				];
+				$exec = $this->Common_model->insert_record('quiz',$data);
+				$result = ($exec) ? [1,'add success',null] : [0,'something error',null];
+			} else {
+				$data = [
+					'q_question' => $question,
+					'q_answer' => $answer,
+					'q_correct' => $correct
+				];
+				$exec = $this->Common_model->update('quiz',$data,['id'=>$id]);
+				$result = ($exec) ? [1,'update success',null] : [0,'something error',null];
+			}
+		}
+		echo json_encode($result);
+	}
+
+	public function delete_quiz()
+	{
+		$id = $this->input->post('id');
+		$exec = $this->Common_model->delete('quiz',['id'=>$id]);
+		$result = ($exec) ? [1,'delete success',null] : [0,'something error',null];
+		echo json_encode($result);
+	}
+
+
 	public function update_lesson()
 	{
 		$id = trimChar_input('id');
@@ -83,40 +186,6 @@ class XhrA extends CI_Controller
 			$result = 1;
 		} else {
 			$result = 0;
-		}
-		echo json_encode($result);
-	}
-
-	public function create_lesson()
-	{
-		$title = trimChar_input('title');
-		$slug  = trimChar_input('slug');
-		$label = trimChar_input('label');
-		if (!$title) {
-			$result = 'title field is required';
-		} else {
-			if(!$slug) {
-				$result = 'slug field is required';
-			} else {
-				$id = create_rand($label);
-				$check = $this->Common_model->check_exist('materi',['les_id'=>$id]);
-				if ($check) {
-					$id = create_rand($label);
-				} else {
-					$order = $this->Common_model->counting('materi',['les_level'=>$label]);
-					$data = [
-						'les_id'			 => $id,
-					  'les_order'    => $order + 1,
-					  'les_title'    => ucwords($title),
-					  'les_slug'     => $slug,
-					  'les_level'    => $label,
-					  'les_upload'   => time(),
-					  'les_update'   => time()
-					];
-					$exec = $this->Common_model->insert_record('materi',$data);
-					$result = ($exec) ? [1,'success',null] : [0,'something error',null];
-				}
-			}
 		}
 		echo json_encode($result);
 	}
