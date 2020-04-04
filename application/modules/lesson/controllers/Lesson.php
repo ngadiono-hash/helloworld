@@ -178,11 +178,7 @@ class Lesson extends CI_Controller
 		if (!$fetch) {
 			not_found();
 		} else {
-			$data['quiz'] = $this->Common_model->select_where(
-				'quiz',
-				'id,q_question,q_answer',
-				['q_level' => $level, 'q_active' => 1]
-			);
+			$data['count'] = $this->Common_model->counting('quiz',['q_level' => $level, 'q_active' => 1]);
 			$data['title'] = 'My Note - Quiz JavaScript '.ucwords($level);
 			$data['titles'] = $this->Common_model->select_specific('level','description',['name' => $level]);
 			$this->load->view('templates/mainHeader', $data);

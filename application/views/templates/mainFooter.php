@@ -112,10 +112,11 @@ $quiz_page = whats_page(2,['quiz']);
 </script>
 <?php } ?>
 <script name="mainScript">
-const over = $('.overlay'), blog = $('.blog-content'), form = $('.quiz-form'), fin = $('.finish');
-let xhrRest, imgRest, myRest, active, iData, turn, time,
+const over = $('.overlay'), blog = $('.blog-content'), form = $('.quiz-content'), userForm = $('#form-user'), fin = $('.finish');
+let xhrRest, imgRest, myRest, active, iData, turn, time, user,
     myQuiz = [],
-    sec = 8;
+    sec = 8,
+    label = window.location.pathname.split('/').pop();
 linkActive('.site-menu a');
 linkActive('.lesson-menu a');
 function handling(xhr){
@@ -156,6 +157,16 @@ function endAjax(){
 </script>
 <?php if ($quiz_page) { ?>
 <script>
+  function del(callback,ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
   function getFormData(form){
     let in_array = {}, un_array = form.serializeArray();
     $.map(un_array, function(n, i){
@@ -168,7 +179,7 @@ function endAjax(){
     return in_array;
   }
   function myTimer() {
-    form.parents('.active').find('.spent').html(sec + " detik");
+    form.find('.quiz-form').parents('.active').find('.spent').html(sec + " detik");
     sec--;
     if (sec == -1) {
       clearInterval(time);
@@ -179,7 +190,7 @@ function endAjax(){
     sec = 8;
     turn++;
     time = setInterval(myTimer,1000);
-    active = form.parents('.active');
+    active = form.find('.quiz-form').parents('.active');
     iData = getFormData(active.find('form'));
     myQuiz.push(iData);
     form.find('input[type="radio"]').prop('checked',false);
@@ -192,7 +203,7 @@ function endAjax(){
       if (active.next('div.card').length == 0) {
         
         $.ajax({
-          url : host + 'xhrm/get_quiz',
+          url : host + 'xhrm/get_result',
           type : 'POST',
           data : { quest: myQuiz, csrf_token: csrf },
           beforeSend : function(){
@@ -207,10 +218,8 @@ function endAjax(){
             temp += `<h1>score : ${dat.score}</h1>`;
             temp += `<h3>${dat.plain.h3}</h3>`;
             temp += `<h4 class="mb-3">${dat.plain.h4}</h4>`;
-            temp += `<div class="btn-group">`;
-            temp += `<button class="btn btn-default check-rest">Periksa Jawaban</button>`;
-            temp += `<button class="btn btn-default submit-rest">Submit Score</button>`;
-            temp += `</div>`;
+            temp += `<button class="btn btn-default mx-1 check-rest">Periksa Jawaban</button>`;
+            temp += `<button class="btn btn-default mx-1 submit-rest">Submit Score</button>`;
             fin.find('.card-body').html(temp);
             myQuiz = [];
             myRest = dat.evaluate;
@@ -225,31 +234,83 @@ function endAjax(){
       }
     },700);
   }
+  function slidePre(select){
+    $(select).removeClass('scale-in-center').addClass('slide-out-left');
+    setTimeout(function(){
+      $(select).next('.setup').fadeIn();
+      $(select).hide().removeClass('slide-out-left').addClass('scale-in-center');
+    },700);
+  }
 
   // quiz function
   $(function(){
     $('.quiz-content').on('click','button', function(){
-      let $target = $('#quiz-content').prev('.anch');
+      let $target = $('.anch');
       $('html').animate({'scrollTop': $target.offset().top });
     });
 
-    $('.start').on('click','.btn-default',function() {
+    $('.welcome').on('click','.btn-default',function(){
+      userForm.find('input').val();
+      slidePre('.welcome');
+    });
+    $('.sign').on('click','.btn-default',function(){
+      $.post(host+'xhrm/get_quiz',{ level:label },function(data){
+        $('.start').after(data);
+        Prism.highlightAll();
+      });
+      $('.user-active').html(user);
+      slidePre('.sign');
+    });
+    userForm.find('input').focus(function(){
+      userForm.find('input').removeClass('input-error');
+      userForm.find('.form-group').html('');
+    });
+
+    userForm.find('input').keyup(del(function(e){
+      user = $(this).val();
+      $(this).blur();
+      $.ajax({
+        url : host+'xhrm/check_user',
+        type : 'POST',
+        data : { user: user, csrf_token: csrf },
+        beforeSend : function(){
+          userForm.find('.user-result').hide();
+          userForm.find('img').show();
+        },
+        success : function(data){
+          let dat = $.parseJSON(data);
+          userForm.find('img').hide();
+          $('.user-result').html(dat[1]).show();
+          if (dat[0]) {
+            userForm.find('input').removeClass('input-error');
+            userForm.find('.form-group').html('<button type="button" class="btn btn-default scale-in-center">Selanjutnya</button>');
+          } else {
+            userForm.find('input').addClass('input-error');
+            userForm.find('.form-group').html('');
+          }
+        },
+        error : function(xhr){
+          handling(xhr);
+        }
+      });
+    }, 2000));
+
+    $('.start').on('click','.btn-default',function(){
       turn = 0;
       time = setInterval(myTimer,1000);
-      $('.start').hide().removeClass('active').next('.card').fadeIn().addClass('active');
-    });
-    fin.on('click','.btn-again',function() {
-      fin.hide();
-      fin.parents('.quiz-content').find('.start').fadeIn();
+      $('.start').hide().next('.card').fadeIn().addClass('active');
     });
 
-    form.on('change','input[type="radio"]',function(){
-      $(this).parents('.quiz-form').find('.submit').fadeIn();
+    form.on('change','input[type="radio"]',function(e){
+      $(e.target).parents('.active').find('.submit').fadeIn();
     });
 
-    form.on('click','.submit',function(e) {
+    form.on('click',function(e){
+      if ($(e.target).hasClass('submit')) {
+      // console.log(e.target)
       clearInterval(time);
       slide();
+      }
     });
   });
 </script>

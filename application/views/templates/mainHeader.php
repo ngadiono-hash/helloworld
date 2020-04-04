@@ -44,6 +44,11 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
   .panel-editor .splitter { 
     background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
   }
+  .input-error { border: 1px solid #dc3545 !important; }
+  ul.alert {
+    padding-left: 50px;
+    text-align: left;
+  }
   .anch {
     display: block;
     height: 85px;
@@ -84,16 +89,16 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     vertical-align: middle;
   }
 
-  .btn-danger {
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
-    background: linear-gradient(-45deg,#dd7b9bfa,#e31428);
-  }
+
 
   .quiz-content .finish {
     min-height: 80vh;
   }
 
-  .quiz-content .card, .quiz-content .start, .quiz-content .finish {
+  .quiz-content .card,
+  .quiz-content .setup,
+  .quiz-content .finish {
+    min-height: 75vh;
     max-width: 800px;
     margin: 10px auto;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.5);
@@ -110,13 +115,13 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     text-align: center;
     background: rgba(0,0,0,0.9);
   }
-  .ajax:before {
+  .ajax:before, .midd:before {
     content: '';
     height: 100%;
     display: inline-block;
     vertical-align: middle;
   }
-  .ajax .contain {
+  .contain {
     display: inline-block;
     vertical-align: middle;
   }
@@ -150,11 +155,7 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
   .quiz-content p {
     margin-bottom: 0;
   }
-  .quiz-content .notif .a, .quiz-content .notif .y {
-    font-family: monospace;
-    display: inline-block;
-  }
-  .quiz-content .question, .q, .a, .y {
+  .quiz-content .question {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -162,14 +163,6 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-  }
-  .quiz-content .notif .float {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
   }
   .float:hover {
     border: 2px solid;
@@ -226,19 +219,44 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
   .quiz-content .answer label:hover {
     background: #DDD;
   }  
-  .btn-default {
-    background: #2D71A1;
+  .btn-default, .btn-danger {
     color: #fff;
+    border: 2px solid transparent;
     transition: none !important;
   }
-
-  .btn-default:hover {
-    color: #fff;
-    outline: 2px solid #f1f1f1;
-    background: linear-gradient(180deg, #0062cc, #ccc);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  .btn-default {
+    background: #2D71A1;
+  }
+  .btn-danger {
+    background: #d03141;
   }
 
+  .btn-default:hover, .btn-danger:hover {
+    color: #fff;
+    border: 2px solid;
+  }
+  .btn-default:hover {
+    background: linear-gradient(180deg, #0062cc, #cccccc);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+  .btn-danger:hover {
+    background: linear-gradient(180deg,#e31428,#dee2e6);
+    box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5);
+  }
+
+  @media screen and (max-width: 992px){
+    .btn-panel {
+      top: 65px;
+    }
+    .sign .midd {
+      padding: 25px 10px;
+    }
+  }
+  @media screen and (max-width: 768px){
+    .post-entry > .post-title {
+      top: 15%;
+    }
+  }
 </style>
 </head>
 <body>

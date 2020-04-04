@@ -21,8 +21,66 @@ class XhrM extends CI_Controller
 		return $query;
 	}
 
+	public function check_user()
+	{
+		$this->form_validation->set_rules('user','Username','is_unique[score.user]|min_length[5]|max_length[20]|alpha_dash');
+		if ($this->form_validation->run() == false) {
+			$result = [false,'username tidak tersedia'];
+		} else {
+			$result = [true,'username tersedia'];
+		}
+		echo json_encode($result);
+	}
+
 	public function get_quiz()
-	{	
+	{
+		$level = $this->input->post('level');
+		$myQuiz = $this->Common_model->select_where(
+			'quiz',
+			'id,q_question,q_answer',
+			['q_level' => $level, 'q_active' => 1]
+		);
+		$num = 1;
+		foreach ($myQuiz as $k => $v) :
+		$ans[$k] = explode(',',$v['q_answer']);
+		?>
+		<div class="card scale-in-center" style="display:none">
+		  <div class="card-body">
+		    <form class="quiz-form">
+		      <div class="text-center btn-panel mb-3">
+		        <button type="button" class="btn btn-danger">Soal Latihan #<?=$num?></button>
+		        <button type="button" class="btn btn-default scale-in-center submit" style="display: none;">Selanjutnya</button>
+		        <button type="button" class="btn btn-danger"><span class="spent">detik</span></button>
+		      </div>
+		      <input type="hidden" name="id" value="<?=$v['id']?>">
+		      <div class="question"><?=$v['q_question']?></div>
+		      <hr>
+		      <div class="row answer">
+		      <?php
+		        $cho = 1;
+		        $letter = ord('A');
+		        foreach ($ans[$k] as $kv => $vk) :
+		      ?>
+		        <div class="col-md-6 wrap">
+		          <input type="radio" name="ch" id="<?= 'choice'.$num.$cho ?>" value="<?=$cho?>">
+		          <label for="<?='choice'.$num.$cho?>"><?='<b>'.chr($letter).'.</b> '.html_entity_decode($vk)?></label>
+		        </div>
+		      <?php
+		        $cho++;
+		        $letter++;
+		        endforeach;
+		      ?>
+		      </div>
+		    </form>
+		  </div>
+		</div> <?php
+		$num++;
+		endforeach;
+	}
+
+	public function get_result()
+	{
+		sleep(4);
 		$score = 0;
 		$post = $this->input->post('quest');
 		foreach ($post as $k => $v) {
@@ -73,14 +131,14 @@ class XhrM extends CI_Controller
 		    $h4 = 'kamu hanya bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
 		  }
 			$result['plain'] = ['img' => $img,'h3' => $h3,'h4' => $h4];
-		
+
 		echo json_encode($result);
 	}
-	
+
 	// public function get_exercise()
-	// { 
+	// {
 	// 	$level = $this->input->post('level');
-	// 	$sql = "SELECT A.id,les_title,q_question,q_answer 
+	// 	$sql = "SELECT A.id,les_title,q_question,q_answer
 	// 					FROM quiz AS A
 	// 					JOIN materi AS B ON B.les_id = A.q_rel
 	// 					WHERE q_level = '".$level."'
@@ -123,7 +181,7 @@ class XhrM extends CI_Controller
 					}
 					$result = [1,'ditemukan '.$search_results.' hasil pencarian untuk keyword <br><b>"'.$term.'"</b>',$arr];
 				}
-				
+
 			} else {
 				$result = [0,"Maaf, keyword yang dibutuhkan minimal 4 karakter"];
 			}
@@ -246,6 +304,7 @@ class XhrM extends CI_Controller
 			}
 		}
 	}
+
 
 // END OF FILE
 }
