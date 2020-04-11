@@ -5,11 +5,16 @@
   button.temp-editor {
   	position: fixed;
     z-index: 999999;
-    bottom: 20px;
-    right: 30px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 27px;
+    font-size: 20px;
+    word-wrap: break-word;
+    font-family: monospace;
   }
 </style>
-<button class="btn btn-circle btn-dark temp-editor"><i class="fa fa-code"></i></button>
+<button class="btn-dark temp-editor" id="open-editor">EDITOR</button>
 <div id="content" class="p-1">
   <div class="container-fluid" id="edited-lesson">
 		<div class="row">
@@ -41,10 +46,10 @@
 		  	</div>
 			</div>
 			<div class="col-md-4">
-				<div class="btn-group btn-block mb-1">
+				<div class="btn-group btn-block mb-1" data-id="<?=$id?>">
 				  <a class="btn btn-outline-primary" href="<?=base_url('a/less/'.$label)?>">Back</a>
 				  <a class="btn btn-info" href="<?=$link?>" target="_blank">Go</a>
-				  <button class="btn <?=$btn?>" data-id="<?=$id?>" id="btn-public"><?=$icon?></button>
+				  <button class="btn <?=$btn?>" id="btn-public"><?=$icon?></button>
 				  <button class="btn btn-danger" id=""><i class="fa fa-trash-alt"></i></button>
 				</div>
 

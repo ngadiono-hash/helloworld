@@ -19,17 +19,32 @@ class XhrA extends CI_Controller
 		);
 	}
 
+	// function Ignited_join($table,$data,$tb,$fk,$tp,$where)
+	// {
+	// 	$this->datatables->select($select);
+	// 	$this->datatables->from($table);
+	// 	$this->datatables->join($tb,$fk,$tp);
+	// 	$this->datatables->where($where);
+	// 	$this->db->order_by('materi.les_order','asc');
+	// 	return $this->datatables->generate();		
+	// }
 	public function read_quiz($param)
 	{
+		// select_join($table,$data,$joins,$where='',$array=true,$single=false,$group='',$order='');
+		// $content = $this->Common_model->select_join(
+		// 	'quiz',
+		// 	'q_question',
+		// 	[['table'=>'materi','condition'=>'quiz.q_rel = materi.les_id','type'=>'']],
+		// 	['materi.les_level' => $param],
+		// 	true,true,'',['materi.les_order','asc']);
 		$content = $this->Common_model->Ignited_join(
-			'les_id,les_title,quiz.id,q_order,q_level,q_question,q_answer,q_correct',
 			'quiz',
-			'materi',
-			'quiz.q_rel = materi.les_id',
-			null,
+			'les_id,les_title,quiz.id,q_order,q_level,q_question,q_answer,q_correct',
+			'materi','quiz.q_rel = materi.les_id',null,
 			['materi.les_level' => $param]
-			
 		);
+		// bug($content);
+		// die();
 		echo $content;
 	}
 
@@ -70,8 +85,9 @@ class XhrA extends CI_Controller
 	public function fetch_quiz()
 	{
 		$id = trimChar_input('id');
-		$result = $this->Common_model->select_where('quiz','*',['id' => $id],true,true);
-		echo json_encode($result);
+		$get = $this->Common_model->select_where('quiz','*',['id' => $id],true,true);
+		$get['q_answer'] = html_entity_decode(htmlspecialchars_decode($get['q_answer']));
+		echo json_encode($get);
 	}
 
 	public function create_quiz()
@@ -124,6 +140,7 @@ class XhrA extends CI_Controller
 
 	public function update_lesson()
 	{
+		sleep(2);
 		$id = trimChar_input('id');
 		$title = trimChar_input('title');
 		$slug = trimChar_input('slug');
@@ -159,8 +176,9 @@ class XhrA extends CI_Controller
 		echo json_encode($result);
 	}
 
-	public function update_lesson_public($id)
+	public function update_lesson_public()
 	{
+		$id = $this->input->post('id');
 		$check = $this->Common_model->select_specific('materi','les_publish',['les_id' => $id]);
 		if($check == 0){
 			$this->Common_model->update('materi',['les_publish' => 1],['les_id' => $id]);

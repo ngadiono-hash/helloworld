@@ -75,7 +75,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		$rand = getRandStr(6);
 		if($label == 'beginner'){
 			$id = 'B'.$rand;
-		} elseif ($label == 'intermediate') {
+		} elseif ($label == 'medium') {
 			$id = 'I'.$rand;
 		} else {
 			$id = 'A'.$rand;

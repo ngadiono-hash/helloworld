@@ -1,5 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function myGlobalCss(){ ?>
+  <link rel="stylesheet" href="<?= base_url('assets/css/new.css') ?>">
+<?php }
+function myGlobalJs(){ ?>
+  <script src="<?= base_url('assets/js/new.js') ?>"></script>
+<?php }
+function not_available() { ?>
+  <div class="card not-available" data-aos="fade-up" data-aos-delay="200">
+    <div class="card-body text-center">
+      <img src="<?=base_url('assets/img/emo/maaf.gif')?>" class="my-3" width='150'>
+      <h1>Maaf...</h1>
+      <h3>Sayangnya halaman ini belum tersedia</h3>
+      <h3>Cobalah untuk kembali lagi besok</h3>
+      <hr>
+      <button type="button" class="btn btn-danger mx-1" onclick="window.history.back()">kembali</button>
+    </div>
+  </div> 
+<?php }
 function wave($first,$second) { ?>
   <div class="hero-section inner-page">
     <div class="wave">
@@ -64,11 +82,7 @@ function quotes() { ?>
               <blockquote>
                 <p>Technically, web browsers can control what users see, and sites using Javascript can overwrite anything coming from the original authors. Browsers heavily utilize Javascript to create an interactive Internet. Sites like YouTube, Facebook, and Gmail could be crippled without it.</p>
               </blockquote>
-
-
-
               <p class="review-user">
-                <!-- <img src="img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3"> -->
                 <span class="d-block">
                   <span class="text-black">&bullet; Ben Shapiro &bullet;</span>
                 </span>
@@ -89,11 +103,7 @@ function quotes() { ?>
               <blockquote>
                 <p>JavaScript: This is a super-popular programming language primarily used in web apps. But it doesn't have much to do with Java besides the name. JavaScript runs a lot of the modern web, but it also catches a lot of flak for slowing browsers down and sometimes exposing users to security vulnerabilities.</p>
               </blockquote>
-
-
-
               <p class="review-user">
-                <!-- <img src="img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3"> -->
                 <span class="d-block">
                   <span class="text-black">&bullet; Dmitry Baranovskiy &bullet;</span>
                 </span>
@@ -110,7 +120,6 @@ function quotes() { ?>
 function playEditor() { 
   $adm = whats_page(1,['a']);
   ?>
-
   <div class="wrapper-editor" style="display: none;">
     <div class="panel-editor">
       <div class="panel-left">
@@ -180,11 +189,6 @@ function blank_page($status) {
   </html>
 <?php }
 
-function myGlobal(){ ?>
-  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
-  <script src="<?= base_url('assets/js/gl.js') ?>"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
-<?php }
 
 function selectBS(){ ?>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
@@ -202,6 +206,7 @@ function bootstrap(){ ?>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.5.0/dist/sweetalert2.all.min.js"></script>
 <?php }
 
 function aceEditor(){ ?>

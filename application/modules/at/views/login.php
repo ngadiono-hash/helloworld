@@ -1,12 +1,6 @@
-<style type="text/css">
-.hero-section > .container > .row {
-  height: 100vh;
-  min-height: 660px;
-}  
-</style>
 
 <main id="main">
-  <div class="hero-section">
+  <div class="hero-section log">
     <div class="wave">
       <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink">

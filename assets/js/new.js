@@ -1,9 +1,65 @@
-const host = `http://${window.location.hostname}/helloworld/`;
-const path = window.location.pathname;
-const csrf = $('meta[name="csrf"]').attr('content');
-const imgLoad = `<img src="${host}assets/img/feed/bars.svg" height="50">`;
-const uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
-
+const host = `http://${window.location.hostname}/helloworld/`,
+  path = window.location.pathname,
+  csrf = $('meta[name="csrf"]').attr('content'),
+  over = $('.overlay'),
+  aJax = $('.ajax'),
+  imgLoad = `<img src="${host}assets/img/feed/bars.svg" height="50">`,
+  uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+let xhrRest, imgRest;
+let label = window.location.pathname.split('/').pop();
+function bug(n){
+  console.log(n)
+}
+function ajaxTemp($this){
+  $this.d.csrf_token = csrf;
+  $.ajax({
+    url: host+$this.u,
+    type: 'POST',
+    dataType: 'json',
+    data: $this.d,
+    error: function(xhr){ handling(xhr) },
+    beforeSend: function(){ if($this.b != null ) $this.b() },
+    success: function(data){ $this.s(data) },
+    complete: function(){ if($this.c != null ) $this.c() }
+  });
+}
+function handling(xhr){
+  if (xhr.status == 404) {
+    xhrRest = ``;
+    imgRest = `${host}assets/img/feed/404.gif`;
+  } else if (xhr.status == 403) {
+    xhrRest = window.location.href;
+    imgRest = `${host}assets/img/feed/403.gif`;
+  } else if (xhr.status == 500) {
+    xhrRest = ``;
+    imgRest = `${host}assets/img/feed/500.gif`;
+  }
+  overide(imgRest,xhrRest);
+}
+function overide(image,direct=''){
+  over.fadeIn();
+  over.html(`<img class="scale-in-center img-responsive" src="${image}">`);
+  $(document).scroll(function() {
+    over.fadeOut(1000);
+    if (direct != '') window.location.href = direct;
+    setTimeout(function(){
+      over.fadeOut().empty();
+    },1000);
+  });
+}
+function startAjax(){
+  aJax.fadeIn()
+  .addClass('scale-in-center')
+  .html(`<div class="contain"><img src="${host}assets/img/feed/bars.svg"></div>`);
+}
+function endAjax(){
+  aJax.toggleClass('scale-out-center scale-in-center');
+  setTimeout(function(){
+    aJax.removeClass('scale-out-center');
+    aJax.empty();
+    aJax.fadeOut();
+  },400);
+}
 function myAlert(data){
   let btn = '', alt = $('.alert-auto');
   alt.fadeIn(500);

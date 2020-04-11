@@ -6,7 +6,7 @@
   	<div class="wrap-table">
   		<button class="btn btn-outline-primary btn-sm btn-modal" data-toggle="modal" data-target="#modal-lesson"><i class="fa fa-fw fa-plus"></i> Add New</button>
   		<div class="table-responsive">
-  			<table class="display stripe row-border" id="lesson-table">
+  			<table class="display stripe row-border" id="table-lesson">
   				<thead>
   					<tr>
   						<th>No.</th>

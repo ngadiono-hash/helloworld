@@ -13,11 +13,11 @@ $editPage = whats_page(2,['editor']);
 <title><?= $title; ?></title>
 <meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i|Roboto:300,400,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito|Roboto">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
-<link rel="stylesheet" href="<?=base_url()?>assets/css/global.css">
+<?php myGlobalCss() ?>
 <?php if ($quizTable) {
 echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
 } ?>
@@ -37,22 +37,7 @@ echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2
 	width: 100%;
 	min-height: 560px;
 }
-.mytooltip {
-  border-radius: 5px !important;
-  background-color: #f1f1f1;
-  color: #808080 !important;
-  padding: 5px;
-  margin: 50px;
-  text-align: center;
-  font-size: 14px;
-  border: 2px solid gray !important;
-  min-width: 100px;
-  max-width: 400px;
-  font-family: Rubik, Sans-serif;
-}
-.btn.btn-ctrl:focus {
-	box-shadow: none !important;
-} 
+ 
 #frame-preview p + pre, #frame-preview ul + pre {
   background: linear-gradient(45deg,#ddd,#d6c9c9);
   padding: 10px;
@@ -146,7 +131,7 @@ table thead tr th {
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- active -->
             <a class="collapse-item" href="<?=base_url('a')?>/less/beginner">Beginner</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/less/intermediate">Intermediate</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/less/medium">Medium</a>
             <a class="collapse-item" href="<?=base_url('a')?>/less/advance">Advance</a>
           </div>
         </div>
@@ -160,8 +145,8 @@ table thead tr th {
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?=base_url('a')?>/quiz/beginner">Beginner</a>
-            <a class="collapse-item" href="utilities-border.html">Intermedate</a>
-            <a class="collapse-item" href="utilities-animation.html">Advance</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/medium">Medium</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/advance">Advance</a>
           </div>
         </div>
       </li>

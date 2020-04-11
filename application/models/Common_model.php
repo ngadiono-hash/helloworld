@@ -15,9 +15,9 @@ class Common_model extends CI_Model
 		return $this->datatables->generate();
 	}
 
-	function Ignited_join($select,$table,$tb,$fk,$tp,$where)
+	function Ignited_join($table,$data,$tb,$fk,$tp,$where)
 	{
-		$this->datatables->select($select);
+		$this->datatables->select($data);
 		$this->datatables->from($table);
 		$this->datatables->join($tb,$fk,$tp);
 		$this->datatables->where($where);
@@ -141,12 +141,12 @@ class Common_model extends CI_Model
 		}
 	}
 
-	function select_join($table,$data,$join,$where='',$group,$order)
+	function select_join($table,$data,$joins,$where='',$array=true,$single=false,$group='',$order='')
 	{
 		$this->db->select($data);
 		$this->db->from($table);
 		foreach ($joins as $k => $v) {
-			$this->db->join($v['table'], $v['condition'], $v['type'],(isset($v['escape'])?$v['escape']:TRUE));
+			$this->db->join($v['table'],$v['condition'],$v['type'],(isset($v['escape'])?$v['escape']:TRUE));
 		}
 		if ($where != '') {
 			$this->db->where($where);

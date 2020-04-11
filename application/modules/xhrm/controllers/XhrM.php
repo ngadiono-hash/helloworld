@@ -21,13 +21,53 @@ class XhrM extends CI_Controller
 		return $query;
 	}
 
+	public function submit_Score()
+	{
+		sleep(2);
+		$result = [];
+		$label = trimChar_input('label');
+		$score = trimChar_input('score');
+		$user = trimChar_input('user');
+		$check = $this->Common_model->check_exist('score',['user'=>$user,'level'=>$label]);
+		if ($check) {
+			$result = [0,'username '.$user.' telah terdaftar sebelumnya',null];
+		} else {
+			if ($score <= 0) {
+				$result = [0,'maaf '.$user.', kami tidak bisa menerima score kamu',null];
+			} else {
+				$data = [
+					'user' =>$user,
+					'level' => $label,
+					'score' => $score,
+					'date' => time()
+				];
+				$this->Common_model->insert_record('score',$data);
+				$result = [1,'terima kasih '.$user.' atas partisipasinya',null];
+			}
+		}
+		echo json_encode($result);
+	}
+
 	public function check_user()
 	{
-		$this->form_validation->set_rules('user','Username','is_unique[score.user]|min_length[5]|max_length[20]|alpha_dash');
+		sleep(2);
+		$user = trimChar_input('user');
+		$label = trimChar_input('label');
+		$this->form_validation->set_rules('user','Username','required|min_length[5]|max_length[20]|alpha_dash');
 		if ($this->form_validation->run() == false) {
-			$result = [false,'username tidak tersedia'];
+			$result = [false,'username invalid'];
 		} else {
-			$result = [true,'username tersedia'];
+			$list = ['admin','username'];
+			if (in_array($user,$list)) {
+				$result = [false,'username tidak tersedia'];
+			} else {
+				$check = $this->Common_model->check_exist('score',['user'=>$user,'level'=>$label]);
+				if ($check) {
+					$result = [false,'username telah terdaftar'];
+				} else {
+					$result = [true,'username tersedia'];
+				}
+			}
 		}
 		echo json_encode($result);
 	}
@@ -35,59 +75,87 @@ class XhrM extends CI_Controller
 	public function get_quiz()
 	{
 		$level = $this->input->post('level');
-		$myQuiz = $this->Common_model->select_where(
-			'quiz',
-			'id,q_question,q_answer',
-			['q_level' => $level, 'q_active' => 1]
+		$myQuiz = $this->Common_model->select_join(
+			'quiz AS A',
+			'A.id,A.q_question,A.q_answer,B.les_title,C.description',
+			[
+				['table' => 'materi AS B','condition' => 'A.q_rel = B.les_id','type' => ''],
+				['table' => 'level AS C','condition' => 'A.q_level = C.name','type' => '']
+			],
+			['q_level' => $level],true,false,
+			'','les_order ASC'
 		);
 		$num = 1;
 		foreach ($myQuiz as $k => $v) :
 		$ans[$k] = explode(',',$v['q_answer']);
 		?>
-		<div class="card scale-in-center" style="display:none">
-		  <div class="card-body">
-		    <form class="quiz-form">
-		      <div class="text-center btn-panel mb-3">
-		        <button type="button" class="btn btn-danger">Soal Latihan #<?=$num?></button>
-		        <button type="button" class="btn btn-default scale-in-center submit" style="display: none;">Selanjutnya</button>
-		        <button type="button" class="btn btn-danger"><span class="spent">detik</span></button>
-		      </div>
-		      <input type="hidden" name="id" value="<?=$v['id']?>">
-		      <div class="question"><?=$v['q_question']?></div>
-		      <hr>
-		      <div class="row answer">
-		      <?php
-		        $cho = 1;
-		        $letter = ord('A');
-		        foreach ($ans[$k] as $kv => $vk) :
-		      ?>
-		        <div class="col-md-6 wrap">
-		          <input type="radio" name="ch" id="<?= 'choice'.$num.$cho ?>" value="<?=$cho?>">
-		          <label for="<?='choice'.$num.$cho?>"><?='<b>'.chr($letter).'.</b> '.html_entity_decode($vk)?></label>
-		        </div>
-		      <?php
-		        $cho++;
-		        $letter++;
-		        endforeach;
-		      ?>
-		      </div>
-		    </form>
+		<div class="card squence scale-in-center" style="display:none">
+		  <div class="row text-center">
+		  	<div class="col-lg-8">
+		  		<div class="">
+  				  <form class="quiz-form" data-name="<?=$v['description']?>">
+  						<div class="card-header shadow btn-panel">
+  			        <div class="time-progress"><div></div></div>
+  						</div>
+  						
+  					  <div class="card-body">
+  				      <input type="hidden" name="id" value="<?=$v['id']?>">
+  				      <div class="question shadow"><?=$v['q_question']?></div>
+  				      <hr>
+  				      <div class="row answer">
+  				      <?php
+  				        $cho = 1;
+  				        $letter = ord('A');
+  				        foreach ($ans[$k] as $kv => $vk) :
+  				      ?>
+  				        <div class="col-lg-8 offset-lg-2 wrap">
+  				          <input type="radio" name="ch" id="<?= 'choice'.$num.$cho ?>" value="<?=$cho?>">
+  				          <label title="<?=html_entity_decode($vk)?>" data-toggle="tooltip" for="<?='choice'.$num.$cho?>"><?='<b>'.chr($letter).'.</b> '.html_entity_decode($vk)?></label>
+  				        </div>
+  				      <?php
+  				        $cho++;
+  				        $letter++;
+  				        endforeach;
+  				      ?>
+  				      </div>
+  					  </div>
+  				  </form>		  			
+		  		</div>
+		  	</div>
+		  	<div class="col-lg-4">
+		  		<div class="wrapper-setup">
+			  		<div class="card-body">
+			  			<h3 class="text-center">Soal Latihan #<?=$num?></h3>
+			  			<img src="<?=base_url('assets/img/mikir.gif')?>">
+			  			<h2>waktu tersisa :</h2>
+			  			<h2 class="spent">detik</h2>
+			  			<button type="button" class="btn btn-default scale-in-center next-slide" style="display: none;">Selanjutnya</button>
+			  		</div>
+		  		</div>
+		  	</div>
 		  </div>
-		</div> <?php
+		</div> 
+		<?php
 		$num++;
 		endforeach;
 	}
 
 	public function get_result()
 	{
-		sleep(4);
+		sleep(2);
 		$score = 0;
 		$post = $this->input->post('quest');
 		foreach ($post as $k => $v) {
-			$test[$k] = $this->Common_model->select_where('quiz','*',['id'=>$v['id']],true,true);
-			$true[$k] = explode(',',html_entity_decode($test[$k]['q_answer']));
+			$test[$k] = $this->Common_model->select_join(
+				'quiz AS A',
+				'B.les_title AS title,B.les_slug AS slug,B.les_level AS level,A.q_answer AS answer,A.q_correct AS correct,A.q_question AS question',
+				[
+					['table' => 'materi AS B', 'condition' => 'A.q_rel = B.les_id', 'type' => '']
+				],
+				['A.id'=>$v['id']],true,true);
+			$true[$k] = explode(',',html_entity_decode($test[$k]['answer']));
 			if (isset($v['ch'])) {
-				if ($v['ch'] == $test[$k]['q_correct']) {
+				if ($v['ch'] == $test[$k]['correct']) {
 					$score++;
 					$return = true;
 				} else {
@@ -97,29 +165,32 @@ class XhrM extends CI_Controller
 				$return = false;
 			}
 			$result['evaluate'][$k] = [
-				'question' => $test[$k]['q_question'],
-				'correct' => $true[$k][$test[$k]['q_correct']-1],
-				'yours' => (isset($v['ch'])) ? $true[$k][$v['ch']-1] : null,
-				'result' => $return
+				'question' => $test[$k]['question'],
+				'correct' => $true[$k][$test[$k]['correct']-1],
+				'yours' => (isset($v['ch'])) ? $true[$k][$v['ch']-1] : '...',
+				'result' => $return,
+				'rel' => base_url('lesson/docs/'.create_slug($test[$k]['slug'])),
+				'title' => $test[$k]['title']
 			];
 		}
+		
 		$result['plain'] = [];
 		$result['score'] = $score / count($post) * 100;
 		  if ($result['score'] == 100) {
 		    $img = 'horray.gif';
-		    $h3 = 'baik sekali';
+		    $h3 = 'hebat sekali';
 		    $h4 = 'semua soal berhasil dijawab dengan benar';
 		  } else if ($result['score'] == 0) {
 		  	$img = 'no.gif';
-		  	$h3 = '...';
-		  	$h4 = 'tidak ada soal yang dijawab dengan benar';
+		  	$h3 = 'tetap semangat dalam belajar';
+		  	$h4 = 'meski tidak ada soal yang dijawab dengan benar';
 		  } else if ($result['score'] >= 75) {
 		    $img = 'ok.gif';
 		    $h3 = 'kamu punya bakat, tetap asah logikamu lagi';
 		    $h4 = 'dari '.count($post).' soal, '.$score.' di antaranya berhasil dijawab dengan benar';
 		  } else if ($result['score'] >= 50) {
 		    $img = 'mikir.gif';
-		    $h3 = 'lumayan bagus lah sejauh ini';
+		    $h3 = 'lumayan bagus sejauh ini';
 		    $h4 = 'kamu bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
 		  } else if ($result['score'] >= 25) {
 		  	$img = 'hmm.gif';
@@ -135,21 +206,9 @@ class XhrM extends CI_Controller
 		echo json_encode($result);
 	}
 
-	// public function get_exercise()
-	// {
-	// 	$level = $this->input->post('level');
-	// 	$sql = "SELECT A.id,les_title,q_question,q_answer
-	// 					FROM quiz AS A
-	// 					JOIN materi AS B ON B.les_id = A.q_rel
-	// 					WHERE q_level = '".$level."'
-	// 					GROUP BY q_rel
-	// 					ORDER BY les_order ASC";
-	// 	$result = $this->db->query($sql)->result_array();
-	// 	echo json_encode($result);
-	// }
-
 	public function search()
 	{
+		sleep(3);
 		$term = trimChar_input('search');
 		$term = substr($term,0,100);
 		if (!empty($term)) {
@@ -241,7 +300,6 @@ class XhrM extends CI_Controller
 					}
 				}
 			}
-			die();
 			$user_session = [
 				'sess_log'  => true,
 				'sess_id'   => $userLogged['id'],

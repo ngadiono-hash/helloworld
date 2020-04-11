@@ -33,7 +33,7 @@ class A extends CI_Controller
 	public function index()
 	{
 		$data['t']['b'] = $this->countMateri('beginner');
-		$data['t']['i'] = $this->countMateri('intermediate');
+		$data['t']['i'] = $this->countMateri('medium');
 		$data['t']['a'] = $this->countMateri('advance');
 		_temp_admin($data,'Welcome Admin','index');
 	}
@@ -93,6 +93,12 @@ class A extends CI_Controller
 
 	public function quiz()
 	{
+		// $html = '&amp;lt;script name=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;,&amp;lt;script src=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;,&amp;lt;script&amp;gt;file.js&amp;lt;/script&amp;gt;,&amp;lt;script href=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;';
+		// $html = '&lt;script name=&quot;file.js&quot;&gt;&lt;/script&gt;';
+		// $sp = '<script src="balabala"></script>';
+		// $sp = '&lt;script&gt;';
+		// $sp = '&amp;lt;script name=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;';
+		// bug(html_entity_decode(htmlspecialchars_decode($sp)));
 		$third = $this->uri->segment(3);
 		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
 		$data['quiz'] = $this->Common_model->select_where(

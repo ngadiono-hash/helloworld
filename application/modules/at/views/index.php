@@ -19,9 +19,11 @@
             <div class="row">
               <div class="col-lg-7 text-center text-lg-left">
                 <h1 data-aos="fade-right">Note JavaScript</h1>
-                <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Semua dokumentasi tentang bahasa program JavaScript ada di sini</p>
-                <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="<?=base_url('lesson')?>"
-                    class="btn btn-outline-white">Ayo Pelajari</a></p>
+                <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Dokumentasi belajar bahasa program JavaScript</p>
+                <div data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500">
+                  <a href="<?=base_url('lesson')?>"
+                    class="btn btn-outline-white">Ayo Pelajari</a>
+                </div>
               </div>
               <div class="col-lg-5 iphone-wrap">
                 <img src="<?=base_url()?>assets/img/feed/snippet.png" alt="Image" class="phone-1" data-aos="fade-right">
@@ -38,13 +40,13 @@
       <div class="container">
 
         <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-6" data-aos="fade-up">
+          <div class="col-lg-6" data-aos="fade-up">
             <h2 class="section-heading">Belajar JavaScript</h2>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-archive"></span>
@@ -53,7 +55,7 @@
               <p>Tersedia materi belajar dengan metode yang simpel dan mudah dipahami.</p>
             </div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-laptop"></span>
@@ -62,7 +64,7 @@
               <p>Setiap materi disediakan contoh kode yang relevan dan siap untuk dijalankan.</p>
             </div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-code"></span>
@@ -76,18 +78,14 @@
       </div>
     </div> <!-- .site-section -->
 
-
-
-
-
     <div class="site-section pb-0">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-4 mr-auto">
+          <div class="col-lg-4 mr-auto">
             <h2 class="mb-4">Praktek JavaScript</h2>
             <p class="mb-4">Belajar tentang bagaimana sebuah program berbasis web dijalankan di dalam bahasa program JavaScript. Dari materi JavaScript yang paling dasar sampai pada materi tingkat yang paling lanjut, semua dokumentasinya tersedia di sini. Praktekkan kode snippet pada setiap materi yang ada untuk kemudian memahami bagaimana sistemnya bekerja.</p>
           </div>
-          <div class="col-md-6" data-aos="fade-left">
+          <div class="col-lg-6" data-aos="fade-left">
             <img src="<?=base_url()?>assets/img/feed/live.gif" alt="Image" class="img-fluid rounded shadow-lg">
           </div>
         </div>
@@ -97,11 +95,11 @@
     <div class="site-section">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-4 ml-auto order-2">
+          <div class="col-lg-4 ml-auto order-2">
             <h2 class="mb-4">Kembangkan Kreatifitas</h2>
             <p class="mb-4">Berbekal pengetahuan tentang bahasa program JavaScript, mari bersama-sama untuk mengembangkan kreatifitas dalam membuat program yang bisa bermanfaat.</p>
           </div>
-          <div class="col-md-6" data-aos="fade-right">
+          <div class="col-lg-6" data-aos="fade-right">
             <img src="<?=base_url()?>assets/img/feed/practice.gif" alt="Image" class="img-fluid rounded shadow-lg">
           </div>
         </div>

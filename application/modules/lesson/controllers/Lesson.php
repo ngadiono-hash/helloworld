@@ -10,74 +10,77 @@ class Lesson extends CI_Controller
 
 	private function _temp_menu($lev)
 	{
+		$pageNow = $this->input->get('page');
+		// $dat = $this->Common_model->select_where('materi','les_title',['les_level' => 'intermediate']);
+		// $this->Common_model->update('materi',['les_level' => 'medium'],['les_level' => 'intermediate']);
+		// var_dump($dat);
+		// die();
 		$data['label'] = $this->Common_model->select_where('level','*',['name' => $lev],TRUE,TRUE);
 		$slug = explode(' ',$data['label']['description']);
 		$data['label']['slug'] = 'Dokumentasi '.$slug[0].' Tingkat '.$slug[1];
-		$config['base_url'] = base_url('lesson/').$this->uri->segment(2);
-		$config['total_rows'] = $this->Common_model->counting(
-			'materi',['les_level'=>$lev,'les_publish'=>1]
-		);
-		$config['page_query_string'] = TRUE;
-		$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['per_page'] = 9;
-
-		$pageNow = $this->input->get('page');
-		$page = ($pageNow) ? $pageNow : 1;
-		$ilegal = ceil($config['total_rows']/$config['per_page']);
-		// bug($config['total_rows']/9);
-		if ($page > $ilegal) {
-			not_found();
-			die();
-		}
-		$offset = ($page - 1) * $config['per_page'];
-		$all = $this->Common_model->select_where(
-			'materi',
-			'les_order,les_level,les_title,les_slug,les_content,les_update',
-			['les_level' => $lev,'les_publish' => 1],
-			TRUE,FALSE,
-			['les_order','asc'],
-			[$config['per_page'],$offset]
-		);
-		$config['attributes'] = array('class' => 'page-link');
-		$config['next_link'] = '<i class="fa fa-angle-double-right"></i>';
-		$config['prev_link'] = '<i class="fa fa-angle-double-left"></i>';
-		$config['first_link'] = 'start';
-		$config['last_link'] = 'end';
-		$config['full_tag_open'] = '<ul class="pagination justify-content-center">';
-		$config['full_tag_close'] = '</ul>';
-		$config['num_tag_open'] = '<li class="page-item">';
-		$config['num_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$this->pagination->initialize($config);
-		foreach ($all as $k) {
-			$rest[] = [
-				'num'			=> $k['les_order'],
-				'level' 	=> $k['les_level'],
-				'update'  => date('M d, Y',$k['les_update']),
-				'title' 	=> $k['les_title'],
-				'slug' 		=> $k['les_slug'],
-				'link' 		=> base_url('lesson/docs/').create_slug($k['les_slug']),
-				'content' => read_more($k['les_content'],200)
-			];
-		}
-		$data['list'] = $rest;
 		$data['title'] = 'My Note - Materi '.$data['label']['description'];
+		$rows = $this->Common_model->counting('materi',['les_level'=>$lev,'les_publish'=>1]);
+		if ($rows < 0) :
+			$data['available'] = false;			
+		else :
+			$data['available'] = true;
+			$config = [
+				'base_url' => base_url('lesson/').$this->uri->segment(2),
+				'total_rows' => $rows,
+				'page_query_string' => true,
+				'use_page_numbers' => true,
+				'query_string_segment' => 'page',
+				'per_page' => 9,
+				'attributes' => ['class'=>'page-link'],
+				'next_link' => '<i class="fa fa-angle-double-right"></i>',
+				'prev_link' => '<i class="fa fa-angle-double-left"></i>',
+				'first_link' => 'start',
+				'last_link' => 'end',
+				'full_tag_open' => '<ul class="pagination justify-content-center">',
+				'full_tag_close' => '</ul>',
+				'num_tag_open' => '<li class="page-item">',
+				'num_tag_close' => '</li>',
+				'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+				'cur_tag_close' => '</a></li>',
+				'prev_tag_open' => '<li>',
+				'prev_tag_close' => '</li>',
+				'next_tag_open' => '<li>',
+				'next_tag_close' => '</li>'
+			];
+			$page = ($pageNow) ? $pageNow : 1;
+			$ilegal = ceil($config['total_rows']/$config['per_page']);
+			if ($page > $ilegal) {
+				$data['available'] = false;
+			} else {
+				$offset = ($page - 1) * $config['per_page'];
+				$all = $this->Common_model->select_where(
+					'materi',
+					'les_order,les_level,les_title,les_slug,les_content,les_update',
+					['les_level' => $lev,'les_publish' => 1],
+					TRUE,FALSE,
+					['les_order','asc'],
+					[$config['per_page'],$offset]
+				);
+
+				$this->pagination->initialize($config);
+				foreach ($all as $k) {
+					$rest[] = [
+						'num'			=> $k['les_order'],
+						'level' 	=> $k['les_level'],
+						'update'  => date('M d, Y',$k['les_update']),
+						'title' 	=> $k['les_title'],
+						'slug' 		=> $k['les_slug'],
+						'link' 		=> base_url('lesson/docs/').create_slug($k['les_slug']),
+						'content' => read_more($k['les_content'],200)
+					];
+				}
+				$data['list'] = $rest;
+			}
+		endif;
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('menu',$data);
 		$this->load->view('templates/mainFooter');
 	}
-
-	private function _temp_main($meta)
-	{
-
-	}
-
 
 	public function index()
 	{
@@ -93,10 +96,10 @@ class Lesson extends CI_Controller
 		$data['title'] = 'My Note - JavaScript Dasar';
 		$data['list'] = $this->_temp_menu('beginner');
 	}
-	public function intermediate()
+	public function medium()
 	{
 		$data['title'] = 'My Note - JavaScript DOM';
-		$data['list'] = $this->_temp_menu('intermediate');
+		$data['list'] = $this->_temp_menu('medium');
 	}
 	public function advance()
 	{
@@ -163,8 +166,8 @@ class Lesson extends CI_Controller
 			$prev = $this->Common_model->select_where(
 				'materi','les_slug',['les_order <'=>$s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','DESC'],1
 			);
-			$data['linkNext'] = ($next) ? base_url('lesson/docs/'.create_slug($next['les_slug'])) : '#';
-			$data['linkPrev'] = ($prev) ? base_url('lesson/docs/'.create_slug($prev['les_slug'])) : '#';
+			$data['linkNext'] = ($next) ? base_url('lesson/docs/'.create_slug($next['les_slug'])) : '';
+			$data['linkPrev'] = ($prev) ? base_url('lesson/docs/'.create_slug($prev['les_slug'])) : '';
 			$this->load->view('templates/mainHeader', $data);
 			$this->load->view('single_lesson',$data);
 			$this->load->view('templates/mainFooter');
@@ -173,18 +176,18 @@ class Lesson extends CI_Controller
 
 	public function quiz()
 	{
-		$level = $this->uri->segment(3);
-		$fetch = $this->Common_model->check_exist('level',['name'=>$level]);
-		if (!$fetch) {
-			not_found();
-		} else {
-			$data['count'] = $this->Common_model->counting('quiz',['q_level' => $level, 'q_active' => 1]);
-			$data['title'] = 'My Note - Quiz JavaScript '.ucwords($level);
-			$data['titles'] = $this->Common_model->select_specific('level','description',['name' => $level]);
-			$this->load->view('templates/mainHeader', $data);
-			$this->load->view('quiz',$data);
-			$this->load->view('templates/mainFooter');
-		}
+		$data['title'] = 'My Note - Quiz JavaScript';
+		$data['category'] = $this->Common_model->select_join(
+			'quiz',
+			'name,description',
+			[['table' => 'level','condition' => 'quiz.q_level = level.name','type' => '']],
+			'',true,false,
+			'q_level',
+			'level.id ASC'
+		);
+		$this->load->view('templates/mainHeader', $data);
+		$this->load->view('quiz',$data);
+		$this->load->view('templates/mainFooter');
 	}
 
 } // END
