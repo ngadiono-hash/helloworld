@@ -14,7 +14,7 @@
     font-family: monospace;
   }
 </style>
-<button class="btn-dark temp-editor" id="open-editor">EDITOR</button>
+<!-- <button class="btn-dark temp-editor" id="open-editor">EDITOR</button> -->
 <div id="content" class="p-1">
   <div class="container-fluid" id="edited-lesson">
 		<div class="row">

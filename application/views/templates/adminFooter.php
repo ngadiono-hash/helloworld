@@ -38,12 +38,13 @@ $quizTable = whats_page(2,['quiz']);
 <script src="<?=base_url()?>assets/vendor/ckeditor/adapters/jquery.js"></script>
 <?php
 if ($lessonTable || $quizTable) {
-	echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
+	// echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
+	echo "<script src='http://localhost/offline/dataTable.min.js'></script>";
 }
-if ($lessonTable) {
-echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
+// if ($lessonTable) {
+// echo '<script src="https://cdn.datatables.net/v/ju/dt-1.10.18/rr-1.2.4/datatables.min.js"></script>';
 // echo '<script src="'.base_url().'assets/js/dt_lesson.js"></script>';
-}
+// }
 if ($quizTable) {
 echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>';
 }
@@ -503,15 +504,15 @@ $(function(){
 			let container = CKEDITOR.instances.ckedit.getData();
 			let previewFrame = document.getElementById('frame-preview').contentWindow.document;
 			let plainText = '' +
-			`<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Roboto>`+
-		  `<link rel='stylesheet' href='${host}assets/vendor/bootstrap/bootstrap.min.css'>`+
-		  `<link rel='stylesheet' href='${host}assets/vendor/theme/theme.css'>`+
-		  `<link rel='stylesheet' href='${host}assets/vendor/prism/prism-line.css'>`+
-		  `<link rel='stylesheet' href='${host}assets/css/content.css'>`+
+			`<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Roboto">`+
+		  `<link rel="stylesheet" href="${host}assets/vendor/bootstrap/bootstrap.min.css">`+
+		  `<link rel="stylesheet" href="${host}assets/vendor/theme/theme.css">`+
+		  `<link rel="stylesheet" href="${host}assets/vendor/prism/prism-line.css">`+
+		  `<link rel="stylesheet" href="${host}assets/css/content.css">`+
 		  `<style>body { padding: 30px; text-align: justify; }</style>`+
 			container +
-			`<script src='${host}assets/vendor/prism/prism-line.js'><\/script>`+
-			`<script src='${host}assets/vendor/jquery/jquery.min.js'><\/script>`+
+			`<script src="${host}assets/vendor/prism/prism-line.js"><\/script>`+
+			`<script src="${host}assets/vendor/jquery/jquery.min.js"><\/script>`+
 			`<script>$('.wrapper-content').addClass('p-3 rounded shadow').after('<hr class="mb-5">');<\/script>`;
 			previewFrame.open();
 			previewFrame.writeln(plainText);

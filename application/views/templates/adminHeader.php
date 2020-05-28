@@ -19,10 +19,12 @@ $editPage = whats_page(2,['editor']);
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
 <?php myGlobalCss() ?>
 <?php if ($quizTable) {
-echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
+// echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
+echo '<link rel="stylesheet" href="http://localhost/offline/select-bootstrap.min.css">';
 } ?>
 <?php if ($lessonTable) {
-echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
+// echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
+echo '<link rel="stylesheet" href="http://localhost/offline/datatable.min.css">';
 } ?>
 <?php if ($editPage) {
 	

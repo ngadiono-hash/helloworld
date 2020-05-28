@@ -9,11 +9,6 @@ class At extends CI_Controller
 		$this->load->model('Common_model');
 	}
 
-	public function haha()
-	{
-
-	}
-
 	public function notFound()
 	{
 		not_found();

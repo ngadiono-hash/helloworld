@@ -360,7 +360,7 @@ linkActive('.lesson-menu a');
       win.document.close();
     });
     $("#close").on("click", function() {
-      $('.wrapper-editor').removeClass('scale-in-center').addClass('scale-out-center');
+      // $('.wrapper-editor').removeClass('scale-in-center').addClass('scale-out-center');
       setTimeout(function(){
         $('.wrapper-editor').fadeOut();
       },3000);
@@ -405,14 +405,14 @@ linkActive('.lesson-menu a');
     });
     blog.on('click','.execute',function() {
       let snippet = $(this).siblings('pre').children('code').text();
+      // console.log(snippet);
       source.getSession().setValue(snippet);
       runCode();
       if ($('.wrapper-editor').hasClass('scale-out-center')) {
         $('.wrapper-editor').removeClass('scale-out-center');
       }
-      $('.wrapper-editor').fadeIn().addClass('scale-in-center');
+      $('.wrapper-editor').fadeIn(1000);
       $('html').addClass('fix-scroll');
-      // $('.open-editor').fadeOut();
     });
   });
 </script>

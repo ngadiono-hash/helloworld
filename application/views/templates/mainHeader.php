@@ -95,6 +95,16 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
   }
 
 /*================ external quiz*/
+  table thead tr th {
+    text-transform: capitalize;
+    text-align: center;
+    color: #808080;
+    cursor: pointer;
+    background-color: #f1f1f1;
+  }
+  table tbody tr td {
+    text-align: center;
+  }
   h6.a {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   }

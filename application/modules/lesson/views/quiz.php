@@ -4,7 +4,6 @@
   <section class="site-section">
   	<span class="anch"></span>
     <div class="container quiz-content">
-
 			<div class="setup welcome" data-aos="fade-up" data-aos-delay="200">
 				<div class="row text-center">
 			    <div class="col-lg-7">
@@ -109,6 +108,34 @@
       		</div>
       	</div>
       </div>
+    </div>
+    <hr class="my-5">
+    <div class="container" data-aos="fade-up" data-aos-delay="400">
+    	<h1 class="text-center">Top Leaderboard</h1>
+    	<table class="table table-hover">
+    		<thead>
+    			<tr>
+    				<th>No.</th>
+    				<th>Username</th>
+    				<th>Level</th>
+    				<th>Score</th>
+    				<th>Terdaftar</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<?php $num= 1; ?>
+    			<?php foreach ($leaderboard as $key => $val) : ?>
+    			<tr>
+    				<td><?=$num?>.</td>
+    				<td><?=$val['user']?></td>
+    				<td><?=$val['level']?></td>
+    				<td><?=$val['score']?></td>
+    				<td><?=elapsed('@'.$val['date'])?></td>
+    			</tr>
+    			<?php $num++; ?>
+    			<?php endforeach; ?>
+    		</tbody>
+    	</table>
     </div>
   </section>
 </main>

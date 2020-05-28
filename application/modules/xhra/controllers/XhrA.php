@@ -30,21 +30,12 @@ class XhrA extends CI_Controller
 	// }
 	public function read_quiz($param)
 	{
-		// select_join($table,$data,$joins,$where='',$array=true,$single=false,$group='',$order='');
-		// $content = $this->Common_model->select_join(
-		// 	'quiz',
-		// 	'q_question',
-		// 	[['table'=>'materi','condition'=>'quiz.q_rel = materi.les_id','type'=>'']],
-		// 	['materi.les_level' => $param],
-		// 	true,true,'',['materi.les_order','asc']);
 		$content = $this->Common_model->Ignited_join(
 			'quiz',
 			'les_id,les_title,quiz.id,q_order,q_level,q_question,q_answer,q_correct',
 			'materi','quiz.q_rel = materi.les_id',null,
 			['materi.les_level' => $param]
 		);
-		// bug($content);
-		// die();
 		echo $content;
 	}
 
@@ -140,7 +131,6 @@ class XhrA extends CI_Controller
 
 	public function update_lesson()
 	{
-		sleep(2);
 		$id = trimChar_input('id');
 		$title = trimChar_input('title');
 		$slug = trimChar_input('slug');

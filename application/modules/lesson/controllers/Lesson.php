@@ -185,6 +185,9 @@ class Lesson extends CI_Controller
 			'q_level',
 			'level.id ASC'
 		);
+		$data['leaderboard'] = $this->Common_model->select_where('score','*','',true,false,'score DESC',10);
+		// var_dump($this->db->last_query());
+		// bug($data['leaderboard']);
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('quiz',$data);
 		$this->load->view('templates/mainFooter');
