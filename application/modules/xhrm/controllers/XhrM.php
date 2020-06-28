@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class XhrM extends CI_Controller
+class Xhrm extends CI_Controller
 {
 	public function __construct()
 	{
@@ -235,7 +235,7 @@ class XhrM extends CI_Controller
 							'title' => $v['les_title'],
 							'slug' => $v['les_slug'],
 							'keys' => explode(',',$v['les_key']),
-							'link' => base_url().'lesson/docs/'.create_slug($v['les_slug'])
+							'link' => base_url().'js/docs/'.create_slug($v['les_slug'])
 						];
 					}
 					$result = [1,'ditemukan '.$search_results.' hasil pencarian untuk keyword <br><b>"'.$term.'"</b>',$arr];

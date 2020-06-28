@@ -7,6 +7,7 @@ CKEDITOR.stylesSet.add( 'default', [
 		attributes: { 'class': 'language-html' }
 	},
 	{ name: 'Keyboard',	element: 'kbd' },
+	{ name: 'Code',	element: 'code' },
 	
 	/* Block styles */
 	{

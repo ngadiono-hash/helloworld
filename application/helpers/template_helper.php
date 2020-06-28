@@ -1,10 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 function myGlobalCss(){ ?>
-  <link rel="stylesheet" href="<?= base_url('assets/css/new.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
 <?php }
 function myGlobalJs(){ ?>
-  <script src="<?= base_url('assets/js/new.js') ?>"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+  <script src="<?=log?>jquery.min.js"></script>
+  <script src="<?= base_url('assets/js/global.js') ?>"></script>
+<?php }
+function myEditorJs(){ ?>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script> -->
+  <script src="<?=log?>ace.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script> -->
+  <script src="<?=log?>ace-language.js"></script>
+  <script src="<?=base_url()?>assets/vendor/resize/resiz.js"></script>
+  <script src="<?=base_url()?>assets/js/my-ace.js"></script>
 <?php }
 function not_available() { ?>
   <div class="card not-available" data-aos="fade-up" data-aos-delay="200">
@@ -124,14 +134,13 @@ function playEditor() {
     <div class="panel-editor">
       <div class="panel-left">
         <nav class="ctrl">
-          <button id="close" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-lg fa-fw fa-times"></i></button>
-          <button id="live" data-toggle="tooltip" data-placement="bottom" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
-          <button id="snippet" data-toggle="tooltip" data-placement="bottom" title="Enable Snippet"><i class="fa fa-lg fa-fw fa-laptop-code"></i></button>
-          <button id="clipboard" data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
-          <button id="newTab" data-toggle="tooltip" data-placement="bottom" title="open in New Tab"><i class="fa fa-lg fa-fw fa-external-link-alt"></i></button>
+          <button id="close" class="btn btn-sm btn-control" title="Close"><i class="fa fa-lg fa-fw fa-times"></i></button>
+          <button id="play" class="btn btn-sm btn-control" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
+          <button id="clipboard" class="btn btn-sm btn-control" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
+          <button id="newTab" class="btn btn-sm btn-control" title="open in New Tab"><i class="fa fa-lg fa-fw fa-expand-arrows-alt"></i></button>
           <?php if ($adm) { ?>
-          <button id="temp"><i class="fa fa-lg fa-fw fa-pen"></i></button>
-          <button id="del"><i class="fa fa-lg fa-fw fa-eraser"></i></button>
+          <button id="temp" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-pen"></i></button>
+          <button id="del" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-eraser"></i></button>
           <?php } ?>
         </nav>
         <div class="body-source" id="source-code"></div>
@@ -140,7 +149,6 @@ function playEditor() {
       <div class="panel-right">
         <iframe class="frame" id="result-frame"></iframe>
         <div class="dimension" id="dm"></div>
-        
       </div>
     </div>
   </div>

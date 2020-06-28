@@ -1,14 +1,32 @@
+
+// uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
 const host = `http://${window.location.hostname}/helloworld/`,
   path = window.location.pathname,
   csrf = $('meta[name="csrf"]').attr('content'),
+  frame = document.getElementById('result-frame'),
+  inCss = `<link rel="stylesheet" href="${host}assets/css/injected.css">`,
+  inJs = `<script src="${host}assets/js/injected.js"><\/script>`,
+  liveEditor = $('.wrapper-editor'),
+  play = $('#play'),
+  openEditor = $('#open-editor'),
+  codeSource = $('#source-code'),  
   over = $('.overlay'),
   aJax = $('.ajax'),
-  imgLoad = `<img src="${host}assets/img/feed/bars.svg" height="50">`,
-  uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+  imgLoad = `<img src="${host}assets/img/feed/bars.svg" height="50">`;
 let xhrRest, imgRest;
 let label = window.location.pathname.split('/').pop();
 function bug(n){
   console.log(n)
+}
+function wait(callback,ms) {
+  let counter = 0;
+  return function() {
+    let context = this, args = arguments;
+    clearTimeout(counter);
+    counter = setTimeout(function () {
+      callback.apply(context, args);
+    }, ms || 0);
+  };
 }
 function ajaxTemp($this){
   $this.d.csrf_token = csrf;
@@ -193,18 +211,16 @@ function download(filename,text){
   document.body.removeChild(element);
 }
 
-function runCode(delay){
+function runCode(){
   var plainText = source.getValue();
-  delay = delay || 0;
-  var timer = null;
-  if (timer) clearTimeout(timer);
-  timer = setTimeout(function() {
-    timer = null;
-    frame.contentWindow.document.open();
-    frame.contentWindow.document.write(inCss);
-    frame.contentWindow.document.write(inJs);
-    frame.contentWindow.document.write(plainText);
-    frame.contentWindow.document.close();
-  },delay);
+  frame.contentWindow.document.open();
+  frame.contentWindow.document.write(inCss);
+  frame.contentWindow.document.write(inJs);
+  frame.contentWindow.document.write(plainText);
+  frame.contentWindow.document.close();
+  play.addClass('active');
+  setTimeout(function() {
+    play.removeClass('active');
+  }, 300);
   source.focus();
 }

@@ -23,9 +23,9 @@ $quiz_page = whats_page(2,['quiz']);
           <div class="col-sm-6 mb-4 mb-md-0">
             <h3>Navigation</h3>
             <ul class="list-unstyled">
-              <li><a href="<?=base_url('lesson/beginner')?>">JavaScript Dasar</a></li>
-              <li><a href="<?=base_url('lesson/medium')?>">JavaScript Medium</a></li>
-              <li><a href="<?=base_url('lesson/advance')?>">JavaScript Lanjutan</a></li>
+              <li><a href="<?=base_url('js/beginner')?>">JavaScript Dasar</a></li>
+              <li><a href="<?=base_url('js/medium')?>">JavaScript Medium</a></li>
+              <li><a href="<?=base_url('js/advance')?>">JavaScript Lanjutan</a></li>
             </ul>
           </div>
           <div class="col-sm-6 mb-4 mb-md-0">
@@ -54,33 +54,39 @@ $quiz_page = whats_page(2,['quiz']);
 <div class="ajax"></div>
 
 </div>
-<? // ($lesson_page) ? '<a class="open-editor"><i class="fa fa-code"></i></a>' : ''; ?>
 <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+<div class="modal fade" id="modal-search">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center mb-4"></h3>
+        <div class="search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<!-- <script src="<?=base_url()?>assets/vendor/jquery/jquery.min.js"></script> -->
 <?php myGlobalJs() ?>
-<!-- <script src="<?=base_url()?>assets/vendor/bootstrap/popper.min.js"></script> -->
-<!-- <script src="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.js"></script> -->
+<script src="<?=log?>jquery.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<script src="<?=log?>popper.min.js"></script>
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<script src="<?=log?>bootstrap.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script> -->
+<script src="<?=log?>jquery.mark.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/easing.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/sticky.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/aos.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/owl.carousel.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script src="<?=log?>jquery-ui.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/theme.js"></script>
 <script src="<?=base_url()?>assets/vendor/prism/prism-line.js"></script>
-<?php if ($lesson_page) { ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script>
-<script src="<?=base_url()?>assets/vendor/resize/resiz.js"></script>
-<script src="<?=base_url()?>assets/js/config.js"></script>
-<?php } ?>
-<?php if ($login_page && startSession('access')) { ?>
-<script src="<?=base_url('assets/js/log.js')?>"></script>
+<?php
+if ($lesson_page) myEditorJs();
+if ($login_page && startSession('access')) { ?>
+<script src="<?=base_url('assets/js/login.js')?>"></script>
 <?php } ?>
 <?php if($login_page) { ?>
 <script>
@@ -104,25 +110,63 @@ $quiz_page = whats_page(2,['quiz']);
 </script>
 <?php } ?>
 <script>
-const blog = $('.blog-content');
-linkActive('.site-menu a');
-linkActive('.lesson-menu a');
+  const blog = $('.blog-content');
+  
+  linkActive('.site-menu a');
+  linkActive('.lesson-menu a');  
+  $('.thumbnail').hover(
+    function(){
+      $(this).find('.caption').slideDown(250);
+    },
+    function(){
+      $(this).find('.caption').slideUp(250);
+    }
+  );
+  // search function
+  $(function(){
+    $('#search-form input').on('keypress',function(e){
+      if (e.which == 13) {
+      e.preventDefault();
+        let inval = { search: $(this).val() };
+        ajaxTemp({
+          u: 'xhrm/search',
+          d: inval,
+          b: function(){
+            startAjax();
+            $('html').addClass('fix-scroll');
+          },
+          s: function(data){
+            $('#modal-search').modal('show');
+            $('#modal-search h3').html(data[1]);
+            let temp = "";
+            let arr = [];
+            if (data[0] == 1) {
+              for (let i = 0; i < data[2].length; i++) {
+                arr = data[2][i].keys.join(' | ');
+                temp += '<div class="card"><div class="card-header">';
+                temp += '<a href="'+data[2][i].link+'"><h5 class="section-heading section-low">'+data[2][i].title+' - '+data[2][i].slug+'</h5></a></div>';
+                temp += '<div class="card-body p-2"><p class="m-0">'+arr+'</p></div></div><hr>';
+              };
+              $('#modal-search .search-result').html(temp);
+              $('.search-result p').mark(inval.search,{ "element": "span","className": "highlight" });
+            } else {
+              $('#modal-search .search-result').html('');
+            }
+          },
+          c: function(){
+            endAjax();
+            $('html').removeClass('fix-scroll');
+          },
+        });
+      }
+    });
+  });
 </script>
 <?php if ($quiz_page) { ?>
 <script>
   const form = $('.quiz-content'), userForm = $('#form-user'), fin = $('.finish');
   let myRest, active, iData, user, timeleft, timer, barWidth, barDiv;
   let myQuiz = [], timetotal = 60;
-  function del(callback,ms) {
-    let counter = 0;
-    return function() {
-      let context = this, args = arguments;
-      clearTimeout(counter);
-      counter = setTimeout(function () {
-        callback.apply(context, args);
-      }, ms || 0);
-    };
-  }
   function getFormData(form){
     let in_array = {}, un_array = form.serializeArray();
     $.map(un_array, function(n, i){
@@ -231,7 +275,7 @@ linkActive('.lesson-menu a');
     $('.welcome').on('click','.btn-default',function(){
       slidePre('.welcome');
     });
-    userForm.find('input').keyup(del(function(e){
+    userForm.find('input').keyup(wait(function(e){
       user = $(this).val();
       $(this).blur();
       ajaxTemp({
@@ -317,56 +361,6 @@ linkActive('.lesson-menu a');
       }
     });
   }
-  // search function
-  $(function(){
-    $('#search-form input').on('keypress',function(e){
-      if (e.which == 13) {
-      e.preventDefault();
-        let inval = { search: $(this).val() };
-        ajaxTemp({
-          u: 'xhrm/search',
-          d: inval,
-          b: startAjax,
-          s: function(data){
-            $('#modal-search').modal('show');
-            $('#modal-search h3').html(data[1]);
-            let temp = "";
-            let arr = [];
-            if (data[0] == 1) {
-              for (let i = 0; i < data[2].length; i++) {
-                arr = data[2][i].keys.join(' | ');
-                temp += '<div class="card"><div class="card-header">';
-                temp += '<a href="'+data[2][i].link+'" class="link"><h5>'+data[2][i].title+' - '+data[2][i].slug+'</h5></a></div>';
-                temp += '<div class="card-body p-2"><p class="m-0">'+arr+'</p></div></div><hr>';
-              };
-              $('#modal-search .search-result').html(temp);
-              $('.search-result p').mark(inval.search,{ "element": "span","className": "highlight" });
-            } else {
-              $('#modal-search .search-result').html('');
-            }
-          },
-          c: endAjax
-        });
-      }
-    });
-  });
-
-  // editor function
-  $(function(){
-    $('#newTab').on('click', function() {
-      let win = window.open("","Title");
-      win.document.open();
-      win.document.write(source.getValue());
-      win.document.close();
-    });
-    $("#close").on("click", function() {
-      // $('.wrapper-editor').removeClass('scale-in-center').addClass('scale-out-center');
-      setTimeout(function(){
-        $('.wrapper-editor').fadeOut();
-      },3000);
-      $('html').removeClass('fix-scroll');
-    });
-  });
 
   // main function
   $(function(){
@@ -391,29 +385,35 @@ linkActive('.lesson-menu a');
         $(document).on("scroll", onScroll);
       });
     });
+    
     blog.on('click','img.wide',function(){
       let img = $(this).attr('src');
       overide(img);
     });
-    // blog.find('.code-toolbar pre.language-javascript').removeClass('line-numbers');
-    // Prism.highlightAll;
-    blog.find('.code-toolbar pre.language-html').after('<button class="btn btn-default execute">Try It</button>');
+    blog.find('.code-toolbar pre.language-html').siblings('.toolbar').append('<button class="btn btn-default execute">Try It</button>');
     blog.find('a').addClass('link');
     blog.find('.wrapper-content').after('<hr class="mb-5">').before('<span class="anchor"></span>');
     blog.find('span').attr('id', function(){
       return $(this).prev('h3').text().replace(/\s+/g,'-').toLowerCase();
     });
     blog.on('click','.execute',function() {
-      let snippet = $(this).siblings('pre').children('code').text();
-      // console.log(snippet);
+      let snippet = $(this).parents('.code-toolbar').find('code').text();
       source.getSession().setValue(snippet);
       runCode();
-      if ($('.wrapper-editor').hasClass('scale-out-center')) {
-        $('.wrapper-editor').removeClass('scale-out-center');
+      if (liveEditor.hasClass('slide-out')) {
+        liveEditor.removeClass('slide-out');
       }
-      $('.wrapper-editor').fadeIn(1000);
+      liveEditor.show().addClass('slide-in');
       $('html').addClass('fix-scroll');
     });
+    // blog.on('click','.copy',function(){
+    //   let sn = $(this).parents('.code-toolbar').find('code').text();
+    //   $('body').append('<textarea>'+sn+'</textarea>');
+    //   var clip = $('body>textarea');
+    //   clip.select();
+    //   document.execCommand('copy');
+    //   clip.remove();
+    // });
   });
 </script>
 <?php } ?>

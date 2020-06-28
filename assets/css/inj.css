@@ -1,7 +1,0 @@
-* { margin:10px;padding:10px; }
-body { max-width:650px;margin:10px auto;font-family:sans-serif; }
-body>h1 { text-align: center; }
-body,body>h1,button[onclick],button[id*="btn"] { border:1px solid #cecece; } 
-button[onclick],button[id*="btn"] { font-family:monospace;color:#e83e8c;cursor:pointer; }
-pre#mydebug { white-space:pre-wrap;background:#f8d7da;position:absolute;bottom:0;left:0;right:0;margin:0;padding:0; }  
-pre#mydebug li { list-style: none; }

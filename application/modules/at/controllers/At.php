@@ -17,6 +17,7 @@ class At extends CI_Controller
 // ================ HOME
 	public function index() // ok
 	{
+		$data['label'] = $this->Common_model->select_where('level','*','',TRUE,FALSE);
 		$data['title'] = 'Selamat Datang di My Note';
 		$this->load->view('templates/mainHeader',$data);
 		$this->load->view('index',$data);

@@ -54,6 +54,11 @@ class A extends CI_Controller
 	{
 		$label = $this->uri->segment(3);
 		$order = $this->uri->segment(4);
+		if (in_array($label,['beginner','medium','advance'])) {
+			$lb = 'js';
+		} else {
+			$lb = 'bla';
+		}
 		if(!empty($label) && !empty($order)){
 			$edit = $this->Common_model->select_where(
 				'materi','*',['les_order'=>$order,'les_level'=>$label],TRUE,TRUE
@@ -69,7 +74,7 @@ class A extends CI_Controller
 			$data['upload'] = $edit['les_upload'];
 			$data['update'] = $edit['les_update'];
 			$data['public'] = $edit['les_publish'];
-			$data['link'] = base_url('lesson/docs/'.$data['meta']);
+			$data['link'] = base_url($lb.'/docs/'.$data['meta']);
 			if($data['public'] == 1){
 		    $data['btn'] = 'btn-success';
 		    $data['icon']  = '<i class="fa fa-globe-asia"></i>';
@@ -93,12 +98,6 @@ class A extends CI_Controller
 
 	public function quiz()
 	{
-		// $html = '&amp;lt;script name=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;,&amp;lt;script src=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;,&amp;lt;script&amp;gt;file.js&amp;lt;/script&amp;gt;,&amp;lt;script href=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;';
-		// $html = '&lt;script name=&quot;file.js&quot;&gt;&lt;/script&gt;';
-		// $sp = '<script src="balabala"></script>';
-		// $sp = '&lt;script&gt;';
-		// $sp = '&amp;lt;script name=&amp;quot;file.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;';
-		// bug(html_entity_decode(htmlspecialchars_decode($sp)));
 		$third = $this->uri->segment(3);
 		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
 		$data['quiz'] = $this->Common_model->select_where(

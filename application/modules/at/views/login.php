@@ -20,7 +20,7 @@
           <?php if (startSession('access')) { ?>
           <div class="row">
             <div class="col-lg-7 text-center text-lg-left">
-              <h1 data-aos="fade-right">Welcome Administrator</h1>
+              <h1 data-aos="fade-right">Are You <br> Administrator ?</h1>
               <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Please login to enter your dashboard</p>
             </div>
             <div class="col-lg-5 iphone-wrap">
@@ -39,7 +39,7 @@
             	    <input type="checkbox" id="remember" value="1" class="checkin">
             	    <label for="remember" class="text-white">Remember me?</label>
             	  </div>
-            	  <button class="btn btn-primary btn-log">Submit</button>
+            	  <button class="btn btn-default btn-log">Submit</button>
             	</form>
             </div>
           </div>

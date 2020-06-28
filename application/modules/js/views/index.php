@@ -1,6 +1,6 @@
 
 <main id="main">
-  <?php wave('Materi JavaScript','Dokumentasi tentang bahasa program JavaScipt') ?>
+  <?php // wave('Materi JavaScript','Dokumentasi tentang bahasa program JavaScipt') ?>
 
   <?php foreach ($label as $k => $v) { ?>
   <div class="site-section">

@@ -19,15 +19,12 @@
             <div class="row">
               <div class="col-lg-7 text-center text-lg-left">
                 <h1 data-aos="fade-right">Note JavaScript</h1>
-                <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Dokumentasi belajar bahasa program JavaScript</p>
-                <div data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500">
-                  <a href="<?=base_url('lesson')?>"
-                    class="btn btn-outline-white">Ayo Pelajari</a>
-                </div>
+                <p class="" data-aos="fade-right" data-aos-delay="100">Situs dokumentasi belajar Bahasa Program JavaScript</p>
+                <p class="" data-aos="fade-right" data-aos-delay="200">Mulai dari tingkat dasar hingga tingkat mahir</p>
               </div>
               <div class="col-lg-5 iphone-wrap">
                 <img src="<?=base_url()?>assets/img/feed/snippet.png" alt="Image" class="phone-1" data-aos="fade-right">
-                <img src="<?=base_url()?>assets/img/feed/easy.gif" alt="Image" class="phone-2" data-aos="fade-right" data-aos-delay="400">
+                <img src="<?=base_url()?>assets/img/feed/practice.gif" alt="Image" class="d-none d-lg-block phone-2" data-aos="fade-right" data-aos-delay="400">
               </div>
             </div>
           </div>
@@ -41,7 +38,7 @@
 
         <div class="row justify-content-center text-center mb-5">
           <div class="col-lg-6" data-aos="fade-up">
-            <h2 class="section-heading">Belajar JavaScript</h2>
+            <h2 class="section-heading">Belajar Bahasa Program JavaScript</h2>
           </div>
         </div>
 
@@ -78,33 +75,44 @@
       </div>
     </div> <!-- .site-section -->
 
-    <div class="site-section pb-0">
+    <div class="site-section cta-section">
       <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-4 mr-auto">
-            <h2 class="mb-4">Praktek JavaScript</h2>
-            <p class="mb-4">Belajar tentang bagaimana sebuah program berbasis web dijalankan di dalam bahasa program JavaScript. Dari materi JavaScript yang paling dasar sampai pada materi tingkat yang paling lanjut, semua dokumentasinya tersedia di sini. Praktekkan kode snippet pada setiap materi yang ada untuk kemudian memahami bagaimana sistemnya bekerja.</p>
-          </div>
-          <div class="col-lg-6" data-aos="fade-left">
-            <img src="<?=base_url()?>assets/img/feed/live.gif" alt="Image" class="img-fluid rounded shadow-lg">
+        <h2 class="text-center mb-5">Cari materi dengan keyword di sini</h2>
+        <div class="d-flex justify-content-center h-100">
+          <div id="search-form" class="searchbar">
+            <input class="search_input" type="text" placeholder="Ketik keyword lalu tekan Enter...">
+            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
           </div>
         </div>
       </div>
     </div>
 
+    <?php foreach ($label as $k => $v) { ?>
     <div class="site-section">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-4 ml-auto order-2">
-            <h2 class="mb-4">Kembangkan Kreatifitas</h2>
-            <p class="mb-4">Berbekal pengetahuan tentang bahasa program JavaScript, mari bersama-sama untuk mengembangkan kreatifitas dalam membuat program yang bisa bermanfaat.</p>
+      <div class="container" data-aos="fade-left">
+        <h2 class="mb-4 text-center section-heading"><?=$v['description']?></h2>
+        <div class="col-md-8 offset-md-2 col-sm-12 thumbnail">
+          <img src="<?=base_url('assets/img/feed/').$v['image']?>" class="img-fluid rounded mx-auto d-block shadow-lg">
+          <div class="caption">
+            <p><?=$v['content']?></p>
+            <div class="text-center">
+              <a class="btn btn-default" href="<?=base_url('js/').$v['name']?>">Mulai Belajar</a>
+            </div>
           </div>
-          <div class="col-lg-6" data-aos="fade-right">
-            <img src="<?=base_url()?>assets/img/feed/practice.gif" alt="Image" class="img-fluid rounded shadow-lg">
+        </div>
+        
+        <div class="row d-none align-items-center py-3">
+          <div class="col-md-6">
+            
+          </div>
+          <div class="col-md-6 ml-auto" data-aos="fade-left">
+            <a href="<?=base_url('js/').$v['name']?>">
+            </a>
           </div>
         </div>
       </div>
     </div>
+    <?php } ?>
 
   <?php quotes() ?>
   </main>

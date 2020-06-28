@@ -13,25 +13,25 @@ $editPage = whats_page(2,['editor']);
 <title><?= $title; ?></title>
 <meta name="csrf" content="<?= $this->security->get_csrf_hash(); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito|Roboto">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-<link rel="stylesheet" href="<?=base_url()?>assets/vendor/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="<?=log?>roboto.css">
+<link rel="stylesheet" href="<?=log?>all.min.css">
+<link rel="stylesheet" href="<?=log?>bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
 <?php myGlobalCss() ?>
 <?php if ($quizTable) {
 // echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
-echo '<link rel="stylesheet" href="http://localhost/offline/select-bootstrap.min.css">';
+echo '<link rel="stylesheet" href="'.log.'select-bootstrap.min.css">';
 } ?>
 <?php if ($lessonTable) {
 // echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
-echo '<link rel="stylesheet" href="http://localhost/offline/datatable.min.css">';
+echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
 } ?>
 <?php if ($editPage) {
 	
 } ?>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="<?=log?>jquery-ui.css">
 <style type="text/css">
-.panel-editor .splitter { 
+.wrapper-editor .splitter, .content-editor .splitter { 
 	background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
 }
 #frame-preview {

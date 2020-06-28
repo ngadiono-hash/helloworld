@@ -1,91 +1,108 @@
 <style>
-  .wrapper-editor {
-  	z-index: 99999;
-  }
-  button.temp-editor {
-  	position: fixed;
-    z-index: 999999;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 27px;
-    font-size: 20px;
-    word-wrap: break-word;
-    font-family: monospace;
-  }
-</style>
-<!-- <button class="btn-dark temp-editor" id="open-editor">EDITOR</button> -->
-<div id="content" class="p-1">
-  <div class="container-fluid" id="edited-lesson">
-		<div class="row">
-			<div class="col-md-8">
-		  	<ul class="nav nav-pills nav-fill mb-1">
-		  		<li class="nav-item">
-		  			<a class="nav-link btn btn-outline-primary" href="<?=$linkPrev?>"><i class="fa fa-arrow-left"></i></a>
-		  		</li>
-		  	  <li class="nav-item">
-		  	    <a class="nav-link btn active" data-toggle="pill" href="#pills-editor">Editor</a>
-		  	  </li>
-		  	  <li class="nav-item">
-		  	  	<a class="nav-link btn btn-outline-success" id="btn-update"><i class="fa fa-save"></i></a>
-		  	  </li>
-		  	  <li class="nav-item">
-		  	    <a class="nav-link btn" id="btn-preview" data-href="<?=$link?>" data-toggle="pill" href="#pills-preview">Preview</a>
-		  	  </li>
-				  <li class="nav-item">
-				  	<a class="nav-link btn btn-outline-primary" href="<?=$linkNext?>"><i class="fa fa-arrow-right"></i></a>
-					</li>
-		  	</ul>
-		  	<div class="tab-content">
-		  	  <div class="tab-pane fade show active" id="pills-editor">
-		  	  	<textarea id="ckedit"><?=htmlentities($content)?></textarea>
-		  	  </div>
-		  	  <div class="tab-pane fade" id="pills-preview">
-		  	  	<iframe id="frame-preview"></iframe>
-		  	  </div>
-		  	</div>
-			</div>
-			<div class="col-md-4">
-				<div class="btn-group btn-block mb-1" data-id="<?=$id?>">
-				  <a class="btn btn-outline-primary" href="<?=base_url('a/less/'.$label)?>">Back</a>
-				  <a class="btn btn-info" href="<?=$link?>" target="_blank">Go</a>
-				  <button class="btn <?=$btn?>" id="btn-public"><?=$icon?></button>
-				  <button class="btn btn-danger" id=""><i class="fa fa-trash-alt"></i></button>
-				</div>
+.content-edit {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.content-editor {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  height: 100%;
+  min-height: 92vh;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+.content-editor .splitter {
+  flex: 0 0 auto;
+  width: 18px;
+  min-height: 200px;
+  cursor: col-resize;
+  transition: all .3s ease-in-out;
+}
+.content-editor .splitter:hover {
+  background-color: #ccc;
+}
+.content-editor .content-left {
+  flex: 0 0 auto;
+  width: 50vw;
+  min-width: 5%;
+  max-width: 98%;
+  background-color: #ccc;
+}
+.content-editor .body-source {
+  height: 93vh;
+  padding: 0;
+}
+.content-editor .ctrl {
+  display: flex;
+}
+.content-editor .content-right {
+  flex: 1 1 auto;
+  width: 100%;
+  background: #fff;
+}
+.content-editor .frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.stamp {
+	position: absolute;
+  bottom: 0;
+  right: 10px;
+  padding: 0 10px;
+  background: #000000e6;
+}
 
+.wrapper-editor {
+	z-index: 99999;
+}
+#open-editor {
+  position: fixed;
+  z-index: 999999;
+}
+
+</style>
+<button id="open-editor" class="btn btn-outline-dark"><i class="fa fa-lg fa-fw fa-code"></i></button>
+<div class="content-edit" id="edited-lesson">
+  <div class="content-editor">
+    <div class="content-left">
+      <nav class="ctrl" style="margin-left: 55px;">
+      	<input type="hidden" id="input-id" value="<?=$id?>">
+        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#modal-info"><i class="fa fa-lg fa-fw fa-info"></i></button>
+        <button class="btn btn-outline-dark" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></button>
+      	<button class="btn btn-outline-dark"><a href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a></button>
+        <button class="btn btn-outline-dark"><a href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a></button>
+        <button class="btn btn-outline-dark"><a href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a></button>
+        <button class="btn btn-outline-dark"><a href="<?=$link?>" target="_blank"><i class="fas fa-lg fa-fw fa-location-arrow"></i></a></button>
+        <input type="text" id="input-title" class="form-control" value="<?=$titles?>">
+        <input type="text" id="input-slug" class="form-control" value="<?=$slug?>">
+      </nav>
+      <textarea id="ckedit"><?=htmlentities($content)?></textarea>
+    </div>
+    <div class="splitter"></div>
+    <div class="content-right">
+    	<iframe id="frame-preview" class="frame"></iframe>
+    	<div style="position: absolute; bottom: 0" class="stamp">
+    		<span id="input-update"><?=date('d F, Y H:i',$update)?></span> | 
+    		<span><?=date('d F, Y',$upload)?></span>
+    	</div>
+    </div>
+  </div>  
+</div>
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body">
 				<div class="accordion" id="accord">
 				  <div class="card">
 				    <div class="card-header p-2">
-			        <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true">Info Materi</button>
+			        <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false">Sub Key H3</button>
 				    </div>
-
-				    <div id="collapseOne" class="collapse show" data-parent="#accord">
-				      <div class="card-body">
-				        <div class="form-group">
-				        	<input type="hidden" id="input-id" value="<?=$id?>">
-				        	<label>Title</label>
-				        	<input type="text" id="input-title" class="form-control" value="<?=$titles?>">
-				        </div>
-				        <div class="form-group">
-				        	<label>Slug</label>
-				        	<input type="text" id="input-slug" class="form-control" value="<?=$slug?>">
-				        </div>
-				        <div class="form-group">
-				        	<label>Created</label>
-				        	<input type="text" class="form-control" value="<?=date('d F, Y H:i',$upload)?>" disabled>
-				        </div>
-				        <div class="form-group mb-4">
-				        	<label>Updated</label>
-				        	<input type="text" class="form-control" id="input-update" value="<?=date('d F, Y H:i',$update)?>" disabled>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="card">
-				    <div class="card-header p-2">
-			        <button class="btn btn-block btn-outline-dark collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false">Sub Key H3</button>
-				    </div>
-				    <div id="collapseTwo" class="collapse" data-parent="#accord">
+				    <div id="collapseTwo" class="collapse show" data-parent="#accord">
 				      <div class="card-body">
 				        <div class="form-group">
 				        	<ol id="sub-h3">
@@ -124,9 +141,9 @@
 				    </div>
 				  </div>
 				</div>
-
-			</div>
-		</div>
+      </div>
+    </div>
   </div>
 </div>
+
 <?php playEditor() ?>

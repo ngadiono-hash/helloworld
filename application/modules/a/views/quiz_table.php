@@ -8,7 +8,7 @@
         <i class="fa fa-fw fa-plus"></i> Add New
       </button>
   		<div class="table-responsive">
-  			<table class="display stripe row-border" id="table">
+  			<table class="display stripe row-border" id="table-quiz">
   				<thead>
   					<tr>
   						<th>No.</th>
