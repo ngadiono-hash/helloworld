@@ -18,6 +18,7 @@ let label = window.location.pathname.split('/').pop();
 function bug(n){
   console.log(n)
 }
+
 function wait(callback,ms) {
   let counter = 0;
   return function() {
@@ -223,4 +224,18 @@ function runCode(){
     play.removeClass('active');
   }, 300);
   source.focus();
+}
+
+function onScroll(event){
+  let scrollPos = $(document).scrollTop();
+  $('.hint a').each(function() {
+    let currentLink = $(this), div = $(currentLink.attr("href")).next(), divPos = div.position();
+    if (divPos != undefined) {
+      if ((divPos.top + 300) < scrollPos && (divPos.top + 300) + div.outerHeight() > scrollPos) {
+        $(currentLink).addClass("active");
+      } else {
+        $(currentLink).removeClass("active");
+      }
+    }
+  });
 }

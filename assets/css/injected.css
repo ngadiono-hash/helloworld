@@ -1,9 +1,12 @@
-* { margin:10px;padding:10px; }
-body { max-width:650px;margin:10px auto;font-family:sans-serif; }
+* { margin: 10px;padding: 10px; }
+b,u,i,a,code,span { margin: 0; padding: 0; }
+body { max-width: 650px;margin: 10px auto;font-family: sans-serif; }
 body>h1 { text-align: center; }
 body,body>h1,button[onclick],button[id*="btn"] { border:1px solid #cecece; } 
-button[onclick],button[id*="btn"] { font-family:monospace;color:#e83e8c;cursor:pointer; }
-pre#mydebug { white-space:pre-wrap;background:#f8d7da;position:absolute;bottom:0;left:0;right:0;margin:0;padding:0; }  
+button[onclick],button[id*="btn"] { font-family: monospace;color: #e83e8c;cursor: pointer; }
+hr { margin: 0; padding: 0; }
+code { color: #e83e8c; }
+pre#mydebug { white-space: pre-wrap;background: #f8d7da;position: absolute;bottom: 0;left: 0;right: 0;margin: 0;padding: 0; }  
 pre#mydebug li { list-style: none; }
-p.explain::before { content: 'Info';position: absolute;top: -30px;left: -3px;font-size: 1.4rem;background: #e74a3b;color: #ffffff;padding: 4px 20px;border-top-left-radius: 8px;border-top-right-radius: 8px;}
-p.explain { position: relative;min-width: 0;margin-top: 40px;word-wrap: break-word;background-color: #f1f1f1;background-clip: border-box;border: 1px solid #e74a3b;border-radius: 8px;border-left: 10px solid #e74a3b;border-bottom-color: #e74a3b;padding: 20px;box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15); font-family: monospace;}
+p.explain::before { content: 'Info';position: absolute;top: -30px;left: -3px;font-size: 1.4rem;background: #e74a3b;color: #ffffff;padding: 4px 20px;border-top-left-radius: 8px;border-top-right-radius: 8px; font-family: monospace; }
+p.explain { position: relative;min-width: 0;margin-top: 40px;word-wrap: break-word;background-color: #f1f1f1;background-clip: border-box;border: 1px solid #e74a3b;border-radius: 8px;border-left: 10px solid #e74a3b;border-bottom-color: #e74a3b;padding: 20px;box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15); font-family: cursive; }

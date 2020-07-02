@@ -12,8 +12,15 @@ CKEDITOR.editorConfig = function( config ) {
 	config.protectedSource.push( /<i class[\s\S]*?\>/g );
 	config.protectedSource.push( /<\/i>/g );
 	config.fillEmptyBlocks = false;
-	// config.fullPage = true,
-	config.allowedContent = true;
+	config.allowedContent = {
+    script: true,
+    $1: {
+      elements: CKEDITOR.dtd,
+      attributes: true,
+      styles: true,
+      classes: true
+    }
+  };
 	config.extraAllowedContent = 'html','head','style','script','body','img','input';
 	for(var tag in CKEDITOR.dtd.$removeEmpty){
     CKEDITOR.dtd.$removeEmpty[tag] = false;
@@ -43,7 +50,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// codesnippet
 	config.codeSnippet_theme = 'monokai_sublime';
 	config.codeSnippet_languages = {
-    	// php: 'PHP',
+    	php: 'PHP',
     	html: 'HTML',
     	javascript: 'JavaScript'
 	};

@@ -1,0 +1,227 @@
+
+
+.hero-section, .hero-section > .container > .row {
+  min-height: 830px;
+}
+.hero-section.inner-page {
+  min-height: 80vh;
+}
+.hero-section .iphone-wrap .phone-2 {
+  margin-top: 130px;
+}
+.hero-section.log > .container > .row {
+  height: 100vh;
+  min-height: 660px;
+}
+
+.search-result .label {
+  position: absolute;
+  top: -15px;
+  right: 5px;
+  display: inline-block;
+  background: gainsboro;
+  padding: 1px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #878080;
+  text-align: center;
+  min-width: 120px;
+}
+
+/*================ external quiz*/
+  h6.a {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+  .card-header > a {
+    display: block;
+    cursor: pointer;
+  }
+  .fluid-section {
+    padding: 50px 0;
+  }
+  .anch {
+    display: block;
+    height: 85px;
+    margin-top: -85px;
+    visibility: hidden;
+  }
+  .quiz-content .setup,
+  .quiz-content .squence,
+  .quiz-content .finish {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.5);
+    background: #fff;
+    border-radius: 5px;
+  }
+  .quiz-content .setup .groups,
+  .quiz-content .squence .groups {
+    margin: 30px auto;
+  }
+  .quiz-content .setup > .row,
+  .quiz-content .squence > .row,
+  .quiz-content .finish > .row {
+    min-height: 78vh;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .side-setup {
+    border-left: 1px solid;
+    height: 100%;
+  }
+  .quiz-content .setup .card-body > img,
+  .quiz-content .squence .card-body > img,
+  .quiz-content .finish .card-body > img {
+    display: block;
+    margin: 10px auto;
+    width: 150px;
+  }
+
+  .quiz-content .btn {
+    min-width: 150px;
+  }
+  .quiz-content .btn-panel {
+    position: sticky;
+    top: 85px;
+    padding-top: 10px;
+    background: #fff;
+    z-index: 100;
+    border-radius: 0;
+  }
+  .wrapper-quest {
+    background: linear-gradient(to right, rgba(39, 70, 133, 0.8) 0%, rgba(61, 179, 197, 0.8) 100%);
+  }
+
+  .quiz-content p {
+    margin-bottom: 0;
+  }
+  .quiz-content .question {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background: #fff;
+  }
+  .quiz-content .answer {
+    padding: 10px;
+  }
+
+  .quiz-content .answer .wrap {
+    height: 60px;
+  }
+
+  .quiz-content .answer label,
+  .quiz-content .answer input {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .quiz-content .answer input[type="radio"] {
+    opacity: 0.01;
+    z-index: 88;
+  }
+
+  .quiz-content .answer input[type="radio"]:checked+label {
+    background: linear-gradient(180deg, #17a2b8, #0062cc);
+    color: white;
+    border: 2px solid #6c757d;
+  }
+
+  .quiz-content .answer label {
+    padding: 10px;
+    border: 1px solid #CCC;
+    cursor: pointer;
+    z-index: 90;
+    margin: 0;
+    background: #fff;
+    border-radius: 5px;
+    transition: background .4s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 18px;
+    text-align: left;
+  }
+
+  .quiz-content .answer label:hover {
+    background: #DDD;
+  }
+  .time-progress {
+    width: 100%;
+    height: 15px;
+    background-color: #0A5F44;
+  }
+
+  .time-progress div {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    width: 0;
+    background-color: #CBEA00;
+    box-sizing: border-box;
+  }
+
+/*================ external menu */
+
+  .back-link {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+  .post-entry {
+    position: relative;
+    cursor: default;
+    transition: all .4s ease;
+    min-height: 300px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+  }
+  .post-entry > h4 {
+    text-align: center;
+  }
+  .post-entry > h3 {
+    text-align: center;
+    top: 10%;
+    left: 50%;
+    font-weight: bold;
+    color: #f0dc3f;
+    text-shadow: 2px 2px 4px rgba(0,0,0.4);
+  }
+  .post-entry:hover {
+    box-shadow: 2px 2px 7px rgba(0,0,0.7);
+  }
+
+/*==========================================*/
+  .slide-out {
+    z-index: 1200;
+  }
+  @media screen and (max-width: 992px){
+    .btn-panel {
+      top: 65px !important;
+    }
+    .sign .midd {
+      padding: 25px 10px !important;
+    }
+    .img-index {
+      margin: 10px auto;
+    }
+    .hero-section .wave {
+      bottom: -200px;
+    }
+    .hero-section .iphone-wrap .phone-1 {
+      width: auto;
+      margin: 10px auto;
+    }
+  }
+  @media screen and (max-width: 768px){
+    .post-entry > .post-title {
+      top: 15%;
+    }
+  }  

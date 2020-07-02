@@ -134,10 +134,11 @@ function playEditor() {
     <div class="panel-editor">
       <div class="panel-left">
         <nav class="ctrl">
-          <button id="close" class="btn btn-sm btn-control" title="Close"><i class="fa fa-lg fa-fw fa-times"></i></button>
+          <button id="close" class="btn btn-sm btn-control" title="Close Editor"><i class="fa fa-lg fa-fw fa-times"></i></button>
           <button id="play" class="btn btn-sm btn-control" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
+          <button id="stop" class="btn btn-sm btn-control" title="disable AutoRun"><i class="fa fa-lg fa-fw fa-pause"></i></button>
           <button id="clipboard" class="btn btn-sm btn-control" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
-          <button id="newTab" class="btn btn-sm btn-control" title="open in New Tab"><i class="fa fa-lg fa-fw fa-expand-arrows-alt"></i></button>
+          <button id="newTab" class="btn btn-sm btn-control" title="Open in New Tab"><i class="fa fa-lg fa-fw fa-expand-arrows-alt"></i></button>
           <?php if ($adm) { ?>
           <button id="temp" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-pen"></i></button>
           <button id="del" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-eraser"></i></button>
@@ -186,7 +187,7 @@ function blank_page($status) {
       <?php if($status == 404) { ?>
         <h1>Invalid URL</h1>
         <h3><small><?= $currentURL ?></small></h3>
-        <h3>URL tidak tersedia atau sedang dalam perbaikan</h3>
+        <h3>URL tidak tersedia</h3>
         <button onclick="window.history.back()"><h3>kembali</h3></button>
       <?php } elseif ($status == 403) { ?>
         <h1>You must login to enter this page</h1>

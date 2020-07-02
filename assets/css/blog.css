@@ -31,16 +31,18 @@ span.anchor {
   font-size: 2rem;
   padding: 10px;
   text-align: center;
-  /*box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);*/
   text-shadow: -1px -1px 5px #dae0e5, 1px -1px 5px #dae0e5, -1px 1px 10px #dae0e5, 1px 1px 10px #dae0e5;
 }
 .blog-content .wrapper-content {
   padding-top: 20px;
 }
 .blog-content table th {
-  text-align: center;
+  font-weight: bold;    
   text-transform: capitalize;
-  font-weight: bold;
+  text-align: center;
+  color: #808080;
+  cursor: default;
+  background-color: #f1f1f1;
 }
 .blog-content img {
   max-width: 70%;
@@ -54,10 +56,17 @@ span.anchor {
 }
 .blog-content p + pre, .blog-content ul + pre {
   background: linear-gradient(45deg,#ddd,#d6c9c9);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
   padding: 10px;
-  max-width:90%;
+  max-width: 90%;
   margin: 20px auto;
   border-radius: 10px;
+  border: 2px solid;
+  font-weight: bold;
+  text-align: center;
+}
+.blog-content ul + p {
+  margin-left: 40px;
 }
 .blog-content .code-toolbar {
   max-width: 800px;
@@ -91,16 +100,7 @@ span.anchor {
 .blog-content .code-toolbar pre.language-javascript {
   overflow-x: auto;
 }
-.card-menu .card-anchor {
-  padding: 10px 0;
-  cursor: pointer;
-  display: block;
-  font-size: 1.2rem;
-  font-weight: 700;
-  background: linear-gradient(-45deg, #3db3c5, #274685);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 .sidebar-box {
   padding: 25px 5px;
   position: sticky;
@@ -121,6 +121,17 @@ span.anchor {
   padding: 10px 0;
   cursor: pointer;
   display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(-45deg, #3db3c5, #274685);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#accord [aria-expanded=true] span:before,
+#accord [aria-expanded=false] span:before {
+  background: linear-gradient(-45deg, #3db3c5, #274685);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .sidebar-box a.card-header:hover {
   text-decoration: none;

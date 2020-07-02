@@ -800,9 +800,10 @@ figure figcaption {
 .site-navbar .site-navigation .site-menu .has-children > a:before {
   position: absolute;
   content: "\f107";
-  font-size: 16px;
-  top: 52%;
+  font-size: 18px;
+  top: 50%;
   right: 0;
+  font-weight: 900;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   font-family: 'Font Awesome 5 Free';
@@ -1018,10 +1019,11 @@ figure figcaption {
 }
 
 .site-mobile-menu .site-nav-wrap .arrow-collapse:before {
-  font-size: 12px;
+  font-size: 18px;
   z-index: 20;
-  font-family: "icofont";
-  content: "\ea99";
+  font-family: "Font Awesome 5 Free";
+  content: "\f107";
+  font-weight: 900;
   position: absolute;
   top: 50%;
   left: 50%;

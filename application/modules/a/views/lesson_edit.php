@@ -1,83 +1,20 @@
-<style>
-.content-edit {
-  position: fixed;
-  z-index: 9;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.content-editor {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  height: 100%;
-  min-height: 92vh;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
-}
-.content-editor .splitter {
-  flex: 0 0 auto;
-  width: 18px;
-  min-height: 200px;
-  cursor: col-resize;
-  transition: all .3s ease-in-out;
-}
-.content-editor .splitter:hover {
-  background-color: #ccc;
-}
-.content-editor .content-left {
-  flex: 0 0 auto;
-  width: 50vw;
-  min-width: 5%;
-  max-width: 98%;
-  background-color: #ccc;
-}
-.content-editor .body-source {
-  height: 93vh;
-  padding: 0;
-}
-.content-editor .ctrl {
-  display: flex;
-}
-.content-editor .content-right {
-  flex: 1 1 auto;
-  width: 100%;
-  background: #fff;
-}
-.content-editor .frame {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-.stamp {
-	position: absolute;
-  bottom: 0;
-  right: 10px;
-  padding: 0 10px;
-  background: #000000e6;
-}
-
-.wrapper-editor {
-	z-index: 99999;
-}
-#open-editor {
-  position: fixed;
-  z-index: 999999;
-}
-
-</style>
-<button id="open-editor" class="btn btn-outline-dark"><i class="fa fa-lg fa-fw fa-code"></i></button>
+<script type="text/javascript">
+  function links(a){
+    
+  }  
+</script>
+<a id="open-editor" class="btn btn-outline-primary"><i class="fa fa-lg fa-fw fa-code"></i></a>
 <div class="content-edit" id="edited-lesson">
   <div class="content-editor">
     <div class="content-left">
       <nav class="ctrl" style="margin-left: 55px;">
       	<input type="hidden" id="input-id" value="<?=$id?>">
-        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#modal-info"><i class="fa fa-lg fa-fw fa-info"></i></button>
-        <button class="btn btn-outline-dark" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></button>
-      	<button class="btn btn-outline-dark"><a href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a></button>
-        <button class="btn btn-outline-dark"><a href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a></button>
-        <button class="btn btn-outline-dark"><a href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a></button>
-        <button class="btn btn-outline-dark"><a href="<?=$link?>" target="_blank"><i class="fas fa-lg fa-fw fa-location-arrow"></i></a></button>
+        <a class="btn btn-outline-dark" data-toggle="modal" data-target="#modal-info"><i class="fa fa-lg fa-fw fa-info"></i></a>
+        <a class="btn btn-outline-dark" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></a>
+      	<a class="btn btn-outline-dark" href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a>
+        <a class="btn btn-outline-dark" title="<?=$slugPrev?>" href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a>
+        <a class="btn btn-outline-dark" title="<?=$slugNext?>" href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a>
+        <a class="btn btn-outline-dark" target="_blank" href="<?=$link?>"><i class="fas fa-lg fa-fw fa-location-arrow"></i></a>
         <input type="text" id="input-title" class="form-control" value="<?=$titles?>">
         <input type="text" id="input-slug" class="form-control" value="<?=$slug?>">
       </nav>

@@ -93,12 +93,13 @@ class Xhrm extends CI_Controller
 		  <div class="row text-center">
 		  	<div class="col-lg-8">
 		  		<div class="">
-  				  <form class="quiz-form" data-name="<?=$v['description']?>">
+  				  <form class="quiz-form" data-name="<?=preg_replace('/^JavaScript /','JS ',$v['description'])?>">
   						<div class="card-header shadow btn-panel">
+  							<h4 class="heading"><span class="category-active"></span> - soal ke <?=$num?> dari <span class="total"></span> soal</h4>
   			        <div class="time-progress"><div></div></div>
   						</div>
   						
-  					  <div class="card-body">
+  					  <div class="card-body wrapper-quest">
   				      <input type="hidden" name="id" value="<?=$v['id']?>">
   				      <div class="question shadow"><?=$v['q_question']?></div>
   				      <hr>
@@ -123,13 +124,13 @@ class Xhrm extends CI_Controller
 		  		</div>
 		  	</div>
 		  	<div class="col-lg-4">
-		  		<div class="wrapper-setup">
+		  		<div class="wrapper-setup stick">
 			  		<div class="card-body">
-			  			<h3 class="text-center">Soal Latihan #<?=$num?></h3>
-			  			<img src="<?=base_url('assets/img/mikir.gif')?>">
-			  			<h2>waktu tersisa :</h2>
-			  			<h2 class="spent">detik</h2>
-			  			<button type="button" class="btn btn-default scale-in-center next-slide" style="display: none;">Selanjutnya</button>
+			  			<div class="speech right">
+			  				<h2 class="spent">detik</h2>
+			  				<button type="button" class="btn btn-default scale-in-center next-slide" style="display: none;">Selanjutnya</button>
+			  			</div>
+			  			<img class="mt-5" src="<?=base_url('assets/img/emo/mikir.gif')?>">
 			  		</div>
 		  		</div>
 		  	</div>
@@ -142,7 +143,7 @@ class Xhrm extends CI_Controller
 
 	public function get_result()
 	{
-		sleep(2);
+		// sleep(2);
 		$score = 0;
 		$post = $this->input->post('quest');
 		foreach ($post as $k => $v) {
@@ -169,39 +170,36 @@ class Xhrm extends CI_Controller
 				'correct' => $true[$k][$test[$k]['correct']-1],
 				'yours' => (isset($v['ch'])) ? $true[$k][$v['ch']-1] : '...',
 				'result' => $return,
-				'rel' => base_url('lesson/docs/'.create_slug($test[$k]['slug'])),
+				'rel' => base_url('js/docs/'.create_slug($test[$k]['slug'])),
 				'title' => $test[$k]['title']
 			];
 		}
 		
 		$result['plain'] = [];
 		$result['score'] = $score / count($post) * 100;
+		$totalQuest = count($post);
+		$plus = $score;
+		$minus = $totalQuest - $plus;
 		  if ($result['score'] == 100) {
 		    $img = 'horray.gif';
-		    $h3 = 'hebat sekali';
-		    $h4 = 'semua soal berhasil dijawab dengan benar';
+		    $msg = 'hebat sekali kamu';
 		  } else if ($result['score'] == 0) {
 		  	$img = 'no.gif';
-		  	$h3 = 'tetap semangat dalam belajar';
-		  	$h4 = 'meski tidak ada soal yang dijawab dengan benar';
+		  	$msg = 'tetap semangat yaa belajarnya';
 		  } else if ($result['score'] >= 75) {
 		    $img = 'ok.gif';
-		    $h3 = 'kamu punya bakat, tetap asah logikamu lagi';
-		    $h4 = 'dari '.count($post).' soal, '.$score.' di antaranya berhasil dijawab dengan benar';
+		    $msg = 'kamu punya bakat, tetap asah logikamu lagi';
 		  } else if ($result['score'] >= 50) {
 		    $img = 'mikir.gif';
-		    $h3 = 'lumayan bagus sejauh ini';
-		    $h4 = 'kamu bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		    $msg = 'lumayan bagus lah sejauh ini';
 		  } else if ($result['score'] >= 25) {
 		  	$img = 'hmm.gif';
-		  	$h3 = 'coba lebih serius dalam belajar';
-		  	$h4 = 'kamu hanya bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		  	$msg = 'coba lebih serius dalam belajar';
 		  } else {
 		    $img = 'ouch.gif';
-		    $h3 = 'baca dokumentasi materi dengan lebih teliti';
-		    $h4 = 'kamu hanya bisa menjawab '.$score.' soal dengan benar <br> dari '.count($post).' soal yang tersedia';
+		    $msg = 'baca dokumentasi materi dengan lebih cermat';
 		  }
-			$result['plain'] = ['img' => $img,'h3' => $h3,'h4' => $h4];
+			$result['plain'] = ['img' => $img,'msg' => $msg,'summary' => [$totalQuest,$plus,$minus]];
 
 		echo json_encode($result);
 	}
@@ -212,7 +210,7 @@ class Xhrm extends CI_Controller
 		$term = trimChar_input('search');
 		$term = substr($term,0,100);
 		if (!empty($term)) {
-			if (strlen($term) >= 4) {
+			if (strlen($term) >= 3) {
 				$this->db->from('materi');
 				if (strpos($term,' ') !== false) {
 					$search_exploded = filterSearchKeys($term);
@@ -234,6 +232,7 @@ class Xhrm extends CI_Controller
 						$arr[$key] = [
 							'title' => $v['les_title'],
 							'slug' => $v['les_slug'],
+							'level' => $v['les_level'],
 							'keys' => explode(',',$v['les_key']),
 							'link' => base_url().'js/docs/'.create_slug($v['les_slug'])
 						];
@@ -242,7 +241,7 @@ class Xhrm extends CI_Controller
 				}
 
 			} else {
-				$result = [0,"Maaf, keyword yang dibutuhkan minimal 4 karakter"];
+				$result = [0,"Maaf, keyword yang dibutuhkan minimal 3 karakter"];
 			}
 		} else {
 			$result = [0,"Ketik Keyword dan tekan Enter untuk melakukan pencarian"];

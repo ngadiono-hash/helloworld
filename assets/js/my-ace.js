@@ -11,6 +11,7 @@ const opt = {
   enableLiveAutocompletion: true,
   enableSnippets: true
 };
+let auto = true;
 
 source.session.setMode("ace/mode/html");
 source.setOptions(opt);
@@ -19,7 +20,7 @@ source.setTheme("ace/theme/monokai");
 $(function(){
   $('.panel-left,.content-left').resiz({ handleSelector: ".splitter", resizeHeight: false });
   
-  $('nav.ctrl').on('click','button',function(){
+  $('nav.ctrl button:not("#stop")').on('click',function(){
     let $this = $(this);
     $this.addClass('active');
     setTimeout(function(){
@@ -27,10 +28,16 @@ $(function(){
     },300)
   });
   codeSource.on('keyup', wait(function(){
-    play.click();
+    if (auto) play.click();
   },1000));
   play.on('click', function(){
     runCode();
+  });
+
+  liveEditor.on('click','#stop',function(){
+    auto = auto ? false : true;
+    $(this).toggleClass('active');
+    source.focus();
   });
   
   liveEditor.on('click','#clipboard',function(){

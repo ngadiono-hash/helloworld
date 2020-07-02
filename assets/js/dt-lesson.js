@@ -126,7 +126,7 @@
 					icon : 'fa fa-globe-asia'
 				}
 				preview = `<button class="btn btn-sm btn-block btn-outline-primary btn-preview" data-con="${key}"><i class="fa fa-eye"></i></button>`;
-				linkTarget = '<a class="btn btn-sm btn-outline-primary" href="'+ host +'lesson/docs/'+ meta +'" target="_blank"> <i class="fa fa-thumbs-up"></i></a>';
+				linkTarget = '<a class="btn btn-sm btn-outline-primary" href="'+ host +'js/docs/'+ meta +'" target="_blank"> <i class="fa fa-thumbs-up"></i></a>';
 			} else {
 				public = {
 					btn : 'btn-danger',

@@ -44,7 +44,7 @@ class A extends CI_Controller
 		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_lesson/'.$third;
-			_temp_admin($data,'Lesson JavaScript '.$data['label'],'lesson_table');
+			_temp_admin($data,'Table '.$data['label'],'lesson_table');
 		} else {
 			not_found();
 		}
@@ -83,13 +83,15 @@ class A extends CI_Controller
 		    $data['icon']  = '<i class="fa fa-code"></i>';
 			}
 			$next = $this->Common_model->select_where(
-				'materi','les_order',['les_order >'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','ASC'],1
+				'materi','les_order,les_slug',['les_order >'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','ASC'],1
 			);
 			$prev = $this->Common_model->select_where(
-				'materi','les_order',['les_order <'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','DESC'],1
+				'materi','les_order,les_slug',['les_order <'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','DESC'],1
 			);
-			$data['linkNext'] = ($next) ? base_url('a/editor/'.$label.'/'.$next[0]['les_order']) : '#';
-			$data['linkPrev'] = ($prev) ? base_url('a/editor/'.$label.'/'.$prev[0]['les_order']) : '#';
+			$data['linkNext'] = $next ? base_url('a/editor/'.$label.'/'.$next[0]['les_order']) : '#';
+			$data['slugNext'] = $next ? $next[0]['les_slug'] : '';
+			$data['linkPrev'] = $prev ? base_url('a/editor/'.$label.'/'.$prev[0]['les_order']) : '#';
+			$data['slugPrev'] = $prev ? $prev[0]['les_slug'] : '';
 			_temp_admin($data,'Edit - '.$edit['les_slug'],'lesson_edit');
 		}
 	}

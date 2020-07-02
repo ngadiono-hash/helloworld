@@ -35,6 +35,7 @@ $quizTable = whats_page(2,['quiz']);
 <script src="<?=base_url()?>assets/vendor/ckeditor/ckeditor.js"></script>
 <script src="<?=base_url()?>assets/vendor/ckeditor/adapters/jquery.js"></script>
 <?php
+echo $lessonTable || $quizTable ? '<script>$("html").addClass("fix-scroll")</script>' : '';
 echo $lessonTable || $quizTable ? '<script src="'.log.'dataTable.min.js"></script>' : '';
 $editPage ? myEditorJs() : '';
 echo $editPage ? '<script src="'.base_url().'assets/js/edit-lesson.js"></script>' : '';

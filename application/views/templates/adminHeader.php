@@ -26,21 +26,89 @@ echo '<link rel="stylesheet" href="'.log.'select-bootstrap.min.css">';
 // echo '<link rel="stylesheet" href="https://cdn.datatables.net/v/ju-1.12.1/rr-1.2.4/datatables.min.css">';
 echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
 } ?>
-<?php if ($editPage) {
-	
-} ?>
 <link rel="stylesheet" href="<?=log?>jquery-ui.css">
 <style type="text/css">
 .wrapper-editor .splitter, .content-editor .splitter { 
 	background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
 }
-#frame-preview {
-	border: none;
-	width: 100%;
-	min-height: 560px;
+
+.content-edit {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: border 0.7s ease;
 }
+.content-edit.changed {
+  border: 5px inset red;
+}
+.content-editor {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  height: 100%;
+  min-height: 92vh;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+.content-editor .splitter {
+  flex: 0 0 auto;
+  width: 18px;
+  min-height: 200px;
+  cursor: col-resize;
+  transition: all .3s ease-in-out;
+}
+.content-editor .splitter:hover {
+  background-color: #ccc;
+}
+.content-editor .content-left {
+  flex: 0 0 auto;
+  width: 50vw;
+  min-width: 5%;
+  max-width: 98%;
+  background-color: #ccc;
+}
+.content-editor .body-source {
+  height: 93vh;
+  padding: 0;
+}
+.content-editor .ctrl {
+  display: flex;
+}
+.content-editor .content-right {
+  flex: 1 1 auto;
+  width: 100%;
+  background: #fff;
+}
+.content-editor .frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.stamp {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  padding: 0 10px;
+  background: #000000e6;
+}
+
+.wrapper-editor {
+  z-index: 99999;
+}
+#open-editor {
+  position: fixed;
+  z-index: 999999;
+}
+
+.content-edit .frame {
+  border: none;
+  width: 100%;
+  min-height: 560px;
+} 
  
-#frame-preview p + pre, #frame-preview ul + pre {
+.content-edit .frame p + pre, .content-edit .frame ul + pre {
   background: linear-gradient(45deg,#ddd,#d6c9c9);
   padding: 10px;
   max-width: 90%;

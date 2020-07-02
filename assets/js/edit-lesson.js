@@ -1,3 +1,4 @@
+const edited = $('#edited-lesson');
 function preview(){
 	let container = CKEDITOR.instances.ckedit.getData();
 	let previewFrame = document.getElementById('frame-preview').contentWindow.document;
@@ -25,9 +26,9 @@ function preview(){
 	previewFrame.open();
 	previewFrame.writeln(plainText);
 	previewFrame.close();
+	edited.addClass('changed');
 }
 $(function(){
-	const edited = $('#edited-lesson');
 	CKEDITOR.replace('ckedit');
 	CKEDITOR.dtd.$removeEmpty['i'] = false;
 	preview();
@@ -49,6 +50,7 @@ $(function(){
 			s: function(data){
 				myAlert(data);
 				if (data[0] == 1) {
+					edited.removeClass('changed');
 					$('#input-update').html(data[3]).css('color','red');
 					let h3 = '', h4 = '';
 					if(data[4] != ''){
@@ -65,10 +67,6 @@ $(function(){
 		});
 	});
 
-	// =================== PUBLIC
-	edited.on('click','#btn-public',function(e){
-		publicLesson(e);
-	});
 	// =================== DELETE
 	edited.on('click','.btn-del',function(e){
 		alert('nothing happend');
