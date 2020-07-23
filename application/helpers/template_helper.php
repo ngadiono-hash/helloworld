@@ -11,6 +11,7 @@ function myGlobalJs(){ ?>
 function myEditorJs(){ ?>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script> -->
   <script src="<?=log?>ace.js"></script>
+  <!-- <script src="https://cloud9ide.github.io/emmet-core/emmet.js"></script> -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ext-language_tools.js"></script> -->
   <script src="<?=log?>ace-language.js"></script>
   <script src="<?=base_url()?>assets/vendor/resize/resiz.js"></script>
@@ -136,7 +137,7 @@ function playEditor() {
         <nav class="ctrl">
           <button id="close" class="btn btn-sm btn-control" title="Close Editor"><i class="fa fa-lg fa-fw fa-times"></i></button>
           <button id="play" class="btn btn-sm btn-control" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
-          <button id="stop" class="btn btn-sm btn-control" title="disable AutoRun"><i class="fa fa-lg fa-fw fa-pause"></i></button>
+          <button id="stop" class="btn btn-sm btn-control" title="disable AutoRun"><i class="fas fa-lg fa-fw fa-hourglass-half fa-spin"></i></button>
           <button id="clipboard" class="btn btn-sm btn-control" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
           <button id="newTab" class="btn btn-sm btn-control" title="Open in New Tab"><i class="fa fa-lg fa-fw fa-expand-arrows-alt"></i></button>
           <?php if ($adm) { ?>
@@ -155,9 +156,7 @@ function playEditor() {
   </div>
 <?php }
 
-function blank_page($status) {
-  $currentURL = current_url();
-  ?>
+function blank_page($status) { ?>
   <!DOCTYPE html>
   <html>
   <head>
@@ -186,7 +185,7 @@ function blank_page($status) {
       <img src="<?= base_url('assets/img/feed/404.gif') ?>">
       <?php if($status == 404) { ?>
         <h1>Invalid URL</h1>
-        <h3><small><?= $currentURL ?></small></h3>
+        <h3><small><?= current_url() ?></small></h3>
         <h3>URL tidak tersedia</h3>
         <button onclick="window.history.back()"><h3>kembali</h3></button>
       <?php } elseif ($status == 403) { ?>

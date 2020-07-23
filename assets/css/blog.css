@@ -36,14 +36,6 @@ span.anchor {
 .blog-content .wrapper-content {
   padding-top: 20px;
 }
-.blog-content table th {
-  font-weight: bold;    
-  text-transform: capitalize;
-  text-align: center;
-  color: #808080;
-  cursor: default;
-  background-color: #f1f1f1;
-}
 .blog-content img {
   max-width: 70%;
   border-radius: 5px;
@@ -64,15 +56,21 @@ span.anchor {
   border: 2px solid;
   font-weight: bold;
   text-align: center;
+  position: relative;
 }
 .blog-content ul + p {
   margin-left: 40px;
 }
 .blog-content .code-toolbar {
   max-width: 800px;
-  margin: 10px;
+  padding: 20px;
+  background: #80808094;
   margin-bottom: 30px;
   position: relative;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+}
+.blog-content .code-toolbar .toolbar {
+  text-align: center;
 }
 .blog-content .code-toolbar pre {
   max-height: 42vh;
@@ -80,16 +78,9 @@ span.anchor {
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
 }
 .blog-content .execute {
-  font-size: .8em;
-  padding: 5px 10px !important;
-  transition: all ease 0.2s;
-  position: absolute;
-  top: 6px;
-  right: 20px;
   transition: all 0.4s ease;
-}
-.blog-content .execute:hover {
-  background: linear-gradient(-45deg, #86dbe9, #27857e);
+  font-size: 1rem;
+  padding: 10px 20px !important;
 }
 .blog-content .navigate {
   margin-top: 30px;
@@ -109,7 +100,7 @@ span.anchor {
 .sidebar-box .card-body {
   padding: 10px;
   overflow-y: auto;
-  max-height: 55vh;
+  max-height: 48vh;
 }
 .sidebar-box .hint {
   padding: 5px;
@@ -127,11 +118,8 @@ span.anchor {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-#accord [aria-expanded=true] span:before,
-#accord [aria-expanded=false] span:before {
-  background: linear-gradient(-45deg, #3db3c5, #274685);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.sidebar-box .btn {
+  padding: 10px 30px !important;
 }
 .sidebar-box a.card-header:hover {
   text-decoration: none;
@@ -142,4 +130,7 @@ span.anchor {
 }
 .sidebar-box ul:not(.lesson-menu) li {
   padding: 2px;
+}
+.sidebar-box li a {
+  padding: 4px;
 }

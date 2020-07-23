@@ -6,7 +6,7 @@ class At extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Common_model');
+		$this->load->model('Common');
 	}
 
 	public function notFound()
@@ -17,7 +17,7 @@ class At extends CI_Controller
 // ================ HOME
 	public function index() // ok
 	{
-		$data['label'] = $this->Common_model->select_where('level','*','',TRUE,FALSE);
+		$data['label'] = $this->Common->select_where('level','*','',TRUE,FALSE);
 		$data['title'] = 'Selamat Datang di My Note';
 		$this->load->view('templates/mainHeader',$data);
 		$this->load->view('index',$data);
@@ -33,7 +33,7 @@ class At extends CI_Controller
 			$token = $_COOKIE['_lang'];
 			delete_cookie('_no');
 			delete_cookie('_lang');
-			$this->Common_model->delete('user_cookie',['token' => $token]);
+			$this->Common->delete('user_cookie',['token' => $token]);
 		}
 		redirect('at/sign');
 	}

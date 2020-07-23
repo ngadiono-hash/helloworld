@@ -56,6 +56,24 @@ echo $lessonTable ? '<script src="'.base_url().'assets/js/dt-lesson.js"></script
   }
 
   $(function(){
+    let formConfig = $('.config form');
+    formConfig.submit(function(e) {
+      e.preventDefault();
+      $this = $(this);
+      let data = {
+        key: $this.find('h3').text(),
+        val: $this.find('textarea').val()
+      }
+      ajaxTemp({
+        u: 'xhra/pages',
+        d: data,
+        b: null,
+        s: function(data){
+          myAlert(data);   
+        },
+        e: null
+      });
+    });
     let urlSB = window.location;
     $('.sidebar a').filter(function() {
       return this.href == urlSB;

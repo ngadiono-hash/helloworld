@@ -1,3 +1,4 @@
+
 const edited = $('#edited-lesson');
 function preview(){
 	let container = CKEDITOR.instances.ckedit.getData();
@@ -26,7 +27,7 @@ function preview(){
 	previewFrame.open();
 	previewFrame.writeln(plainText);
 	previewFrame.close();
-	edited.addClass('changed');
+	$('.splitter').addClass('changed');
 }
 $(function(){
 	CKEDITOR.replace('ckedit');
@@ -50,7 +51,7 @@ $(function(){
 			s: function(data){
 				myAlert(data);
 				if (data[0] == 1) {
-					edited.removeClass('changed');
+					$('.splitter').removeClass('changed');
 					$('#input-update').html(data[3]).css('color','red');
 					let h3 = '', h4 = '';
 					if(data[4] != ''){

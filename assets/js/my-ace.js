@@ -13,7 +13,7 @@ const opt = {
 };
 let auto = true;
 
-source.session.setMode("ace/mode/html");
+source.session.setMode("ace/mode/javascript");
 source.setOptions(opt);
 source.setTheme("ace/theme/monokai");
 
@@ -37,6 +37,13 @@ $(function(){
   liveEditor.on('click','#stop',function(){
     auto = auto ? false : true;
     $(this).toggleClass('active');
+    let ic = $(this).find('i');
+    ic.toggleClass('fa-hourglass-half fa-stop');
+    if (ic.hasClass('fa-stop')) {
+      ic.removeClass('fa-spin');
+    } else {
+      ic.addClass('fa-spin');
+    }
     source.focus();
   });
   

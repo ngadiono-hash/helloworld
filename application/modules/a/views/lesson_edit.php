@@ -1,8 +1,4 @@
-<script type="text/javascript">
-  function links(a){
-    
-  }  
-</script>
+
 <a id="open-editor" class="btn btn-outline-primary"><i class="fa fa-lg fa-fw fa-code"></i></a>
 <div class="content-edit" id="edited-lesson">
   <div class="content-editor">

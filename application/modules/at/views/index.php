@@ -75,18 +75,6 @@
       </div>
     </div> <!-- .site-section -->
 
-    <div class="site-section cta-section">
-      <div class="container">
-        <h2 class="text-center mb-5">Cari materi dengan keyword di sini</h2>
-        <div class="d-flex justify-content-center h-100">
-          <div id="search-form" class="searchbar">
-            <input class="search_input" type="text" placeholder="Ketik keyword lalu tekan Enter...">
-            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <?php foreach ($label as $k => $v) { ?>
     <div class="site-section">
       <div class="container" data-aos="fade-left">
@@ -113,6 +101,18 @@
       </div>
     </div>
     <?php } ?>
+
+    <div class="site-section cta-section">
+      <div class="container">
+        <h2 class="text-center mb-5">Cari materi dengan keyword di sini</h2>
+        <div class="d-flex justify-content-center h-100">
+          <div id="search-form" class="searchbar">
+            <input class="search_input" type="text" placeholder="Ketik keyword lalu tekan Enter...">
+            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>    
 
   <?php quotes() ?>
   </main>

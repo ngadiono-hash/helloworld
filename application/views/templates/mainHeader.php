@@ -1,7 +1,5 @@
 <?php
-// var_dump($_COOKIE);
 reload_session();
-// bug($_SESSION);
 $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
 ?>
 
@@ -21,7 +19,7 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
 <meta name="author" content="My Note">
 <meta name ="revised" content ="My Note, <?= date('m/d/Y',$lesson['update']) ?>">
 <?php } ?>
-<link rel="icon" href="<?=base_url()?>assets/img/feed/favicon.png">
+<link rel="icon" href="<?=base_url()?>assets/img/feed/favicon.ico">
 <link rel="apple-touch-icon" href="<?=base_url()?>assets/img/feed/apple-touch-icon.png">
 <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Roboto"> -->
 <link rel="stylesheet" href="<?=log?>roboto.css">
@@ -59,9 +57,10 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
   }
   .speech {
     position: relative;
-    background: #274685;
+    background: #274685b0;
     border-radius: .4em;
     padding: 5px 10px;
+    box-shadow: 4px -3px 5px 1px rgba(0,0,0,.5);
   }
 
   .speech:after {
@@ -71,7 +70,7 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     width: 0;
     height: 0;
     border: 22px solid transparent;
-    border-top-color: #274685;
+    border-top-color: #274685b0;
     border-bottom: 0;
     border-left: 0;
     margin-left: -11px;
@@ -104,7 +103,7 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
         <div class="row align-items-center">
           <div class="col-6 col-lg-2">
             <h1 class="mb-0 site-logo">
-            	<a href="<?=base_url()?>" class="mb-0" title="aaaaaa">My Note</a>
+            	<a href="<?=base_url()?>" class="mb-0">My Note</a>
             </h1>
           </div>
           <div class="col-12 col-md-10 d-none d-lg-block">
@@ -118,10 +117,9 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
                     <li><a href="<?=base_url('js/advance')?>" class="nav-link">JavaScript Lanjutan</a></li>
                   </ul>
                 </li>
-                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Vue</a></li>
-                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">React</a></li>
-                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Angular</a></li>
-                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Node JS</a></li>
+                <li><a href="<?=base_url('js/qu')?>" class="nav-link">Vue</a></li>
+                <li><a href="<?=base_url('js/qui')?>" class="nav-link">React</a></li>
+                <li><a href="<?=base_url('js/uiz')?>" class="nav-link">Angular</a></li>
                 <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Quiz</a></li>
                 <?php if (is_admin()) { ?>
                 <li><a href="<?=base_url()?>a" class="nav-link" target="_blank"><i class="fas fa-lg fa-recycle"></i></a></li>

@@ -41,8 +41,9 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   right: 0;
   transition: border 0.7s ease;
 }
-.content-edit.changed {
-  border: 5px inset red;
+.content-edit .splitter.changed {
+  /*border: 5px inset red;*/
+  border: 2px inset #F44336;
 }
 .content-editor {
   display: flex;
@@ -232,7 +233,7 @@ table thead tr th {
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Login</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/config/js">Menu JS</a>
           </div>
         </div>
       </li>

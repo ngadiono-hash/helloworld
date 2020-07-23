@@ -118,6 +118,19 @@ function reloadTable(table){
   $(table).DataTable().ajax.reload(null, false);
 }
 
+function msToTime(duration) {
+let milliseconds = parseInt((duration % 1000) / 100),
+  minutes = Math.floor((duration / (1000 * 60)) % 60),
+  seconds = Math.floor((duration / 1000) % 60);
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  return minutes + "." + seconds ;
+  // minutes = (minutes < 10) ? "0" + minutes : minutes;
+  // seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  // return minutes + ":" + seconds + "." + milliseconds;
+}
+
 function timeElapsed(timeStamp) {
   let dateNow     = new Date(),
       msPerMinute = 60 * 1000,
@@ -142,6 +155,7 @@ function timeElapsed(timeStamp) {
 }
 
 function convert_time(timeStamp,full=false){
+  let _date, _time;
   let time = new Date(timeStamp),
   Y    = time.getFullYear(),
   M    = time.getMonth(),
@@ -154,22 +168,17 @@ function convert_time(timeStamp,full=false){
   H    = time.getHours(),
   Min  = time.getMinutes(),
   S    = time.getSeconds();
-    
-  function cek(i) {
-    return (i < 10) ? '0' + i : '';
-  }
-  H = cek(H);
-  Min = cek(Min);
-  S = cek(S);
-
-  let _date, _time;
+  
   _date = DaStr +", "+ Dt +" "+ MStr +" "+ Y ;
-  _time = H +":"+ Min +":"+ S;
-  if (full== false) {
-    return _date;
-  } else {
+  _time = zeroCheck(H) + ":" + zeroCheck(Min) + ":" + zeroCheck(S);
+  if (full) {
     return _date +' | '+ _time;
+  } else {
+    return _date;
   }
+}
+function zeroCheck(i) {
+  return i < 10 ? '0' + i : i;
 }
 
 
@@ -238,4 +247,35 @@ function onScroll(event){
       }
     }
   });
+}
+
+function createTable(objectArray, fields, fieldTitles) {
+  let tabs = document.createElement('div');
+  tabs.setAttribute('class','table-responsive');
+  let table = document.createElement('table');
+  let thead = document.createElement('thead');
+  let thr = document.createElement('tr');
+  fieldTitles.forEach((fieldTitle) => {
+    let th = document.createElement('th');
+    th.appendChild(document.createTextNode(fieldTitle));
+    thr.appendChild(th);
+  });
+  thead.appendChild(thr);
+  table.appendChild(thead);
+  table.setAttribute('class','table table-hover table-sm');
+
+  let tbody = document.createElement('tbody');
+  let tr = document.createElement('tr');
+  objectArray.forEach((object) => {
+    let tr = document.createElement('tr');
+    fields.forEach((field) => {
+      var td = document.createElement('td');
+      td.appendChild(document.createTextNode(object[field]));
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);    
+  });
+  table.appendChild(tbody);
+  tabs.appendChild(table);
+  return tabs;
 }

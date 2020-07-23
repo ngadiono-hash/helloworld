@@ -1,3 +1,4 @@
+
 $(function(){
   const blog = $('.blog-content');
   $(document).on("scroll",onScroll);
@@ -7,6 +8,7 @@ $(function(){
       window.location.href = nav;
     },500);
   });
+  
   $('.hint a').on('click', function() {
     let target = this.hash, $target = $(target);
     $(document).off("scroll");

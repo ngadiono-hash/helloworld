@@ -22,6 +22,15 @@
   .fix-scroll {
     overflow-y: hidden;
   }
+  
+  table th {
+    font-weight: bold;    
+    text-transform: capitalize;
+    text-align: center;
+    color: #808080;
+    cursor: default;
+    background-color: #f1f1f1;
+  }
 
   .checkin + label {
     display: inline-block;
@@ -118,7 +127,7 @@
   }
   #accord [aria-expanded=true] { pointer-events: none; }
   
-  .input-error { border: 1px solid #dc3545 !important; }
+  .form-control.input-error { color: #dc3545 !important; }
   .overlay {
     position: fixed;
     display: none;

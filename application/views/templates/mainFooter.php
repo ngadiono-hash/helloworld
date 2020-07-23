@@ -145,14 +145,14 @@ if ($login_page) { ?>
                 let lb = data[2][i].level;
                 let lbh = '';
                 if (lb == 'beginner') {
-                  lbh = 'dasar';
+                  lbh = 'javascript dasar';
                 } else if (lb == 'medium') {
-                  lbh = 'medium';
+                  lbh = 'javascript medium';
                 } else if (lb == 'advance') {
-                  lbh = 'lanjutan'
+                  lbh = 'javascript lanjutan'
                 }
-                temp += '<div class="card"><div class="card-header"><span class="label">'+lbh+'</span>';
-                temp += '<a href="'+data[2][i].link+'"><h5 class="heading mb-0">'+data[2][i].title+' - '+data[2][i].slug+'</h5></a></div>';
+                temp += '<div class="card"><span class="label">'+lbh+'</span>';
+                temp += `<a class="btn btn-block btn-default" href="${data[2][i].link}">${data[2][i].title} - ${data[2][i].slug}</h5></a>`;
                 temp += '<div class="card-body p-2"><p class="m-0">'+arr+'</p></div></div><hr>';
               };
               $('#modal-search .search-result').html(temp);

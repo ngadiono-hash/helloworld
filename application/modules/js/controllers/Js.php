@@ -5,17 +5,17 @@ class Js extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Common_model');
+		$this->load->model('Common');
 	}
 
 	private function _temp_menu($lev)
 	{
 		$pageNow = $this->input->get('page');
-		$data['label'] = $this->Common_model->select_where('level','*',['name' => $lev],TRUE,TRUE);
+		$data['label'] = $this->Common->select_where('level','*',['name' => $lev],TRUE,TRUE);
 		$slug = explode(' ',$data['label']['description']);
 		$data['label']['slug'] = 'Dokumentasi '.$slug[0].' Tingkat '.$slug[1];
 		$data['title'] = 'My Note - Materi '.$data['label']['description'];
-		$rows = $this->Common_model->counting('materi',['les_level'=>$lev,'les_publish'=>1]);
+		$rows = $this->Common->counting('materi',['les_level'=>$lev,'les_publish'=>1]);
 		if ($rows < 0) :
 			$data['available'] = false;			
 		else :
@@ -49,7 +49,7 @@ class Js extends CI_Controller
 				$data['available'] = false;
 			} else {
 				$offset = ($page - 1) * $config['per_page'];
-				$all = $this->Common_model->select_where(
+				$all = $this->Common->select_where(
 					'materi',
 					'les_order,les_level,les_title,les_slug,les_content,les_update',
 					['les_level' => $lev,'les_publish' => 1],
@@ -98,13 +98,13 @@ class Js extends CI_Controller
 	{
 		$meta  = $this->uri->segment(3);
 		$meta = str_replace('-',' ',$meta);
-		$checkMeta = $this->Common_model->check_materi($meta);
+		$checkMeta = $this->Common->check_materi($meta);
 		if(!$checkMeta){
 			not_found();
 		} else {
 			$this->load->library('disqus');
 			$s = $checkMeta;
-			$all = $this->Common_model->select_where(
+			$all = $this->Common->select_where(
 				'materi',
 				'les_title,les_slug',
 				['les_level' => $s['les_level'],'les_publish' => 1],
@@ -112,12 +112,19 @@ class Js extends CI_Controller
 				['les_order','asc']
 			);
 			$data['title'] = $s['les_slug'];
-			$data['label'] = $this->Common_model->select_specific('level','description',['name' => $s['les_level']]);
+			$news = $this->Common->select_where('materi','les_slug,les_title',['les_publish'=> 1],true,false,['les_update','DESC'],4);
+			foreach ($news as $key) {
+				$data['news'][] = [
+					'link' => base_url('js/docs/').create_slug($key['les_slug']),
+					'title' => $key['les_slug']
+				];
+			}
+			$data['label'] = $this->Common->select_specific('level','description',['name' => $s['les_level']]);
 			
 			$key1 = getTags($s['les_content'],'h3');
 			$key2 = getTags($s['les_content'],'h4');
 			$keyword = array_merge($key1,$key2);
-			
+		 	
 			$meta_key = strtolower('belajar javascript, '.$s['les_slug'].', '.implode(', ',$keyword));
 			$data['lesson'] = [
 				'id'  		=> $s['les_id'],
@@ -141,10 +148,10 @@ class Js extends CI_Controller
 				];
 			}
 
-			$next = $this->Common_model->select_where(
+			$next = $this->Common->select_where(
 				'materi','les_slug',['les_order >'=> $s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','ASC'],1
 			);
-			$prev = $this->Common_model->select_where(
+			$prev = $this->Common->select_where(
 				'materi','les_slug',['les_order <'=>$s['les_order'],'les_publish'=> 1,'les_level'=>$s['les_level']],TRUE,TRUE,['les_order','DESC'],1
 			);
 			$data['linkNext'] = ($next) ? base_url('js/docs/'.create_slug($next['les_slug'])) : '';
@@ -158,7 +165,7 @@ class Js extends CI_Controller
 	public function quiz()
 	{
 		$data['title'] = 'My Note - Quiz JavaScript';
-		$data['category'] = $this->Common_model->select_join(
+		$data['category'] = $this->Common->select_join(
 			'quiz',
 			'name,description',
 			[['table' => 'level','condition' => 'quiz.q_level = level.name','type' => '']],
@@ -166,9 +173,6 @@ class Js extends CI_Controller
 			'q_level',
 			'level.id ASC'
 		);
-		$data['leaderboard'] = $this->Common_model->select_where('score','*','',true,false,'score DESC',10);
-		// var_dump($this->db->last_query());
-		// bug($data['leaderboard']);
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('quiz',$data);
 		$this->load->view('templates/mainFooter');

@@ -1,10 +1,15 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	function bug($param)
+	function bug($param = '')
 	{
-		var_dump($param);
-		die();
+		// if ($param == '') {
+			// var_dump('end of test');
+			// die();
+		// } else {
+			var_dump($param);
+			die();
+		// }
 	}
 
 	function change_host($content)
@@ -98,19 +103,15 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	}
 
 	function filterSearchKeys($query){
-	  $query = trim(preg_replace("/(\s+)+/", " ", $query));
-	  $words = array();
+	  $query = trim(preg_replace("/(\s+)+/"," ", $query));
+	  $words = [];
 	  // expand this list with your words.
-	  $list = ["di","itu","sebuah","ini","dari","atau","kami","kita","kalian","dalam","tetapi"];
+	  $list = ["di","itu","sebuah","ini","dari","atau","kami","kita","kalian","dalam","tetapi","pada"];
 	  $c = 0;
 	  foreach(explode(" ", $query) as $key){
-	    if (in_array($key, $list)){
-	      continue;
-	    }
+	    if (in_array($key, $list)) continue;
 	    $words[] = $key;
-	    if ($c >= count($list)){
-	      break;
-	    }
+	    if ($c >= count($list)) break;
 	    $c++;
 	  }
 	  return $words;
@@ -139,7 +140,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			if ( $check->num_rows() > 0 ) {
 				$user = $check->row_array();
 				if ($user['expired'] > time()) {
-					$getData = $CI->db->select('u_id,u_role,u_email')->where(['u_id' => $id])->get('users')->row_array();
+					$CI->db->select('u_id,u_role,u_email');
+					$CI->db->where(['u_id' => $id]);
+					$getData = $CI->db->get('users')->row_array();
 					if ( $token === hash('sha256',$getData['u_email']) ){
 						$data = [
 							'sess_log' => true,

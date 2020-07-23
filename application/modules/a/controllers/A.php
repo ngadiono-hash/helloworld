@@ -11,17 +11,17 @@ class A extends CI_Controller
 		reload_session();
 		is_logged();
 		is_admin();
-		$this->load->model('Common_model');
+		$this->load->model('Common');
 	}
 
 	private function countMateri($level)
 	{
 		$DB = [];
-		$DB['nam'] = ucwords($level);
+		$DB['nam'] = $level;
 		$DB['lin'] = base_url().'a/less/'.$level;
-		$DB['all'] = $this->Common_model->counting('materi',['les_level' => $level]);
-		$DB['pub'] = $this->Common_model->counting('materi',['les_level' => $level,'les_publish' => 1]);
-		$DB['dra'] = $this->Common_model->counting('materi',['les_level' => $level,'les_publish' => 0]);
+		$DB['all'] = $this->Common->counting('materi',['les_level' => $level]);
+		$DB['pub'] = $this->Common->counting('materi',['les_level' => $level,'les_publish' => 1]);
+		$DB['dra'] = $this->Common->counting('materi',['les_level' => $level,'les_publish' => 0]);
 		return $DB;
 	}
 
@@ -41,7 +41,7 @@ class A extends CI_Controller
 	public function less()
 	{
 		$third = $this->uri->segment(3);
-		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
+		$data['label'] = $this->Common->select_specific('level','description',['name'=>$third]);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_lesson/'.$third;
 			_temp_admin($data,'Table '.$data['label'],'lesson_table');
@@ -60,7 +60,7 @@ class A extends CI_Controller
 			$lb = 'bla';
 		}
 		if(!empty($label) && !empty($order)){
-			$edit = $this->Common_model->select_where(
+			$edit = $this->Common->select_where(
 				'materi','*',['les_order'=>$order,'les_level'=>$label],TRUE,TRUE
 			);
 			$data['id'] 		= $edit['les_id'];
@@ -82,10 +82,10 @@ class A extends CI_Controller
 		    $data['btn'] = 'btn-danger';
 		    $data['icon']  = '<i class="fa fa-code"></i>';
 			}
-			$next = $this->Common_model->select_where(
+			$next = $this->Common->select_where(
 				'materi','les_order,les_slug',['les_order >'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','ASC'],1
 			);
-			$prev = $this->Common_model->select_where(
+			$prev = $this->Common->select_where(
 				'materi','les_order,les_slug',['les_order <'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','DESC'],1
 			);
 			$data['linkNext'] = $next ? base_url('a/editor/'.$label.'/'.$next[0]['les_order']) : '#';
@@ -101,8 +101,8 @@ class A extends CI_Controller
 	public function quiz()
 	{
 		$third = $this->uri->segment(3);
-		$data['label'] = $this->Common_model->select_specific('level','description',['name'=>$third]);
-		$data['quiz'] = $this->Common_model->select_where(
+		$data['label'] = $this->Common->select_specific('level','description',['name'=>$third]);
+		$data['quiz'] = $this->Common->select_where(
 			'materi','les_id,les_title',['les_level'=>$third],true,false,['les_order','asc']
 		);
 		if (!empty($third)) {
@@ -110,6 +110,14 @@ class A extends CI_Controller
 			_temp_admin($data,'Quiz '.$data['label'],'quiz_table');
 		} else {
 			not_found();
+		}
+	}
+
+	public function config($page)
+	{
+		if ($page == 'js') {
+			$data['all'] = $this->Common->select_where('level','*');
+			_temp_admin($data,'Config','config');
 		}
 	}
 
