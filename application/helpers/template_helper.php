@@ -131,29 +131,45 @@ function quotes() { ?>
 function playEditor() { 
   $adm = whats_page(1,['a']);
   ?>
-  <div class="wrapper-editor" style="display: none;">
-    <div class="panel-editor">
-      <div class="panel-left">
-        <nav class="ctrl">
-          <button id="close" class="btn btn-sm btn-control" title="Close Editor"><i class="fa fa-lg fa-fw fa-times"></i></button>
-          <button id="play" class="btn btn-sm btn-control" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></button>
-          <button id="stop" class="btn btn-sm btn-control" title="disable AutoRun"><i class="fas fa-lg fa-fw fa-hourglass-half fa-spin"></i></button>
-          <button id="clipboard" class="btn btn-sm btn-control" title="Copy to Clipboard"><i class="fa fa-lg fa-fw fa-copy"></i></button>
-          <button id="newTab" class="btn btn-sm btn-control" title="Open in New Tab"><i class="fa fa-lg fa-fw fa-expand-arrows-alt"></i></button>
-          <?php if ($adm) { ?>
-          <button id="temp" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-pen"></i></button>
-          <button id="del" class="btn btn-sm btn-control"><i class="fa fa-lg fa-fw fa-eraser"></i></button>
-          <?php } ?>
-        </nav>
-        <div class="body-source" id="source-code"></div>
-      </div>
-      <div class="splitter"></div>
-      <div class="panel-right">
-        <iframe class="frame" id="result-frame"></iframe>
-        <div class="dimension" id="dm"></div>
-      </div>
-    </div>
-  </div>
+<style type="text/css">
+#mySidenav a {
+  position: absolute; /* Position them relative to the browser window */
+  left: -80px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#about {
+  top: 20px;
+  background-color: #4CAF50;
+}
+
+#blog {
+  top: 80px;
+  background-color: #2196F3; /* Blue */
+}
+
+#projects {
+  top: 140px;
+  background-color: #f44336; /* Red */
+}
+
+#contact {
+  top: 200px;
+  background-color: #555 /* Light Black */
+}  
+</style>
+
 <?php }
 
 function blank_page($status) { ?>

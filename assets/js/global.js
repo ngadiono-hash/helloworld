@@ -3,20 +3,32 @@
 const host = `http://${window.location.hostname}/helloworld/`,
   path = window.location.pathname,
   csrf = $('meta[name="csrf"]').attr('content'),
-  frame = document.getElementById('result-frame'),
-  inCss = `<link rel="stylesheet" href="${host}assets/css/injected.css">`,
-  inJs = `<script src="${host}assets/js/injected.js"><\/script>`,
-  liveEditor = $('.wrapper-editor'),
-  play = $('#play'),
-  openEditor = $('#open-editor'),
-  codeSource = $('#source-code'),  
   over = $('.overlay'),
   aJax = $('.ajax'),
   imgLoad = `<img src="${host}assets/img/feed/bars.svg" height="50">`;
 let xhrRest, imgRest;
 let label = window.location.pathname.split('/').pop();
+
 function bug(n){
   console.log(n)
+}
+
+// function copyToClipboard(text) {
+  // var $temp = document.createElement('textarea');
+  // bug($temp)
+  // $("body").append($temp);
+  // $temp.val(text);
+  // document.execCommand("copy");
+  // $temp.remove();
+// }
+
+function copyToClipboard(text) {
+  let $temp = document.createElement("textarea");
+  $temp.value = text;
+  document.body.appendChild($temp);
+  $temp.select();
+  document.execCommand("copy");
+  document.body.removeChild($temp);
 }
 
 function wait(callback,ms) {
@@ -221,19 +233,7 @@ function download(filename,text){
   document.body.removeChild(element);
 }
 
-function runCode(){
-  var plainText = source.getValue();
-  frame.contentWindow.document.open();
-  frame.contentWindow.document.write(inCss);
-  frame.contentWindow.document.write(inJs);
-  frame.contentWindow.document.write(plainText);
-  frame.contentWindow.document.close();
-  play.addClass('active');
-  setTimeout(function() {
-    play.removeClass('active');
-  }, 300);
-  source.focus();
-}
+
 
 function onScroll(event){
   let scrollPos = $(document).scrollTop();

@@ -32,16 +32,17 @@ $quizTable = whats_page(2,['quiz']);
 <script src="<?=log?>bootstrap.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.js"></script>
 <script src="<?=log?>jquery-ui.js"></script>
+<script src="<?=base_url()?>assets/vendor/resize/resiz.js"></script>
 <script src="<?=base_url()?>assets/vendor/ckeditor/ckeditor.js"></script>
 <script src="<?=base_url()?>assets/vendor/ckeditor/adapters/jquery.js"></script>
 <?php
 echo $lessonTable || $quizTable ? '<script>$("html").addClass("fix-scroll")</script>' : '';
 echo $lessonTable || $quizTable ? '<script src="'.log.'dataTable.min.js"></script>' : '';
-$editPage ? myEditorJs() : '';
+// $editPage ? myEditorJs() : '';
 echo $editPage ? '<script src="'.base_url().'assets/js/edit-lesson.js"></script>' : '';
 echo $quizTable ? '<script src="'.log.'select-bootstrap.min.js"></script>' : '';
-echo $quizTable ? '<script src="'.base_url().'assets/js/dt-quiz.js"></script>' : '';
-echo $lessonTable ? '<script src="'.base_url().'assets/js/dt-lesson.js"></script>' : '';
+echo $quizTable ? '<script src="'.base_url().'assets/js/table-quiz.js"></script>' : '';
+echo $lessonTable ? '<script src="'.base_url().'assets/js/table-lesson.js"></script>' : '';
 ?>
 
 

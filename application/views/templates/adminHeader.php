@@ -42,8 +42,7 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   transition: border 0.7s ease;
 }
 .content-edit .splitter.changed {
-  /*border: 5px inset red;*/
-  border: 2px inset #F44336;
+  background: #F44336;
 }
 .content-editor {
   display: flex;
@@ -98,9 +97,12 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
 .wrapper-editor {
   z-index: 99999;
 }
-#open-editor {
+.open-editor {
   position: fixed;
   z-index: 999999;
+}
+.modal {
+  z-index: 99999;
 }
 
 .content-edit .frame {
@@ -116,6 +118,24 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   margin: 20px auto;
   border-radius: 10px;
 }
+
+#main-accord-snippet {
+  overflow: auto;
+  max-height: 56vh;
+}
+#main-accord [aria-expanded="true"] {
+  transition: box-shadow 200ms cubic-bezier(.4,0,.2,1) 0s;
+  box-shadow: 0 0 20px 5px #e8e8efed inset;
+  background: linear-gradient(180deg, #17a2b8, #0062cc);
+  color: white;
+}
+#main-accord textarea {
+  font-family: monospace;
+  background: cadetblue;
+  color: #fff;
+}
+
+
 
 .btn-modal {
   position: absolute;

@@ -28,8 +28,13 @@ $(function(){
     let img = $(this).attr('src');
     overide(img);
   });
-  blog.find('.code-toolbar pre.language-html').siblings('.toolbar').append('<button class="btn btn-default execute">Try It</button>');
-  blog.find('a').addClass('link');
+
+  let a = blog.find('[href*=tryit]').addClass('btn btn-default').attr('target','_blank').text('Try It');
+  let pre = blog.find('.code-toolbar pre.language-javascript.line-numbers').siblings('.toolbar');
+  for (let i = 0; i < a.length; i++) {
+    pre[i].append(a[i]);
+  }
+  blog.find('a:not([href*=tryit])').addClass('link')
   blog.find('.wrapper-content').after('<hr class="mb-5">').before('<span class="anchor"></span>');
   blog.find('span').attr('id', function(){
     return $(this).prev('h3').text().replace(/\s+/g,'-').toLowerCase();

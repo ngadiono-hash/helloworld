@@ -6,28 +6,11 @@ class Xhra extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// is_send_ajax();
+		is_send_ajax();
 		$this->load->model('Common');
 	}
 
-	public function read_lesson($param)
-	{
-		echo $this->Common->Ignited_dt(
-			'les_id,les_level,les_order,les_title,les_slug,les_content,les_length,les_key,les_publish,les_update',
-			'materi',
-			['les_level' => $param]
-		);
-	}
-
-	// function Ignited_join($table,$data,$tb,$fk,$tp,$where)
-	// {
-	// 	$this->datatables->select($select);
-	// 	$this->datatables->from($table);
-	// 	$this->datatables->join($tb,$fk,$tp);
-	// 	$this->datatables->where($where);
-	// 	$this->db->order_by('materi.les_order','asc');
-	// 	return $this->datatables->generate();		
-	// }
+// ============== QUIZ
 	public function read_quiz($param)
 	{
 		$content = $this->Common->Ignited_join(
@@ -37,40 +20,6 @@ class Xhra extends CI_Controller
 			['materi.les_level' => $param]
 		);
 		echo $content;
-	}
-
-	public function create_lesson()
-	{
-		$title = trimChar_input('title');
-		$slug  = trimChar_input('slug');
-		$label = trimChar_input('label');
-		if (!$title) {
-			$result = 'title field is required';
-		} else {
-			if(!$slug) {
-				$result = 'slug field is required';
-			} else {
-				$id = create_rand($label);
-				$check = $this->Common->check_exist('materi',['les_id'=>$id]);
-				if ($check) {
-					$id = create_rand($label);
-				} else {
-					$order = $this->Common->counting('materi',['les_level'=>$label]);
-					$data = [
-						'les_id'			 => $id,
-					  'les_order'    => $order + 1,
-					  'les_title'    => ucwords($title),
-					  'les_slug'     => $slug,
-					  'les_level'    => $label,
-					  'les_upload'   => time(),
-					  'les_update'   => time()
-					];
-					$exec = $this->Common->insert_record('materi',$data);
-					$result = ($exec) ? [1,'success',null] : [0,'something error',null];
-				}
-			}
-		}
-		echo json_encode($result);
 	}
 
 	public function fetch_quiz()
@@ -128,6 +77,49 @@ class Xhra extends CI_Controller
 		echo json_encode($result);
 	}
 
+// ============== LESSON
+	public function read_lesson($param)
+	{
+		echo $this->Common->Ignited_dt(
+			'les_id,les_level,les_order,les_title,les_slug,les_content,les_length,les_key,les_publish,les_update',
+			'materi',
+			['les_level' => $param]
+		);
+	}
+
+	public function create_lesson()
+	{
+		$title = trimChar_input('title');
+		$slug  = trimChar_input('slug');
+		$label = trimChar_input('label');
+		if (!$title) {
+			$result = 'title field is required';
+		} else {
+			if(!$slug) {
+				$result = 'slug field is required';
+			} else {
+				$id = create_rand($label);
+				$check = $this->Common->check_exist('materi',['les_id'=>$id]);
+				if ($check) {
+					$id = create_rand($label);
+				} else {
+					$order = $this->Common->counting('materi',['les_level'=>$label]);
+					$data = [
+						'les_id'			 => $id,
+					  'les_order'    => $order + 1,
+					  'les_title'    => ucwords($title),
+					  'les_slug'     => $slug,
+					  'les_level'    => $label,
+					  'les_upload'   => time(),
+					  'les_update'   => time()
+					];
+					$exec = $this->Common->insert_record('materi',$data);
+					$result = ($exec) ? [1,'success',null] : [0,'something error',null];
+				}
+			}
+		}
+		echo json_encode($result);
+	}
 
 	public function update_lesson()
 	{
@@ -217,75 +209,56 @@ class Xhra extends CI_Controller
 		echo json_encode($result);
 	}
 
-	
+	public function create_snippet()
+	{
+		$result = [];
+		$rel = $this->input->post('rel');
+		$title = trimChar_input('title');
+		if (!empty($title) && !empty($rel) ) {
+			$where = " LOWER(title)='".$title."' ";
+			$check = $this->Common->check_segment('snippet',$where);
+			if (!$check) {
+				$data = [
+					'relation' => $rel,
+				  'title' => $title,
+				  'htm' => $this->input->post('htm'),
+				  'css' => $this->input->post('css'),
+				  'jsc' => $this->input->post('jsc')
+				];
+				$exec = $this->Common->insert_record('snippet',$data);
+				$insert = $this->Common->select_where('snippet','*',['id'=>$exec],true,true);
+				$result = $exec ? [1,'add snippet success',null,$insert] : [0,'errors db',null];
+			} else {
+				$result = [0,'there are duplicate title',null];	
+			}
+		} else {
+			$result = [0,'check your title',null];
+		}
+		echo json_encode($result);
+	}
 
+	public function update_snippet()
+	{
+		$result = [];
+		$id = $this->input->post('id');
+		$title = trimChar_input('title');
+		if (!empty($title)) {
+			$data = [
+			  'title' => $title,
+			  'htm' => $this->input->post('htm'),
+			  'css' => $this->input->post('css'),
+			  'jsc' => $this->input->post('jsc')
+			];
+			$this->Common->update('snippet',$data,['id'=>$id]);
+			$fetch = $this->Common->select_where('snippet','*',['id'=>$id],true,true);
+			$result = $fetch ? [1,'update snippet success',null,$fetch] : [0,'errors',null];
+		} else {
+			$result = [0,'failed to update snippet',null];
+		}
+		echo json_encode($result);
+	}
 
-
-
-
-
-
-
-	// public function get_detail_user()
-	// {
-	// 	$id = $this->input->post('id');
-	// 	$res = $this->db->get_where('users',['u_id' => $id])->row_array();
-	// 	$result = [
-	// 		'uid'   => $res['u_id'],
-	// 		'provider'  => $res['u_provider'],
-	// 		'role'	=> $res['u_role'],
-	// 		'username' => $res['u_username'],
-	// 		'name' => ucwords($res['u_name']),
-	// 		'email' => $res['u_email'],
-	// 		'active' => $res['u_active'],
-	// 		'register' => time_elapsed_string('@'.$res['u_register']),
-	// 		'gender' => $res['u_gender'],
-	// 		'web'	=> $res['u_web'],
-	// 		'image' => $res['u_image']
-	// 	];
-	// 	$this->output->set_content_type('aplication/json')->set_output(json_encode($result));
-	// }
-
-	// public function update_role()
-	// {
-	// 	$action = $this->input->post('action');
-	// 	$id   = $this->input->post('id');
-	// 	$role = $this->input->post('role');
-	// 	if($action == 'change'){
-	// 		$change = $this->Update_model->updateUserRole($id,$role);
-	// 		$result = ($change) ? 1 : 0;
-	// 	} else {
-	// 		$delete = $this->Delete_model->deleteUserByAdmin($id);
-	// 		$result = ($delete) ? 1 : 0;
-	// 	}
-	// 	echo json_encode($result);
-	// }
-
-
-
-	// public function inline_tutorial()
-	// {
-	// 	$id = $this->input->post('id');
-	// 	$desc = preg_replace('/&nbsp;/',' ',$this->input->post('desc'));
-	// 	$data = [
-	// 	  'snip_code'   => $this->input->post('count_words'),
-	// 	  'snip_content'=> $desc,
-	// 	  'snip_key'		=> trim(strtolower(implode(',',getTags($desc,'h3')))),
-	// 	];
-	// 	$this->Common->update('tutors',$data,['snip_id' => $id]);
-	// 	$affect = $this->Common->select_spec('tutors','snip_content',['snip_id' => $id]);
-	// 	if (!empty($affect)) {
-	// 		echo json_encode($affect);
-	// 	} else {
-	// 		echo '<script>alert("something wrong")</script>';
-	// 	}		
-	// }
-
-	// public function delete_tutorial($id)
-	// {
-	// 	$delete = $this->Delete_model->deleteTutorial($id);
-	// }
-
+// ============== CONFIG PAGE
 	public function pages()
 	{
 		$key = trimChar_input('key');

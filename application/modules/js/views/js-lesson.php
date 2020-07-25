@@ -88,4 +88,3 @@
   </section>
 
 </main>
-<?php playEditor() ?>

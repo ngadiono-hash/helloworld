@@ -25,6 +25,15 @@ class Common extends CI_Model
 		return $this->datatables->generate();		
 	}
 
+	function check_segment($table,$where)
+	{
+		// $field = LOWER(les_slug);
+		// $where = "LOWER(les_slug)='".$meta."' AND les_publish='1'";
+		$this->db->where($where);
+		$query = $this->db->get($table);
+		return ($query->num_rows() > 0) ? $query->row_array() : FALSE;
+	}
+
 	function check_exist($table,$where)
 	{
 		$this->db->where($where);
@@ -36,13 +45,6 @@ class Common extends CI_Model
 		}
 	}
 
-	function check_materi($meta)
-	{
-		$where = "LOWER(les_slug)='".$meta."' AND les_publish='1'";
-		$this->db->where($where);
-		$query = $this->db->get('materi');
-		return ($query->num_rows() > 0) ? $query->row_array() : FALSE;
-	}
 
 	function counting($table,$where='')
 	{

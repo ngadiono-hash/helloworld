@@ -34,9 +34,10 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
 <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 <link rel="stylesheet" href="<?=log?>jquery-ui.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/prism/prism-line.css">
-<?php myGlobalCss() ?>
+
+<link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/main.css">
-<?= $lesson_page ? '<link rel="stylesheet" href="'.base_url().'assets/css/blog.css">' : ''; ?>
+<?= $lesson_page ? '<link rel="stylesheet" href="'.base_url().'assets/css/js-lesson.css">' : ''; ?>
 
 <style>
   .hero-section, .fluid-section {

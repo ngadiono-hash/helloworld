@@ -85,9 +85,9 @@ $quiz_page = whats_page(2,['quiz']);
 <script src="<?=base_url()?>assets/vendor/theme/theme.js"></script>
 <script src="<?=base_url()?>assets/vendor/prism/prism-line.js"></script>
 <?php
-if ($lesson_page) myEditorJs();
-echo $quiz_page ? '<script src="'.base_url().'assets/js/quiz.js"></script>' : '';
-echo $lesson_page ? '<script src="'.base_url().'assets/js/lesson.js"></script>' : '';
+// if ($lesson_page) myEditorJs();
+echo $quiz_page ? '<script src="'.base_url().'assets/js/js-quiz.js"></script>' : '';
+echo $lesson_page ? '<script src="'.base_url().'assets/js/js-lesson.js"></script>' : '';
 echo ($login_page && startSession('access')) ? '<script src="'.base_url().'assets/js/login.js"></script>' : '';
 if ($login_page) { ?>
 <script>

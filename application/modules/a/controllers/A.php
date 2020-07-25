@@ -25,10 +25,6 @@ class A extends CI_Controller
 		return $DB;
 	}
 
-	public function tes()
-	{
-		
-	}
 // =================== DASHBOARD
 	public function index()
 	{
@@ -44,7 +40,7 @@ class A extends CI_Controller
 		$data['label'] = $this->Common->select_specific('level','description',['name'=>$third]);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_lesson/'.$third;
-			_temp_admin($data,'Table '.$data['label'],'lesson_table');
+			_temp_admin($data,'Table '.$data['label'],'table-lesson');
 		} else {
 			not_found();
 		}
@@ -75,13 +71,9 @@ class A extends CI_Controller
 			$data['update'] = $edit['les_update'];
 			$data['public'] = $edit['les_publish'];
 			$data['link'] = base_url($lb.'/docs/'.$data['meta']);
-			if($data['public'] == 1){
-		    $data['btn'] = 'btn-success';
-		    $data['icon']  = '<i class="fa fa-globe-asia"></i>';
-			} else {
-		    $data['btn'] = 'btn-danger';
-		    $data['icon']  = '<i class="fa fa-code"></i>';
-			}
+			
+			$data['snippet'] = $this->Common->select_where('snippet','*',['relation'=>$data['id']],true,false,['id','ASC']);
+			// bug($data['snippet']);
 			$next = $this->Common->select_where(
 				'materi','les_order,les_slug',['les_order >'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','ASC'],1
 			);
@@ -92,7 +84,7 @@ class A extends CI_Controller
 			$data['slugNext'] = $next ? $next[0]['les_slug'] : '';
 			$data['linkPrev'] = $prev ? base_url('a/editor/'.$label.'/'.$prev[0]['les_order']) : '#';
 			$data['slugPrev'] = $prev ? $prev[0]['les_slug'] : '';
-			_temp_admin($data,'Edit - '.$edit['les_slug'],'lesson_edit');
+			_temp_admin($data,'Edit - '.$edit['les_slug'],'edit-lesson');
 		}
 	}
 
@@ -107,7 +99,7 @@ class A extends CI_Controller
 		);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_quiz/'.$third;
-			_temp_admin($data,'Quiz '.$data['label'],'quiz_table');
+			_temp_admin($data,'Quiz '.$data['label'],'table-quiz');
 		} else {
 			not_found();
 		}

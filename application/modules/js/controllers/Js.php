@@ -74,7 +74,7 @@ class Js extends CI_Controller
 			}
 		endif;
 		$this->load->view('templates/mainHeader', $data);
-		$this->load->view('menu',$data);
+		$this->load->view('js-menu',$data);
 		$this->load->view('templates/mainFooter');
 	}
 
@@ -98,7 +98,8 @@ class Js extends CI_Controller
 	{
 		$meta  = $this->uri->segment(3);
 		$meta = str_replace('-',' ',$meta);
-		$checkMeta = $this->Common->check_materi($meta);
+		$where = "LOWER(les_slug)='".$meta."' AND les_publish='1'";
+		$checkMeta = $this->Common->check_segment('materi',$where);
 		if(!$checkMeta){
 			not_found();
 		} else {
@@ -157,10 +158,11 @@ class Js extends CI_Controller
 			$data['linkNext'] = ($next) ? base_url('js/docs/'.create_slug($next['les_slug'])) : '';
 			$data['linkPrev'] = ($prev) ? base_url('js/docs/'.create_slug($prev['les_slug'])) : '';
 			$this->load->view('templates/mainHeader', $data);
-			$this->load->view('single_lesson',$data);
+			$this->load->view('js-lesson',$data);
 			$this->load->view('templates/mainFooter');
 		}
 	}
+
 
 	public function quiz()
 	{
@@ -174,7 +176,7 @@ class Js extends CI_Controller
 			'level.id ASC'
 		);
 		$this->load->view('templates/mainHeader', $data);
-		$this->load->view('quiz',$data);
+		$this->load->view('js-quiz',$data);
 		$this->load->view('templates/mainFooter');
 	}
 

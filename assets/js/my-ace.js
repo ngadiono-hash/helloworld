@@ -1,9 +1,16 @@
-const source = ace.edit('source-code');
-const opt = {
+const srcHtm = ace.edit('source-htm'),
+  srcCss = ace.edit('source-css'),
+  srcJsc = ace.edit('source-jsc'),
+  frame = document.getElementById('result-frame').contentWindow.document,
+  inCss = `<link rel="stylesheet" href="${host}assets/css/injected.css">\n`,
+  inJs = `<script src="${host}assets/js/injected.js"><\/script>\n`,
+  liveEditor = $('.wrapper-editor'),
+  play = $('#play');
+let opt = {
   showFoldWidgets: true,
   showLineNumbers: true,
   showPrintMargin: false,
-  wrap: false,
+  wrap: true,
   fontSize: 15,
   tabSize: 2,
   highlightActiveLine: true,
@@ -13,21 +20,50 @@ const opt = {
 };
 let auto = true;
 
-source.session.setMode("ace/mode/javascript");
-source.setOptions(opt);
-source.setTheme("ace/theme/monokai");
+function runCode(){
+  let pT = '';
+  pT += '<meta charset="UTF-8">\n';
+  pT += '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">\n';
+  pT += `<title><\/title>\n`;
+  pT += inCss;
+  pT += inJs;
+  pT += `<style>\n${srcCss.getValue()}\n<\/style>\n`;
+  pT += `<body>\n${srcHtm.getValue()}\n`;
+  pT += `<script>\n${srcJsc.getValue()}\n<\/script>\n`;
+  pT += '<\/body>';
+  frame.open();
+  frame.write(pT);
+  frame.close();
+  play.addClass('blink');
+  setTimeout(function() {
+    play.removeClass('blink');
+  }, 300);
+}
+srcHtm.session.setMode("ace/mode/html");
+srcHtm.setTheme("ace/theme/monokai");
+srcHtm.setOptions(opt);
+
+srcCss.session.setMode("ace/mode/css")
+srcCss.setTheme("ace/theme/monokai");;
+srcCss.setOptions(opt);
+
+srcJsc.session.setMode("ace/mode/javascript");
+srcJsc.setTheme("ace/theme/monokai");
+srcJsc.setOptions(opt);
+
+
 
 $(function(){
   $('.panel-left,.content-left').resiz({ handleSelector: ".splitter", resizeHeight: false });
   
-  $('nav.ctrl button:not("#stop")').on('click',function(){
+  $('.control a:not("#stop")').on('click',function(){
     let $this = $(this);
-    $this.addClass('active');
+    $this.addClass('blink');
     setTimeout(function(){
-      $this.removeClass('active')
+      $this.removeClass('blink')
     },300)
   });
-  codeSource.on('keyup', wait(function(){
+  $('#source-htm,#source-css,#source-jsc').on('keyup', wait(function(){
     if (auto) play.click();
   },1000));
   play.on('click', function(){
@@ -36,7 +72,7 @@ $(function(){
 
   liveEditor.on('click','#stop',function(){
     auto = auto ? false : true;
-    $(this).toggleClass('active');
+    $(this).toggleClass('blink');
     let ic = $(this).find('i');
     ic.toggleClass('fa-hourglass-half fa-stop');
     if (ic.hasClass('fa-stop')) {
@@ -44,51 +80,23 @@ $(function(){
     } else {
       ic.addClass('fa-spin');
     }
-    source.focus();
+    // source.focus();
   });
   
-  liveEditor.on('click','#clipboard',function(){
-    var sel = source.selection.toJSON();
-    source.selectAll();
+  liveEditor.on('click','#clipboard',function(e){
+    let active = liveEditor.find('.tab-pane.show.active .body-source').attr('id');
+    let tabActive = ace.edit(active);
+    let sel = tabActive.selection.toJSON();
+    tabActive.selectAll();
+    tabActive.focus();
     document.execCommand('copy');
-    source.selection.fromJSON(sel);
-    myAlert([1,'copied!',null]);
-    source.selectAll();
-    source.focus();
+    tabActive.selection.fromJSON(sel);
+    tabActive.selectAll();
   });
-  liveEditor.on('click','#temp',function(){
-    let temp = ``;
-    temp += `<!DOCTYPE html>\n<html>\n<head>\n  <title></title>\n</head>`;
-    temp += `\n<body>\n  <h1></h1>\n\n<script><\/script>\n</body>\n</html>`;
-    source.getSession().setValue(temp);
-    source.gotoLine(6);
-    source.focus();
-  });
-  liveEditor.on('click','#del',function(){
-    source.getSession().setValue('');
-    source.focus();
-  });
-  liveEditor.on('click','#newTab', function() {
-    let win = window.open("","Title");
-    win.document.open();
-    win.document.write(source.getValue());
-    win.document.close();
-  });
-
-  openEditor.on('click',function(){
-    $(this).fadeOut();
-    if (liveEditor.hasClass('slide-out')) {
-      liveEditor.removeClass('slide-out');
-    }
-    liveEditor.show().addClass('slide-in');
-    $('html').addClass('fix-scroll');
-  });
-
-  liveEditor.on('click','#close',function(){
-    liveEditor.removeClass('slide-in').addClass('slide-out').fadeOut(1000);
-    openEditor.fadeIn(1200);
-    $('html').removeClass('fix-scroll');
-  });
+  // liveEditor.on('click','#del',function(){
+  //   source.getSession().setValue('');
+  //   source.focus();
+  // });
   
   $('.splitter').on('mousedown',function(e){
     dragstart(e);

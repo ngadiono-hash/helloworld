@@ -29,18 +29,18 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
 		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
 		{ name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
-		{ name: 'forms', groups: [ 'forms' ] },
+		{ name: 'forms', groups: [ 'forms','Button','ImageButton' ] },
 		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
 		{ name: 'links', groups: [ 'links' ] },
-		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'insert', groups: [ 'insert','Iframe' ] },
 		{ name: 'colors', groups: [ 'colors' ] },
 		{ name: 'others', groups: [ 'others' ] },
 		{ name: 'tools', groups: [ 'tools' ] },
 		{ name: 'about', groups: [ 'about' ] }
 	];
-	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,Replace,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,HorizontalRule,Smiley,SpecialChar,Iframe,Font,About,JustifyLeft';
+	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,Replace,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,HorizontalRule,Smiley,SpecialChar,Font,About,JustifyLeft';
 	
 	// autogrow	
 	// config.autoGrow_minHeight = 250;
