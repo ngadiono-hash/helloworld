@@ -14,6 +14,15 @@ class A extends CI_Controller
 		$this->load->model('Common');
 	}
 
+	private function linkLevels()
+	{
+		$all = $this->Common->select_where('level','name,names,description');
+		foreach ($all as $key) {
+			$a[] = ['link' => base_url('a/less/').$key['names'], 'title' => $key['description']];
+		}
+		return $a;
+	}
+
 	private function countMateri($level)
 	{
 		$DB = [];
@@ -25,9 +34,15 @@ class A extends CI_Controller
 		return $DB;
 	}
 
+	public function tes()
+	{
+ 
+	}
+
 // =================== DASHBOARD
 	public function index()
 	{
+		$data['sidenav'] = $this->linkLevels();
 		$data['t']['b'] = $this->countMateri('beginner');
 		$data['t']['i'] = $this->countMateri('medium');
 		$data['t']['a'] = $this->countMateri('advance');
@@ -36,8 +51,10 @@ class A extends CI_Controller
 
 	public function less()
 	{
+		$data['sidenav'] = $this->linkLevels();
+		// bug($data['sidenav']);
 		$third = $this->uri->segment(3);
-		$data['label'] = $this->Common->select_specific('level','description',['name'=>$third]);
+		$data['label'] = $this->Common->select_specific('level','names',['names'=>$third]);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_lesson/'.$third;
 			_temp_admin($data,'Table '.$data['label'],'table-lesson');
@@ -50,11 +67,6 @@ class A extends CI_Controller
 	{
 		$label = $this->uri->segment(3);
 		$order = $this->uri->segment(4);
-		if (in_array($label,['beginner','medium','advance'])) {
-			$lb = 'js';
-		} else {
-			$lb = 'bla';
-		}
 		if(!empty($label) && !empty($order)){
 			$edit = $this->Common->select_where(
 				'materi','*',['les_order'=>$order,'les_level'=>$label],TRUE,TRUE
@@ -70,10 +82,12 @@ class A extends CI_Controller
 			$data['upload'] = $edit['les_upload'];
 			$data['update'] = $edit['les_update'];
 			$data['public'] = $edit['les_publish'];
-			$data['link'] = base_url($lb.'/docs/'.$data['meta']);
+			$data['snips'] = $edit['les_snippet'];
+			$data['link'] = base_url('js/docs/'.$data['meta']);
 			
 			$data['snippet'] = $this->Common->select_where('snippet','*',['relation'=>$data['id']],true,false,['id','ASC']);
 			// bug($data['snippet']);
+			// bug(getTags($data['content'],'a'));
 			$next = $this->Common->select_where(
 				'materi','les_order,les_slug',['les_order >'=>$order,'les_level'=>$label],TRUE,FALSE,['les_order','ASC'],1
 			);
@@ -93,9 +107,10 @@ class A extends CI_Controller
 	public function quiz()
 	{
 		$third = $this->uri->segment(3);
-		$data['label'] = $this->Common->select_specific('level','description',['name'=>$third]);
-		$data['quiz'] = $this->Common->select_where(
-			'materi','les_id,les_title',['les_level'=>$third],true,false,['les_order','asc']
+		$data['sidenav'] = $this->linkLevels();
+		$data['label'] = '';
+		$data['option'] = $this->Common->select_where(
+			'materi','les_id,les_title','',true,false,['les_order','asc']
 		);
 		if (!empty($third)) {
 			$data['getData'] = 'xhra/read_quiz/'.$third;
@@ -107,6 +122,7 @@ class A extends CI_Controller
 
 	public function config($page)
 	{
+		$data['sidenav'] = $this->linkLevels();
 		if ($page == 'js') {
 			$data['all'] = $this->Common->select_where('level','*');
 			_temp_admin($data,'Config','config');

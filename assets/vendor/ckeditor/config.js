@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	config.uiColor = '#393A3E';
-	config.skin = 'moonocolor';
+	config.skin = 'office2013';
 	config.extraPlugins = 'codeTag,imageuploader,codesnippet,wordcount,notification,sourcedialog,codemirror,stylescombo,bt_table';
 	config.protectedSource.push( /<i class[\s\S]*?\>/g );
 	config.protectedSource.push( /<\/i>/g );
@@ -26,21 +26,21 @@ CKEDITOR.editorConfig = function( config ) {
     CKEDITOR.dtd.$removeEmpty[tag] = false;
 	}
 	config.toolbarGroups = [
-		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
 		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
 		{ name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
-		{ name: 'forms', groups: [ 'forms','Button','ImageButton' ] },
-		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
 		{ name: 'links', groups: [ 'links' ] },
 		{ name: 'insert', groups: [ 'insert','Iframe' ] },
 		{ name: 'colors', groups: [ 'colors' ] },
 		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'tools', groups: [ 'tools' ] },
 		{ name: 'about', groups: [ 'about' ] }
 	];
-	config.removeButtons = 'Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,Replace,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,HorizontalRule,Smiley,SpecialChar,Font,About,JustifyLeft';
+	config.removeButtons = `Button,ImageButton,Save,NewPage,Print,PasteText,PasteFromWord,Scayt,Templates,Form,Checkbox,Radio,TextField,Textarea,Select,HiddenField,CopyFormatting,RemoveFormat,Strike,BidiLtr,BidiRtl,Language,Flash,FontSize,Blockquote,Cut,Copy,Paste,PageBreak,Anchor,Undo,Redo,SelectAll,autoFormat,Sourcedialog,searchCode,CommentSelectedRange,UncommentSelectedRange,AutoComplete,Preview,Subscript,Superscript,Outdent,Indent,HorizontalRule,Smiley,SpecialChar,Font,About,JustifyLeft`;
 	
 	// autogrow	
 	// config.autoGrow_minHeight = 250;

@@ -111,7 +111,7 @@
   }
   #accord [aria-expanded=true] { pointer-events: none; }
   
-  .form-control.input-error { color: #dc3545 !important; }
+  
   .overlay {
     position: fixed;
     display: none;
@@ -187,121 +187,19 @@
     min-width: 100px;
     max-width: 400px;
   }
-  a.link {
-    display: inline-block;
-    color: #3c8dbc;
-  }
-  a.link:hover {
-    text-decoration: none;
-    color: lightblue;
-  }
-  a.link::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: #98a0b8;
-    transition: width .3s;
-  }
-  a.link:hover::after {
-    width: 100%;
-  }
-  a.link.active {
-    color: #000;
-  }
-  a.link.active::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: #98a0b8;
-    width: 100%;
-  }
-
-
-
-  .hero-section.inner-page .hero-text {
-    margin-top: -70px;
-  }
-  .section-heading.section-low {
-    font-size: 1.7rem !important;
-  }
-  .search-result span.highlight {
-    color: red;
-    background: yellow;
-  }
-  .searchbar{
-    margin-bottom: auto;
-    margin-top: auto;
-    height: 60px;
-    background-color: #353b48;
-    border-radius: 30px;
-    padding: 10px;
-  }
-
-  .search_input{
-    color: white;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 0;
-    caret-color:transparent;
-    line-height: 40px;
-    transition: width 0.4s linear;
-  }
-
-  .searchbar:hover > .search_input{
-    padding: 0 10px;
-    width: 450px;
-    caret-color:red;
-    transition: width 0.4s linear;
-  }
-
-  .searchbar:hover > .search_icon{
-    background: white;
-    color: #e74c3c;
-  }
-
-  .search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color:white;
-    text-decoration:none;
-  }
-  .thumbnail {
-    position:relative;
-    overflow:hidden;
-  }
-
-  .caption {
-    position: absolute;
-    top: 0;
-    right: 3%;
-    left: 3%;
-    background: #5a5a5abf;
-    width: auto;
-    height: 100%;
-    padding: 2%;
-    display: none;
-    text-align: center;
-    padding-top: 50px;
-    font-size: 1.4rem;
-    color: #fff !important;
-    z-index: 2;
+  .btn.focus, .btn:focus {
+    box-shadow: none;
   }
   .btn-default, .btn-danger {
     color: #fff;
     border: 2px solid transparent;
     text-shadow: -1px -1px 3px #676d72, 1px -1px 2px #676d72, -1px 1px 3px #676d72, 1px 1px 2px #676d72;
-    transition: none !important;
+    /*transition: none !important;*/
   }
   .btn-default {
     background: #d1ecf1;
+    background: linear-gradient(180deg, #1391a5, #274685);
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
   }
   .btn-danger {
     background: #F8D7DA;

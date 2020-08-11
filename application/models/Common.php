@@ -6,6 +6,24 @@ class Common extends CI_Model
 	{
 		parent::__construct();
 	}
+	
+	public function search_materi($term)
+	{
+		$this->db->from('materi');
+		if (strpos($term,' ') !== false) {
+			$search_exploded = filterSearchKeys($term);
+
+			foreach($search_exploded as $key){
+				$this->db->or_like('les_key',strtolower($key));
+			}
+		} else {
+			$this->db->like('les_key',strtolower($term));
+		}
+		$this->db->join('level','les_level = names');
+		$this->db->where('les_publish',1);
+		$this->db->order_by('level.id ASC');
+		return $this->db->get();
+	}
 // ================= READ QUERY
 	function Ignited_dt($select,$table,$where)
 	{

@@ -9,15 +9,36 @@ class Xhra extends CI_Controller
 		is_send_ajax();
 		$this->load->model('Common');
 	}
+	public function my()
+	{
+		$a = trimChar_input('code');
+		$b = trimChar_input('replace');
 
+		if (!empty($b)) {
+			$exec = $this->Common->update('snippet',['relation'=>$b],['relation'=>$a]);
+			if ($exec) {
+				$e = $this->Common->select_where('snippet','title,relation',['relation'=>$a]);
+				// var_dump($e);
+				echo json_encode('sukses');
+				// var_dump($edit);
+			} else {
+				echo json_encode('gagal');
+			}
+		} else {
+			// $ed = $this->Common->select_where('snippet','title,relation',['relation'=>$a]);
+			// echo json_encode($ed);
+			echo json_encode('kosong');
+			// echo json_encode($ed);
+		}
+	}
 // ============== QUIZ
 	public function read_quiz($param)
 	{
 		$content = $this->Common->Ignited_join(
 			'quiz',
-			'les_id,les_title,quiz.id,q_order,q_level,q_question,q_answer,q_correct',
+			'les_id,les_title,quiz.id,q_title,q_level,q_question,q_answer,q_correct',
 			'materi','quiz.q_rel = materi.les_id',null,
-			['materi.les_level' => $param]
+			['quiz.q_level' => $param]
 		);
 		echo $content;
 	}
@@ -34,36 +55,38 @@ class Xhra extends CI_Controller
 	{
 		$id = $this->input->post('id');
 		$rel = trimChar_input('rel');
+		$title = trimChar_input('title');
 		$label = trimChar_input('label');
 		$question = preg_replace('/&nbsp;/',' ',$this->input->post('question'));
 		$answer = htmlentities(trimChar_input('answer'));
-		$lenghtA = explode(',',$answer);
-		$lenghtA = in_array('',$lenghtA);
+		$lenghtA = in_array( '',explode(',',$answer) );
 		$correct = trimChar_input('correct');
 		
-		if (strlen($rel) === 0 || strlen($question) === 0 || $lenghtA || strlen($correct) === 0) {
-			$result = [0,'all input required',null];
+		if (strlen($label) === 0 || strlen($rel) === 0 || strlen($question) === 0 || $lenghtA || strlen($correct) === 0) {
+			$result = [0,'all of input required',null];
 		} else {
 			if ($id == '') {
-				$order = $this->Common->counting('quiz',['q_rel'=>$rel]);
 				$data = [
-					'q_order' => $order + 1,
 					'q_rel' => $rel,
 					'q_level' => $label,
+					'q_title' => $title,
 					'q_question' => $question,
 					'q_answer' => $answer,
 					'q_correct' => $correct
 				];
 				$exec = $this->Common->insert_record('quiz',$data);
-				$result = ($exec) ? [1,'add success',null] : [0,'something error',null];
+				$result = ($exec) ? [1,'add success',null] : [0,'add error',null];
 			} else {
 				$data = [
+					'q_rel' => $rel,
+					'q_level' => $label,
+					'q_title' => $title,
 					'q_question' => $question,
 					'q_answer' => $answer,
 					'q_correct' => $correct
 				];
 				$exec = $this->Common->update('quiz',$data,['id'=>$id]);
-				$result = ($exec) ? [1,'update success',null] : [0,'something error',null];
+				$result = ($exec) ? [1,'update success',null] : [0,'update error',null];
 			}
 		}
 		echo json_encode($result);
@@ -81,7 +104,7 @@ class Xhra extends CI_Controller
 	public function read_lesson($param)
 	{
 		echo $this->Common->Ignited_dt(
-			'les_id,les_level,les_order,les_title,les_slug,les_content,les_length,les_key,les_publish,les_update',
+			'les_id,les_level,les_order,les_title,les_slug,les_content,les_length,les_snippet,les_key,les_publish,les_update',
 			'materi',
 			['les_level' => $param]
 		);
@@ -93,15 +116,15 @@ class Xhra extends CI_Controller
 		$slug  = trimChar_input('slug');
 		$label = trimChar_input('label');
 		if (!$title) {
-			$result = 'title field is required';
+			$result = [0,'title field is required',null];
 		} else {
 			if(!$slug) {
-				$result = 'slug field is required';
+				$result = [0,'slug field is required',null];
 			} else {
-				$id = create_rand($label);
+				$id = getRandStr(10);
 				$check = $this->Common->check_exist('materi',['les_id'=>$id]);
 				if ($check) {
-					$id = create_rand($label);
+					$id = getRandStr(10);
 				} else {
 					$order = $this->Common->counting('materi',['les_level'=>$label]);
 					$data = [
@@ -114,7 +137,7 @@ class Xhra extends CI_Controller
 					  'les_update'   => time()
 					];
 					$exec = $this->Common->insert_record('materi',$data);
-					$result = ($exec) ? [1,'success',null] : [0,'something error',null];
+					$result = ($exec) ? [1,'add success',null] : [0,'unknow error',null];
 				}
 			}
 		}
@@ -126,8 +149,10 @@ class Xhra extends CI_Controller
 		$id = trimChar_input('id');
 		$title = trimChar_input('title');
 		$slug = trimChar_input('slug');
-		$content = preg_replace('/&nbsp;/',' ',$this->input->post('content'));
+		$oriCon = $this->input->post('content');
+		$content = correcting($oriCon);
 		$length = trimChar_input('length');
+		$snippet = trimChar_input('snippet');
 		$key1 = !empty($content) ? strtolower(implode(',',getTags($content,'h3'))) : '';
 		$key2 = !empty($content) ? getTags($content,'h4') : '';
 		if (!empty($key2)) {
@@ -143,6 +168,7 @@ class Xhra extends CI_Controller
 		  'les_title'  => ucwords($title),
 		  'les_slug'   => $slug,
 		  'les_length' => $length,
+		  'les_snippet'=> $snippet,
 		  'les_content'=> $content,
 		  'les_key'		 => $keywords,
 		  'les_update' => time()
@@ -153,8 +179,17 @@ class Xhra extends CI_Controller
 			$h3 = getTags($affected,'h3');
 			$h4 = getTags($affected,'h4');
 		}
-		$result = [1,'update success',null,date('d F, Y H:i',time()),$h3,$h4];
+		$result = [1,'update lesson success',null,date('d F, Y H:i',time()),$h3,$h4];
 		
+		echo json_encode($result);
+	}
+
+	public function update_lesson_level()
+	{
+		$id = trimChar_input('id');
+		$level = trimChar_input('level');	
+		$exec = $this->Common->update('materi',['les_level'=>$level],['les_id'=>$id]);
+		$result = ($exec) ? [1,'update level success',null] : [0,'unknow error',null];
 		echo json_encode($result);
 	}
 
@@ -242,6 +277,7 @@ class Xhra extends CI_Controller
 		$result = [];
 		$id = $this->input->post('id');
 		$title = trimChar_input('title');
+		$rels = trimChar_input('rels');
 		if (!empty($title)) {
 			$data = [
 			  'title' => $title,
@@ -256,6 +292,24 @@ class Xhra extends CI_Controller
 			$result = [0,'failed to update snippet',null];
 		}
 		echo json_encode($result);
+	}
+
+	public function delete_snippet()
+	{
+		$result = [];
+		$id = $this->input->post('id');
+		$level = $this->input->post('rels');
+		$exec = $this->Common->delete('snippet',['id'=>$id]);
+		$this->Common->update('materi',['les_snippet'=>0],['les_id'=>$level]);
+		$result = $exec ? [1,'delete snippet success',null] : [0,'errors',null];
+		echo json_encode($result);
+	}
+
+	public function fetch_snippet()
+	{
+		$id = trimChar_input('id');
+		$t = $this->Common->select_where('snippet','*',['relation'=>$id],true,false,['id','ASC']);
+		echo json_encode($t);
 	}
 
 // ============== CONFIG PAGE

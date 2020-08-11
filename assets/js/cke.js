@@ -1,11 +1,9 @@
 CKEDITOR.editorConfig = function( config ) {
 	config.uiColor = '#393A3E';
-	config.skin = 'moonocolor';
-	config.extraPlugins = 'codeTag,imageuploader,codesnippet,wordcount,notification,sourcedialog,codemirror,stylescombo,bt_table';
-	config.protectedSource.push( /<i class[\s\S]*?\>/g );
-	config.protectedSource.push( /<\/i>/g );
+	config.skin = 'office2013';
+	config.extraPlugins = 'codeTag,imageuploader,codesnippet,wordcount,notification,codemirror,stylescombo,bt_table';
 	config.fillEmptyBlocks = false;
-	config.height = 200;
+	config.height = 280;
 	config.allowedContent = true;
 	config.extraAllowedContent = 'html','head','style','script','body','img','input';
 	for(var tag in CKEDITOR.dtd.$removeEmpty){

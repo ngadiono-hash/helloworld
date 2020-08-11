@@ -20,7 +20,6 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
 <meta name ="revised" content ="My Note, <?= date('m/d/Y',$lesson['update']) ?>">
 <?php } ?>
 <link rel="icon" href="<?=base_url()?>assets/img/feed/favicon.ico">
-<link rel="apple-touch-icon" href="<?=base_url()?>assets/img/feed/apple-touch-icon.png">
 <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Roboto"> -->
 <link rel="stylesheet" href="<?=log?>roboto.css">
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> -->
@@ -84,6 +83,20 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     position: sticky;
     top: 85px;
   }
+  .site-navbar .site-navigation .site-menu .has-children .dropdown {
+    visibility: hidden;
+    opacity: 1;
+    top: 100%;
+    right: 0;
+    position: absolute;
+    text-align: left;
+    width: 275px;
+    font-family: fantasy;
+    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
+    padding: 0px 0px;
+    margin-top: 10px;
+    transition: 0.2s 0s;
+  }
 </style>
 </head>
 <body>
@@ -110,19 +123,24 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
           <div class="col-12 col-md-10 d-none d-lg-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="<?=base_url('js/files')?>" class="nav-link">JavaScript</a></li>
+                <!-- <li><a href="<?=base_url('js/qui')?>" class="nav-link">React</a></li> -->
+                <!-- <li><a href="<?=base_url('js/uiz')?>" class="nav-link">Angular</a></li> -->
+                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Quiz</a></li>
                 <li class="has-children">
-                  <a class="nav-link">JavaScript</a>
+                  <a class="nav-link"><i class="fa fa-search"></i></a>
                   <ul class="dropdown">
-                    <li><a href="<?=base_url('js/beginner')?>" class="nav-link">JavaScript Dasar</a></li>
-                    <li><a href="<?=base_url('js/medium')?>" class="nav-link">JavaScript Medium</a></li>
-                    <li><a href="<?=base_url('js/advance')?>" class="nav-link">JavaScript Lanjutan</a></li>
+                    <li>
+                      <form id="search-form" class="search-form">
+                        <div class="">
+                          <span class="icon fa fa-search"></span>
+                          <input type="text" class="form-control" placeholder="ketik Keyword dan tekan Enter">
+                        </div>
+                      </form>
+                    </li>
                   </ul>
                 </li>
-                <li><a href="<?=base_url('js/qu')?>" class="nav-link">Vue</a></li>
-                <li><a href="<?=base_url('js/qui')?>" class="nav-link">React</a></li>
-                <li><a href="<?=base_url('js/uiz')?>" class="nav-link">Angular</a></li>
-                <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Quiz</a></li>
-                <?php if (is_admin()) { ?>
+                <?php if ( is_admin() ) { ?>
                 <li><a href="<?=base_url()?>a" class="nav-link" target="_blank"><i class="fas fa-lg fa-recycle"></i></a></li>
                 <?php } ?>
               </ul>

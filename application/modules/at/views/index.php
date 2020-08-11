@@ -18,13 +18,11 @@
           <div class="col-12 hero-text-image">
             <div class="row">
               <div class="col-lg-7 text-center text-lg-left">
-                <h1 data-aos="fade-right">Note JavaScript</h1>
-                <p class="" data-aos="fade-right" data-aos-delay="100">Situs dokumentasi belajar Bahasa Program JavaScript</p>
-                <p class="" data-aos="fade-right" data-aos-delay="200">Mulai dari tingkat dasar hingga tingkat mahir</p>
+                <h1 data-aos="fade-right">Notes JavaScript</h1>
+                <p class="" data-aos="fade-right" data-aos-delay="100">Situs Dokumentasi Belajar Bahasa Program JavaScript</p>
               </div>
               <div class="col-lg-5 iphone-wrap">
-                <img src="<?=base_url()?>assets/img/feed/snippet.png" alt="Image" class="phone-1" data-aos="fade-right">
-                <img src="<?=base_url()?>assets/img/feed/practice.gif" alt="Image" class="d-none d-lg-block phone-2" data-aos="fade-right" data-aos-delay="400">
+                <img src="<?=base_url()?>assets/img/feed/jsbasic.png" alt="Image" class="phone-1" data-aos="fade-right">
               </div>
             </div>
           </div>
@@ -38,7 +36,7 @@
 
         <div class="row justify-content-center text-center mb-5">
           <div class="col-lg-6" data-aos="fade-up">
-            <h2 class="section-heading">Belajar Bahasa Program JavaScript</h2>
+            <h2 class="section-heading">Belajar JavaScript</h2>
           </div>
         </div>
 
@@ -49,31 +47,32 @@
                 <span class="icon fa fa-archive"></span>
               </div>
               <h3 class="mb-3">Materi Belajar Simpel</h3>
-              <p>Tersedia materi belajar dengan metode yang simpel dan mudah dipahami.</p>
+              <p>Tersedia materi belajar dengan metode yang simpel dan mudah dipahami</p>
             </div>
           </div>
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <span class="icon fa fa-laptop"></span>
+                <span class="icon fa fa-code"></span>
               </div>
-              <h3 class="mb-3">Dilengkapi Live Code Editor</h3>
-              <p>Setiap materi disediakan contoh kode yang relevan dan siap untuk dijalankan.</p>
+              <h3 class="mb-3">Live Code Editor</h3>
+              <p>Belajar dengan contoh program yang siap dijalankan dengan code editor</p>
             </div>
           </div>
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <span class="icon fa fa-code"></span>
+                <span class="icon fa fa-laptop"></span>
               </div>
-              <h3 class="mb-3">Materi Up to Date</h3>
-              <p>Materi tentang JavaScript akan selalu kami berikan yang terupdate.</p>
+              <h3 class="mb-3">Asah Kemampuan Logika</h3>
+              <p>Uji kemampuanmu dengan menjawab soal latihan dan jadilah yang terbaik</p>
             </div>
           </div>
         </div>
 
       </div>
     </div> <!-- .site-section -->
+
 
     <?php foreach ($label as $k => $v) { ?>
     <div class="site-section">

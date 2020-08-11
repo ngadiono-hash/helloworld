@@ -67,9 +67,10 @@ $quiz_page = whats_page(2,['quiz']);
     </div>
   </div>
 </div>
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+<script src="<?=log?>jquery.min.js"></script>
+<script src="<?= base_url('assets/js/global.js') ?>"></script>
 
-
-<?php myGlobalJs() ?>
 <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
 <script src="<?=log?>popper.min.js"></script>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
@@ -85,7 +86,6 @@ $quiz_page = whats_page(2,['quiz']);
 <script src="<?=base_url()?>assets/vendor/theme/theme.js"></script>
 <script src="<?=base_url()?>assets/vendor/prism/prism-line.js"></script>
 <?php
-// if ($lesson_page) myEditorJs();
 echo $quiz_page ? '<script src="'.base_url().'assets/js/js-quiz.js"></script>' : '';
 echo $lesson_page ? '<script src="'.base_url().'assets/js/js-lesson.js"></script>' : '';
 echo ($login_page && startSession('access')) ? '<script src="'.base_url().'assets/js/login.js"></script>' : '';
@@ -94,16 +94,11 @@ if ($login_page) { ?>
   let acc = $('#access');
   acc.on('keypress',function(e){
     if (e.which == 13) {
-      $.ajax({
-        url: host + 'xhrm/adm',
-        type: 'post',
-        dataType: 'json',
-        data: {csrf_token: csrf, access: acc.val()},
-        success : function(data){
+      ajaxTemp({
+        u: 'xhrm/adm', d: { access: acc.val()}, b: null, c: null,
+        s: function(data){
           myAlert(data);
-          if (data[0] == 0) {
-            acc.val('');
-          }
+          if (data[0] == 0) acc.val('');
         }
       });
     }
@@ -128,43 +123,26 @@ if ($login_page) { ?>
       e.preventDefault();
         let inval = { search: $(this).val() };
         ajaxTemp({
-          u: 'xhrm/search',
-          d: inval,
-          b: function(){
-            startAjax();
-            $('html').addClass('fix-scroll');
-          },
-          s: function(data){
-            $('#modal-search').modal('show');
+          u: 'xhrm/search', d: inval, b: startAjax, c: endAjax,
+          s: function(data){            
             $('#modal-search h3').html(data[1]);
             let temp = "";
-            let arr = [];
+            let arrays = [];
             if (data[0] == 1) {
               for (let i = 0; i < data[2].length; i++) {
-                arr = data[2][i].keys.join(' | ');
-                let lb = data[2][i].level;
-                let lbh = '';
-                if (lb == 'beginner') {
-                  lbh = 'javascript dasar';
-                } else if (lb == 'medium') {
-                  lbh = 'javascript medium';
-                } else if (lb == 'advance') {
-                  lbh = 'javascript lanjutan'
-                }
-                temp += '<div class="card"><span class="label">'+lbh+'</span>';
-                temp += `<a class="btn btn-block btn-default" href="${data[2][i].link}">${data[2][i].title} - ${data[2][i].slug}</h5></a>`;
-                temp += '<div class="card-body p-2"><p class="m-0">'+arr+'</p></div></div><hr>';
+                let $this = data[2][i];
+                arrays = $this.keys.join(' | ');
+                temp += `<div class="card"><span class="label shadow">${$this.level}</span>`;
+                temp += `<a class="btn btn-block btn-default" href="${$this.link}">${$this.title} - ${$this.slug}</h5></a>`;
+                temp += `<div class="card-body p-3 bg-light"><p class="m-0">${arrays}</p></div></div><hr>`;
               };
               $('#modal-search .search-result').html(temp);
               $('.search-result p').mark(inval.search,{ "element": "span","className": "highlight" });
             } else {
               $('#modal-search .search-result').html('');
             }
-          },
-          c: function(){
-            endAjax();
-            $('html').removeClass('fix-scroll');
-          },
+            $('#modal-search').modal('show');
+          }
         });
       }
     });

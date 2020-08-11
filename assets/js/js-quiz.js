@@ -68,7 +68,7 @@ function clue(){
       temp += `<div class="col-lg-6"><div class="alert-warning py-3 px-1 rounded"><h5>jawaban kamu</h5><hr><h6 class="a">${myRest[0][i].y}</h6></div></div>`;
     }
     temp += `</div>`;
-    temp += `<h5 class="mt-3">referensi : <a href="${myRest[0][i].r}" class="link" target="_blank">${myRest[0][i].t}</a></h5>`;
+    temp += `<h5 class="mt-3">referensi : <a href="${myRest[0][i].l}" class="link" target="_blank">${myRest[0][i].t}</a></h5>`;
     temp += `</div>`;
     temp += `</div>`;
     temp += `</div>`;
@@ -86,6 +86,7 @@ function nextQuest(){
   iData = getFormData(sqForm);
   myQuiz.push(iData);
 
+
   sqActive.removeClass('scale-in-center').addClass('slide-out-left');
   setTimeout(function(){
     sqActive.next('.card').addClass('active').fadeIn();
@@ -97,6 +98,7 @@ function nextQuest(){
         u: 'xhrm/get_result',
         d: { quest: myQuiz, dur: spent, usr: usr, ctg: ctg, date: timeEnd },
         b: startAjax,
+        c: endAjax,
         s: function(data) {
           clearInterval(animateTime);
           ending.find('.side-setup .alert-info h2').html(totalQuiz);
@@ -112,8 +114,7 @@ function nextQuest(){
           myRest = [data.evaluate];
           lead();
           clue();
-        },
-        c: endAjax
+        }
       });
     }
   },700);
@@ -200,7 +201,6 @@ $(function(){
     let $this = $(e.target);
     if ($this.hasClass('next-slide')) {
       remainTime = -1;
-      bug('aaa')
       timeToSlide();
     } else if ($this.hasClass('check-rest')) {
       $('#modal-result').modal('show');

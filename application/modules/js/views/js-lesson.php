@@ -5,20 +5,9 @@
       
       <div class="row">
         <div class="col-lg-8 blog-content">
-          <h4 class="mt-5 section-heading section-low">Kategori : <?php echo $label ?></h4>
-          <h5 class="mb-5">Terakhir diperbarui pada <?=date('M d, Y',$lesson['update'])?></h5>
+          <!-- <h5 class="mb-5">Terakhir diperbarui pada <?=date('M d, Y',$lesson['update'])?></h5> -->
           <?php echo $lesson['content'] ?>
 
-          <div class="row">
-            <div class="col-12 navigate">
-              <?php if($linkPrev != '') : ?>
-              <button class="btn btn-default" data-href="<?=$linkPrev?>"><i class="fa fa-lg fa-angle-left"></i> Sebelumnya</button>
-              <?php endif; ?>
-              <?php if($linkNext != '') : ?>
-              <button class="btn btn-default float-right" data-href="<?=$linkNext?>">Selanjutnya <i class="fa fa-lg fa-angle-right"></i></button>
-              <?php endif; ?>
-            </div>
-          </div>
           <?php // echo $lesson['disqus'] ?>
         </div>
         <div class="col-lg-4 sidebar">
@@ -55,19 +44,6 @@
                 </div>
               </div>
               <div class="card card-menu">
-                <a href="#" class="btn btn-block btn-default collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">Search<span class="ml-auto"></span></a>
-                <div id="collapseThree" class="collapse" data-parent="#accord">
-                  <div class="card-body">
-                    <form id="search-form" class="search-form my-4">
-                      <div class="form-group">
-                        <span class="icon fa fa-search"></span>
-                        <input type="text" class="form-control" placeholder="Search...">
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="card card-menu">
                 <a href="#" class="btn btn-block btn-default collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false">What New's<span class="ml-auto"></span></a>
                 <div id="collapseFour" class="collapse" data-parent="#accord">
                   <div class="card-body">
@@ -77,6 +53,16 @@
                     <?php } ?>
                     </ul>                    
                   </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="btn-group btn-block navigate">
+                  <?php if($linkPrev != '') : ?>
+                  <button class="btn btn-default" title="Sebelumnya" data-href="<?=$linkPrev?>"><i class="fa fa-lg fa-angle-double-left"></i></button>
+                  <?php endif; ?>
+                  <?php if($linkNext != '') : ?>
+                  <button class="btn btn-default" title="Selanjutnya" data-href="<?=$linkNext?>"><i class="fa fa-lg fa-angle-double-right"></i></button>
+                  <?php endif; ?>
                 </div>
               </div>
 

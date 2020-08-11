@@ -1,15 +1,16 @@
 
-<a class="btn btn-outline-dark open-editor" data-toggle="modal" data-target="#modal-info"><i class="fa fa-lg fa-fw fa-info"></i></a>
+<button class="btn btn-outline-primary open-editor" data-toggle="modal" data-target="#modal-info"><?=$titles?></button>
 <div class="content-edit" id="edited-lesson">
   <div class="content-editor">
     <div class="content-left">
-      <nav class="ctrl" style="margin-left: 55px;">
-        <a class="btn btn-outline-dark" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></a>
-        <a class="btn btn-outline-dark" href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a>
-        <a class="btn btn-outline-dark" title="<?=$slugPrev?>" href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a>
-        <a class="btn btn-outline-dark" title="<?=$slugNext?>" href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a>
+      <nav class="ctrl">
+        <button class="btn btn-outline-success px-4" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></button>
+        <button class="btn btn-outline-info" onclick="editorAdm()"><i class="fa fa-lg fa-fw fa-hourglass-half fa-spin"></i></button>
+        <a class="btn btn-primary" href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a>
+        <a class="btn btn-primary" title="<?=$slugPrev?>" href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a>
+        <a class="btn btn-primary" title="<?=$slugNext?>" href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a>
         <a class="btn btn-outline-dark" target="_blank" href="<?=$link?>"><i class="fas fa-lg fa-fw fa-location-arrow"></i></a>
-        <input type="text" class="form-control" value="<?=$titles?>" disabled>
+        
       </nav>
       <textarea id="ckedit"><?=htmlentities($content)?></textarea>
     </div>
@@ -39,14 +40,14 @@
             <div class="card-header p-2">
               <div class="btn-group btn-block">
                 <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#main-accord-snippet" aria-expanded="true">Snippet</button>
+                <button class="btn btn-outline-dark" id="snip-length"><?=$snips?></button>
                 <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#main-accord-add">ADD Snippet</button>
               </div>
             </div>
             <div id="main-accord-add" class="collapse p-2" data-parent="#main-accord">
               <form class="border bg-light p-2">
                 <ul class="nav nav-tabs nav-fill">
-                  <button class="btn btn-outline-success mx-1"><i class="fa fa-fw fa-plus"></i></button>
-                  <button class="btn btn-outline-info mx-1"><i class="fa fa-fw fa-play"></i></button>
+                  <button type="button" class="btn btn-outline-success mx-1"><i class="fa fa-fw fa-plus"></i></button>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#add-h">HTM</a>
                   </li>
@@ -64,13 +65,13 @@
 
                 <div class="tab-content">
                   <div class="tab-pane p-2 active" id="add-h">
-                    <textarea class="form-control" name="htm" rows="8"></textarea>
+                    <textarea name="htm" rows="8"></textarea>
                   </div>
                   <div class="tab-pane p-2 fade" id="tab-c">
-                    <textarea class="form-control" name="css" rows="8"></textarea>
+                    <textarea name="css" rows="8"></textarea>
                   </div>
                   <div class="tab-pane p-2 fade" id="tab-j">
-                    <textarea class="form-control" name="jsc" rows="8"></textarea>
+                    <textarea name="jsc" rows="8"></textarea>
                   </div>
                 </div>
               </form>
@@ -84,9 +85,11 @@
                   <button type="button" class="btn btn-block btn-default my-2" data-toggle="collapse" data-target="#acc-<?=$v['id']?>" aria-expanded="false"><?=$v['title']?></button>
                   <div id="acc-<?=$v['id']?>" data-id="<?=$v['id']?>" class="collapse p-2" data-parent="#sub-accord">
                     <ul class="nav nav-tabs nav-fill">
+                      <input type="hidden"  name="rels" value="<?=$id?>">
                       <button type="button" class="btn btn-outline-success mr-1"><i class="fa fa-fw fa-save"></i></button>
                       <button type="button" data-href="<?=$href?>" class="btn btn-outline-dark mr-1"><i class="fa fa-fw fa-link"></i></button>
                       <a href="<?=$href?>" target="_blank" class="btn btn-outline-info mr-1"><i class="fa fa-fw fa-location-arrow"></i></a>
+                      <button type="button" class="btn btn-outline-danger mx-1"><i class="fa fa-fw fa-trash-alt"></i></button>
                       <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#tab-h-<?=$v['id']?>">HTM</a>
                       </li>
@@ -104,20 +107,19 @@
 
                     <div class="tab-content">
                       <div class="tab-pane p-2 fade" id="tab-h-<?=$v['id']?>">
-                        <textarea class="form-control" name="htm" rows="8"><?=$v['htm']?></textarea>
+                        <textarea name="htm" rows="8"><?=$v['htm']?></textarea>
                       </div>
                       <div class="tab-pane p-2 fade" id="tab-c-<?=$v['id']?>">
-                        <textarea class="form-control" name="css" rows="8"><?=$v['css']?></textarea>
+                        <textarea name="css" rows="8"><?=$v['css']?></textarea>
                       </div>
                       <div class="tab-pane p-2 active" id="tab-j-<?=$v['id']?>">
-                        <textarea class="form-control" name="jsc" rows="8"><?=$v['jsc']?></textarea>
+                        <textarea name="jsc" rows="8"><?=$v['jsc']?></textarea>
                       </div>
                     </div>
                   </div>
                 </form>
               <?php } ?>
               </div>
-
             </div>
           </div>
 
@@ -154,6 +156,23 @@
               </div>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header p-2">
+              <div class="btn-group btn-block">
+                <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#quiz-accord" aria-expanded="false">Quiz</button>
+                <button class="btn btn-outline-dark">1</button>
+                <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#quiz-accord-add">ADD Quiz</button>
+              </div>
+            </div>
+            <div id="quiz-accord-add" class="collapse p-2" data-parent="#main-accord">
+
+            </div>
+            <div id="quiz-accord" class="collapse p-2" data-parent="#main-accord">
+
+            </div>
+          </div>
+
 
         </div>
       </div>

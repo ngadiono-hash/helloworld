@@ -1,4 +1,32 @@
 const lessonTable = $('#table-lesson');
+const mdSnip = $('#modal-snippet');
+const mdAdds = $('#modal-lesson');
+
+lessonTable.on('click','tr td:nth-child(7)',function() {
+	let id = $(this).parent('tr').data('id');
+	let title = $(this).parent('tr').children('td:nth-child(4)').text();
+	ajaxTemp({
+		u: 'xhra/fetch_snippet', d: {id: id}, c: null,
+		b: function(){
+			mdSnip.find('.modal-body').html('');
+		},
+		s: function(data){
+			let temp = '';
+			if (data.length > 0) {
+				temp += `<h3 class="text-center">${title}</h3>`;
+				temp += '<div class="accordion" id="sub-accord">';
+				for (let i = 0; i < data.length; i++) {
+					temp += templateSnip(data[i]);
+				}
+				temp += '</div>';
+			} else {
+				temp += '<h3 class="text-center">Nothing snippet found</h3>';
+			}
+			mdSnip.find('.modal-body').html(temp);
+			mdSnip.modal('show');
+		}
+	})
+});
 // =================== EDIT ORDER
 lessonTable.find('tbody').sortable({
 	placeholder : "ui-state-highlight",
@@ -16,22 +44,60 @@ lessonTable.find('tbody').sortable({
 	}
 });
 // =================== ADD TUTORIAL
-$('#lesson-form').submit(function(e){
+$('.add-modal').click(function(event) {
+	let tempAdd = `<h3 class="text-center">Add New Lesson</h3>
+	<form id="lesson-form" autocomplete="off">
+		<div class="card card-body">
+			<input type="hidden" name="label" value="${label}">
+			<input type="text" name="title" class="form-control my-1" placeholder="Enter Title Here...">
+			<input type="text" name="slug" class="form-control my-1" placeholder="Enter Slug Here...">
+			<button type="button" class="btn btn-block my-1 btn-primary">Submit</button>
+		</div>
+	</form>`;
+	mdAdds.find('.modal-body').html(tempAdd);
+	mdAdds.modal('show');
+});
+
+mdAdds.on('click','.btn-success,.btn-primary',function(e){
 	e.preventDefault();
-	let myData = {
-		title: $('#lesson-title').val(),
-		slug: $('#lesson-slug').val(),
-		label: label
+	let myData;
+	myData = $(this).parents('form').serialize();
+	if ($(e.target).hasClass('btn-primary')) {
+		ajaxTemp({
+			u: 'xhra/create_lesson', d: myData, b: null, c: null,
+			s: function(data) {
+				myAlert(data);
+				if (data[0]) reloadTable('#table-lesson');
+			}
+		});
+	} else if ($(e.target).hasClass('btn-success')) {
+		ajaxTemp({
+			u: 'xhra/update_lesson_level', d: myData, b: null, c: null,
+			s: function(data) {
+				myAlert(data);
+				if (data[0]) reloadTable('#table-lesson');
+			}
+		});
 	}
-	ajaxTemp({
-		u: 'xhra/create_lesson', d: myData, b: null, c: null,
-		s: function(data) {
-			myAlert(data);
-			reloadTable('#table-lesson');
-			$('#modal-lesson').modal('hide');
-			$('#lesson-form input').val('');
-		}
+	mdAdds.modal('hide');
+});
+lessonTable.on('click','td:nth-child(2)', function(e) {
+	e.preventDefault();
+	let id = $(this).parent('tr').data('id');
+	let lvl = $(this).parent('tr').data('level');
+	let href = $('#collapseTwo').find('a').map(function(i,e) {
+		return e.getAttribute('href').split('/').pop();
 	});
+	let tempSel = `<form><input type="hidden" name="id" value="${id}">`;
+	tempSel += `<button class="btn btn-success">OK</button>`;
+	tempSel += `<select id="select-level" name="level">`;
+	for (let i = 0; i < href.length; i++) {
+		tempSel += `<option>${href[i]}</option>`;
+	}
+	tempSel += `</select></form>`;
+	mdAdds.find('.modal-body').html(tempSel);
+	mdAdds.find('#select-level').val(lvl).selectpicker();
+	mdAdds.modal('show');
 });
 // =================== EDIT INLINE
 lessonTable.on('dblclick','.btn-title,.btn-slug',function(){
@@ -91,9 +157,9 @@ lessonTable.dataTable({
 	},
 	ajax:
 	{
-		url : host + $('.url').data('url'),
-		type : "POST",
-		data : { param : label }
+		url: host + $('.url').data('url'),
+		type: "POST",
+		data: { param : label }
 	},
 	createdRow: function( row, data, dataIndex, cells ) {
 		var	meta 	= data['les_slug'].replace(/\s/g,'-').toLowerCase(),
@@ -102,6 +168,7 @@ lessonTable.dataTable({
 		title = data['les_title'],
 		slug  = data['les_slug'],
 		words = data['les_length'],
+		snips = data['les_snippet'],
 		updates = data['les_update'],
 		status = data['les_publish'],
 		key = data['les_key'],
@@ -115,32 +182,33 @@ lessonTable.dataTable({
 				btn : 'btn-success',
 				icon : 'fa fa-globe-asia'
 			}
-			preview = `<button class="btn btn-sm btn-block btn-outline-primary btn-preview" data-con="${key}"><i class="fa fa-eye"></i></button>`;
-			linkTarget = '<a class="btn btn-sm btn-outline-primary" href="'+ host +'js/docs/'+ meta +'" target="_blank"> <i class="fa fa-thumbs-up"></i></a>';
+			keyword = `<button class="btn btn-sm btn-block btn-outline-primary btn-keyword" data-con="${key}">${key.length}</button>`;
+			linkTarget = `<a class="btn btn-sm btn-primary" href="${host}js/docs/${meta}" target="_blank"><i class="fa fa-location-arrow"></i></a>`;
 		} else {
 			public = {
 				btn : 'btn-danger',
 				icon : 'fa fa-code'
 			}
-			preview = '';
+			keyword = '';
 			linkTarget = '';
 		}
 
 		// rows
-		$(row).attr('data-id', id);
+		$(row).attr({'data-id': id, 'data-level': data['les_level']});
+
 		if (status == '0') $(row).css('color','red');
 		// order
-		$(cells[2]).html('<a class="btn" data-toggle="tooltip" title="edited: '+timeElapsed(times)+'" href="'+linkEdit+'"><i class="fa fa-fw fa-edit"></i></a>');
+		$(cells[2]).html(`<a class="btn" data-toggle="tooltip" title="edited: ${timeElapsed(times)}" href="${linkEdit}"><i class="fa fa-fw fa-edit"></i></a>`);
 		// title
 		$(cells[3]).html('<a class="btn btn-title">'+title+'</a>');
 		// slug
 		$(cells[4]).html('<a class="btn btn-slug">'+slug+'</a>');
 		// public
-		$(cells[6]).html('<button class="btn btn-block btn-sm btn-public '+public.btn+'"><i class="'+public.icon+'""></i></button>');
+		$(cells[7]).html(`<button class="btn btn-block btn-sm btn-public ${public.btn}"><i class="${public.icon}"></i></button>`);
 		// ready
-		$(cells[7]).html(linkTarget);
-		// preview
-		$(cells[8]).html(preview);
+		$(cells[8]).html(linkTarget);
+		// keyword
+		$(cells[9]).html(keyword);
 	},
 	"columnDefs": [
 		// no
@@ -155,15 +223,17 @@ lessonTable.dataTable({
 		{ "targets": 4, "data": null, orderable: false },
 		// words
 		{ "targets": 5, "data": 'les_length', "width": "80px", orderable: true },
+		// snippet
+		{ "targets": 6, "data": 'les_snippet', "width": "80px", orderable: true },
 		// public
-		{ "targets": 6, "data": null, "width": "70px", orderable: false },
-		// ready
 		{ "targets": 7, "data": null, "width": "70px", orderable: false },
-		// preview
+		// ready
 		{ "targets": 8, "data": null, "width": "70px", orderable: false },
+		// keyword
+		{ "targets": 9, "data": null, "width": "70px", orderable: false },
 	],
-	"lengthMenu": [[10,20,30,50,100,-1], [10,20,30,50,100, "All"]],
-	"displayLength": 10,
+	"lengthMenu": [[20,50,-1], [20,50, "All"]],
+	"displayLength": 20,
 	"lengthChange": true,
 	"searching": false,
 	"info": true,
@@ -195,14 +265,20 @@ lessonTable.dataTable({
 			});
 			$('body').popover({
 				html: true,
-				selector: '.btn-preview',
+				selector: '.btn-keyword',
 				trigger: 'hover',
 				placement: 'left',
-				content : function() {
-					var keys = $(this).data('con').split(',').join('<hr class="m-1">');
-					return '<div class="card">'+keys+'</div>';
+				content: function() {
+					let temp = '';
+					let k = $(this).data('con').split(',');
+					for (let i = 0; i < k.length; i++) {
+						temp += `<div class="card p-1 bg-light mb-1">${k[i]}</div>`;
+					}
+					return temp;
 				}
 			});
+
+
 		});
 	}
 });

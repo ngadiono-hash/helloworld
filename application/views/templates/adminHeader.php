@@ -18,7 +18,7 @@ $editPage = whats_page(2,['editor']);
 <link rel="stylesheet" href="<?=log?>bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/vendor/sb-admin/sb-admin-2.min.css">
 <?php myGlobalCss() ?>
-<?php if ($quizTable) {
+<?php if ($lessonTable || $quizTable) {
 // echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">';
 echo '<link rel="stylesheet" href="'.log.'select-bootstrap.min.css">';
 } ?>
@@ -41,8 +41,12 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   right: 0;
   transition: border 0.7s ease;
 }
-.content-edit .splitter.changed {
-  background: #F44336;
+.content-edit .ctrl .btn-primary.changed {
+  /*background: #F44336;*/
+  transition: box-shadow 200ms cubic-bezier(.4,0,.2,1) 0s;
+  box-shadow: 0 0 20px 5px #e8e8efed inset;
+  background: linear-gradient(180deg, #17a2b8, #0062cc);
+  color: white;  
 }
 .content-editor {
   display: flex;
@@ -67,7 +71,6 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   width: 50vw;
   min-width: 5%;
   max-width: 98%;
-  background-color: #ccc;
 }
 .content-editor .body-source {
   height: 93vh;
@@ -75,6 +78,10 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
 }
 .content-editor .ctrl {
   display: flex;
+  margin-left: 170px;
+}
+.content-editor .ctrl a, .content-editor .ctrl button {
+  margin: 0 1px;
 }
 .content-editor .content-right {
   flex: 1 1 auto;
@@ -100,8 +107,9 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
 .open-editor {
   position: fixed;
   z-index: 999999;
+  min-width: 170px;
 }
-.modal {
+#modal-info {
   z-index: 99999;
 }
 
@@ -111,13 +119,13 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   min-height: 560px;
 } 
  
-.content-edit .frame p + pre, .content-edit .frame ul + pre {
+/*.content-edit .frame p + pre, .content-edit .frame ul + pre {
   background: linear-gradient(45deg,#ddd,#d6c9c9);
   padding: 10px;
   max-width: 90%;
   margin: 20px auto;
   border-radius: 10px;
-}
+}*/
 
 #main-accord-snippet {
   overflow: auto;
@@ -129,15 +137,33 @@ echo '<link rel="stylesheet" href="'.log.'datatable.min.css">';
   background: linear-gradient(180deg, #17a2b8, #0062cc);
   color: white;
 }
-#main-accord textarea {
+textarea {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-weight: 400;
+  line-height: 1.5;
   font-family: monospace;
-  background: cadetblue;
   color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+textarea[name="htm"] {
+  background: coral;
+}
+textarea[name="css"] {
+  background: cornflowerblue;
+
+}
+textarea[name="jsc"] {
+  background: gold;
 }
 
 
 
-.btn-modal {
+/*table page*/
+.add-modal {
   position: absolute;
   top: 52px;
   right: 30px;
@@ -167,20 +193,25 @@ table thead tr th {
 .dataTable tbody tr td {
   text-align: center;
 }
-.dataTable tbody tr:hover {
-  background-color: #d2d6de !important;
-}
 .dataTable tbody tr td .btn {
   display: block;
 }
 .dataTable tbody tr td:hover {
-  background: linear-gradient(45deg,#ddd,#fff);
-  border-color: transparent;
+  box-sizing: border-box;
+  background: linear-gradient(180deg,#ddd,#fff);
+  border: 2px inset #808080;
 }
 .dataTable tbody tr td .btn.btn-title,
 .dataTable tbody tr td .btn.btn-slug,
 .dataTable tbody tr td .btn.btn-quest {
   text-align: left;
+}
+#table-lesson td:nth-child(2),
+#table-lesson td:nth-child(7) {
+  cursor: pointer;
+}
+#table-lesson tr:hover {
+  background-color: #d2d6de !important;
 }
 </style>
 </head>
@@ -220,10 +251,9 @@ table thead tr th {
         <!-- show -->
         <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <!-- active -->
-            <a class="collapse-item" href="<?=base_url('a')?>/less/beginner">Beginner</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/less/medium">Medium</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/less/advance">Advance</a>
+            <?php foreach ($sidenav as $k => $v) { ?>
+              <a class="collapse-item" href="<?=$v['link']?>"><?=$v['title']?></a>  
+            <?php } ?>
           </div>
         </div>
       </li>
@@ -235,9 +265,9 @@ table thead tr th {
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?=base_url('a')?>/quiz/beginner">Beginner</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/quiz/medium">Medium</a>
-            <a class="collapse-item" href="<?=base_url('a')?>/quiz/advance">Advance</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/a">Beginner</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/b">Medium</a>
+            <a class="collapse-item" href="<?=base_url('a')?>/quiz/c">Advance</a>
           </div>
         </div>
       </li>

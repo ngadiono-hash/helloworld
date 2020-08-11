@@ -23,24 +23,7 @@ CKEDITOR.stylesSet.add( 'default', [
 			'font-weight': 'bold'
 		}
 	},
-  {
-		name: 'reff',
-		element: 'p',
-		attributes: { class:'reff' }
-	},
 	/* Object styles */
-
-	{
-		name: 'Styled Image (left)',
-		element: 'img',
-		attributes: { 'class': 'left' }
-	},
-
-	{
-		name: 'Styled Image (right)',
-		element: 'img',
-		attributes: { 'class': 'right' }
-	},
 
 	{
 		name: 'Compact Table',

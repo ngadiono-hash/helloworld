@@ -292,7 +292,7 @@
 			// to defire required content with "and" operator.
 			requiredContent: 'pre',
 			styleableElements: 'pre',
-			template: '<pre class="line-numbers"><code class="' + codeClass + '"></code></pre>',
+			template: '<pre class="line-numbers l e"><code class="' + codeClass + '"></code></pre>',
 			dialog: 'codeSnippet',
 			pathName: lang.pathName,
 			mask: true,

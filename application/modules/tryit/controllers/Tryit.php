@@ -13,7 +13,7 @@ class Tryit extends CI_Controller
 		$meta = $this->uri->segment(3);
 		$where = " LOWER(title)='".str_replace('-',' ',$meta)."' ";
 		$data['snippet'] = $this->Common->check_segment('snippet',$where);
-		if ($data['snippet']) {
+		if ($data['snippet'] || !$data['snippet'] && is_admin() ) {
 			$data['title'] = 'Tryit - '. $data['snippet']['title'];
 			$this->load->view('play',$data);
 		} else {

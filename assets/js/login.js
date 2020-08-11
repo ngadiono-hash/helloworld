@@ -16,18 +16,14 @@ $(document).ready(function() {
 
   $('#form-login').on('click','.btn-log',function(e) {
    e.preventDefault();
-    var data = {
+    let myData = {
       key_email: $('[name="key_email"]').val(),
       key_pass: $('[name="key_pass"]').val(),
-      remember: $('[type="checkbox"]').val(),
-      csrf_token: csrf
+      remember: $('[type="checkbox"]').val()
     }
-    $.ajax({
-      url: host+'xhrm/set_login',
-      type: 'post',
-      dataType: 'json',
-      data: data,
-      success : function(data){
+    ajaxTemp({
+      u: 'xhrm/set_login', d: myData, b: null, c: null,
+      s: function(data){
         $.each(data, function(key, value){
           $('[name="'+key+'"]').parents('.form-group').find('#error').html(value);
         });

@@ -3,26 +3,27 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	function bug($param = '')
 	{
-		// if ($param == '') {
-			// var_dump('end of test');
-			// die();
-		// } else {
-			var_dump($param);
-			die();
-		// }
+		var_dump($param);
+		die();
 	}
 
-	function change_host($content)
+	function changeHost($content='')
 	{
 		// $find = ["/http:\/\/localhost\/helloworld\//"]
-		// $replace 		= ["".base_url().""];
-		// $find = '';
-		// $replace = '';
-		if(isset($find) && isset($replace)){
-			return preg_replace($find,$replace,$content);
-		} else {
-			return $content;
+		// $replace = ["".base_url().""];
+		// if(isset($find) && isset($replace)){
+		// 	return preg_replace($find,$replace,$content);
+		// } else {
+		// 	return $content;
+		// }
+	}
+	function correcting($content)
+	{
+		$replace = [['/&nbsp;/',' '],['/ekspresi/','expression']];
+		for ($i=0; $i < count($replace) ; $i++) { 
+			$content = preg_replace($replace[$i][0],$replace[$i][1],$content);
 		}
+		return $content;
 	}
 
 	function buildSession($name,$value=null)

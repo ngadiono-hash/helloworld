@@ -38,11 +38,11 @@ class Xhrm extends CI_Controller
 		$bx = [];
 		$cx = [];
 		foreach ($boards as $board => $b) {
-			if ($b['level'] == 'beginner') {
+			if ($b['level'] == 'a') {
 				array_push($ax,['rank' => count($ax) + 1,'name'=>$b['user'],'score'=>$b['score'],'spent'=>$b['spent'],'date'=>$b['date']]);
-			} elseif ($b['level'] == 'medium') {
+			} elseif ($b['level'] == 'b') {
 				array_push($bx,['rank' => count($bx) + 1,'name'=>$b['user'],'score'=>$b['score'],'spent'=>$b['spent'],'date'=>$b['date']]);
-			} elseif ($b['level'] == 'advance') {
+			} elseif ($b['level'] == 'c') {
 				array_push($cx,['rank' => count($cx) + 1,'name'=>$b['user'],'score'=>$b['score'],'spent'=>$b['spent'],'date'=>$b['date']]);
 			}
 		}
@@ -87,16 +87,7 @@ class Xhrm extends CI_Controller
 	public function get_quiz()
 	{
 		$level = $this->input->post('ctg');
-		$myQuiz = $this->Common->select_join(
-			'quiz AS A',
-			'A.id,A.q_question,A.q_answer,B.les_title,C.description',
-			[
-				['table' => 'materi AS B','condition' => 'A.q_rel = B.les_id','type' => ''],
-				['table' => 'level AS C','condition' => 'A.q_level = C.name','type' => '']
-			],
-			['q_level' => $level],true,false,
-			'','les_order ASC'
-		);
+		$myQuiz = $this->Common->select_where('quiz','id,q_question,q_answer',['q_level'=>$level],true,false,'rand()');
 		$num = 1;
 		foreach ($myQuiz as $k => $v) :
 		$ans[$k] = explode(',',$v['q_answer']);
@@ -161,55 +152,55 @@ class Xhrm extends CI_Controller
 	// 	echo json_encode($s);
 	// }
 
-	public function my()
-	{
-		$usr = trimChar_input('nama');
-		$ctg = trimChar_input('level');
-		$float = trimChar_input('skor');
-		$spent = trimChar_input('waktu');
-		$date = trimChar_input('daftar');
-		$data = ['user'=>$usr,'level'=>$ctg,'score'=>$float,'spent'=>$spent];
+	// public function my()
+	// {
+	// 	$usr = trimChar_input('nama');
+	// 	$ctg = trimChar_input('level');
+	// 	$float = trimChar_input('skor');
+	// 	$spent = trimChar_input('waktu');
+	// 	$date = trimChar_input('daftar');
+	// 	$data = ['user'=>$usr,'level'=>$ctg,'score'=>$float,'spent'=>$spent];
 
-		$all = $this->Common->select_where('boards','score',['level'=>$ctg]);
+	// 	$all = $this->Common->select_where('boards','score',['level'=>$ctg]);
 		
-		$allScore = array_column( $all, 'score' );
-		$lowestScore = $this->Common->select_where('boards','spent',['level'=>$ctg,'score'=>min($allScore)]); // skor terkecil
-		$longestTime = max(array_column( $lowestScore, 'spent' ));
-		$where = ['level'=>$ctg,'score <='=>$float,'spent'=>$longestTime];
-		$exec = $this->Common->update('boards',$data,$where);
-		if ($exec) {
-			$track = 'selamat '.$usr.', skormu masuk di leaderboard';
-		} else {
-			$track = 'skormu belum mampu bersaing di leaderboard';
-		}
+	// 	$allScore = array_column( $all, 'score' );
+	// 	$lowestScore = $this->Common->select_where('boards','spent',['level'=>$ctg,'score'=>min($allScore)]); // skor terkecil
+	// 	$longestTime = max(array_column( $lowestScore, 'spent' ));
+	// 	$where = ['level'=>$ctg,'score <='=>$float,'spent'=>$longestTime];
+	// 	$exec = $this->Common->update('boards',$data,$where);
+	// 	if ($exec) {
+	// 		$track = 'selamat '.$usr.', skormu masuk di leaderboard';
+	// 	} else {
+	// 		$track = 'skormu belum mampu bersaing di leaderboard';
+	// 	}
 
-		// generating output
-	  if ($float == 100) {
-	    $msg = "tak perlu diragukan lagi...<br>".$usr.", you're master of JavaScript";
-	    $img = 'horray.gif';
-	  } else if ($float >= 75) { // 99 . 75
-	    $msg = "kamu punya bakat,<br>tetaplah asah logikamu, ".$usr."";
-	    $img = 'ok.gif';
-	  } else if ($float >= 50) { // 74 . 50
-	    $msg = 'hmm... gimana yaa...<br> lumayan deh buat hari ini';
-	    $img = 'ups.gif';
-	  } else if ($float >= 25) { // 49 . 25
-	  	$msg = 'hei '.$usr.'<br>serius ini ?! kok hanya '.$plus.' yang benar';
-	  	$img = 'duh.gif';
-	  } else if ($float <= 24) { // 24 . 1
-	  	$msg = 'aduh... '.$usr.'<br> ayo lebih serius lagi belajarnya';
-	  	$img = 'ouch.gif';
-	  }
-	  $bind['result'] = ['img' => $img,'msg' => $msg,'rest' => [
-	  		'score' => $float,
-	  		'true' => $plus,
-	  		'false' => $minus,
-	  		'spent' => $spent,
-	  		'fire' => $track
-	  	]
-	  ];
-	  echo json_encode($bind);
-	}
+	// 	// generating output
+	//   if ($float == 100) {
+	//     $msg = "tak perlu diragukan lagi...<br>".$usr.", you're master of JavaScript";
+	//     $img = 'horray.gif';
+	//   } else if ($float >= 75) { // 99 . 75
+	//     $msg = "kamu punya bakat,<br>tetaplah asah logikamu, ".$usr."";
+	//     $img = 'ok.gif';
+	//   } else if ($float >= 50) { // 74 . 50
+	//     $msg = 'hmm... gimana yaa...<br> lumayan deh buat hari ini';
+	//     $img = 'ups.gif';
+	//   } else if ($float >= 25) { // 49 . 25
+	//   	$msg = 'hei '.$usr.'<br>serius ini ?! kok hanya '.$plus.' yang benar';
+	//   	$img = 'duh.gif';
+	//   } else if ($float <= 24) { // 24 . 1
+	//   	$msg = 'aduh... '.$usr.'<br> ayo lebih serius lagi belajarnya';
+	//   	$img = 'ouch.gif';
+	//   }
+	//   $bind['result'] = ['img' => $img,'msg' => $msg,'rest' => [
+	//   		'score' => $float,
+	//   		'true' => $plus,
+	//   		'false' => $minus,
+	//   		'spent' => $spent,
+	//   		'fire' => $track
+	//   	]
+	//   ];
+	//   echo json_encode($bind);
+	// }
 
 	public function get_result()
 	{
@@ -226,7 +217,10 @@ class Xhrm extends CI_Controller
 		foreach ($post as $k => $v) {
 			$test[$k] = $this->Common->select_join(
 				'quiz AS A',
-				'B.les_title AS title,B.les_slug AS slug,B.les_level AS level,A.q_answer AS answer,A.q_correct AS correct,A.q_question AS question',
+				'
+				B.les_title AS title,B.les_slug AS slug,B.les_level AS level,
+				A.q_answer AS answer,A.q_correct AS correct,A.q_question AS question
+				',
 				[
 					['table' => 'materi AS B', 'condition' => 'A.q_rel = B.les_id', 'type' => '']
 				],
@@ -259,7 +253,7 @@ class Xhrm extends CI_Controller
 
 		// bind to db
 		$all = $this->Common->select_where('boards','score',['level'=>$ctg]);
-		
+		// bug($all);
 		$allScore = array_column( $all, 'score' );
 		$lowestScore = $this->Common->select_where('boards','spent',['level'=>$ctg,'score'=>min($allScore)]); // skor terkecil
 		$longestTime = max(array_column( $lowestScore, 'spent' ));
@@ -308,33 +302,22 @@ class Xhrm extends CI_Controller
 		$min = 3;
 		if (!empty($term)) {
 			if (strlen($term) >= $min) {
-				$this->db->from('materi');
-				if (strpos($term,' ') !== false) {
-					$search_exploded = filterSearchKeys($term);
-
-					foreach($search_exploded as $key){
-						$this->db->or_like('les_key',strtolower($key));
-					}
-				} else {
-					$this->db->like('les_key',strtolower($term));
-				}
-				$this->db->where('les_publish',1);
-				$run = $this->db->get();
+				$run = $this->Common->search_materi($term);
 				$search_results = $run->num_rows();
 				if ($search_results === 0) {
-				  $result = [0,'tidak ada hasil ditemukan untuk pencarian <br><b>"'.$term.'"</b>'];
+				  $result = [0,'tidak ada hasil ditemukan untuk pencarian <br><b class="heading">"'.$term.'"</b>'];
 				} else {
 					$r = $run->result_array();
 					foreach ($r as $key => $v) {
 						$arr[$key] = [
 							'title' => $v['les_title'],
 							'slug' => $v['les_slug'],
-							'level' => $v['les_level'],
+							'level' => $v['description'],
 							'keys' => explode(',',$v['les_key']),
 							'link' => base_url().'js/docs/'.create_slug($v['les_slug'])
 						];
 					}
-					$result = [1,'ditemukan '.$search_results.' hasil pencarian untuk keyword <br><b>"'.$term.'"</b>',$arr];
+					$result = [1,'ditemukan '.$search_results.' hasil pencarian untuk keyword <br><b class="heading">"'.$term.'"</b>',$arr];
 				}
 
 			} else {

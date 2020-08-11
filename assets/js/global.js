@@ -9,6 +9,8 @@ const host = `http://${window.location.hostname}/helloworld/`,
 let xhrRest, imgRest;
 let label = window.location.pathname.split('/').pop();
 
+$('img').attr('alt','Image');
+
 function bug(n){
   console.log(n)
 }
@@ -82,6 +84,7 @@ function startAjax(){
   aJax.fadeIn()
   .addClass('scale-in-center')
   .html(`<div class="contain"><img src="${host}assets/img/feed/bars.svg"></div>`);
+  $('html').addClass('fix-scroll');
 }
 function endAjax(){
   aJax.toggleClass('scale-out-center scale-in-center');
@@ -90,6 +93,7 @@ function endAjax(){
     aJax.empty();
     aJax.fadeOut();
   },400);
+  $('html').removeClass('fix-scroll');
 }
 function myAlert(data){
   let btn = '', alt = $('.alert-auto');
@@ -202,7 +206,7 @@ function getStyle(elmnt,style) {
   }
 }
 
-var dragging = false;
+let dragging = false;
 function dragstart(e) {
   e.preventDefault();
   dragging = true;

@@ -188,7 +188,7 @@ function blank_page($status) { ?>
       color: #808080;
     }
     h1 { font-family: Stencil, Fantasy; }
-    img { width: 350px; }
+    img { width: 70%; }
     button {
       min-width: 220px;
       cursor: pointer;
@@ -198,7 +198,7 @@ function blank_page($status) { ?>
   </head>
   <body>
     <div>
-      <img src="<?= base_url('assets/img/feed/404.gif') ?>">
+      <img src="<?= base_url('assets/img/feed/'.$status.'.gif') ?>">
       <?php if($status == 404) { ?>
         <h1>Invalid URL</h1>
         <h3><small><?= current_url() ?></small></h3>

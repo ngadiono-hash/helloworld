@@ -11,12 +11,7 @@
   padding: 20px;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
 }
-:not(pre) > code[class*="language-"], pre[class*="language-"] {
-  background: #495057;
-}
-:not(pre) > code[class*="language-"] {
-  padding: 0 2px;
-}
+
 span.anchor {
   display: block;
   height: 155px;
@@ -24,7 +19,7 @@ span.anchor {
   visibility: hidden;
 }
 .blog-content {
-  text-align: justify;
+  font-size: 1.2rem;
 }
 .blog-content h3 {
   color: #6c757d;
@@ -58,12 +53,9 @@ span.anchor {
   text-align: center;
   position: relative;
 }
-.blog-content ul + p {
-  margin-left: 40px;
-}
 .blog-content .code-toolbar {
   max-width: 800px;
-  padding: 20px;
+  padding: 20px 5px;
   background: #80808094;
   margin-bottom: 30px;
   position: relative;
@@ -72,24 +64,29 @@ span.anchor {
 .blog-content .code-toolbar .toolbar {
   text-align: center;
 }
+.blog-content .code-toolbar .btn {
+  margin-right: 2px;
+}
 .blog-content .code-toolbar pre {
-  max-height: 42vh;
-  overflow-x: hidden;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+  font-size: 16px;
+  max-height: 60vh;
+  overflow-x: auto;
+  border-radius: 0;
 }
-.blog-content .execute {
-  transition: all 0.4s ease;
-  font-size: 1rem;
-  padding: 10px 20px !important;
+.blog-content .code-toolbar pre:not(.line-numbers) {
+  /*overflow-x: auto;*/
 }
+
+:not(pre) > code[class*="language-"] {
+  padding: 0 2px;
+}
+
 .blog-content .navigate {
   margin-top: 30px;
   border-bottom: 2px solid #ccc;
   border-top: 2px solid #ccc;
   padding: 20px;
-}
-.blog-content .code-toolbar pre.language-javascript {
-  overflow-x: auto;
 }
 
 .sidebar-box {
@@ -100,7 +97,8 @@ span.anchor {
 .sidebar-box .card-body {
   padding: 10px;
   overflow-y: auto;
-  max-height: 48vh;
+  overflow-x: hidden;
+  max-height: 50vh;
 }
 .sidebar-box .hint {
   padding: 5px;
@@ -118,13 +116,13 @@ span.anchor {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.sidebar-box .btn {
+.sidebar-box .btn, .blog-content .btn {
   padding: 10px 30px !important;
 }
 .sidebar-box a.card-header:hover {
   text-decoration: none;
 }
-.sidebar-box ul:not(.lesson-menu) {
+.sidebar-box ul {
   list-style: none;
   padding: 0;
 }
@@ -132,5 +130,9 @@ span.anchor {
   padding: 2px;
 }
 .sidebar-box li a {
-  padding: 4px;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
 }

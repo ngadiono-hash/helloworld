@@ -1,13 +1,4 @@
-<style type="text/css">
-	table th {
-	    /*width: auto !important;*/
-	}
-	th:nth-child(1),
-	td:nth-child(1) {
-		/*width: 100px;*/
-	}
-	.w-10 { width: 10% !important; }
-</style>
+
 <main id="main">
   <?php wave('JavaScript Quiz','Soal Latihan Materi JavaScript') ?>
   <div class="site-section quiz-intro">
@@ -53,8 +44,8 @@
 		      			<div class="row answer">
 		      			<?php foreach ($category as $k => $v) : ?>
 		      			  <div class="col-md-8 offset-md-2 wrap">
-		      			    <input type="radio" name="c" id="<?=$v['name']?>" value="<?=$v['name']?>">
-		      			    <label for="<?=$v['name']?>" class="text-center"><?=$v['description']?></label>
+		      			    <input type="radio" name="c" id="<?=$v['key']?>" value="<?=$v['key']?>">
+		      			    <label for="<?=$v['key']?>" class="text-center"><?=$v['name']?></label>
 		      			  </div>
 		      			<?php endforeach; ?>
 		      			</div>

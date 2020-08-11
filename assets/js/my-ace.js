@@ -10,8 +10,8 @@ let opt = {
   showFoldWidgets: true,
   showLineNumbers: true,
   showPrintMargin: false,
-  wrap: true,
-  fontSize: 15,
+  wrap: false,
+  fontSize: 18,
   tabSize: 2,
   highlightActiveLine: true,
   highlightSelectedWord: true,
@@ -21,16 +21,15 @@ let opt = {
 let auto = true;
 
 function runCode(){
-  let pT = '';
-  pT += '<meta charset="UTF-8">\n';
-  pT += '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">\n';
-  pT += `<title><\/title>\n`;
-  pT += inCss;
-  pT += inJs;
-  pT += `<style>\n${srcCss.getValue()}\n<\/style>\n`;
-  pT += `<body>\n${srcHtm.getValue()}\n`;
-  pT += `<script>\n${srcJsc.getValue()}\n<\/script>\n`;
-  pT += '<\/body>';
+  let pT = `<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">\n
+  <title><\/title>
+  ${inCss}\n
+  ${inJs}\n
+  <style>\n${srcCss.getValue()}\n</style>\n
+  <body>\n
+  ${srcHtm.getValue()}\n
+  <script>\n(function(){\n${srcJsc.getValue()}\n})();\n</script>\n</body>`;
   frame.open();
   frame.write(pT);
   frame.close();
@@ -93,10 +92,13 @@ $(function(){
     tabActive.selection.fromJSON(sel);
     tabActive.selectAll();
   });
-  // liveEditor.on('click','#del',function(){
-  //   source.getSession().setValue('');
-  //   source.focus();
-  // });
+  liveEditor.on('click','#del',function(){
+    let active = liveEditor.find('.tab-pane.show.active .body-source').attr('id');
+    let tabActive = ace.edit(active);
+    tabActive.getSession().setValue('');
+    tabActive.focus();
+    runCode();
+  });
   
   $('.splitter').on('mousedown',function(e){
     dragstart(e);

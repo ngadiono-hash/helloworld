@@ -8,90 +8,52 @@ class Js extends CI_Controller
 		$this->load->model('Common');
 	}
 
-	private function _temp_menu($lev)
-	{
-		$pageNow = $this->input->get('page');
-		$data['label'] = $this->Common->select_where('level','*',['name' => $lev],TRUE,TRUE);
-		$slug = explode(' ',$data['label']['description']);
-		$data['label']['slug'] = 'Dokumentasi '.$slug[0].' Tingkat '.$slug[1];
-		$data['title'] = 'My Note - Materi '.$data['label']['description'];
-		$rows = $this->Common->counting('materi',['les_level'=>$lev,'les_publish'=>1]);
-		if ($rows < 0) :
-			$data['available'] = false;			
-		else :
-			$data['available'] = true;
-			$config = [
-				'base_url' => base_url('js/').$this->uri->segment(2),
-				'total_rows' => $rows,
-				'page_query_string' => true,
-				'use_page_numbers' => true,
-				'query_string_segment' => 'page',
-				'per_page' => 9,
-				'attributes' => ['class'=>'page-link'],
-				'next_link' => '<i class="fa fa-angle-double-right"></i>',
-				'prev_link' => '<i class="fa fa-angle-double-left"></i>',
-				'first_link' => 'start',
-				'last_link' => 'end',
-				'full_tag_open' => '<ul class="pagination justify-content-center">',
-				'full_tag_close' => '</ul>',
-				'num_tag_open' => '<li class="page-item">',
-				'num_tag_close' => '</li>',
-				'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
-				'cur_tag_close' => '</a></li>',
-				'prev_tag_open' => '<li>',
-				'prev_tag_close' => '</li>',
-				'next_tag_open' => '<li>',
-				'next_tag_close' => '</li>'
-			];
-			$page = ($pageNow) ? $pageNow : 1;
-			$ilegal = ceil($config['total_rows']/$config['per_page']);
-			if ($page > $ilegal) {
-				$data['available'] = false;
-			} else {
-				$offset = ($page - 1) * $config['per_page'];
-				$all = $this->Common->select_where(
-					'materi',
-					'les_order,les_level,les_title,les_slug,les_content,les_update',
-					['les_level' => $lev,'les_publish' => 1],
-					TRUE,FALSE,
-					['les_order','asc'],
-					[$config['per_page'],$offset]
-				);
+	// private function linkLevels()
+	// {
+	// 	$all = $this->Common->select_where('level','name,names,description');
+	// 	foreach ($all as $key) {
+	// 		$a[] = ['link' => base_url('a/less/').$key['names'], 'title' => $key['description']];
+	// 	}
+	// 	return $a;
+	// }
 
-				$this->pagination->initialize($config);
-				foreach ($all as $k) {
-					$rest[] = [
-						'num'			=> $k['les_order'],
-						'level' 	=> $k['les_level'],
-						'update'  => date('M d, Y',$k['les_update']),
-						'title' 	=> $k['les_title'],
-						'slug' 		=> $k['les_slug'],
-						'link' 		=> base_url('js/docs/').create_slug($k['les_slug']),
-						'content' => read_more($k['les_content'],200)
-					];
-				}
-				$data['list'] = $rest;
-			}
-		endif;
+	public function files()
+	{
+		$data['title'] = 'JavaScript List';
+		
+		$map = $this->Common->select_join(
+			'level',
+			'level.id,names,description,les_title,les_slug,les_order',
+			[['table'=>'materi','condition'=>'level.names = materi.les_level','type'=>'']],
+			['les_publish'=>1],true,false,'','level.id ASC'
+		);
+
+		// $levels = $this->Common->select_where('level','names,description');
+		// $m = [];
+		// foreach ($levels as $k) {
+		// 	$materi = $this->Common->select_where('materi','les_level,les_order,les_title,les_slug',['les_level'=>$k['names']]);
+		// 	uasort($materi, function ($a, $b) {
+		// 	    if ($a['les_order'] == $b['les_order']) return 0;
+		// 	    return ($a['les_order'] < $b['les_order']) ? -1 : 1;
+		// 	});
+		// 	array_push($m,$materi);
+		// }
+		// var_dump($m);
+		
+		// bug($result);
+		uasort($map, function ($a, $b) {
+	    if ($a['les_order'] == $b['les_order']) return 0;
+	    return ($a['les_order'] < $b['les_order']) ? -1 : 1;
+		});
+		foreach ($map as $element) {
+			$result[$element['id']][] = $element;
+		}
+		ksort($result);
+		$data['menu'] = array_values($result);
+		// bug($data['menu']);
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('js-menu',$data);
 		$this->load->view('templates/mainFooter');
-	}
-
-	public function beginner()
-	{
-		$data['title'] = 'My Note - JavaScript Dasar';
-		$data['list'] = $this->_temp_menu('beginner');
-	}
-	public function medium()
-	{
-		$data['title'] = 'My Note - JavaScript DOM';
-		$data['list'] = $this->_temp_menu('medium');
-	}
-	public function advance()
-	{
-		$data['title'] = 'My Note - JavaScript Lajutan';
-		$data['list'] = $this->_temp_menu('advance');
 	}
 
 	public function docs()
@@ -120,7 +82,7 @@ class Js extends CI_Controller
 					'title' => $key['les_slug']
 				];
 			}
-			$data['label'] = $this->Common->select_specific('level','description',['name' => $s['les_level']]);
+			$data['label'] = $this->Common->select_specific('level','description',['names' => $s['les_level']]);
 			
 			$key1 = getTags($s['les_content'],'h3');
 			$key2 = getTags($s['les_content'],'h4');
@@ -167,14 +129,14 @@ class Js extends CI_Controller
 	public function quiz()
 	{
 		$data['title'] = 'My Note - Quiz JavaScript';
-		$data['category'] = $this->Common->select_join(
-			'quiz',
-			'name,description',
-			[['table' => 'level','condition' => 'quiz.q_level = level.name','type' => '']],
-			'',true,false,
-			'q_level',
-			'level.id ASC'
-		);
+		$cat = $this->Common->select_where('quiz','q_level','',true,false,'q_level ASC','','q_level');
+		foreach ($cat as $k) {
+			if ($k['q_level'] == 'a') $name = 'JavaScript Dasar';
+			if ($k['q_level'] == 'b') $name = 'JavaScript Medium';
+			if ($k['q_level'] == 'c') $name = 'JavaScript Lanjutan';
+			$category[] = ['key'=>$k['q_level'],'name'=>$name];
+		}
+		$data['category'] = $category;
 		$this->load->view('templates/mainHeader', $data);
 		$this->load->view('js-quiz',$data);
 		$this->load->view('templates/mainFooter');
