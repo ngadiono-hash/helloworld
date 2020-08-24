@@ -5,11 +5,11 @@
     <div class="content-left">
       <nav class="ctrl">
         <button class="btn btn-outline-success px-4" id="btn-update"><i class="fa fa-lg fa-fw fa-save"></i></button>
-        <button class="btn btn-outline-info" onclick="editorAdm()"><i class="fa fa-lg fa-fw fa-hourglass-half fa-spin"></i></button>
         <a class="btn btn-primary" href="<?=base_url('a/less/'.$label)?>"><i class="fas fa-lg fa-fw fa-reply"></i></a>
         <a class="btn btn-primary" title="<?=$slugPrev?>" href="<?=$linkPrev?>"><i class="fa fa-lg fa-fw fa-arrow-left"></i></a>
         <a class="btn btn-primary" title="<?=$slugNext?>" href="<?=$linkNext?>"><i class="fa fa-lg fa-fw fa-arrow-right"></i></a>
         <a class="btn btn-outline-dark" target="_blank" href="<?=$link?>"><i class="fas fa-lg fa-fw fa-location-arrow"></i></a>
+        <a class="btn btn-outline-danger" href="<?=base_url('tryit/file/')?>" target="_blank"><i class="fa fa-lg fa-fw fa-code"></i></a>
         
       </nav>
       <textarea id="ckedit"><?=htmlentities($content)?></textarea>

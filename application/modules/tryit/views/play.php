@@ -1,9 +1,8 @@
+<?php reload_session() ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" href="<?=base_url()?>assets/img/feed/favicon.ico">
@@ -37,8 +36,9 @@
   border: 2px solid #6c757d;
   cursor: pointer;
   text-align: center;
+  color: #808080;
 }
-.nav-pills .nav-link.navs {
+.nav-pills .nav-link.t {
 	min-width: 115px;
 }
 .nav-pills .nav-link:hover {
@@ -109,54 +109,51 @@
 	<main class="main">
 		<div class="wrapper-editor">
 		  <ul class="nav nav-pills control bg-light">
-		  		<li class="nav-item hide-sm">
-		  	  	<a class="nav-link" title="Menu" href="<?=base_url('js/files')?>"><i class="fas fa-lg fa-fw fa-bars"></i></a>
-		  		</li>
+	  		<li class="nav-item hide-sm">
+	  	  	<a class="nav-link" title="Menu" href="<?=base_url('js/files')?>"><i class="fas fa-lg fa-fw fa-home"></i></a>
+	  		</li>
 		  	<li class="nav-item hide-sm">
-		    	<a id="stop" class="nav-link" title="disable Auto Run"><i class="fas fa-lg fa-fw fa-hourglass-half fa-spin"></i></a>
+		    	<a id="stop" class="nav-link" title="Auto Run"><i class="fas fa-lg fa-fw fa-sync"></i></a>
 		  	</li>
 		  	<li class="nav-item hide-sm">
 		    	<a id="play" class="nav-link" title="Run Code"><i class="fa fa-lg fa-fw fa-play"></i></a>
 		  	</li>
-		  	<!-- <li class="nav-item hide-sm"> -->
-		    	<!-- <a id="newTab" class="nav-link" title="Save"><i class="fa fa-lg fa-fw fa-save"></i></a> -->
-		  	<!-- </li> -->
+	  		<li class="nav-item hide-sm">
+	  	  	<a id="clip" class="nav-link" title="Copy"><i class="fa fa-lg fa-fw fa-copy"></i></a>
+	  		</li>
 		    <li class="nav-item">
-		      <a class="nav-link navs" data-toggle="pill" href="#tab-htm">HTML</a>
+		      <a class="nav-link t active" data-toggle="pill" href="#tab-htm">HTML</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link navs" data-toggle="pill" href="#tab-css">CSS</a>
+		      <a class="nav-link t" data-toggle="pill" href="#tab-css">CSS</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link navs active" data-toggle="pill" href="#tab-jsc">JavaScript</a>
+		      <a class="nav-link t" data-toggle="pill" href="#tab-jsc">JavaScript</a>
 		    </li>
 		    <?php if (startSession('sess_log')) { ?>
-		  	<li class="nav-item hide-sm">
-		    	<a id="clipboard" class="nav-link" title="Copy"><i class="fa fa-lg fa-fw fa-copy"></i></a>
-		  	</li>
 		  	<li class="nav-item hide-sm">
 		    	<a id="del" class="nav-link"><i class="fa fa-lg fa-fw fa-eraser"></i></a>
 		  	</li>
 		    <?php } ?>
 		    <!-- <li class="nav-item">
-		      <a class="nav-link navs" data-toggle="pill" href="#tab-cns">Console</a>
+		      <a class="nav-link t" data-toggle="pill" href="#tab-cns">Console</a>
 		    </li> -->
 		  </ul>
 		  <div class="panel-editor">
 		    <div class="panel-left">
 		      <div class="tab-content">
-		        <div class="tab-pane fade" id="tab-htm">
+		        <div class="tab-pane fade show active" id="tab-htm">
 		          <div class="body-source" id="source-htm"><?=htmlentities($snippet['htm'])?></div>
 		        </div>
 		        <div class="tab-pane fade" id="tab-css">
 		          <div class="body-source" id="source-css"><?=$snippet['css']?></div>
 		        </div>
-		        <div class="tab-pane fade show active" id="tab-jsc">
+		        <div class="tab-pane fade" id="tab-jsc">
 		          <div class="body-source" id="source-jsc"><?=htmlentities($snippet['jsc'])?></div>
 		        </div>
-		        <!-- <div class="tab-pane fade" id="tab-cns">
+		        <div class="tab-pane fade" id="tab-cns">
 		          <div class="body-source" id="term_demo"></div>
-		        </div> -->
+		        </div>
 		      </div>
 		    </div>
 		    <div class="splitter"></div>
@@ -185,30 +182,28 @@
 <script src="<?=base_url()?>assets/js/my-ace.js"></script>
 <!-- <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.js"></script> -->
 <script>
-	// $(function($, undefined) {
-	//     $('#term_demo').terminal(function(command) {
-	//         if (command !== '') {
-	//             try {
-	//                 var result = window.eval(command);
-	//                 if (result !== undefined) {
-	//                     this.echo(new String(result));
-	//                 }
-	//             } catch(e) {
-	//                 this.error(new String(e));
-	//             }
-	//         } else {
-	//            this.echo('');
-	//         }
-	//     }, {
-	//         greetings: 'JavaScript Interpreter',
-	//         name: 'js_demo',
-	//         height: 200,
-	//         prompt: 'js> '
-	//     });
-	// });
-	$(document).ready(function() {
-		runCode();
-	});
+
+// $(function($, undefined) {
+//   $('#term_demo').terminal(function(command) {
+//     if (command !== '') {
+//       try {
+//         let result = window.eval(command);
+//         if (result !== undefined) {
+//             this.echo(new String(result));
+//         }
+//       } catch(e) {
+//         this.error(new String(e));
+//       }
+//     } else {
+//       this.echo('');
+//     }
+//   }, {
+//     greetings: 'JavaScript Interpreter',
+//     name: 'js_demo',
+//     height: 200,
+//     prompt: '> '
+//   });
+// });
 </script>
 </body>
 </html>

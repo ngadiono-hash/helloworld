@@ -19,10 +19,11 @@
             <div class="row">
               <div class="col-lg-7 text-center text-lg-left">
                 <h1 data-aos="fade-right">Notes JavaScript</h1>
-                <p class="" data-aos="fade-right" data-aos-delay="100">Situs Dokumentasi Belajar Bahasa Program JavaScript</p>
+                <h3 class="text-white" data-aos="fade-right" data-aos-delay="100">Dokumentasi Belajar<br>Bahasa Program JavaScript</h3>
               </div>
               <div class="col-lg-5 iphone-wrap">
-                <img src="<?=base_url()?>assets/img/feed/jsbasic.png" alt="Image" class="phone-1" data-aos="fade-right">
+                <img src="<?=base_url()?>assets/img/feed/un-1.png" data-aos-delay="100" class="one" data-aos="fade-up">
+                <img src="<?=base_url()?>assets/img/feed/un-2.png" data-aos-delay="100" class="two" data-aos="fade-down">
               </div>
             </div>
           </div>
@@ -41,77 +42,43 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="">
-            <div class="feature-1 text-center">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <a class="back-link" href="<?=base_url('js/files')?>">
+            <div class="feature-1">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-archive"></span>
               </div>
-              <h3 class="mb-3">Materi Belajar Simpel</h3>
-              <p>Tersedia materi belajar dengan metode yang simpel dan mudah dipahami</p>
+              <h3 class="mb-3">Materi Belajar</h3>
+              <p>Tersedia materi belajar JavaScript modern dengan metode yang simpel</p>
             </div>
+            </a>
           </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="feature-1 text-center">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <a class="back-link" href="<?=base_url('tryit/file/demo')?>">
+            <div class="feature-1">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-code"></span>
               </div>
-              <h3 class="mb-3">Live Code Editor</h3>
-              <p>Belajar dengan contoh program yang siap dijalankan dengan code editor</p>
+              <h3 class="mb-3">Live Code</h3>
+              <p>Belajar dengan contoh program yang siap dijalankan dengan live code editor</p>
             </div>
+            </a>
           </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="feature-1 text-center">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <a class="back-link" href="<?=base_url('js/quiz')?>">
+            <div class="feature-1">
               <div class="wrap-icon icon-1">
                 <span class="icon fa fa-laptop"></span>
               </div>
-              <h3 class="mb-3">Asah Kemampuan Logika</h3>
+              <h3 class="mb-3">Asah Logika</h3>
               <p>Uji kemampuanmu dengan menjawab soal latihan dan jadilah yang terbaik</p>
             </div>
-          </div>
-        </div>
-
-      </div>
-    </div> <!-- .site-section -->
-
-
-    <?php foreach ($label as $k => $v) { ?>
-    <div class="site-section">
-      <div class="container" data-aos="fade-left">
-        <h2 class="mb-4 text-center section-heading"><?=$v['description']?></h2>
-        <div class="col-md-8 offset-md-2 col-sm-12 thumbnail">
-          <img src="<?=base_url('assets/img/feed/').$v['image']?>" class="img-fluid rounded mx-auto d-block shadow-lg">
-          <div class="caption">
-            <p><?=$v['content']?></p>
-            <div class="text-center">
-              <a class="btn btn-default" href="<?=base_url('js/').$v['name']?>">Mulai Belajar</a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row d-none align-items-center py-3">
-          <div class="col-md-6">
-            
-          </div>
-          <div class="col-md-6 ml-auto" data-aos="fade-left">
-            <a href="<?=base_url('js/').$v['name']?>">
             </a>
           </div>
         </div>
+
       </div>
     </div>
-    <?php } ?>
-
-    <div class="site-section cta-section">
-      <div class="container">
-        <h2 class="text-center mb-5">Cari materi dengan keyword di sini</h2>
-        <div class="d-flex justify-content-center h-100">
-          <div id="search-form" class="searchbar">
-            <input class="search_input" type="text" placeholder="Ketik keyword lalu tekan Enter...">
-            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>    
 
   <?php quotes() ?>
   </main>

@@ -1,20 +1,22 @@
+.hero-section .iphone-wrap img {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+.hero-section .iphone-wrap img.one {
+  top: -140%;
+  left: -10%;
+}
+.hero-section .iphone-wrap img.two {
+  top: -80%;
+  left: 30%;
+}
+.hero-section .iphone-wrap img.three {
+  top: -20%;
+  left: -20%;
+}
 
-.hero-section, .hero-section > .container > .row {
-  min-height: 830px;
-}
-.hero-section.inner-page {
-  min-height: 80vh;
-}
-.hero-section .iphone-wrap .phone-2 {
-  margin-top: 130px;
-}
-.hero-section.log > .container > .row {
-  height: 100vh;
-  min-height: 660px;
-}
-.hero-section.inner-page .hero-text {
-  margin-top: -70px;
-}
 .section-heading.section-low {
   font-size: 1.7rem !important;
 }
@@ -78,28 +80,6 @@
   border-radius: 50%;
   color:white;
   text-decoration:none;
-}
-
-.thumbnail {
-  position:relative;
-  overflow:hidden;
-}
-
-.caption {
-  position: absolute;
-  top: 0;
-  right: 3%;
-  left: 3%;
-  background: #5a5a5abf;
-  width: auto;
-  height: 100%;
-  padding: 2%;
-  display: none;
-  text-align: center;
-  padding-top: 50px;
-  font-size: 1.4rem;
-  color: #fff !important;
-  z-index: 2;
 }
 
 
@@ -349,32 +329,20 @@ a.link.active::after {
     right: 0;
     z-index: 1;
   }
-  .post-entry {
-    position: relative;
-    cursor: default;
-    min-height: 300px;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
-  }
-  .post-entry > h4 {
-    text-align: center;
-  }
-  .post-entry > h3 {
-    text-align: center;
-    top: 10%;
-    left: 50%;
-    font-weight: bold;
-    color: #f0dc3f;
-    text-shadow: 2px 2px 4px rgba(0,0,0.4);
-  }
   .back-link:hover {
-    transition: box-shadow .4s ease;
-    box-shadow: 2px 2px 7px rgba(0,0,0.7);
+    text-decoration: none !important;
+    opacity: 0.7;
+    transition: opacity .4s ease;
+  }
+  .feature-1 {
+    text-align: center;
+    padding: 10px;
+  }
+  .site-section {
+    min-height: 90vh;
   }
 
 /*==========================================*/
-  .slide-out {
-    z-index: 1200;
-  }
   @media screen and (max-width: 992px){
     .btn-panel {
       top: 65px !important;
@@ -386,11 +354,11 @@ a.link.active::after {
       margin: 10px auto;
     }
     .hero-section .wave {
-      bottom: -200px;
+      /*bottom: -200px;*/
     }
     .hero-section .iphone-wrap .phone-1 {
-      width: auto;
-      margin: 10px auto;
+      /*width: auto;*/
+      /*margin: 10px auto;*/
     }
   }
   @media screen and (max-width: 768px){

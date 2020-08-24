@@ -43,9 +43,6 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     background: linear-gradient(to right, rgba(39, 70, 133, 0.8) 0%, rgba(61, 179, 197, 0.8) 100%), url(<?=base_url()?>assets/img/feed/hero-bg.jpg);
     position: relative;
   }
-  .panel-editor .splitter {
-    background: url('<?=base_url('assets/img/feed/splitter.png')?>') center center no-repeat #aaa5a5;
-  }
   .heading {
     font-weight: 700;
     background: linear-gradient(-45deg, #3db3c5, #274685);
@@ -84,18 +81,18 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
     top: 85px;
   }
   .site-navbar .site-navigation .site-menu .has-children .dropdown {
-    visibility: hidden;
-    opacity: 1;
-    top: 100%;
+    /*visibility: hidden;*/
+    /*opacity: 1;*/
+    /*top: 100%;*/
     right: 0;
-    position: absolute;
-    text-align: left;
+    /*position: absolute;*/
+    /*text-align: left;*/
     width: 275px;
     font-family: fantasy;
-    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
-    padding: 0px 0px;
-    margin-top: 10px;
-    transition: 0.2s 0s;
+    /*box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);*/
+    /*padding: 0px 0px;*/
+    /*margin-top: 10px;*/
+    /*transition: 0.2s 0s;*/
   }
 </style>
 </head>
@@ -123,12 +120,13 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
           <div class="col-12 col-md-10 d-none d-lg-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <?php if ( is_admin() ) { ?>
+                <li><a class="link" href="<?=base_url('a')?>" target="_blank">Admin</a></li>
+                <?php } ?>
                 <li><a href="<?=base_url('js/files')?>" class="nav-link">JavaScript</a></li>
-                <!-- <li><a href="<?=base_url('js/qui')?>" class="nav-link">React</a></li> -->
-                <!-- <li><a href="<?=base_url('js/uiz')?>" class="nav-link">Angular</a></li> -->
                 <li><a href="<?=base_url('js/quiz')?>" class="nav-link">Quiz</a></li>
                 <li class="has-children">
-                  <a class="nav-link"><i class="fa fa-search"></i></a>
+                  <a class="nav-link">Pencarian Materi</a>
                   <ul class="dropdown">
                     <li>
                       <form id="search-form" class="search-form">
@@ -140,9 +138,6 @@ $lesson_page = whats_page(2,['docs']) && !empty($this->uri->segment(3));
                     </li>
                   </ul>
                 </li>
-                <?php if ( is_admin() ) { ?>
-                <li><a href="<?=base_url()?>a" class="nav-link" target="_blank"><i class="fas fa-lg fa-recycle"></i></a></li>
-                <?php } ?>
               </ul>
             </nav>
           </div>

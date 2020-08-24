@@ -19,20 +19,20 @@ $quiz_page = whats_page(2,['quiz']);
         </p>
       </div>
       <div class="col-md-7 ml-auto">
-        <div class="row site-section pt-0">
+        <div class="row pt-0">
           <div class="col-sm-6 mb-4 mb-md-0">
             <h3>Navigation</h3>
             <ul class="list-unstyled">
-              <li><a href="<?=base_url('js/beginner')?>">JavaScript Dasar</a></li>
-              <li><a href="<?=base_url('js/medium')?>">JavaScript Medium</a></li>
-              <li><a href="<?=base_url('js/advance')?>">JavaScript Lanjutan</a></li>
+              <li><a class="link" href="<?=base_url('js/files')?>">Materi JavaScript</a></li>
+              <li><a class="link" href="<?=base_url('tryit/file/demo')?>">JavaScript Editor</a></li>
+              <li><a class="link" href="<?=base_url('js/quiz')?>">JavaScript Quiz</a></li>
             </ul>
           </div>
           <div class="col-sm-6 mb-4 mb-md-0">
             <h3>Services</h3>
             <ul class="list-unstyled">
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">About</a></li>
+              <li><a class="link" href="#">Contact</a></li>
+              <li><a class="link" href="#">About</a></li>
             </ul>
           </div>
         </div>
@@ -67,21 +67,22 @@ $quiz_page = whats_page(2,['quiz']);
     </div>
   </div>
 </div>
+
 <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
 <script src="<?=log?>jquery.min.js"></script>
 <script src="<?= base_url('assets/js/global.js') ?>"></script>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
 <script src="<?=log?>popper.min.js"></script>
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 <script src="<?=log?>bootstrap.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script> -->
 <script src="<?=log?>jquery.mark.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/easing.min.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/sticky.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/aos.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/owl.carousel.min.js"></script>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 <script src="<?=log?>jquery-ui.js"></script>
 <script src="<?=base_url()?>assets/vendor/theme/theme.js"></script>
 <script src="<?=base_url()?>assets/vendor/prism/prism-line.js"></script>
@@ -121,12 +122,12 @@ if ($login_page) { ?>
     $('#search-form input').on('keypress',function(e){
       if (e.which == 13) {
       e.preventDefault();
-        let inval = { search: $(this).val() };
+        let inval = $(this).val();
         ajaxTemp({
-          u: 'xhrm/search', d: inval, b: startAjax, c: endAjax,
+          u: 'xhrm/search', d: { search: inval }, b: startAjax, c: endAjax,
           s: function(data){            
             $('#modal-search h3').html(data[1]);
-            let temp = "";
+            let temp = '';
             let arrays = [];
             if (data[0] == 1) {
               for (let i = 0; i < data[2].length; i++) {
@@ -137,7 +138,8 @@ if ($login_page) { ?>
                 temp += `<div class="card-body p-3 bg-light"><p class="m-0">${arrays}</p></div></div><hr>`;
               };
               $('#modal-search .search-result').html(temp);
-              $('.search-result p').mark(inval.search,{ "element": "span","className": "highlight" });
+              $('.search-result p').mark(inval,{ "element": "span","className": "highlight" });
+
             } else {
               $('#modal-search .search-result').html('');
             }

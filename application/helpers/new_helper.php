@@ -19,7 +19,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	}
 	function correcting($content)
 	{
-		$replace = [['/&nbsp;/',' '],['/ekspresi/','expression']];
+		$replace = [['/&nbsp;/',' '],['/ekspresi/','expression'],['/expresi/','expression']];
 		for ($i=0; $i < count($replace) ; $i++) { 
 			$content = preg_replace($replace[$i][0],$replace[$i][1],$content);
 		}
